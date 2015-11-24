@@ -15,7 +15,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="StudentsFolder" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">C:\Users\Bonghi\Google Drive\UNN\_Courseware\2015-16\Students</Value>
     </Setting>
   </Settings>
 </SettingsFile>

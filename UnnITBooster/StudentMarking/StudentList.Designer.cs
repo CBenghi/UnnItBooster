@@ -47,25 +47,25 @@
             this.StudImage = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StudImage)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtModuleCode
             // 
             this.txtModuleCode.Location = new System.Drawing.Point(116, 23);
-            this.txtModuleCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtModuleCode.Margin = new System.Windows.Forms.Padding(4);
             this.txtModuleCode.Name = "txtModuleCode";
             this.txtModuleCode.Size = new System.Drawing.Size(132, 22);
             this.txtModuleCode.TabIndex = 0;
@@ -93,7 +93,7 @@
             // txtFolder
             // 
             this.txtFolder.Location = new System.Drawing.Point(74, 19);
-            this.txtFolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtFolder.Margin = new System.Windows.Forms.Padding(4);
             this.txtFolder.Name = "txtFolder";
             this.txtFolder.Size = new System.Drawing.Size(561, 22);
             this.txtFolder.TabIndex = 2;
@@ -102,7 +102,7 @@
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button2.Location = new System.Drawing.Point(272, 21);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(100, 28);
             this.button2.TabIndex = 13;
@@ -116,9 +116,9 @@
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(18, 116);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(388, 65);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
@@ -127,7 +127,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(18, 51);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 28);
             this.button1.TabIndex = 14;
@@ -138,7 +138,7 @@
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(537, 51);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(100, 28);
             this.button3.TabIndex = 15;
@@ -157,7 +157,7 @@
             this.lstStudents.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstStudents.FullRowSelect = true;
             this.lstStudents.Location = new System.Drawing.Point(0, 37);
-            this.lstStudents.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstStudents.Margin = new System.Windows.Forms.Padding(4);
             this.lstStudents.Name = "lstStudents";
             this.lstStudents.Size = new System.Drawing.Size(755, 613);
             this.lstStudents.TabIndex = 16;
@@ -194,7 +194,7 @@
             // 
             this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.Location = new System.Drawing.Point(90, 7);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(4);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(661, 22);
             this.txtSearch.TabIndex = 17;
@@ -218,6 +218,7 @@
             this.StudImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StudImage.Name = "StudImage";
             this.StudImage.Size = new System.Drawing.Size(462, 650);
+            this.StudImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.StudImage.TabIndex = 19;
             this.StudImage.TabStop = false;
             // 
@@ -242,21 +243,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Navigation";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.txtFolder);
-            this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Controls.Add(this.button1);
-            this.tabPage2.Controls.Add(this.button3);
-            this.tabPage2.Controls.Add(this.groupBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(791, 656);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Data download";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // splitContainer1
             // 
@@ -292,13 +278,28 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(755, 37);
             this.tableLayoutPanel1.TabIndex = 19;
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.txtFolder);
+            this.tabPage2.Controls.Add(this.label2);
+            this.tabPage2.Controls.Add(this.button1);
+            this.tabPage2.Controls.Add(this.button3);
+            this.tabPage2.Controls.Add(this.groupBox1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1227, 656);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Data download";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
             // StudentList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1235, 685);
             this.Controls.Add(this.tabControl1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "StudentList";
             this.Text = "StudentList";
             this.groupBox1.ResumeLayout(false);
@@ -306,14 +307,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.StudImage)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
