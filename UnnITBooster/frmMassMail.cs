@@ -1,22 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.IO;
-using System.Data.SQLite;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
-using System.Globalization;
 using LateBindingTest;
 using System.Threading;
 using StudentsFetcher;
-using StudentsFetcher.StudentMarking;
-using ZedGraph;
 using System.Net;
 
 namespace StudentMarking

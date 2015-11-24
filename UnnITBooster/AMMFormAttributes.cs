@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace StudentsFetcher
+﻿namespace StudentsFetcher
 {
     internal class AMMFormAttributes : System.Attribute
     {

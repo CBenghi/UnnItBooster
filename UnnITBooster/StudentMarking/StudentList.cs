@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using StudentMarking;
@@ -19,39 +15,37 @@ namespace StudentsFetcher.StudentMarking
         public StudentList()
         {
             InitializeComponent();
-            txtFolder.Text = StudentsFetcher.Properties.Settings.Default.StudentsFolder;
+            txtFolder.Text = Properties.Settings.Default.StudentsFolder;
+            StudentsLoad();
         }
-        
-        class Student
+
+        private class Student
         {
-            public string module;
-            public string surname;
-            public string forename;
-            public string routeCode;
-            public string studentid;
-            public string courseyear;
-            public string email;
+            public string Module;
+            public string Surname;
+            public string Forename;
+            public string RouteCode;
+            public string Studentid;
+            public string CourseYear;
+            public string Email;
 
             public bool Matches(string filter)
             {
-                if (module == filter)
+                if (Module == filter)
                     return true;
                 if (
-                    surname.Contains(filter)
-                    || forename.Contains(filter)
+                    Surname.Contains(filter)
+                    || Forename.Contains(filter)
                     )
                     return true;
-                if (studentid.Contains(filter))
-                    return true;
-                if (email.Contains(filter))
-                    return true;
-                return false;
-
+                return 
+                    Studentid.Contains(filter) 
+                    || Email.Contains(filter);
             }
 
             public string PictureName(string pictureFolder)
             {
-                return Path.Combine(pictureFolder, String.Format("{0}.jpg", studentid));
+                return Path.Combine(pictureFolder, String.Format("{0}.jpg", Studentid));
             }
         }
 
@@ -61,20 +55,28 @@ namespace StudentsFetcher.StudentMarking
             var doc = XDocument.Load(file.FullName);
             var rows = doc.Descendants("student").Select(el => new Student
             {
-                module = modName,
-                surname = el.Element("surname").Value,
-                forename = el.Element("forename").Value,
-                routeCode = el.Element("routeCode").Value,
-                studentid = el.Element("studentid").Value,
-                courseyear = el.Element("courseyear").Value,
-                email = el.Element("email").Value
+                Module = modName,
+                Surname = GetField(el, "surname"),
+                Forename = GetField(el, "forename"),
+                RouteCode = GetField(el, "routeCode"),
+                Studentid = GetField(el, "studentid"),
+                CourseYear = GetField(el, "courseyear"),
+                Email = GetField(el, "email")
             }).ToList();
 
             //foreach (var item in rows)
             //{
-            //    frmAutomaticMarkingMachine.GetImage(folder, item.studentid);
+            //    frmAutomaticMarkingMachine.GetImage(folder, item.Studentid);
             //}
             return rows;
+        }
+
+        private static string GetField(XContainer el, string fieldName)
+        {
+            var fld = el.Element(fieldName);
+            return fld != null 
+                ? fld.Value 
+                : "<Missing>";
         }
 
         private void SaveSettings()
@@ -142,9 +144,10 @@ namespace StudentsFetcher.StudentMarking
             lstStudents.Items.Clear();
             foreach (var student in _students)
             {
-                // sb.AppendFormat("{0}\t{1}\r\n", student.forename, student.module);
+                // sb.AppendFormat("{0}\t{1}\r\n", student.Forename, student.Module);
                 AddStudent(student);
             }       
+
         }
 
         private void AddRoutes(FileInfo file)
@@ -198,14 +201,14 @@ namespace StudentsFetcher.StudentMarking
         {
             var li = new ListViewItem
             {
-                Text = string.Format("{0} {1}", student.forename, student.surname),
+                Text = string.Format("{0} {1}", student.Forename, student.Surname),
                 Tag = student
             };
-            li.SubItems.Add(student.module);
-            li.SubItems.Add(student.studentid);
-            li.SubItems.Add(student.email);
-            if (_routes.ContainsKey(student.routeCode))
-                li.SubItems.Add(_routes[student.routeCode]);
+            li.SubItems.Add(student.Module);
+            li.SubItems.Add(student.Studentid);
+            li.SubItems.Add(student.Email);
+            if (_routes.ContainsKey(student.RouteCode))
+                li.SubItems.Add(_routes[student.RouteCode]);
             lstStudents.Items.Add(li);
         }
 
@@ -245,7 +248,7 @@ namespace StudentsFetcher.StudentMarking
         {
             var fname = st.PictureName(PictureFolder);
             if (!File.Exists(fname))
-                frmAutomaticMarkingMachine.GetImage(PictureFolder, st.studentid);
+                frmAutomaticMarkingMachine.GetImage(PictureFolder, st.Studentid);
 
 
 
