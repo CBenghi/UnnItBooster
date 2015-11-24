@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4F6802FC-4CE4-48F4-AC77-DBB8A833E617}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StudentsFetcher</RootNamespace>
+    <AssemblyName>UNNITBooster</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>packages\System.Data.SQLite.1.0.81.0\lib\net40\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq">
+      <HintPath>packages\System.Data.SQLite.1.0.81.0\lib\net40\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="ZedGraph">
+      <HintPath>packages\ZedGraph.5.1.6\lib\net35-Client\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AMMFormAttributes.cs" />
+    <Compile Include="Calendar\frmGoogleCalendar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calendar\frmGoogleCalendar.Designer.cs">
+      <DependentUpon>frmGoogleCalendar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGroupMailer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGroupMailer.Designer.cs">
+      <DependentUpon>frmGroupMailer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMatchLists.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMatchLists.Designer.cs">
+      <DependentUpon>frmMatchLists.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SerializableDictionary.cs" />
+    <Compile Include="frmMassMail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMassMail.Designer.cs">
+      <DependentUpon>frmMassMail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentMarking\frmAutomaticMarkingMachine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentMarking\frmAutomaticMarkingMachine.Designer.cs">
+      <DependentUpon>frmAutomaticMarkingMachine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentMarking\StudentList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentMarking\StudentList.Designer.cs">
+      <DependentUpon>StudentList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentMarking\XDocument.cs" />
+    <Compile Include="TimeTabling\Cal.cs" />
+    <Compile Include="TimeTabling\CalItem.cs" />
+    <Compile Include="TimeTabling\frmTimeTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimeTabling\frmTimeTable.Designer.cs">
+      <DependentUpon>frmTimeTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectAllTextbox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="frmMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMenu.Designer.cs">
+      <DependentUpon>frmMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTextGames.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTextGames.Designer.cs">
+      <DependentUpon>frmTextGames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentMarking\clsConfig2.cs" />
+    <Compile Include="StudentMarking\MarkCalculator.cs" />
+    <Compile Include="StudentMarking\ucComponentMark.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StudentMarking\ucComponentMark.Designer.cs">
+      <DependentUpon>ucComponentMark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimeTabling\TimeSlot.cs" />
+    <Compile Include="Turnitin\frmTurnitIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Turnitin\frmTurnitIn.Designer.cs">
+      <DependentUpon>frmTurnitIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLists.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLists.Designer.cs">
+      <DependentUpon>frmLists.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmStudentFetcher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStudentFetcher.Designer.cs">
+      <DependentUpon>frmStudentFetcher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="mailclass.cs" />
+    <Compile Include="Marking.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Utf8XML.cs" />
+    <Compile Include="Webdata\Programme.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportServer.cs" />
+    <Compile Include="StudentMarking\frmReporting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentMarking\frmReporting.Designer.cs">
+      <DependentUpon>frmReporting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CookieAwareWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Turnitin\TurnitInSubmission.cs" />
+    <EmbeddedResource Include="Calendar\frmGoogleCalendar.resx">
+      <DependentUpon>frmGoogleCalendar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGroupMailer.resx">
+      <DependentUpon>frmGroupMailer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMatchLists.resx">
+      <DependentUpon>frmMatchLists.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMenu.resx">
+      <DependentUpon>frmMenu.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTextGames.resx">
+      <DependentUpon>frmTextGames.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMassMail.resx">
+      <DependentUpon>frmMassMail.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentMarking\frmAutomaticMarkingMachine.resx">
+      <DependentUpon>frmAutomaticMarkingMachine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentMarking\StudentList.resx">
+      <DependentUpon>StudentList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentMarking\ucComponentMark.resx">
+      <DependentUpon>ucComponentMark.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TimeTabling\frmTimeTable.resx">
+      <DependentUpon>frmTimeTable.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Turnitin\frmTurnitIn.resx">
+      <DependentUpon>frmTurnitIn.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLists.resx">
+      <DependentUpon>frmLists.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStudentFetcher.resx">
+      <DependentUpon>frmStudentFetcher.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="StudentMarking\frmReporting.resx">
+      <DependentUpon>frmReporting.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BE1187.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License-LGPL.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExtendedTextBox\ExtendedTextBox.csproj">
+      <Project>{0c7c5d10-74aa-4a92-b75f-ebbfc9156172}</Project>
+      <Name>ExtendedTextBox</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

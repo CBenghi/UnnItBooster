@@ -1,0 +1,42 @@
+http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentModulesXML.php?studentID=12026828
+http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsByIDorNameXML.php?fieldName=studentID&searchString=12026828
+http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsOnModuleXML.php?moduleCode=BE1187&semester=3
+http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsByIDorNameXML.php?fieldName=studentName&searchString=Creed
+
+$6)?E7@,<eAPC|&;PqPOST /amfphp/services/unn/getStudentsByIDorNameXML.php HTTP/1.1
+Host: wheel.northumbria.ac.uk
+Connection: keep-alive
+Content-Length: 40
+Origin: http://wheel.northumbria.ac.uk
+X-Requested-With: ShockwaveFlash/17.0.0.169
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Accept: */*
+Referer: http://wheel.northumbria.ac.uk/UNNStudent.swf
+Accept-Encoding: gzip, deflate
+Accept-Language: en-GB,en-US;q=0.8,en;q=0.6,it;q=0.4
+Cookie: __utma=251220249.599300504.1365779052.1396279290.1396283833.40; _ga=GA1.3.599300504.1365779052
+
+
+
+/amfphp/services/unn/getStudentsByIDorNameXML.php?fieldName=studentName&searchString=Creed
+studentID
+
+POST /amfphp/services/unn/getStudentsByIDorNameXML.php HTTP/1.1
+
+
+http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsOnModuleXML.php?moduleCode=BE1187&semester=3
+Host: 
+Connection: keep-alive
+Content-Length: 28
+Authorization: Negotiate TlRMTVNTUAADAAAAGAAYAHoAAAByAXIBkgAAAAYABgBYAAAACgAKAF4AAAASABIAaAAAABAAEAAEAgAAFYKI4gYBsR0AAAAPtPkSJ4Rvwzmg4atngp2eLlUATgBOAHMAZwBtAGsAMgBDADEAMAAyADAAMAAyADEANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFWYS3xJRglfStrUOC7wtfAQEAAAAAAAAxRIpdlH/QAVP1Bt8zN1xlAAAAAAIABgBVAE4ATgABABIAQQBTAEgAQgBPAFUAUgBOAEUABAAgAGMAYQBtAHAAdQBzAC4AdQBuAG4ALgBhAGMALgB1AGsAAwA0AEEAUwBIAEIATwBVAFIATgBFAC4AYwBhAG0AcAB1AHMALgB1AG4AbgAuAGEAYwAuAHUAawAFACAAYwBhAG0AcAB1AHMALgB1AG4AbgAuAGEAYwAuAHUAawAHAAgAMUSKXZR/0AEGAAQAAgAAAAgAMAAwAAAAAAAAAAEAAAAAIAAAaU3IEG66OyC9DN20GzfQExydSlWr/qf/oAtgZFSlQzsKABAAAAAAAAAAAAAAAAAAAAAAAAkAOgBIAFQAVABQAC8AbgB1AHcAZQBiADIALgBuAG8AcgB0AGgAdQBtAGIAcgBpAGEALgBhAGMALgB1AGsAAAAAAAAAAAAAAAAANymSVd9qxLYfBmAWNd7vPg==
+Origin: http://wheel.northumbria.ac.uk
+X-Requested-With: ShockwaveFlash/17.0.0.169
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Accept: */*
+Referer: http://wheel.northumbria.ac.uk/UNNModule.swf
+Accept-Encoding: gzip, deflate
+Accept-Language: en-GB,en-US;q=0.8,en;q=0.6,it;q=0.4
+Cookie: __utma=251220249.599300504.1365779052.1396279290.1396283833.40; _ga=GA1.3.599300504.1365779052
+
