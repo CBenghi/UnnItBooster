@@ -807,7 +807,7 @@ namespace StudentMarking
 
             if (chkCommentLib.Checked)
             {
-                sql += "insert into tb_comments select * from OTHERDB.tb_comments; ";
+                sql += "insert into tb_comments (COMM_Section, COMM_Area, COMM_Text) select  COMM_Section, COMM_Area, COMM_Text from OTHERDB.tb_comments; ";
                 // Config.Execute(sql);
             }
 
