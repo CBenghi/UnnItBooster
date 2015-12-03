@@ -658,7 +658,7 @@ namespace StudentMarking
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(941, 598);
+            this.tabPage2.Size = new System.Drawing.Size(941, 606);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Emailing";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -677,7 +677,7 @@ namespace StudentMarking
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.tableLayoutPanel3);
-            this.splitContainer3.Size = new System.Drawing.Size(933, 590);
+            this.splitContainer3.Size = new System.Drawing.Size(933, 598);
             this.splitContainer3.SplitterDistance = 376;
             this.splitContainer3.SplitterWidth = 5;
             this.splitContainer3.TabIndex = 3;
@@ -698,8 +698,8 @@ namespace StudentMarking
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.StudImage);
-            this.splitContainer5.Size = new System.Drawing.Size(376, 590);
-            this.splitContainer5.SplitterDistance = 293;
+            this.splitContainer5.Size = new System.Drawing.Size(376, 598);
+            this.splitContainer5.SplitterDistance = 296;
             this.splitContainer5.TabIndex = 14;
             // 
             // lstEmailSendSelection
@@ -717,7 +717,7 @@ namespace StudentMarking
             this.lstEmailSendSelection.Location = new System.Drawing.Point(0, 37);
             this.lstEmailSendSelection.Margin = new System.Windows.Forms.Padding(4);
             this.lstEmailSendSelection.Name = "lstEmailSendSelection";
-            this.lstEmailSendSelection.Size = new System.Drawing.Size(376, 256);
+            this.lstEmailSendSelection.Size = new System.Drawing.Size(376, 259);
             this.lstEmailSendSelection.TabIndex = 3;
             this.lstEmailSendSelection.UseCompatibleStateImageBehavior = false;
             this.lstEmailSendSelection.View = System.Windows.Forms.View.Details;
@@ -810,7 +810,7 @@ namespace StudentMarking
             this.StudImage.Location = new System.Drawing.Point(0, 0);
             this.StudImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StudImage.Name = "StudImage";
-            this.StudImage.Size = new System.Drawing.Size(376, 293);
+            this.StudImage.Size = new System.Drawing.Size(376, 298);
             this.StudImage.TabIndex = 13;
             this.StudImage.TabStop = false;
             // 
@@ -834,7 +834,7 @@ namespace StudentMarking
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(552, 590);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(552, 598);
             this.tableLayoutPanel3.TabIndex = 8;
             // 
             // tabControl2
@@ -849,7 +849,7 @@ namespace StudentMarking
             this.tabControl2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(546, 494);
+            this.tabControl2.Size = new System.Drawing.Size(546, 502);
             this.tabControl2.TabIndex = 7;
             // 
             // tabPage4
@@ -861,7 +861,7 @@ namespace StudentMarking
             this.tabPage4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage4.Size = new System.Drawing.Size(538, 465);
+            this.tabPage4.Size = new System.Drawing.Size(538, 473);
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "Template";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -869,7 +869,7 @@ namespace StudentMarking
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(7, 430);
+            this.button1.Location = new System.Drawing.Point(7, 438);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(172, 28);
@@ -881,7 +881,7 @@ namespace StudentMarking
             // cmdSaveEmail
             // 
             this.cmdSaveEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdSaveEmail.Location = new System.Drawing.Point(187, 430);
+            this.cmdSaveEmail.Location = new System.Drawing.Point(187, 438);
             this.cmdSaveEmail.Margin = new System.Windows.Forms.Padding(4);
             this.cmdSaveEmail.Name = "cmdSaveEmail";
             this.cmdSaveEmail.Size = new System.Drawing.Size(172, 28);
@@ -904,7 +904,7 @@ namespace StudentMarking
             this.txtEmailBody.MaxLength = 0;
             this.txtEmailBody.Name = "txtEmailBody";
             this.txtEmailBody.OriginalText = "";
-            this.txtEmailBody.Size = new System.Drawing.Size(525, 411);
+            this.txtEmailBody.Size = new System.Drawing.Size(525, 419);
             this.txtEmailBody.SpellCheck = true;
             this.txtEmailBody.TabIndex = 6;
             this.txtEmailBody.TabStop = false;
@@ -919,7 +919,7 @@ namespace StudentMarking
             this.tabPage5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage5.Size = new System.Drawing.Size(538, 466);
+            this.tabPage5.Size = new System.Drawing.Size(538, 465);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "Output";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -935,7 +935,7 @@ namespace StudentMarking
             this.txtEmailPreview.Multiline = true;
             this.txtEmailPreview.Name = "txtEmailPreview";
             this.txtEmailPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtEmailPreview.Size = new System.Drawing.Size(526, 445);
+            this.txtEmailPreview.Size = new System.Drawing.Size(526, 444);
             this.txtEmailPreview.TabIndex = 7;
             this.txtEmailPreview.TabStop = false;
             this.txtEmailPreview.Text = "Dear {SUB_FirstName}, \r\nThe marking and moderation process for BE1178 has been co" +
@@ -1008,7 +1008,7 @@ namespace StudentMarking
             this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage3.Size = new System.Drawing.Size(941, 598);
+            this.tabPage3.Size = new System.Drawing.Size(941, 606);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Tools";
             this.tabPage3.UseVisualStyleBackColor = true;
