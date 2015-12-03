@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using LateBindingTest;
 using StudentMarking;
 
 namespace StudentsFetcher.StudentMarking
@@ -246,18 +247,18 @@ namespace StudentsFetcher.StudentMarking
 
         private void TryShowStudent(Student st)
         {
+            // load the picture
             var fname = st.PictureName(PictureFolder);
             if (!File.Exists(fname))
                 frmAutomaticMarkingMachine.GetImage(PictureFolder, st.Studentid);
-
-
-
             if (File.Exists(fname))
                 StudImage.Load(fname);
             else
                 StudImage.Image = null;
 
-
+            // todo:  list emails 
+            // var outlook = new OutlookEmailerLateBinding();
+            
         }
     }
 }
