@@ -33,6 +33,10 @@ namespace StudentsFetcher.Turnitin
         {
             WebClient req = new WebClient();
             string url = "https://submit.ac.uk/paper_download.asp?r=96.8644370479907&svr=6&session-id=" + SessionId + "&lang=en_us&svr=6&oid=" + PaperID + "&fe=pdf&fn=.pdf&session-id=" + SessionId + "&type=paper&p=1";
+            url = "https://www.turnitinuk.com/pdf_download.asp?r=64.9048690964243&svr=07&session-id=" + SessionId + "&lang=en_us&svr=6&oid=" + PaperID + "&fe=pdf&fn=.pdf&session-id=" + SessionId + "&type=paper&p=1";
+
+            // var  a = "https://www.turnitinuk.com/download_file.asp?r=64.9048690964243&svr=07&session-id=f59647dc5a1fc37854166dedbd2865f1&lang=en_us&type=paper&oid=51027190&fn=&session-id=&p=1"; 
+            // /pdf_download.asp?r=76.6607112328153&svr=08&session-id=f59647dc5a1fc37854166dedbd2865f1&lang=en_us&svr=08&oid=49460823&fe=pdf&fn=.pdf&session-id=f59647dc5a1fc37854166dedbd2865f1&type=paper'
 
             string destfilename = UserID + "_" + Title.Replace('/','_')  + ".pdf";
             try 
