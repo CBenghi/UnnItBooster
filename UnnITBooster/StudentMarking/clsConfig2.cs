@@ -58,7 +58,7 @@ namespace StudentMarking
             {
                 return "";
             }
-            sb.AppendFormat("{1} {2} {3} email: {4}\r\n",
+            sb.AppendFormat("{1} {2} {3} email: {4} (#{0})\r\n",
                stud["SUB_Id"].ToString(),
                stud["SUB_FirstName"].ToString(),
                stud["SUB_LastName"].ToString(),
@@ -122,7 +122,7 @@ namespace StudentMarking
             if (totmark != -1)
                 sb.AppendFormat("Final mark: {0}%\r\n\r\n", totmark);
             sb.AppendLine("---------------");
-            sb.AppendFormat("Similarity index: {0}\r\n", stud["SUB_overlap"].ToString());
+            // sb.AppendFormat("Similarity index: {0}\r\n", stud["SUB_overlap"].ToString());
 
 
             string tmp = ComponentComments.Replace("\r\n", "").Trim();
