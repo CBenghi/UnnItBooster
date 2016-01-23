@@ -1053,11 +1053,17 @@ Claudio
 
 {MarkReport}";
         }
+       
+        private void cmdOpenOther_Click(object sender, EventArgs e)
+        {
+            var fullname = Path.Combine(Config.GetFolderName() + relFolder.Text, cmdCompare.Tag.ToString());
+            Process.Start(fullname);       
+        }
 
         private void cmdCompare_Click(object sender, EventArgs e)
         {
             var com1 = Path.Combine(Config.GetFolderName(), cmbDocuments.Text);
-            var com2 = Path.Combine(Config.GetFolderName() + relFolder.Text , cmdCompare.Tag.ToString());
+            var com2 = Path.Combine(Config.GetFolderName() + relFolder.Text, cmdCompare.Tag.ToString());
 
             var pars = string.Format("\"{0}\" \"{1}\"", com1, com2);
 
@@ -1066,7 +1072,7 @@ Claudio
                 pars
                 );
         }
-
+        
         #region emailing
 
 

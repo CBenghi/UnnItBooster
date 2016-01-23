@@ -35,6 +35,7 @@
             this.txtLibReport = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.txtStudentreport = new ExtendedTextBox.ExtTextBox();
             this.cmdSaveMarks = new System.Windows.Forms.Button();
             this.flComponents = new System.Windows.Forms.FlowLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -44,6 +45,7 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.relFolder = new System.Windows.Forms.TextBox();
             this.cmdCompare = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.cmbDocuments = new System.Windows.Forms.ComboBox();
@@ -51,6 +53,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.txtTextOrPointer = new ExtendedTextBox.ExtTextBox();
+            this.txtAdditionalNote = new ExtendedTextBox.ExtTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtSection = new System.Windows.Forms.TextBox();
             this.txtArea = new System.Windows.Forms.TextBox();
@@ -83,6 +87,7 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.cmdSaveEmail = new System.Windows.Forms.Button();
+            this.txtEmailBody = new ExtendedTextBox.ExtTextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.txtEmailPreview = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
@@ -101,11 +106,7 @@
             this.cmdSourceDataFile = new System.Windows.Forms.Button();
             this.lblSourceData = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.relFolder = new System.Windows.Forms.TextBox();
-            this.txtStudentreport = new ExtendedTextBox.ExtTextBox();
-            this.txtTextOrPointer = new ExtendedTextBox.ExtTextBox();
-            this.txtAdditionalNote = new ExtendedTextBox.ExtTextBox();
-            this.txtEmailBody = new ExtendedTextBox.ExtTextBox();
+            this.cmdOpenOther = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -182,7 +183,7 @@
             this.txtLibReport.Multiline = true;
             this.txtLibReport.Name = "txtLibReport";
             this.txtLibReport.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLibReport.Size = new System.Drawing.Size(196, 363);
+            this.txtLibReport.Size = new System.Drawing.Size(196, 339);
             this.txtLibReport.TabIndex = 2;
             this.txtLibReport.TabStop = false;
             this.txtLibReport.Text = "ctrl+up is spell check";
@@ -228,6 +229,25 @@
             this.splitContainer4.SplitterDistance = 192;
             this.splitContainer4.SplitterWidth = 3;
             this.splitContainer4.TabIndex = 15;
+            // 
+            // txtStudentreport
+            // 
+            this.txtStudentreport.AcceptsReturn = true;
+            this.txtStudentreport.AcceptsTab = false;
+            this.txtStudentreport.ChangedColour = System.Drawing.Color.Empty;
+            this.txtStudentreport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtStudentreport.Location = new System.Drawing.Point(0, 0);
+            this.txtStudentreport.Margin = new System.Windows.Forms.Padding(4);
+            this.txtStudentreport.MaxLength = 0;
+            this.txtStudentreport.Name = "txtStudentreport";
+            this.txtStudentreport.OriginalText = "";
+            this.txtStudentreport.Size = new System.Drawing.Size(206, 192);
+            this.txtStudentreport.SpellCheck = true;
+            this.txtStudentreport.TabIndex = 3;
+            this.txtStudentreport.TabStop = false;
+            this.txtStudentreport.TextCase = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtStudentreport.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
+            this.txtStudentreport.Wrapping = true;
             // 
             // cmdSaveMarks
             // 
@@ -329,22 +349,33 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.cmdOpenOther);
             this.groupBox2.Controls.Add(this.relFolder);
             this.groupBox2.Controls.Add(this.cmdCompare);
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.cmbDocuments);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox2.Location = new System.Drawing.Point(0, 405);
+            this.groupBox2.Location = new System.Drawing.Point(0, 381);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(196, 79);
+            this.groupBox2.Size = new System.Drawing.Size(196, 103);
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Documents downloaded";
             // 
+            // relFolder
+            // 
+            this.relFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.relFolder.Location = new System.Drawing.Point(12, 46);
+            this.relFolder.Name = "relFolder";
+            this.relFolder.Size = new System.Drawing.Size(37, 20);
+            this.relFolder.TabIndex = 4;
+            this.relFolder.Text = "\\..\\1\\";
+            // 
             // cmdCompare
             // 
             this.cmdCompare.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdCompare.Location = new System.Drawing.Point(55, 42);
+            this.cmdCompare.Location = new System.Drawing.Point(126, 44);
             this.cmdCompare.Name = "cmdCompare";
             this.cmdCompare.Size = new System.Drawing.Size(65, 23);
             this.cmdCompare.TabIndex = 3;
@@ -355,7 +386,7 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(126, 42);
+            this.button2.Location = new System.Drawing.Point(126, 73);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(65, 23);
             this.button2.TabIndex = 2;
@@ -369,7 +400,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbDocuments.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDocuments.FormattingEnabled = true;
-            this.cmbDocuments.Location = new System.Drawing.Point(12, 16);
+            this.cmbDocuments.Location = new System.Drawing.Point(12, 19);
             this.cmbDocuments.Name = "cmbDocuments";
             this.cmbDocuments.Size = new System.Drawing.Size(178, 21);
             this.cmbDocuments.TabIndex = 0;
@@ -434,6 +465,52 @@
             this.label2.TabIndex = 17;
             this.label2.Text = "subcomment";
             this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // txtTextOrPointer
+            // 
+            this.txtTextOrPointer.AcceptsReturn = true;
+            this.txtTextOrPointer.AcceptsTab = false;
+            this.txtTextOrPointer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTextOrPointer.ChangedColour = System.Drawing.Color.Empty;
+            this.txtTextOrPointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTextOrPointer.Location = new System.Drawing.Point(62, 5);
+            this.txtTextOrPointer.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtTextOrPointer.MaxLength = 0;
+            this.txtTextOrPointer.Name = "txtTextOrPointer";
+            this.txtTextOrPointer.OriginalText = "";
+            this.txtTextOrPointer.Size = new System.Drawing.Size(221, 171);
+            this.txtTextOrPointer.SpellCheck = true;
+            this.txtTextOrPointer.TabIndex = 4;
+            this.txtTextOrPointer.TextCase = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtTextOrPointer.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
+            this.txtTextOrPointer.Wrapping = true;
+            this.txtTextOrPointer.OnCtrlEnter += new ExtendedTextBox.ExtTextBox.CtrlEnterPressed(this.txtTextOrPointer_OnCtrlEnter);
+            this.txtTextOrPointer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
+            // 
+            // txtAdditionalNote
+            // 
+            this.txtAdditionalNote.AcceptsReturn = true;
+            this.txtAdditionalNote.AcceptsTab = false;
+            this.txtAdditionalNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAdditionalNote.ChangedColour = System.Drawing.Color.Empty;
+            this.txtAdditionalNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAdditionalNote.Location = new System.Drawing.Point(62, 186);
+            this.txtAdditionalNote.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtAdditionalNote.MaxLength = 0;
+            this.txtAdditionalNote.Name = "txtAdditionalNote";
+            this.txtAdditionalNote.OriginalText = "";
+            this.txtAdditionalNote.Size = new System.Drawing.Size(221, 171);
+            this.txtAdditionalNote.SpellCheck = true;
+            this.txtAdditionalNote.TabIndex = 5;
+            this.txtAdditionalNote.TextCase = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtAdditionalNote.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
+            this.txtAdditionalNote.Wrapping = true;
+            this.txtAdditionalNote.OnCtrlEnter += new ExtendedTextBox.ExtTextBox.CtrlEnterPressed(this.txtAdditionalNote_OnCtrlEnter);
+            this.txtAdditionalNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
             // 
             // label1
             // 
@@ -800,6 +877,28 @@
             this.cmdSaveEmail.UseVisualStyleBackColor = true;
             this.cmdSaveEmail.Click += new System.EventHandler(this.cmdSaveEmail_Click);
             // 
+            // txtEmailBody
+            // 
+            this.txtEmailBody.AcceptsReturn = true;
+            this.txtEmailBody.AcceptsTab = true;
+            this.txtEmailBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtEmailBody.ChangedColour = System.Drawing.Color.Empty;
+            this.txtEmailBody.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEmailBody.Location = new System.Drawing.Point(4, 7);
+            this.txtEmailBody.Margin = new System.Windows.Forms.Padding(6);
+            this.txtEmailBody.MaxLength = 0;
+            this.txtEmailBody.Name = "txtEmailBody";
+            this.txtEmailBody.OriginalText = "";
+            this.txtEmailBody.Size = new System.Drawing.Size(393, 340);
+            this.txtEmailBody.SpellCheck = true;
+            this.txtEmailBody.TabIndex = 6;
+            this.txtEmailBody.TabStop = false;
+            this.txtEmailBody.TextCase = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtEmailBody.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
+            this.txtEmailBody.Wrapping = true;
+            // 
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.txtEmailPreview);
@@ -1025,102 +1124,16 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(712, 32);
             this.tableLayoutPanel4.TabIndex = 13;
             // 
-            // relFolder
+            // cmdOpenOther
             // 
-            this.relFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.relFolder.Location = new System.Drawing.Point(12, 44);
-            this.relFolder.Name = "relFolder";
-            this.relFolder.Size = new System.Drawing.Size(37, 20);
-            this.relFolder.TabIndex = 4;
-            this.relFolder.Text = "\\..\\1\\";
-            // 
-            // txtStudentreport
-            // 
-            this.txtStudentreport.AcceptsReturn = true;
-            this.txtStudentreport.AcceptsTab = false;
-            this.txtStudentreport.ChangedColour = System.Drawing.Color.Empty;
-            this.txtStudentreport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtStudentreport.Location = new System.Drawing.Point(0, 0);
-            this.txtStudentreport.Margin = new System.Windows.Forms.Padding(4);
-            this.txtStudentreport.MaxLength = 0;
-            this.txtStudentreport.Name = "txtStudentreport";
-            this.txtStudentreport.OriginalText = "";
-            this.txtStudentreport.Size = new System.Drawing.Size(206, 192);
-            this.txtStudentreport.SpellCheck = true;
-            this.txtStudentreport.TabIndex = 3;
-            this.txtStudentreport.TabStop = false;
-            this.txtStudentreport.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtStudentreport.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-            this.txtStudentreport.Wrapping = true;
-            // 
-            // txtTextOrPointer
-            // 
-            this.txtTextOrPointer.AcceptsReturn = true;
-            this.txtTextOrPointer.AcceptsTab = false;
-            this.txtTextOrPointer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTextOrPointer.ChangedColour = System.Drawing.Color.Empty;
-            this.txtTextOrPointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTextOrPointer.Location = new System.Drawing.Point(62, 5);
-            this.txtTextOrPointer.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.txtTextOrPointer.MaxLength = 0;
-            this.txtTextOrPointer.Name = "txtTextOrPointer";
-            this.txtTextOrPointer.OriginalText = "";
-            this.txtTextOrPointer.Size = new System.Drawing.Size(221, 171);
-            this.txtTextOrPointer.SpellCheck = true;
-            this.txtTextOrPointer.TabIndex = 4;
-            this.txtTextOrPointer.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtTextOrPointer.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-            this.txtTextOrPointer.Wrapping = true;
-            this.txtTextOrPointer.OnCtrlEnter += new ExtendedTextBox.ExtTextBox.CtrlEnterPressed(this.txtTextOrPointer_OnCtrlEnter);
-            this.txtTextOrPointer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
-            // 
-            // txtAdditionalNote
-            // 
-            this.txtAdditionalNote.AcceptsReturn = true;
-            this.txtAdditionalNote.AcceptsTab = false;
-            this.txtAdditionalNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAdditionalNote.ChangedColour = System.Drawing.Color.Empty;
-            this.txtAdditionalNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAdditionalNote.Location = new System.Drawing.Point(62, 186);
-            this.txtAdditionalNote.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.txtAdditionalNote.MaxLength = 0;
-            this.txtAdditionalNote.Name = "txtAdditionalNote";
-            this.txtAdditionalNote.OriginalText = "";
-            this.txtAdditionalNote.Size = new System.Drawing.Size(221, 171);
-            this.txtAdditionalNote.SpellCheck = true;
-            this.txtAdditionalNote.TabIndex = 5;
-            this.txtAdditionalNote.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtAdditionalNote.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-            this.txtAdditionalNote.Wrapping = true;
-            this.txtAdditionalNote.OnCtrlEnter += new ExtendedTextBox.ExtTextBox.CtrlEnterPressed(this.txtAdditionalNote_OnCtrlEnter);
-            this.txtAdditionalNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
-            // 
-            // txtEmailBody
-            // 
-            this.txtEmailBody.AcceptsReturn = true;
-            this.txtEmailBody.AcceptsTab = true;
-            this.txtEmailBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtEmailBody.ChangedColour = System.Drawing.Color.Empty;
-            this.txtEmailBody.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmailBody.Location = new System.Drawing.Point(4, 7);
-            this.txtEmailBody.Margin = new System.Windows.Forms.Padding(6);
-            this.txtEmailBody.MaxLength = 0;
-            this.txtEmailBody.Name = "txtEmailBody";
-            this.txtEmailBody.OriginalText = "";
-            this.txtEmailBody.Size = new System.Drawing.Size(393, 340);
-            this.txtEmailBody.SpellCheck = true;
-            this.txtEmailBody.TabIndex = 6;
-            this.txtEmailBody.TabStop = false;
-            this.txtEmailBody.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtEmailBody.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-            this.txtEmailBody.Wrapping = true;
+            this.cmdOpenOther.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdOpenOther.Location = new System.Drawing.Point(55, 44);
+            this.cmdOpenOther.Name = "cmdOpenOther";
+            this.cmdOpenOther.Size = new System.Drawing.Size(65, 23);
+            this.cmdOpenOther.TabIndex = 5;
+            this.cmdOpenOther.Text = "Other";
+            this.cmdOpenOther.UseVisualStyleBackColor = true;
+            this.cmdOpenOther.Click += new System.EventHandler(this.cmdOpenOther_Click);
             // 
             // FrmAutomaticMarkingMachine
             // 
@@ -1260,6 +1273,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button cmdCompare;
         private System.Windows.Forms.TextBox relFolder;
+        private System.Windows.Forms.Button cmdOpenOther;
     }
 }
 
