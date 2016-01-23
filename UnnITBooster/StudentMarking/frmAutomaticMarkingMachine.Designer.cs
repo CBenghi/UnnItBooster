@@ -101,11 +101,11 @@
             this.cmdSourceDataFile = new System.Windows.Forms.Button();
             this.lblSourceData = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.relFolder = new System.Windows.Forms.TextBox();
             this.txtStudentreport = new ExtendedTextBox.ExtTextBox();
             this.txtTextOrPointer = new ExtendedTextBox.ExtTextBox();
             this.txtAdditionalNote = new ExtendedTextBox.ExtTextBox();
             this.txtEmailBody = new ExtendedTextBox.ExtTextBox();
-            this.relFolder = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -1025,6 +1025,16 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(712, 32);
             this.tableLayoutPanel4.TabIndex = 13;
             // 
+            // relFolder
+            // 
+            this.relFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.relFolder.Location = new System.Drawing.Point(12, 44);
+            this.relFolder.Name = "relFolder";
+            this.relFolder.Size = new System.Drawing.Size(37, 20);
+            this.relFolder.TabIndex = 4;
+            this.relFolder.Text = "\\..\\1\\";
+            // 
             // txtStudentreport
             // 
             this.txtStudentreport.AcceptsReturn = true;
@@ -1111,14 +1121,6 @@
             this.txtEmailBody.TextCase = System.Windows.Forms.CharacterCasing.Normal;
             this.txtEmailBody.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
             this.txtEmailBody.Wrapping = true;
-            // 
-            // relFolder
-            // 
-            this.relFolder.Location = new System.Drawing.Point(12, 44);
-            this.relFolder.Name = "relFolder";
-            this.relFolder.Size = new System.Drawing.Size(37, 20);
-            this.relFolder.TabIndex = 4;
-            this.relFolder.Text = "\\..\\1\\";
             // 
             // FrmAutomaticMarkingMachine
             // 
