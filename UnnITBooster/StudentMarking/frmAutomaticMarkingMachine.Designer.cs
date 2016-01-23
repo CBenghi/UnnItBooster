@@ -1,8 +1,6 @@
-﻿using ExtendedTextBox;
-
-namespace StudentMarking
+﻿namespace StudentsFetcher.StudentMarking
 {
-    partial class frmAutomaticMarkingMachine
+    partial class FrmAutomaticMarkingMachine
     {
         /// <summary>
         /// Required designer variable.
@@ -37,7 +35,6 @@ namespace StudentMarking
             this.txtLibReport = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.txtStudentreport = new ExtendedTextBox.ExtTextBox();
             this.cmdSaveMarks = new System.Windows.Forms.Button();
             this.flComponents = new System.Windows.Forms.FlowLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -47,14 +44,13 @@ namespace StudentMarking
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cmdCompare = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.cmbDocuments = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtTextOrPointer = new ExtendedTextBox.ExtTextBox();
-            this.txtAdditionalNote = new ExtendedTextBox.ExtTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtSection = new System.Windows.Forms.TextBox();
             this.txtArea = new System.Windows.Forms.TextBox();
@@ -87,7 +83,6 @@ namespace StudentMarking
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.cmdSaveEmail = new System.Windows.Forms.Button();
-            this.txtEmailBody = new ExtendedTextBox.ExtTextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.txtEmailPreview = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
@@ -106,6 +101,11 @@ namespace StudentMarking
             this.cmdSourceDataFile = new System.Windows.Forms.Button();
             this.lblSourceData = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.txtStudentreport = new ExtendedTextBox.ExtTextBox();
+            this.txtTextOrPointer = new ExtendedTextBox.ExtTextBox();
+            this.txtAdditionalNote = new ExtendedTextBox.ExtTextBox();
+            this.txtEmailBody = new ExtendedTextBox.ExtTextBox();
+            this.relFolder = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -212,7 +212,7 @@ namespace StudentMarking
             // 
             this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer4.Location = new System.Drawing.Point(0, 58);
-            this.splitContainer4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitContainer4.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer4.Name = "splitContainer4";
             this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -228,25 +228,6 @@ namespace StudentMarking
             this.splitContainer4.SplitterDistance = 192;
             this.splitContainer4.SplitterWidth = 3;
             this.splitContainer4.TabIndex = 15;
-            // 
-            // txtStudentreport
-            // 
-            this.txtStudentreport.AcceptsReturn = true;
-            this.txtStudentreport.AcceptsTab = false;
-            this.txtStudentreport.ChangedColour = System.Drawing.Color.Empty;
-            this.txtStudentreport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtStudentreport.Location = new System.Drawing.Point(0, 0);
-            this.txtStudentreport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtStudentreport.MaxLength = 0;
-            this.txtStudentreport.Name = "txtStudentreport";
-            this.txtStudentreport.OriginalText = "";
-            this.txtStudentreport.Size = new System.Drawing.Size(206, 192);
-            this.txtStudentreport.SpellCheck = true;
-            this.txtStudentreport.TabIndex = 3;
-            this.txtStudentreport.TabStop = false;
-            this.txtStudentreport.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtStudentreport.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-            this.txtStudentreport.Wrapping = true;
             // 
             // cmdSaveMarks
             // 
@@ -264,7 +245,7 @@ namespace StudentMarking
             this.flComponents.AutoScroll = true;
             this.flComponents.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flComponents.Location = new System.Drawing.Point(0, 0);
-            this.flComponents.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.flComponents.Margin = new System.Windows.Forms.Padding(2);
             this.flComponents.Name = "flComponents";
             this.flComponents.Size = new System.Drawing.Size(206, 231);
             this.flComponents.TabIndex = 13;
@@ -275,7 +256,7 @@ namespace StudentMarking
             this.panel2.Controls.Add(this.button5);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 33);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(206, 25);
             this.panel2.TabIndex = 17;
@@ -284,7 +265,7 @@ namespace StudentMarking
             // 
             this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button6.Location = new System.Drawing.Point(86, 2);
-            this.button6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button6.Margin = new System.Windows.Forms.Padding(2);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(56, 19);
             this.button6.TabIndex = 0;
@@ -296,7 +277,7 @@ namespace StudentMarking
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button5.Location = new System.Drawing.Point(147, 2);
-            this.button5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button5.Margin = new System.Windows.Forms.Padding(2);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(56, 19);
             this.button5.TabIndex = 1;
@@ -348,6 +329,8 @@ namespace StudentMarking
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.relFolder);
+            this.groupBox2.Controls.Add(this.cmdCompare);
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.cmbDocuments);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -357,6 +340,17 @@ namespace StudentMarking
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Documents downloaded";
+            // 
+            // cmdCompare
+            // 
+            this.cmdCompare.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdCompare.Location = new System.Drawing.Point(55, 42);
+            this.cmdCompare.Name = "cmdCompare";
+            this.cmdCompare.Size = new System.Drawing.Size(65, 23);
+            this.cmdCompare.TabIndex = 3;
+            this.cmdCompare.Text = "Compare";
+            this.cmdCompare.UseVisualStyleBackColor = true;
+            this.cmdCompare.Click += new System.EventHandler(this.cmdCompare_Click);
             // 
             // button2
             // 
@@ -440,52 +434,6 @@ namespace StudentMarking
             this.label2.TabIndex = 17;
             this.label2.Text = "subcomment";
             this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // txtTextOrPointer
-            // 
-            this.txtTextOrPointer.AcceptsReturn = true;
-            this.txtTextOrPointer.AcceptsTab = false;
-            this.txtTextOrPointer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTextOrPointer.ChangedColour = System.Drawing.Color.Empty;
-            this.txtTextOrPointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTextOrPointer.Location = new System.Drawing.Point(62, 5);
-            this.txtTextOrPointer.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.txtTextOrPointer.MaxLength = 0;
-            this.txtTextOrPointer.Name = "txtTextOrPointer";
-            this.txtTextOrPointer.OriginalText = "";
-            this.txtTextOrPointer.Size = new System.Drawing.Size(221, 171);
-            this.txtTextOrPointer.SpellCheck = true;
-            this.txtTextOrPointer.TabIndex = 4;
-            this.txtTextOrPointer.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtTextOrPointer.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-            this.txtTextOrPointer.Wrapping = true;
-            this.txtTextOrPointer.OnCtrlEnter += new ExtendedTextBox.ExtTextBox.CtrlEnterPressed(this.txtTextOrPointer_OnCtrlEnter);
-            this.txtTextOrPointer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
-            // 
-            // txtAdditionalNote
-            // 
-            this.txtAdditionalNote.AcceptsReturn = true;
-            this.txtAdditionalNote.AcceptsTab = false;
-            this.txtAdditionalNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAdditionalNote.ChangedColour = System.Drawing.Color.Empty;
-            this.txtAdditionalNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAdditionalNote.Location = new System.Drawing.Point(62, 186);
-            this.txtAdditionalNote.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.txtAdditionalNote.MaxLength = 0;
-            this.txtAdditionalNote.Name = "txtAdditionalNote";
-            this.txtAdditionalNote.OriginalText = "";
-            this.txtAdditionalNote.Size = new System.Drawing.Size(221, 171);
-            this.txtAdditionalNote.SpellCheck = true;
-            this.txtAdditionalNote.TabIndex = 5;
-            this.txtAdditionalNote.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtAdditionalNote.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-            this.txtAdditionalNote.Wrapping = true;
-            this.txtAdditionalNote.OnCtrlEnter += new ExtendedTextBox.ExtTextBox.CtrlEnterPressed(this.txtAdditionalNote_OnCtrlEnter);
-            this.txtAdditionalNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
             // 
             // label1
             // 
@@ -615,7 +563,7 @@ namespace StudentMarking
             this.tabPage1.Controls.Add(this.splitContainer1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(704, 490);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Marking";
@@ -626,7 +574,7 @@ namespace StudentMarking
             this.tabPage2.Controls.Add(this.splitContainer3);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(704, 490);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Emailing";
@@ -653,7 +601,7 @@ namespace StudentMarking
             // 
             this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer5.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitContainer5.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer5.Name = "splitContainer5";
             this.splitContainer5.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -724,7 +672,7 @@ namespace StudentMarking
             this.tableLayoutPanel2.Controls.Add(this.cmdSelectAll, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -772,7 +720,7 @@ namespace StudentMarking
             // 
             this.StudImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StudImage.Location = new System.Drawing.Point(0, 0);
-            this.StudImage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.StudImage.Margin = new System.Windows.Forms.Padding(2);
             this.StudImage.Name = "StudImage";
             this.StudImage.Size = new System.Drawing.Size(281, 241);
             this.StudImage.TabIndex = 13;
@@ -791,7 +739,7 @@ namespace StudentMarking
             this.tableLayoutPanel3.Controls.Add(this.chkEmailDryRun, 0, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 4;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -810,7 +758,7 @@ namespace StudentMarking
             this.tabControl2.Controls.Add(this.tabPage4);
             this.tabControl2.Controls.Add(this.tabPage5);
             this.tabControl2.Location = new System.Drawing.Point(2, 77);
-            this.tabControl2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl2.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
             this.tabControl2.Size = new System.Drawing.Size(409, 405);
@@ -822,9 +770,9 @@ namespace StudentMarking
             this.tabPage4.Controls.Add(this.cmdSaveEmail);
             this.tabPage4.Controls.Add(this.txtEmailBody);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage4.Size = new System.Drawing.Size(401, 379);
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "Template";
@@ -852,36 +800,14 @@ namespace StudentMarking
             this.cmdSaveEmail.UseVisualStyleBackColor = true;
             this.cmdSaveEmail.Click += new System.EventHandler(this.cmdSaveEmail_Click);
             // 
-            // txtEmailBody
-            // 
-            this.txtEmailBody.AcceptsReturn = true;
-            this.txtEmailBody.AcceptsTab = true;
-            this.txtEmailBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtEmailBody.ChangedColour = System.Drawing.Color.Empty;
-            this.txtEmailBody.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmailBody.Location = new System.Drawing.Point(4, 7);
-            this.txtEmailBody.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.txtEmailBody.MaxLength = 0;
-            this.txtEmailBody.Name = "txtEmailBody";
-            this.txtEmailBody.OriginalText = "";
-            this.txtEmailBody.Size = new System.Drawing.Size(393, 340);
-            this.txtEmailBody.SpellCheck = true;
-            this.txtEmailBody.TabIndex = 6;
-            this.txtEmailBody.TabStop = false;
-            this.txtEmailBody.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtEmailBody.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-            this.txtEmailBody.Wrapping = true;
-            // 
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.txtEmailPreview);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage5.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tabPage5.Size = new System.Drawing.Size(402, 380);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage5.Size = new System.Drawing.Size(401, 379);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "Output";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -896,7 +822,7 @@ namespace StudentMarking
             this.txtEmailPreview.Multiline = true;
             this.txtEmailPreview.Name = "txtEmailPreview";
             this.txtEmailPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtEmailPreview.Size = new System.Drawing.Size(396, 369);
+            this.txtEmailPreview.Size = new System.Drawing.Size(395, 368);
             this.txtEmailPreview.TabIndex = 7;
             this.txtEmailPreview.TabStop = false;
             this.txtEmailPreview.Text = "Dear {SUB_FirstName}, \r\nThe marking and moderation process for BE1178 has been co" +
@@ -961,9 +887,9 @@ namespace StudentMarking
             this.tabPage3.Controls.Add(this.zedGraphControl1);
             this.tabPage3.Controls.Add(this.groupBox3);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage3.Size = new System.Drawing.Size(704, 490);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Tools";
@@ -972,7 +898,7 @@ namespace StudentMarking
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(6, 188);
-            this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(56, 56);
             this.button4.TabIndex = 19;
@@ -986,7 +912,7 @@ namespace StudentMarking
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.zedGraphControl1.Location = new System.Drawing.Point(66, 188);
-            this.zedGraphControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.zedGraphControl1.Margin = new System.Windows.Forms.Padding(4);
             this.zedGraphControl1.Name = "zedGraphControl1";
             this.zedGraphControl1.ScrollGrace = 0D;
             this.zedGraphControl1.ScrollMaxX = 0D;
@@ -1008,9 +934,9 @@ namespace StudentMarking
             this.groupBox3.Controls.Add(this.cmdSourceDataFile);
             this.groupBox3.Controls.Add(this.lblSourceData);
             this.groupBox3.Location = new System.Drawing.Point(6, 12);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox3.Size = new System.Drawing.Size(694, 173);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
@@ -1020,7 +946,7 @@ namespace StudentMarking
             // 
             this.chkImportComponents.AutoSize = true;
             this.chkImportComponents.Location = new System.Drawing.Point(106, 106);
-            this.chkImportComponents.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkImportComponents.Margin = new System.Windows.Forms.Padding(2);
             this.chkImportComponents.Name = "chkImportComponents";
             this.chkImportComponents.Size = new System.Drawing.Size(142, 17);
             this.chkImportComponents.TabIndex = 17;
@@ -1030,7 +956,7 @@ namespace StudentMarking
             // cmdGetData
             // 
             this.cmdGetData.Location = new System.Drawing.Point(106, 128);
-            this.cmdGetData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmdGetData.Margin = new System.Windows.Forms.Padding(2);
             this.cmdGetData.Name = "cmdGetData";
             this.cmdGetData.Size = new System.Drawing.Size(282, 26);
             this.cmdGetData.TabIndex = 15;
@@ -1042,7 +968,7 @@ namespace StudentMarking
             // 
             this.chkCommentLib.AutoSize = true;
             this.chkCommentLib.Location = new System.Drawing.Point(106, 84);
-            this.chkCommentLib.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkCommentLib.Margin = new System.Windows.Forms.Padding(2);
             this.chkCommentLib.Name = "chkCommentLib";
             this.chkCommentLib.Size = new System.Drawing.Size(136, 17);
             this.chkCommentLib.TabIndex = 16;
@@ -1092,21 +1018,116 @@ namespace StudentMarking
             this.tableLayoutPanel4.Controls.Add(this.txtExcelFileName, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(712, 32);
             this.tableLayoutPanel4.TabIndex = 13;
             // 
-            // frmAutomaticMarkingMachine
+            // txtStudentreport
+            // 
+            this.txtStudentreport.AcceptsReturn = true;
+            this.txtStudentreport.AcceptsTab = false;
+            this.txtStudentreport.ChangedColour = System.Drawing.Color.Empty;
+            this.txtStudentreport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtStudentreport.Location = new System.Drawing.Point(0, 0);
+            this.txtStudentreport.Margin = new System.Windows.Forms.Padding(4);
+            this.txtStudentreport.MaxLength = 0;
+            this.txtStudentreport.Name = "txtStudentreport";
+            this.txtStudentreport.OriginalText = "";
+            this.txtStudentreport.Size = new System.Drawing.Size(206, 192);
+            this.txtStudentreport.SpellCheck = true;
+            this.txtStudentreport.TabIndex = 3;
+            this.txtStudentreport.TabStop = false;
+            this.txtStudentreport.TextCase = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtStudentreport.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
+            this.txtStudentreport.Wrapping = true;
+            // 
+            // txtTextOrPointer
+            // 
+            this.txtTextOrPointer.AcceptsReturn = true;
+            this.txtTextOrPointer.AcceptsTab = false;
+            this.txtTextOrPointer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTextOrPointer.ChangedColour = System.Drawing.Color.Empty;
+            this.txtTextOrPointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTextOrPointer.Location = new System.Drawing.Point(62, 5);
+            this.txtTextOrPointer.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtTextOrPointer.MaxLength = 0;
+            this.txtTextOrPointer.Name = "txtTextOrPointer";
+            this.txtTextOrPointer.OriginalText = "";
+            this.txtTextOrPointer.Size = new System.Drawing.Size(221, 171);
+            this.txtTextOrPointer.SpellCheck = true;
+            this.txtTextOrPointer.TabIndex = 4;
+            this.txtTextOrPointer.TextCase = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtTextOrPointer.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
+            this.txtTextOrPointer.Wrapping = true;
+            this.txtTextOrPointer.OnCtrlEnter += new ExtendedTextBox.ExtTextBox.CtrlEnterPressed(this.txtTextOrPointer_OnCtrlEnter);
+            this.txtTextOrPointer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
+            // 
+            // txtAdditionalNote
+            // 
+            this.txtAdditionalNote.AcceptsReturn = true;
+            this.txtAdditionalNote.AcceptsTab = false;
+            this.txtAdditionalNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAdditionalNote.ChangedColour = System.Drawing.Color.Empty;
+            this.txtAdditionalNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAdditionalNote.Location = new System.Drawing.Point(62, 186);
+            this.txtAdditionalNote.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtAdditionalNote.MaxLength = 0;
+            this.txtAdditionalNote.Name = "txtAdditionalNote";
+            this.txtAdditionalNote.OriginalText = "";
+            this.txtAdditionalNote.Size = new System.Drawing.Size(221, 171);
+            this.txtAdditionalNote.SpellCheck = true;
+            this.txtAdditionalNote.TabIndex = 5;
+            this.txtAdditionalNote.TextCase = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtAdditionalNote.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
+            this.txtAdditionalNote.Wrapping = true;
+            this.txtAdditionalNote.OnCtrlEnter += new ExtendedTextBox.ExtTextBox.CtrlEnterPressed(this.txtAdditionalNote_OnCtrlEnter);
+            this.txtAdditionalNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
+            // 
+            // txtEmailBody
+            // 
+            this.txtEmailBody.AcceptsReturn = true;
+            this.txtEmailBody.AcceptsTab = true;
+            this.txtEmailBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtEmailBody.ChangedColour = System.Drawing.Color.Empty;
+            this.txtEmailBody.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEmailBody.Location = new System.Drawing.Point(4, 7);
+            this.txtEmailBody.Margin = new System.Windows.Forms.Padding(6);
+            this.txtEmailBody.MaxLength = 0;
+            this.txtEmailBody.Name = "txtEmailBody";
+            this.txtEmailBody.OriginalText = "";
+            this.txtEmailBody.Size = new System.Drawing.Size(393, 340);
+            this.txtEmailBody.SpellCheck = true;
+            this.txtEmailBody.TabIndex = 6;
+            this.txtEmailBody.TabStop = false;
+            this.txtEmailBody.TextCase = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtEmailBody.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
+            this.txtEmailBody.Wrapping = true;
+            // 
+            // relFolder
+            // 
+            this.relFolder.Location = new System.Drawing.Point(12, 44);
+            this.relFolder.Name = "relFolder";
+            this.relFolder.Size = new System.Drawing.Size(37, 20);
+            this.relFolder.TabIndex = 4;
+            this.relFolder.Text = "\\..\\1\\";
+            // 
+            // FrmAutomaticMarkingMachine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(712, 548);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.tableLayoutPanel4);
-            this.Name = "frmAutomaticMarkingMachine";
+            this.Name = "FrmAutomaticMarkingMachine";
             this.Text = "Marking Machine";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
@@ -1125,6 +1146,7 @@ namespace StudentMarking
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -1234,6 +1256,8 @@ namespace StudentMarking
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.Button cmdCompare;
+        private System.Windows.Forms.TextBox relFolder;
     }
 }
 

@@ -1,6 +1,6 @@
-﻿namespace StudentMarking
+﻿namespace StudentsFetcher.StudentMarking
 {
-    partial class frmReporting
+    partial class FrmReporting
     {
         /// <summary>
         /// Required designer variable.
@@ -70,7 +70,7 @@
             this.Controls.Add(this.txtReport);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Name = "frmReporting";
+            this.Name = "FrmReporting";
             this.Text = "frmReporting";
             this.ResumeLayout(false);
             this.PerformLayout();

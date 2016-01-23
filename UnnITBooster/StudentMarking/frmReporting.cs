@@ -1,52 +1,51 @@
 ﻿using System;
 using System.Data;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
-using LateBindingTest;
-using System.Globalization;
+using System.Text;
 using System.Threading;
+using System.Windows.Forms;
+using LateBindingTest;
 
-namespace StudentMarking
+namespace StudentsFetcher.StudentMarking
 {
-    public partial class frmReporting : Form
+    public partial class FrmReporting : Form
     {
-        private clsConfig clsConfig;
+        private ClsConfig clsConfig;
 
-        public frmReporting()
+        public FrmReporting()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            StringBuilder sb = new StringBuilder();
-            string mainFolder = clsConfig.GetFolderName() + @"Reports\";
+            var sb = new StringBuilder();
+            var mainFolder = clsConfig.GetFolderName() + @"Reports\";
 
-            string sql = "select * from Students";
+            const string sql = "select * from Students";
             var studs = clsConfig.GetDataTable(sql);
             foreach (DataRow dr in studs.Rows)
             {
                 if (dr["MarkFinal"] != DBNull.Value)
                 {
-                    string studId = dr["UserID"].ToString().Trim();
-                    string thisdir = Path.Combine(mainFolder, studId);
+                    var studId = dr["UserID"].ToString().Trim();
+                    var thisdir = Path.Combine(mainFolder, studId);
                     if (!Directory.Exists(thisdir))
                     {
                         Directory.CreateDirectory(thisdir);
                     }
                     if (Directory.Exists(thisdir))
                     {
-                        int numberId = Convert.ToInt32(dr["Stud_ID"]);
-                        string JustFileName = string.Format("{0} {1} {2}.txt",
-                            dr["LastName"].ToString(),
-                            dr["FirstName"].ToString(),
-                            dr["UserID"].ToString()
+                        var numberId = Convert.ToInt32(dr["Stud_ID"]);
+                        var justFileName = string.Format("{0} {1} {2}.txt",
+                            dr["LastName"],
+                            dr["FirstName"],
+                            dr["UserID"]
                             );
                         // create a writer and open the file
-                        string fullname = Path.Combine(thisdir, JustFileName);
+                        var fullname = Path.Combine(thisdir, justFileName);
                         TextWriter tw = new StreamWriter(fullname);
-                        string srep = clsConfig.GetStudentReport(numberId, false);
+                        var srep = clsConfig.GetStudentReport(numberId, false);
 
                         txtReport.Text += srep;
                         
@@ -63,7 +62,7 @@ namespace StudentMarking
             }
         }
 
-        private string emailBody = @"
+        private readonly string emailBody = @"
 Dear {FirstName},
 
 The marking and moderation process for BE1013 has been completed a few days ago.
@@ -81,35 +80,35 @@ Claudio
         {
 
             var v = MessageBox.Show("Ready to send emails?", "Warning", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-            if (v != System.Windows.Forms.DialogResult.Yes)
+            if (v != DialogResult.Yes)
                 return;
 
-            string sql = "select * from Qemails";
+            var sql = "select * from Qemails";
             var studs = clsConfig.GetDataTable(sql);
 
             
-            TextInfo textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
-            OutlookEmailerLateBinding app = new OutlookEmailerLateBinding();
+            var textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
+            var app = new OutlookEmailerLateBinding();
 
             foreach (DataRow row in studs.Rows)
             {
-                string DestEmail = row["email"].ToString();
-                string emailtext = emailBody;
+                var destEmail = row["email"].ToString();
+                var emailtext = emailBody;
 
                 //string sname = row["name"].ToString().ToLower();
                 //string wholename = textInfo.ToTitleCase(sname);
                 //string[] wholenames = wholename.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                string firstnames = row["FirstName"].ToString().ToLower();
-                string[] firstnamesA = firstnames.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                string firstname = firstnamesA[0];
+                var firstnames = row["FirstName"].ToString().ToLower();
+                var firstnamesA = firstnames.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                var firstname = firstnamesA[0];
 
-                int thisId = (int)row["Stud_Id"];
+                var thisId = (int)row["Stud_Id"];
 
                 emailtext = emailtext.Replace("{FirstName}", textInfo.ToTitleCase(firstname));
                 emailtext = emailtext.Replace("{Feedback}", clsConfig.GetStudentReport(thisId, false));
                 txtReport.Text += emailtext;
                 txtReport.Text += "\r\n====================\r\n";
-                app.SendOutlookEmail(DestEmail, "BE1013 mark", emailtext);
+                app.SendOutlookEmail(destEmail, "BE1013 mark", emailtext);
             }
         }
     }

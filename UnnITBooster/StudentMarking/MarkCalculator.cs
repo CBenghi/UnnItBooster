@@ -7,7 +7,7 @@ namespace StudentsFetcher.StudentMarking
     public class MarksCalculator
     {
         public List<MarkComponent> Marks;
-        public int GetFinalMark(string NumericUserId, clsConfig cfg)
+        public int GetFinalMark(string NumericUserId, ClsConfig cfg)
         {
             double totPerc = 0;
             double totMark = 0;

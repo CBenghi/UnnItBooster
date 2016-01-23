@@ -250,7 +250,7 @@ namespace StudentsFetcher.StudentMarking
             // load the picture
             var fname = st.PictureName(PictureFolder);
             if (!File.Exists(fname))
-                frmAutomaticMarkingMachine.GetImage(PictureFolder, st.Studentid);
+                FrmAutomaticMarkingMachine.GetImage(PictureFolder, st.Studentid);
             if (File.Exists(fname))
                 StudImage.Load(fname);
             else
