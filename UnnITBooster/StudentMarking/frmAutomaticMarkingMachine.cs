@@ -177,9 +177,12 @@ namespace StudentsFetcher.StudentMarking
 
         private List<string> GetValidFiles(string fname, string sId)
         {
-            var d = new DirectoryInfo(fname);
-            var dirs = d.GetDirectories();
             List<string> validFiles = new List<string>();
+            var d = new DirectoryInfo(fname);
+            if (!d.Exists)
+                return validFiles;
+            var dirs = d.GetDirectories();
+            
             foreach (var item in dirs)
             {
                 var files = item.GetFiles(sId + "*.*");
