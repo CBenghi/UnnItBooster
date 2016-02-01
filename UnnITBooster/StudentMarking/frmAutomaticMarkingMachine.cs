@@ -792,6 +792,13 @@ namespace StudentsFetcher.StudentMarking
                     lvi.SubItems.Add(mcalc.GetFinalMark(numUID, Config).ToString());
                     lvi.SubItems.Add(lvi.Tag + " " + item["markDate"]);
                     lvi.SubItems.Add(item["NumComments"].ToString());
+                    lvi.SubItems.Add(
+                        string.Format("Overalp: {0} Internet: {1} Pub: {2} Student: {3}",
+                            item["SUB_Overlap"],
+                            item["SUB_InternetOverlap"],
+                            item["SUB_PublicationsOverlap"],
+                            item["SUB_StudentPapersOverlap"]
+                            ));
 
                     lstEmailSendSelection.Items.Add(lvi);
                     // lstEmailSendSelection.Items.Add(numUID);

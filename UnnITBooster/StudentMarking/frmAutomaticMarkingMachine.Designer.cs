@@ -45,6 +45,7 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cmdOpenOther = new System.Windows.Forms.Button();
             this.relFolder = new System.Windows.Forms.TextBox();
             this.cmdCompare = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -77,6 +78,7 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.cmdEmailRefreshStudents = new System.Windows.Forms.Button();
             this.cmdGetImages = new System.Windows.Forms.Button();
@@ -106,7 +108,6 @@
             this.cmdSourceDataFile = new System.Windows.Forms.Button();
             this.lblSourceData = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.cmdOpenOther = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -361,6 +362,17 @@
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Documents downloaded";
+            // 
+            // cmdOpenOther
+            // 
+            this.cmdOpenOther.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdOpenOther.Location = new System.Drawing.Point(55, 44);
+            this.cmdOpenOther.Name = "cmdOpenOther";
+            this.cmdOpenOther.Size = new System.Drawing.Size(65, 23);
+            this.cmdOpenOther.TabIndex = 5;
+            this.cmdOpenOther.Text = "Other";
+            this.cmdOpenOther.UseVisualStyleBackColor = true;
+            this.cmdOpenOther.Click += new System.EventHandler(this.cmdOpenOther_Click);
             // 
             // relFolder
             // 
@@ -703,7 +715,8 @@
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
-            this.columnHeader5});
+            this.columnHeader5,
+            this.columnHeader6});
             this.lstEmailSendSelection.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstEmailSendSelection.FullRowSelect = true;
             this.lstEmailSendSelection.GridLines = true;
@@ -737,6 +750,10 @@
             // columnHeader5
             // 
             this.columnHeader5.Text = "NumComments";
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Similarity";
             // 
             // tableLayoutPanel2
             // 
@@ -1124,17 +1141,6 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(712, 32);
             this.tableLayoutPanel4.TabIndex = 13;
             // 
-            // cmdOpenOther
-            // 
-            this.cmdOpenOther.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdOpenOther.Location = new System.Drawing.Point(55, 44);
-            this.cmdOpenOther.Name = "cmdOpenOther";
-            this.cmdOpenOther.Size = new System.Drawing.Size(65, 23);
-            this.cmdOpenOther.TabIndex = 5;
-            this.cmdOpenOther.Text = "Other";
-            this.cmdOpenOther.UseVisualStyleBackColor = true;
-            this.cmdOpenOther.Click += new System.EventHandler(this.cmdOpenOther_Click);
-            // 
             // FrmAutomaticMarkingMachine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1274,6 +1280,7 @@
         private System.Windows.Forms.Button cmdCompare;
         private System.Windows.Forms.TextBox relFolder;
         private System.Windows.Forms.Button cmdOpenOther;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
     }
 }
 
