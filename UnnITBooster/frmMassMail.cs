@@ -54,7 +54,7 @@ namespace StudentMarking
                 return;
             var con = new OleDbConnection(@"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + f.FullName + ";Extended Properties=Excel 8.0;"); // Extended Properties=Excel 8.0;
             con.Open();
-            var da = new OleDbDataAdapter("select * from [Sheet3$]", con);
+            var da = new OleDbDataAdapter("select * from [Sheet1$]", con);
             var dt = new DataTable();
             da.Fill(dt);
             con.Close();

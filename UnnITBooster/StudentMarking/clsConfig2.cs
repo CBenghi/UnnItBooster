@@ -115,8 +115,12 @@ namespace StudentsFetcher.StudentMarking
                     sb.AppendFormat("Component {0}: {1}\r\n", item["MARK_ptr_Component"], item["MARK_Value"]);
                 }
             }
-
-            var totmark = GetMarkCalculator().GetFinalMark(stud["SUB_NumericUserId"].ToString(), this);
+            var studId = stud["SUB_NumericUserId"].ToString();
+            if (studId == @"")
+            {
+                throw  new Exception(@"Missing student Id");
+            }
+            var totmark = GetMarkCalculator().GetFinalMark(studId, this);
             if (totmark != -1)
                 sb.AppendFormat("Overall mark: {0}%\r\n\r\n", totmark);
             sb.AppendLine("---------------");
