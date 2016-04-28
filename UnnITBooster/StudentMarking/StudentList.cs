@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using LateBindingTest;
@@ -258,7 +259,13 @@ namespace StudentsFetcher.StudentMarking
 
             // todo:  list emails 
             // var outlook = new OutlookEmailerLateBinding();
-            
+            var sb = new StringBuilder();
+            sb.AppendFormat("{0} {1}\r\n", st.Forename, st.Surname);
+            sb.AppendFormat("{0} {1}\r\n", st.Studentid, st.RouteCode);
+            sb.AppendFormat("{0}\r\n", st.Email);
+
+            txtStudentInfo.Text = sb.ToString();
+
         }
     }
 }
