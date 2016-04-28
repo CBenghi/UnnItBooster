@@ -118,7 +118,7 @@ namespace StudentsFetcher.StudentMarking
 
             var totmark = GetMarkCalculator().GetFinalMark(stud["SUB_NumericUserId"].ToString(), this);
             if (totmark != -1)
-                sb.AppendFormat("Final mark: {0}%\r\n\r\n", totmark);
+                sb.AppendFormat("Overall mark: {0}%\r\n\r\n", totmark);
             sb.AppendLine("---------------");
             // sb.AppendFormat("Similarity index: {0}\r\n", stud["SUB_overlap"].ToString());
 
