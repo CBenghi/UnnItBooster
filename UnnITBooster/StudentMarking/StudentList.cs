@@ -18,6 +18,7 @@ namespace StudentsFetcher.StudentMarking
         {
             InitializeComponent();
             txtFolder.Text = Properties.Settings.Default.StudentsFolder;
+            RefreshModulesList();
             StudentsLoad();
         }
 
@@ -134,13 +135,17 @@ namespace StudentsFetcher.StudentMarking
         {
             _students.Clear();
             _routes.Clear();
-            foreach (var file in Folder.GetFiles("*.stud.xml"))
+
+            
+
+            foreach (var checkedItem in lstModules.CheckedItems)
             {
-                _students.AddRange(GetModuleStudents(file));
-            }
-            foreach (var file in Folder.GetFiles("*.routes.xml"))
-            {
-                AddRoutes(file);
+                var stFile = Folder.GetFiles(checkedItem + ".stud.xml").FirstOrDefault();
+                _students.AddRange(GetModuleStudents(stFile));
+
+                var sRt = Folder.GetFiles(checkedItem + ".routes.xml").FirstOrDefault();
+                AddRoutes(sRt);
+
             }
 
             lstStudents.Items.Clear();
@@ -211,6 +216,9 @@ namespace StudentsFetcher.StudentMarking
             li.SubItems.Add(student.Email);
             if (_routes.ContainsKey(student.RouteCode))
                 li.SubItems.Add(_routes[student.RouteCode]);
+            else
+                li.SubItems.Add(student.RouteCode);
+            
             lstStudents.Items.Add(li);
         }
 
@@ -221,6 +229,7 @@ namespace StudentsFetcher.StudentMarking
 
         private void lstStudents_SelectedIndexChanged(object sender, EventArgs e)
         {
+            txtStudentInfo.Text = "";
             foreach (var selectedItem in lstStudents.SelectedItems)
             {
                 var lvi = selectedItem as ListViewItem;
@@ -253,19 +262,59 @@ namespace StudentsFetcher.StudentMarking
             if (!File.Exists(fname))
                 FrmAutomaticMarkingMachine.GetImage(PictureFolder, st.Studentid);
             if (File.Exists(fname))
-                StudImage.Load(fname);
+            {
+                try
+                {
+                    StudImage.Load(fname);
+                }
+                catch 
+                { }
+            }
             else
                 StudImage.Image = null;
 
-            // todo:  list emails 
-            // var outlook = new OutlookEmailerLateBinding();
-            var sb = new StringBuilder();
-            sb.AppendFormat("{0} {1}\r\n", st.Forename, st.Surname);
-            sb.AppendFormat("{0} {1}\r\n", st.Studentid, st.RouteCode);
-            sb.AppendFormat("{0}\r\n", st.Email);
+            if (lstStudents.SelectedItems.Count == 1)
+            {
 
-            txtStudentInfo.Text = sb.ToString();
+                // var outlook = new OutlookEmailerLateBinding();
+                var sb = new StringBuilder();
+                sb.AppendFormat("{0} {1}\r\n", st.Forename, st.Surname);
+                sb.AppendFormat("{0} {1}\r\n", st.Studentid, st.RouteCode);
+                sb.AppendFormat("{0}\r\n", st.Email);
 
+                txtStudentInfo.Text = sb.ToString();
+            }
+            else
+            {
+                var sb = new StringBuilder();
+
+                var Cohort = (_routes.ContainsKey(st.RouteCode)) 
+                    ? _routes[st.RouteCode]
+                    : st.RouteCode;
+
+                sb.AppendFormat("{0}\t{1}\t{2}\t{3}\t{4}\r\n", st.Forename, st.Surname, st.Studentid, Cohort, st.Email);
+
+                txtStudentInfo.Text += sb.ToString();
+            }
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            RefreshModulesList();
+        }
+
+        private void RefreshModulesList()
+        {
+            lstModules.Items.Clear();
+            foreach (var file in Folder.GetFiles("*.stud.xml"))
+            {
+                var modname = file.Name.Substring(0, 6);
+                lstModules.Items.Add(modname);
+            }
+
+            for (var i = 0; i < lstModules.Items.Count; i++)
+                lstModules.SetItemChecked(i, true);
         }
     }
 }

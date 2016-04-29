@@ -55,9 +55,11 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.txtStudentInfo = new System.Windows.Forms.TextBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lstModules = new System.Windows.Forms.CheckedListBox();
+            this.button4 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StudImage)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -70,8 +72,8 @@
             this.tabControl2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtModuleCode
@@ -122,7 +124,7 @@
             this.groupBox1.Controls.Add(this.txtModuleCode);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(14, 94);
+            this.groupBox1.Location = new System.Drawing.Point(187, 81);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(291, 53);
             this.groupBox1.TabIndex = 14;
@@ -131,9 +133,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(14, 41);
+            this.button1.Location = new System.Drawing.Point(14, 286);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(120, 23);
             this.button1.TabIndex = 14;
             this.button1.Text = "Reload";
             this.button1.UseVisualStyleBackColor = true;
@@ -342,22 +344,6 @@
             this.columnHeader10.Text = "Date";
             this.columnHeader10.Width = 200;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.txtFolder);
-            this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Controls.Add(this.button1);
-            this.tabPage2.Controls.Add(this.button3);
-            this.tabPage2.Controls.Add(this.groupBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage2.Size = new System.Drawing.Size(918, 531);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Data download";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.txtStudentInfo);
@@ -377,6 +363,42 @@
             this.txtStudentInfo.Name = "txtStudentInfo";
             this.txtStudentInfo.Size = new System.Drawing.Size(332, 495);
             this.txtStudentInfo.TabIndex = 0;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.button4);
+            this.tabPage2.Controls.Add(this.lstModules);
+            this.tabPage2.Controls.Add(this.txtFolder);
+            this.tabPage2.Controls.Add(this.label2);
+            this.tabPage2.Controls.Add(this.button1);
+            this.tabPage2.Controls.Add(this.button3);
+            this.tabPage2.Controls.Add(this.groupBox1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage2.Size = new System.Drawing.Size(918, 531);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Data download";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // lstModules
+            // 
+            this.lstModules.FormattingEnabled = true;
+            this.lstModules.Location = new System.Drawing.Point(14, 81);
+            this.lstModules.Name = "lstModules";
+            this.lstModules.Size = new System.Drawing.Size(120, 199);
+            this.lstModules.TabIndex = 17;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(14, 52);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(120, 23);
+            this.button4.TabIndex = 18;
+            this.button4.Text = "Refresh";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // StudentList
             // 
@@ -400,10 +422,10 @@
             this.tabControl2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -440,5 +462,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader10;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TextBox txtStudentInfo;
+        private System.Windows.Forms.CheckedListBox lstModules;
+        private System.Windows.Forms.Button button4;
     }
 }
