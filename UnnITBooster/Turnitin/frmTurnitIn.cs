@@ -53,7 +53,7 @@ namespace StudentsFetcher
         {
             get
             {
-                string ReportName = Regex.Match(filename, "Inbox_Report_(.*).xls").Groups[1].ToString();
+                var ReportName = Regex.Match(filename, "Inbox_Report_(.*).xls").Groups[1].ToString();
                 if (ReportName == "")
                     ReportName = "Files";
                 return ReportName;
@@ -71,26 +71,24 @@ namespace StudentsFetcher
                 return;
             }
 
-            OleDbConnection con = new OleDbConnection(@"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fullname + ";Extended Properties=Excel 8.0;"); // Extended Properties=Excel 8.0;
+            var con = new OleDbConnection(@"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fullname + ";Extended Properties=Excel 8.0;"); // Extended Properties=Excel 8.0;
             con.Open();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from [Sheet1$]", con);
-            DataTable dt = new DataTable();
+            var da = new OleDbDataAdapter("select * from [Sheet1$]", con);
+            var dt = new DataTable();
             da.Fill(dt);
             con.Close();
 
 
             foreach (DataRow row in dt.Rows)
             {
-                int iCount = 0;
-                TurnitInSubmission stud = new TurnitInSubmission();
+                var stud = new TurnitInSubmission();
                 foreach (DataColumn col in dt.Columns)
                 {
-                    string val = row[col.ColumnName].ToString();
+                    var val = row[col.ColumnName].ToString();
                     if (val != string.Empty)
                     {
                         stud.SetProp(val, col.ColumnName);
                     }
-                    iCount++;
                 }
                 students.Add(stud);
             }
@@ -104,23 +102,19 @@ namespace StudentsFetcher
 
         }
 
-        
-
         private void PopulateDatabase(string fullname)
         {
-            string filename = Path.ChangeExtension(fullname, "sqlite");
-            SQLiteConnection c = new SQLiteConnection("Data source=" + filename + ";");
+            var filename = Path.ChangeExtension(fullname, "sqlite");
+            var c = new SQLiteConnection("Data source=" + filename + ";");
             SQLiteCommand cmd;
             string sql;
             c.Open();
             foreach (var item in students)
             {
-
-
                 sql = "insert into TB_Submissions (SUB_LastName, SUB_FirstName , SUB_UserID, SUB_TurnitinUserID, SUB_Title, SUB_PaperID, SUB_DateUploaded, SUB_Grade, SUB_Overlap, SUB_InternetOverlap, SUB_PublicationsOverlap, SUB_StudentPapersOverlap, SUB_NumericUserID, SUB_email) " +
-                    "values ('" + item.LastName.Replace("'", "''") + "','" + item.FirstName.Replace("'", "''") + "','" + item.UserID.Replace("'", "''") + "','" + item.TurnitinUserID.Replace("'", "''") + "','" + item.Title.Replace("'", "''") + "','" + item.PaperID.Replace("'", "''") + "','" + item.DateUploaded.Replace("'", "''") + "','" + item.Grade.Replace("'", "''") + "','" + item.Overlap.Replace("'", "''") + "','" + item.InternetOverlap.Replace("'", "''") + "','" + item.PublicationsOverlap.Replace("'", "''") + "'," + 
+                    "values ('" + item.LastName.Replace("'", "''") + "','" + item.FirstName.Replace("'", "''") + "','" + item.UserId.Replace("'", "''") + "','" + item.TurnitinUserId.Replace("'", "''") + "','" + item.Title.Replace("'", "''") + "','" + item.PaperId.Replace("'", "''") + "','" + item.DateUploaded.Replace("'", "''") + "','" + item.Grade.Replace("'", "''") + "','" + item.Overlap.Replace("'", "''") + "','" + item.InternetOverlap.Replace("'", "''") + "','" + item.PublicationsOverlap.Replace("'", "''") + "'," + 
                     "'" + item.StudentPapersOverlap.Replace("'", "''") + "',"  +
-                    "'" + item.NumericUserID.Replace("'", "''") + "'," +
+                    "'" + item.NumericUserId.Replace("'", "''") + "'," +
                     "'" + item.Email.Replace("'", "''") + "'" +
                     ")";
                 cmd = new SQLiteCommand(sql, c);
@@ -131,8 +125,8 @@ namespace StudentsFetcher
 
         private void CreateDatabase(string fullname)
         {
-            string filename = Path.ChangeExtension(fullname, "sqlite");
-            SQLiteConnection c = new SQLiteConnection("Data source=" + filename + ";");
+            var filename = Path.ChangeExtension(fullname, "sqlite");
+            var c = new SQLiteConnection("Data source=" + filename + ";");
             SQLiteCommand cmd;
             string sql;
             c.Open();
@@ -234,9 +228,9 @@ namespace StudentsFetcher
 
         public static string getWebData(string url)
         {
-            WebClient req = new WebClient();
+            var req = new WebClient();
             req.Credentials = CredentialCache.DefaultCredentials;
-            string retval = "";
+            var retval = "";
             try
             {
                 retval = Encoding.UTF8.GetString(req.DownloadData(url));
@@ -244,7 +238,7 @@ namespace StudentsFetcher
             catch (System.Net.WebException webexc)
             {
                 System.Diagnostics.Debug.WriteLine("Error fetching: " + url);
-                Stream s = webexc.Response.GetResponseStream();
+                var s = webexc.Response.GetResponseStream();
             }
             catch (Exception ex)
             {
@@ -286,7 +280,7 @@ namespace StudentsFetcher
 
         private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            string s = e.Url.ToString();
+            var s = e.Url.ToString();
             System.Diagnostics.Debug.WriteLine(s);
             // return;
 
@@ -305,10 +299,10 @@ namespace StudentsFetcher
                         webBrowser1.Navigate(_urlSuccessfulLoginPage);
                         return;
                     }
-                    string cont = webBrowser1.DocumentText;
-                    string studid = Regex.Match(cont, "href=\"([^\"]*).*check enr.*", RegexOptions.IgnoreCase).Groups[1].ToString();
+                    var cont = webBrowser1.DocumentText;
+                    var studid = Regex.Match(cont, "href=\"([^\"]*).*check enr.*", RegexOptions.IgnoreCase).Groups[1].ToString();
                     // students[fd_CurrentId].NumericUserID = studid;
-                    string newurl = e.Url.GetLeftPart(UriPartial.Authority);
+                    var newurl = e.Url.GetLeftPart(UriPartial.Authority);
                     newurl += studid;
                     // e.Url.PathAndQuery = studid;
                     _urlStudentSearchFormSubmitter = newurl;
@@ -322,7 +316,7 @@ namespace StudentsFetcher
             else if (s == _urlStudentSearchFormSubmitter)
             {
                 // id=userInfoSearchText
-                string nxt = GetNext();
+                var nxt = GetNext();
                 if (nxt != "")
                 {
                     // post next search
@@ -336,11 +330,11 @@ namespace StudentsFetcher
             {
                 try
                 {
-                    string cont = webBrowser1.DocumentText;
-                    string studid = Regex.Match(cont, "Student id[^\\d]*(\\d*)", RegexOptions.IgnoreCase).Groups[1].ToString();
-                    students[fd_CurrentId].NumericUserID = studid;
+                    var cont = webBrowser1.DocumentText;
+                    var studid = Regex.Match(cont, "Student id[^\\d]*(\\d*)", RegexOptions.IgnoreCase).Groups[1].ToString();
+                    students[fd_CurrentId].NumericUserId = studid;
 
-                    string email = Regex.Match(cont, "Email Address:([^<]*<[^>]*>){0,2}\\s*([^<]*)", RegexOptions.IgnoreCase).Groups[2].ToString();
+                    var email = Regex.Match(cont, "Email Address:([^<]*<[^>]*>){0,2}\\s*([^<]*)", RegexOptions.IgnoreCase).Groups[2].ToString();
                     students[fd_CurrentId].Email = email;
                 }
                 catch (Exception)
@@ -381,23 +375,25 @@ namespace StudentsFetcher
 
         private void button4_Click(object sender, EventArgs e)
         {
-            string filesDir = Path.Combine(folder, ReportName);
+            var filesDir = Path.Combine(folder, ReportName);
             foreach (var item in students)
             {
                 
-                DirectoryInfo d = new DirectoryInfo(filesDir);
+                var d = new DirectoryInfo(filesDir);
                 if (!d.Exists)
                 {
                     d.Create();
                 }
-                var ret = d.GetFiles(item.UserID + "*.*");
+                var ret = d.GetFiles(item.UserId + "*.*");
                 if (ret.Length == 0)
                 {
-                    string url = item.GetUrl(filesDir, textBox1.Text);
+                    item.DownloadDocument(filesDir, textBox1.Text);
                 }
             }
         }
-         
+
+
+ 
         private string fd_PageUrl = "";
         private string fd_fieldname = "";
         private string fd_otherparams = "";
@@ -416,7 +412,7 @@ namespace StudentsFetcher
                 return "";
             if (fd_CurrentId < students.Count)
             {
-                return students[fd_CurrentId].UserID;
+                return students[fd_CurrentId].UserId;
             }
             return "";
         }
@@ -451,17 +447,17 @@ namespace StudentsFetcher
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string s = "https://elp.northumbria.ac.uk/webapps/unn-managementsuite-bb_bb60/module/check_enrolments.jsp?tab_tab_group_id=_2_1&module_id=_788_1&tabURL=/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_2_1&tabId=_2_1&forwardUrl=index.jsp";
+            var s = "https://elp.northumbria.ac.uk/webapps/unn-managementsuite-bb_bb60/module/check_enrolments.jsp?tab_tab_group_id=_2_1&module_id=_788_1&tabURL=/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_2_1&tabId=_2_1&forwardUrl=index.jsp";
 
-            string PostDataStr =
+            var PostDataStr =
                 "tab_tab_group_id=_2_1&" +
                 "module_id=_788_1&" +
                 "tabURL=/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_2_1&" +
                 "action=SEARCH&" +
                 "numResults=25&" +
                 "my_user_id=w11025490";
-            byte[] PostDataByte = Encoding.UTF8.GetBytes(PostDataStr);
-            string AdditionalHeaders = "Content-Type: application/x-www-form-urlencoded" + Environment.NewLine;
+            var PostDataByte = Encoding.UTF8.GetBytes(PostDataStr);
+            var AdditionalHeaders = "Content-Type: application/x-www-form-urlencoded" + Environment.NewLine;
             webBrowser1.Navigate(
                 fd_PageUrl, 
                 "", 
@@ -472,7 +468,12 @@ namespace StudentsFetcher
 
         private void button3_Click_1(object sender, EventArgs e)
         {
-            string s = "https://elp.northumbria.ac.uk/webapps/unn-managementsuite-bb_bb60/module/check_enrolments.jsp?tab_tab_group_id=_2_1&module_id=_788_1&tabURL=/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_2_1&tabId=_2_1&forwardUrl=index.jsp";
+            var s = "https://elp.northumbria.ac.uk/webapps/unn-managementsuite-bb_bb60/module/check_enrolments.jsp?tab_tab_group_id=_2_1&module_id=_788_1&tabURL=/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_2_1&tabId=_2_1&forwardUrl=index.jsp";
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

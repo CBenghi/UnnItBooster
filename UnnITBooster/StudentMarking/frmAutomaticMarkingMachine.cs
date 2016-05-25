@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -12,6 +13,7 @@ using System.Threading;
 using System.Windows.Forms;
 using LateBindingTest;
 using StudentsFetcher.Properties;
+using StudentsFetcher.Turnitin;
 using ZedGraph;
 
 namespace StudentsFetcher.StudentMarking
@@ -177,7 +179,7 @@ namespace StudentsFetcher.StudentMarking
 
         private List<string> GetValidFiles(string fname, string sId)
         {
-            List<string> validFiles = new List<string>();
+            var validFiles = new List<string>();
             var d = new DirectoryInfo(fname);
             if (!d.Exists)
                 return validFiles;
@@ -1082,7 +1084,110 @@ Claudio
                 pars
                 );
         }
-        
+
+        private void btnCompleteData_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.DefaultExt = "xls";
+            openFileDialog1.Multiselect = false;
+            openFileDialog1.ShowDialog();
+            if (openFileDialog1.FileName == "")
+                return;
+            var excelName = openFileDialog1.FileName;
+
+            if (!File.Exists(excelName))
+            {
+                MessageBox.Show("Excel File not found");
+                return;
+            }
+
+            var con =
+                new OleDbConnection(@"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + excelName +
+                                    ";Extended Properties=Excel 8.0;"); // Extended Properties=Excel 8.0;
+            con.Open();
+            var da = new OleDbDataAdapter("select * from [Sheet1$]", con);
+            var dt = new DataTable();
+            da.Fill(dt);
+            con.Close();
+            var iInserted = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                
+                var uid = row["User ID"].ToString();
+
+                var existing = Config.GetStudentRow(uid);
+                if (existing != null)
+                    continue;
+
+                var sql =
+                    "insert into TB_Submissions (SUB_LastName, SUB_FirstName , SUB_UserID, SUB_TurnitinUserID, SUB_Title, SUB_PaperID, SUB_DateUploaded, SUB_Grade, SUB_Overlap, SUB_InternetOverlap, SUB_PublicationsOverlap, SUB_StudentPapersOverlap) " +
+                    "values ('" + row["Last Name"].ToString().Replace("'", "''") + "','" +
+                    row["First Name"].ToString().Replace("'", "''") + "','"
+                    + row["User ID"].ToString().Replace("'", "''") + "','" +
+                    row["Turnitin User ID"].ToString().Replace("'", "''") + "','" +
+                    row["Title"].ToString().Replace("'", "''") + "','" + row["Paper ID"].ToString().Replace("'", "''") +
+                    "','" + row["Date Uploaded"].ToString().Replace("'", "''") + "','" +
+                    row["Grade"].ToString().Replace("'", "''") + "','" + row["Overlap"].ToString().Replace("'", "''") +
+                    "','" + row["Internet Overlap"].ToString().Replace("'", "''") + "','" +
+                    row["Publications Overlap"].ToString().Replace("'", "''") + "'," +
+                    "'" + row["Student Papers Overlap"].ToString().Replace("'", "''") + "'" +
+                    //"'" + row["User ID"].ToString().NumericUserID.Replace("'", "''") + "'," +
+                    //"'" + row["User ID"].ToString().Email.Replace("'", "''") + "'" +
+                    ")";
+
+                Config.Execute(sql);
+                iInserted++;
+            }
+
+            MessageBox.Show(
+                string.Format("{0} students added", iInserted)
+                );
+        }
+
+        private void cmdGetFiles_Click(object sender, EventArgs e)
+        {
+
+            string filesDir = Path.Combine(folder, Config.BareName);
+            DirectoryInfo d = new DirectoryInfo(filesDir);
+            if (!d.Exists)
+            {
+                d.Create();
+            }
+
+             var dt = Config.GetDataTable(
+                    "select  * from tb_submissions");
+
+            var iCnt = 0;
+
+            foreach (DataRow item in dt.Rows)
+            {
+                var minSub = new TurnitInSubmission(
+                    item["SUB_UserId"].ToString(),
+                    item["SUB_PaperId"].ToString(),
+                    item["SUB_Title"].ToString()
+                    );
+
+                if (minSub.DownloadDocument(filesDir, elpSessionId.Text))
+                    iCnt++;
+            }
+            MessageBox.Show(iCnt + " documents downloaded");
+        }
+
+        private void elpSessionId_TextChanged(object sender, EventArgs e)
+        {
+            var r = Regex.Match(elpSessionId.Text, "session-id=([^&]*)");
+            var val = r.Groups[1].Value;
+            if (!string.IsNullOrWhiteSpace(val))
+            {
+                elpSessionId.Text = val;
+            }
+            cmdGetFiles.Enabled = (elpSessionId.Text.Length == 32);
+        }
+
         #region emailing
 
 

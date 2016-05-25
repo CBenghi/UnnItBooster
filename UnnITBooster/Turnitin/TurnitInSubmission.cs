@@ -8,10 +8,10 @@ namespace StudentsFetcher.Turnitin
     {
         public string FirstName = "";
         public string LastName = "";
-        public string UserID = "";
-        public string TurnitinUserID = "";
+        public string UserId = "";
+        public string TurnitinUserId = "";
         public string Title = "";
-        public string PaperID = "";
+        public string PaperId = "";
         public string DateUploaded = "";
         public string Grade = "";
         public string Overlap = "";
@@ -19,34 +19,40 @@ namespace StudentsFetcher.Turnitin
         public string PublicationsOverlap = "";
         public string StudentPapersOverlap = "";
 
-        public string NumericUserID = "";
+        public string NumericUserId = "";
         public string Email = "";
+        
+        public TurnitInSubmission()
+        { }
 
-        //enum ItemFormat
-        //{
-        //    OriginalFormat,
-        //    Pdf
-        //}
+        public TurnitInSubmission(string userId, string paperId, string paperTitle)
+        {
+            UserId = userId;
+            PaperId = paperId;
+            Title = paperTitle;
+        }
 
         //public string GetUrl(ItemFormat format)
-        public string GetUrl(string folder, string SessionId)
+        public bool DownloadDocument(string folder, string sessionId)
         {
-            WebClient req = new WebClient();
-            string url = "https://submit.ac.uk/paper_download.asp?r=96.8644370479907&svr=6&session-id=" + SessionId + "&lang=en_us&svr=6&oid=" + PaperID + "&fe=pdf&fn=.pdf&session-id=" + SessionId + "&type=paper&p=1";
-            url = "https://www.turnitinuk.com/pdf_download.asp?r=64.9048690964243&svr=07&session-id=" + SessionId + "&lang=en_us&svr=6&oid=" + PaperID + "&fe=pdf&fn=.pdf&session-id=" + SessionId + "&type=paper&p=1";
+            if (!CanDownloadFile())
+                return false;
+            var req = new WebClient();
+            var url = "https://submit.ac.uk/paper_download.asp?r=96.8644370479907&svr=6&session-id=" + sessionId + "&lang=en_us&svr=6&oid=" + PaperId + "&fe=pdf&fn=.pdf&session-id=" + sessionId + "&type=paper&p=1";
+            url = "https://www.turnitinuk.com/pdf_download.asp?r=64.9048690964243&svr=07&session-id=" + sessionId + "&lang=en_us&svr=6&oid=" + PaperId + "&fe=pdf&fn=.pdf&session-id=" + sessionId + "&type=paper&p=1";
 
             // var  a = "https://www.turnitinuk.com/download_file.asp?r=64.9048690964243&svr=07&session-id=f59647dc5a1fc37854166dedbd2865f1&lang=en_us&type=paper&oid=51027190&fn=&session-id=&p=1"; 
             // /pdf_download.asp?r=76.6607112328153&svr=08&session-id=f59647dc5a1fc37854166dedbd2865f1&lang=en_us&svr=08&oid=49460823&fe=pdf&fn=.pdf&session-id=f59647dc5a1fc37854166dedbd2865f1&type=paper'
 
-            string destfilename = UserID + "_" + Title.Replace('/','_')  + ".pdf";
+            var destfilename = UserId + "_" + Title.Replace('/','_')  + ".pdf";
             try 
 	        {
-                System.IO.FileInfo f = new System.IO.FileInfo(destfilename);
+                var f = new System.IO.FileInfo(destfilename);
 	        }
 	        catch (Exception)
 	        {
-                string originalname = Regex.Match(url, "&fn=([^&]*)").Groups[1].ToString();
-                destfilename = UserID;
+                // var originalname = Regex.Match(url, "&fn=([^&]*)").Groups[1].ToString();
+                destfilename = UserId + ".pdf";
 	        }
             
             if (!System.IO.Directory.Exists(folder))
@@ -56,7 +62,18 @@ namespace StudentsFetcher.Turnitin
             if (!System.IO.File.Exists(destfilename))
                 req.DownloadFile(url, destfilename);
 
-            return "";           
+            return true;           
+        }
+
+        internal bool CanDownloadFile()
+        {
+            if (string.IsNullOrWhiteSpace(UserId))
+                return false;
+            if (string.IsNullOrWhiteSpace(Title))
+                return false;
+            if (string.IsNullOrWhiteSpace(PaperId))
+                return false;
+            return true;
         }
 
         internal void SetProp(string Value, string PropertyName)
@@ -70,10 +87,10 @@ namespace StudentsFetcher.Turnitin
                     this.FirstName = Value;
                     break;
                 case "User ID":
-                    this.UserID = Value;
+                    this.UserId = Value;
                     break;
                 case "Turnitin User ID":
-                    this.TurnitinUserID = Value;
+                    this.TurnitinUserId = Value;
                     break;
                 case "Title":
                     this.Title = Value;
@@ -82,7 +99,7 @@ namespace StudentsFetcher.Turnitin
                     this.DateUploaded = Value;
                     break;
                 case "Paper ID":
-                    this.PaperID = Value;
+                    this.PaperId = Value;
                     break;
                 case "Grade":
                     this.Grade = Value;

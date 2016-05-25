@@ -42,9 +42,23 @@ namespace StudentsFetcher.StudentMarking
             var da = new SQLiteDataAdapter(sql, c);
             da.Fill(dt);
             // c.Close();
-            if (dt.Rows.Count == 1)
-                return dt.Rows[0];
-            return null;
+            return dt.Rows.Count == 1 
+                ? dt.Rows[0] 
+                : null;
+        }
+
+        internal DataRow GetStudentRow(string uid)
+        {
+            var dt = new DataTable();
+            var c = GetConn();
+
+            var sql = string.Format("select * from TB_Submissions where SUB_UserID = '{0}'", uid);
+            var da = new SQLiteDataAdapter(sql, c);
+            da.Fill(dt);
+            // c.Close();
+            return dt.Rows.Count == 1 
+                ? dt.Rows[0] 
+                : null;
         }
 
         internal string GetStudentReport(int id, bool sendModerationNotice)
@@ -124,8 +138,10 @@ namespace StudentsFetcher.StudentMarking
             if (totmark != -1)
                 sb.AppendFormat("Overall mark: {0}%\r\n\r\n", totmark);
             sb.AppendLine("---------------");
-            // sb.AppendFormat("Similarity index: {0}\r\n", stud["SUB_overlap"].ToString());
-
+            if (sendModerationNotice)
+            {
+                sb.AppendFormat("Similarity index: {0}\r\n", stud["SUB_overlap"].ToString());
+            }
 
             var tmp = componentComments.Replace("\r\n", "").Trim();
 
@@ -239,6 +255,14 @@ namespace StudentsFetcher.StudentMarking
             }
 
             return ret;
+        }
+
+        public string BareName
+        {
+            get
+            {
+                return  Path.GetFileNameWithoutExtension(DbName);
+            }
         }
     }
 }
