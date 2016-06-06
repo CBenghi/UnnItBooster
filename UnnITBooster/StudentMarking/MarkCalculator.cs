@@ -13,7 +13,7 @@ namespace StudentsFetcher.StudentMarking
             double totMark = 0;
             double finalMark = -1;
 
-            string sql = "select MARK_Value from TB_Marks inner join TB_Submissions on mark_ptr_submission = SUB_ID where SUB_NumericUserID = " + NumericUserId + " and MARK_ptr_Component = -1";
+            string sql = "select MARK_Value from TB_Marks inner join TB_Submissions on mark_ptr_submission = SUB_ID where cast (SUB_NumericUserID as int) = cast(" + NumericUserId + " as int) and MARK_ptr_Component = -1";
             int marktot = cfg.ExecuteScalar(sql);
             if (marktot != -1)
             {
@@ -23,7 +23,7 @@ namespace StudentsFetcher.StudentMarking
             {
                 foreach (var mc in Marks)
                 {
-                    sql = "select MARK_Value from TB_Marks inner join TB_Submissions on mark_ptr_submission = SUB_ID where SUB_NumericUserID = " + NumericUserId + " and MARK_ptr_Component = " + mc.id;
+                    sql = "select MARK_Value from TB_Marks inner join TB_Submissions on mark_ptr_submission = SUB_ID where cast (SUB_NumericUserID as int) = cast(" + NumericUserId + " as int) and MARK_ptr_Component = " + mc.id;
                     int mark = cfg.ExecuteScalar(sql);
                     if (mark != -1)
                     {
