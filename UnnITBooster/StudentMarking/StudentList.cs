@@ -279,6 +279,7 @@ namespace StudentsFetcher.StudentMarking
                 // var outlook = new OutlookEmailerLateBinding();
                 var sb = new StringBuilder();
                 sb.AppendFormat("{0} {1}\r\n", st.Forename, st.Surname);
+                sb.AppendFormat("First Name: {0}\r\n", st.Forename);
                 sb.AppendFormat("{0} {1}\r\n", st.Studentid, st.RouteCode);
                 sb.AppendFormat("{0}\r\n", st.Email);
 
