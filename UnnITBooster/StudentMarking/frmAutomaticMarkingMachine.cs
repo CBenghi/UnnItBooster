@@ -21,7 +21,7 @@ namespace StudentsFetcher.StudentMarking
     [AMMFormAttributes(ButtonText = "Automatic marking machine", Order = 1)] 
     public partial class FrmAutomaticMarkingMachine : Form
     {
-        private ClsConfig Config;
+        private ClsConfig _config;
 
         public FrmAutomaticMarkingMachine()
         {
@@ -35,17 +35,17 @@ namespace StudentsFetcher.StudentMarking
         {
             if (e.KeyCode == Keys.Enter)
             {
-                UpdateStudentUI();
+                UpdateStudentUi();
             }
         }
 
-        private void UpdateStudentUI()
+        private void UpdateStudentUi()
         {
             UpdateStudentReport();
-            UpdateStudentMarksUI();
+            UpdateStudentMarksUi();
         }
 
-        private void UpdateStudentMarksUI()
+        private void UpdateStudentMarksUi()
         {
             foreach (var item in flComponents.Controls)
             {
@@ -56,7 +56,7 @@ namespace StudentsFetcher.StudentMarking
             if (GetStudentNumber() != -1)
             {
                 var sql = "select * from TB_Marks where MARK_ptr_Submission = " + GetStudentNumber();
-                var dt = Config.GetDataTable(sql);
+                var dt = _config.GetDataTable(sql);
                 foreach (DataRow item in dt.Rows)
                 {
                     var cmp = Convert.ToInt32(item["MARK_ptr_Component"]);
@@ -80,16 +80,16 @@ namespace StudentsFetcher.StudentMarking
         {
             if (GetStudentNumber() != -1)
             {
-                txtStudentreport.Text = Config.GetStudentReport(GetStudentNumber(), chkSendModerationNotice.Checked);
+                txtStudentreport.Text = _config.GetStudentReport(GetStudentNumber(), chkSendModerationNotice.Checked);
                 UpdateDocumentsList();
 
                 // show student picure.
                 
-                var dt = Config.GetDataTable("SELECT SUB_NumericUserId from tb_submissions where SUB_Id = " + GetStudentNumber());
+                var dt = _config.GetDataTable("SELECT SUB_NumericUserId from tb_submissions where SUB_Id = " + GetStudentNumber());
                 if (dt.Rows.Count == 1)
                 {
-                    var numeriCuserID = dt.Rows[0][0].ToString();
-                    ShowUserImage(numeriCuserID);
+                    var numericUserId = dt.Rows[0][0].ToString();
+                    ShowUserImage(numericUserId);
                 }
                 
             }
@@ -106,14 +106,15 @@ namespace StudentsFetcher.StudentMarking
                         "SUB_email like '%" + txtStudentId.Text.Replace("'", "''") + "%'";
                 }
 
-                var mc =  Config.GetMarkCalculator();
+                var mc =  _config.GetMarkCalculator();
                 
 
                 var sb = new StringBuilder();
-                var dt = Config.GetDataTable(sql);
+                var sbDataUpload = new StringBuilder();
+                var dt = _config.GetDataTable(sql);
                 foreach (DataRow item in dt.Rows)
                 {
-                    var totmark = mc.GetFinalMark(item["SUB_NumericUserId"].ToString(), Config);
+                    var totmark = mc.GetFinalMark(item["SUB_NumericUserId"].ToString(), _config);
 
                     sb.AppendFormat("{0}\t{1}\t{2}\t{3}\t{5}\t{4}\t{6}\r\n", 
                         item["SUB_id"],
@@ -124,15 +125,25 @@ namespace StudentsFetcher.StudentMarking
                         item["SUB_NumericUserID"],
                         totmark
                         );
+
+                    sbDataUpload.AppendFormat("\"{0}\"\t\"{1}\"\t\"{2}\"\t\"{3}\"\t\t\t\t\"{4}.00\"\n",
+                        item["SUB_LastName"],
+                        item["SUB_FirstName"],
+                        item["SUB_UserID"],
+                        item["SUB_NumericUserID"],
+                        totmark
+                        );
                 }
 
+                sb.AppendFormat("\r\n\r\n");
+                sb.Append(sbDataUpload);
                 sb.AppendFormat("\r\n\r\n");
 
 
                 foreach (DataRow item in dt.Rows)
                 {
                     var id = Convert.ToInt32(item["SUB_id"]);
-                    sb.Append(Config.GetStudentReport(id, chkSendModerationNotice.Checked));
+                    sb.Append(_config.GetStudentReport(id, chkSendModerationNotice.Checked));
                 }
                 txtStudentreport.Text = sb.ToString();
 
@@ -142,11 +153,11 @@ namespace StudentsFetcher.StudentMarking
         private void UpdateDocumentsList()
         {
             cmbDocuments.Items.Clear();
-            var stud = Config.GetStudentRow(GetStudentNumber());
+            var stud = _config.GetStudentRow(GetStudentNumber());
             if (stud == null)
                 return;
             var sId = stud["sub_userid"].ToString();
-            var folderName = Config.GetFolderName();
+            var folderName = _config.GetFolderName();
 
 
             // this submission files
@@ -273,12 +284,12 @@ namespace StudentsFetcher.StudentMarking
             txtStudentreport.Text += "Missing report:\r\n";
             txtStudentreport.Text += "==============:\r\n";
             var sql = "SELECT * FROM TB_Submissions";
-            var dt = Config.GetDataTable(sql);
+            var dt = _config.GetDataTable(sql);
             foreach (DataRow r in dt.Rows)
             {
-                var lookForID = r["sub_numericUserId"].ToString();
+                var lookForId = r["sub_numericUserId"].ToString();
 
-                var rEx = new Regex("" + lookForID +@"/(\d)");
+                var rEx = new Regex("" + lookForId +@"/(\d)");
 
                 var bFound = false;
                 foreach (var reqId in allIds)
@@ -291,7 +302,7 @@ namespace StudentsFetcher.StudentMarking
                 }
                 if (!bFound)
                 {
-                    txtStudentreport.Text += lookForID + " (#" + r["sub_ID"] + ") missing\r\n";
+                    txtStudentreport.Text += lookForId + " (#" + r["sub_ID"] + ") missing\r\n";
                 }
             }
         }
@@ -300,7 +311,7 @@ namespace StudentsFetcher.StudentMarking
         {
             txtLibReport.Text = "Submissions:\r\n";
             var sql = "SELECT SCOM_ptr_Submission FROM TB_SubComments where SCOM_ptr_comment = " + m4.Groups[1].Value;
-            var dt = Config.GetDataTable(sql);
+            var dt = _config.GetDataTable(sql);
             foreach (DataRow item in dt.Rows)
             {
                 txtLibReport.Text += item[0] + "\r\n";
@@ -311,7 +322,7 @@ namespace StudentsFetcher.StudentMarking
         {
             txtLibReport.Text = "";
             var sql = "SELECT sub_userid, sub_numericUserId FROM TB_Submissions";
-            var dt = Config.GetDataTable(sql);
+            var dt = _config.GetDataTable(sql);
             foreach (DataRow item in dt.Rows)
             {
                 txtLibReport.Text += item[0] + "\r\n";
@@ -322,14 +333,13 @@ namespace StudentsFetcher.StudentMarking
             {
                 txtLibReport.Text += item[1] + "\r\n";
             }
-
         }
 
         private void GetMarks(Match m)
         {
             // string component = m.Groups[1].ToString();
             var ids = txtLibReport.Text.Split(new[] { "\r\n" }, StringSplitOptions.None);
-            var markgen = Config.GetMarkCalculator();
+            var markgen = _config.GetMarkCalculator();
 
             foreach (var idWithSlash in ids)
             {
@@ -338,7 +348,7 @@ namespace StudentsFetcher.StudentMarking
                 if (idParts.Length == 2)
                 {
                     var id = idParts[0];
-                    result = markgen.GetFinalMark(id, Config).ToString();
+                    result = markgen.GetFinalMark(id, _config).ToString();
                 }
                 txtStudentreport.Text += string.Format("{0}\t{1}\r\n", idWithSlash, result);
             }
@@ -352,14 +362,14 @@ namespace StudentsFetcher.StudentMarking
             var compTitle = m.Groups[3].ToString();
 
             sql = "delete from TB_Components where CPNT_Order = " + compOrder;
-            Config.Execute(sql);
+            _config.Execute(sql);
 
             sql = "insert into TB_Components (CPNT_Order, CPNT_Percent, CPNT_Name) values (" +
                 compOrder + ", " +
                 compPercent + ", " +
                 "'" + compTitle.Trim().Replace("'", "''") + "' " +
                 ")";
-            Config.Execute(sql);
+            _config.Execute(sql);
         }
 
         private void SearchCommentInLibrary()
@@ -397,7 +407,7 @@ namespace StudentsFetcher.StudentMarking
             }
 
             var sb = new StringBuilder();
-            var dt = Config.GetDataTable(sql);
+            var dt = _config.GetDataTable(sql);
             foreach (DataRow item in dt.Rows)
             {
                 sb.AppendFormat("{0}: ({2}/{3})\r\n{1}\r\n\r\n",
@@ -415,7 +425,6 @@ namespace StudentsFetcher.StudentMarking
                 }
             }
             txtLibReport.Text = sb.ToString();
-
         }
 
         private void cmdAdd_Click(object sender, EventArgs e)
@@ -430,7 +439,7 @@ namespace StudentsFetcher.StudentMarking
                 MessageBox.Show("Need student");
                 return;
             }
-            var con = Config.GetConn();
+            var con = _config.GetConn();
 
             string sql;
             var reference = -1;
@@ -438,19 +447,19 @@ namespace StudentsFetcher.StudentMarking
             if (!isok)
             {
                 reference = -1;
-                var c = Config.GetConn();
+                var c = _config.GetConn();
                 c.Open();
                 if (txtTextOrPointer.Text == "")
                 {
-                    reference = Config.ExecuteScalar("SELECT comm_id FROM TB_Comments where comm_text = ''", c);
+                    reference = _config.ExecuteScalar("SELECT comm_id FROM TB_Comments where comm_text = ''", c);
                 }
                 if (reference == -1)
                 {
                     sql = "insert into TB_Comments ([COMM_Section],[COMM_Area],[COMM_Text]) values " +
                         "('" + txtSection.Text.Replace("'", "''") + "','" + txtArea.Text.Replace("'", "''") + "','" + txtTextOrPointer.Text.Replace("'", "''") + "')";
-                    Config.Execute(sql, c);
+                    _config.Execute(sql, c);
 
-                    reference = Config.ExecuteScalar("SELECT last_insert_rowid()", c);
+                    reference = _config.ExecuteScalar("SELECT last_insert_rowid()", c);
                 }
                 c.Close();
             }
@@ -466,7 +475,7 @@ namespace StudentsFetcher.StudentMarking
                     GetComponentComment() + "," +
                     "'" + txtAdditionalNote.Text.Replace("'", "''") + "'" +
                 ")";
-            Config.Execute(sql);
+            _config.Execute(sql);
 
             UpdateStudentReport();
             txtTextOrPointer.Text = "";
@@ -518,8 +527,8 @@ namespace StudentsFetcher.StudentMarking
         {
             if (!File.Exists(txtExcelFileName.Text))
                 return;
-            Config = new ClsConfig();
-            Config.DbName = txtExcelFileName.Text;
+            _config = new ClsConfig();
+            _config.DbName = txtExcelFileName.Text;
             UpdateComponents();
         }
 
@@ -545,7 +554,7 @@ namespace StudentsFetcher.StudentMarking
             // 
             try
             {
-                var dt = Config.GetDataTable("select * from TB_Components order by CPNT_Order");
+                var dt = _config.GetDataTable("select * from TB_Components order by CPNT_Order");
                 foreach (DataRow item in dt.Rows)
                 {
                     var order = Convert.ToInt32(item["CPNT_Order"]);
@@ -643,7 +652,7 @@ namespace StudentsFetcher.StudentMarking
             var sql = "";
             sql = "delete from TB_Marks " +
                   "where MARK_ptr_Submission = " + GetStudentNumber();
-            Config.Execute(sql);
+            _config.Execute(sql);
 
             foreach (var comp in flComponents.Controls)
             {
@@ -661,7 +670,7 @@ namespace StudentsFetcher.StudentMarking
                           markvalue + "," +
                           "datetime('now')" +
                           ")";
-                    Config.Execute(sql);
+                    _config.Execute(sql);
                 }  
             }
             cmdSaveMarks.BackColor = Color.Transparent;
@@ -675,7 +684,7 @@ namespace StudentsFetcher.StudentMarking
             if (cmbDocuments.Text != "")
             {
                 var fullname = Path.Combine(
-                    Config.GetFolderName(),
+                    _config.GetFolderName(),
                     cmbDocuments.Text);
                 Process.Start(fullname);
             }
@@ -705,7 +714,7 @@ namespace StudentsFetcher.StudentMarking
                 return;
             }
             
-            var mcalc = Config.GetMarkCalculator();
+            var mcalc = _config.GetMarkCalculator();
     
             var textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
             var app = new OutlookEmailerLateBinding();
@@ -731,7 +740,7 @@ namespace StudentsFetcher.StudentMarking
 
         private string Emailtext(int iStudentId)
         {
-            var mcalc = Config.GetMarkCalculator();
+            var mcalc = _config.GetMarkCalculator();
             var replacements = GetReplacementList(txtEmailBody.Text);
             DataRow row;
             var emailtext = Emailtext(replacements, iStudentId, mcalc, out row);
@@ -741,17 +750,17 @@ namespace StudentsFetcher.StudentMarking
         private string Emailtext(IEnumerable<string> replacements, int iStudentId, MarksCalculator mcalc, out DataRow row)
         {
             var emailtext = txtEmailBody.Text;
-            row = Config.GetStudentRow(iStudentId);
+            row = _config.GetStudentRow(iStudentId);
             foreach (var item in replacements)
             {
                 var repvalue = "";
                 switch (item)
                 {
                     case "MarkReport":
-                        repvalue = Config.GetStudentReport(iStudentId, chkSendModerationNotice.Checked);
+                        repvalue = _config.GetStudentReport(iStudentId, chkSendModerationNotice.Checked);
                         break;
                     case "FinalMark":
-                        repvalue = mcalc.GetFinalMark(row["SUB_NumericUserId"].ToString(), Config).ToString();
+                        repvalue = mcalc.GetFinalMark(row["SUB_NumericUserId"].ToString(), _config).ToString();
                         break;
                     case "AllMarks":
                     {
@@ -776,11 +785,11 @@ namespace StudentsFetcher.StudentMarking
 
         private void cmdEmailRefreshStudents_Click(object sender, EventArgs e)
         {
-            var mcalc = Config.GetMarkCalculator();
+            var mcalc = _config.GetMarkCalculator();
             lstEmailSendSelection.Items.Clear();
             try
             {
-                var dt = Config.GetDataTable(
+                var dt = _config.GetDataTable(
                     "select  *, " +
                     "(SELECT count(*) FROM tb_marks WHERE mark_ptr_submission=sub_id) as marks, " +
                     "(SELECT count(*) FROM TB_SubComments WHERE scom_ptr_submission=sub_id) as NumComments, " +
@@ -794,7 +803,7 @@ namespace StudentsFetcher.StudentMarking
                     lvi.Tag = Convert.ToInt32(item["SUB_Id"]);
                     lvi.SubItems.Add(item["marks"].ToString()); 
                     var numUID = item["SUB_NumericUserId"].ToString();
-                    lvi.SubItems.Add(mcalc.GetFinalMark(numUID, Config).ToString());
+                    lvi.SubItems.Add(mcalc.GetFinalMark(numUID, _config).ToString());
                     lvi.SubItems.Add(lvi.Tag + " " + item["markDate"]);
                     lvi.SubItems.Add(item["NumComments"].ToString());
                     lvi.SubItems.Add(
@@ -833,7 +842,7 @@ namespace StudentsFetcher.StudentMarking
 
         private void cmdGetData_Click(object sender, EventArgs e)
         {
-            if (!chkImportComponents.Checked && !chkCommentLib.Checked)
+            if (!chkImportComponents.Checked && !chkCommentLib.Checked && !chkImportSubmissions.Checked)
                 return;
 
             var sql = "";
@@ -852,8 +861,14 @@ namespace StudentsFetcher.StudentMarking
                 //Config.Execute(sql);
             }
 
+            if (chkImportSubmissions.Checked)
+            {
+                sql += "insert into TB_Submissions (SUB_LastName, SUB_FirstName, SUB_UserID, SUB_TurnitinUserID, SUB_NumericUserID, SUB_email, SUB_Title, SUB_PaperID, SUB_DateUploaded, SUB_Grade, SUB_Overlap, SUB_InternetOverlap, SUB_PublicationsOverlap, SUB_StudentPapersOverlap) select SUB_LastName, SUB_FirstName, SUB_UserID, SUB_TurnitinUserID, SUB_NumericUserID, SUB_email, SUB_Title, SUB_PaperID, SUB_DateUploaded, SUB_Grade, SUB_Overlap, SUB_InternetOverlap, SUB_PublicationsOverlap, SUB_StudentPapersOverlap from OTHERDB.TB_Submissions; ";
+                //Config.Execute(sql);
+            }
+
             sql += string.Format("DETACH {0}; ", "OTHERDB");
-            Config.Execute(sql);
+            _config.Execute(sql);
 
             txtExcelFileName_TextChanged(null, null);
 
@@ -882,12 +897,12 @@ namespace StudentsFetcher.StudentMarking
         {
             var Groups = new int[10];
 
-            var mcalc = Config.GetMarkCalculator();
+            var mcalc = _config.GetMarkCalculator();
             var sql = "SELECT sub_userid, sub_numericUserId FROM TB_Submissions";
-            var dt = Config.GetDataTable(sql);
+            var dt = _config.GetDataTable(sql);
             foreach (DataRow rw in dt.Rows)
             {
-                var mk = mcalc.GetFinalMark(rw[1].ToString(), Config);
+                var mk = mcalc.GetFinalMark(rw[1].ToString(), _config);
                 var m = mk / 10;
                 Groups[m]++;
             }
@@ -920,7 +935,7 @@ namespace StudentsFetcher.StudentMarking
             }
             iSN += Delta;
             txtStudentId.Text = iSN.ToString();
-            UpdateStudentUI();
+            UpdateStudentUi();
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -944,7 +959,7 @@ namespace StudentsFetcher.StudentMarking
         private void cmdGetImages_Click(object sender, EventArgs e)
         {
             var filesDir = Path.Combine(folder, "Pics");
-            var dt = Config.GetDataTable("SELECT * from tb_submissions");
+            var dt = _config.GetDataTable("SELECT * from tb_submissions");
             var iOk = 0;
             var iErr = 0;
             foreach (DataRow item in dt.Rows)
@@ -999,7 +1014,7 @@ namespace StudentsFetcher.StudentMarking
             {
                 // show picture
                 var iShort = (int)lstEmailSendSelection.SelectedItems[0].Tag;
-                var dt = Config.GetDataTable("SELECT SUB_NumericUserId from tb_submissions where SUB_Id = " + iShort);
+                var dt = _config.GetDataTable("SELECT SUB_NumericUserId from tb_submissions where SUB_Id = " + iShort);
                 if (dt.Rows.Count == 1)
                 {
                     var numeriCuserID = dt.Rows[0][0].ToString();
@@ -1068,14 +1083,14 @@ Claudio
        
         private void cmdOpenOther_Click(object sender, EventArgs e)
         {
-            var fullname = Path.Combine(Config.GetFolderName() + relFolder.Text, cmdCompare.Tag.ToString());
+            var fullname = Path.Combine(_config.GetFolderName() + relFolder.Text, cmdCompare.Tag.ToString());
             Process.Start(fullname);       
         }
 
         private void cmdCompare_Click(object sender, EventArgs e)
         {
-            var com1 = Path.Combine(Config.GetFolderName(), cmbDocuments.Text);
-            var com2 = Path.Combine(Config.GetFolderName() + relFolder.Text, cmdCompare.Tag.ToString());
+            var com1 = Path.Combine(_config.GetFolderName(), cmbDocuments.Text);
+            var com2 = Path.Combine(_config.GetFolderName() + relFolder.Text, cmdCompare.Tag.ToString());
 
             var pars = string.Format("\"{0}\" \"{1}\"", com1, com2);
 
@@ -1119,7 +1134,7 @@ Claudio
                 
                 var uid = row["User ID"].ToString();
 
-                var existing = Config.GetStudentRow(uid);
+                var existing = _config.GetStudentRow(uid);
                 if (existing != null)
                     continue;
 
@@ -1139,7 +1154,7 @@ Claudio
                     //"'" + row["User ID"].ToString().Email.Replace("'", "''") + "'" +
                     ")";
 
-                Config.Execute(sql);
+                _config.Execute(sql);
                 iInserted++;
             }
 
@@ -1151,14 +1166,14 @@ Claudio
         private void cmdGetFiles_Click(object sender, EventArgs e)
         {
 
-            string filesDir = Path.Combine(folder, Config.BareName);
+            string filesDir = Path.Combine(folder, _config.BareName);
             DirectoryInfo d = new DirectoryInfo(filesDir);
             if (!d.Exists)
             {
                 d.Create();
             }
 
-             var dt = Config.GetDataTable(
+             var dt = _config.GetDataTable(
                     "select  * from tb_submissions");
 
             var iCnt = 0;

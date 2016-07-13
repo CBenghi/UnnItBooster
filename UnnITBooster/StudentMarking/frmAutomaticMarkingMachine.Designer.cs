@@ -101,6 +101,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.chkImportSubmissions = new System.Windows.Forms.CheckBox();
             this.cmdGetFiles = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.elpSessionId = new System.Windows.Forms.TextBox();
@@ -153,10 +154,9 @@
             // txtStudentId
             // 
             this.txtStudentId.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtStudentId.Location = new System.Drawing.Point(0, 17);
-            this.txtStudentId.Margin = new System.Windows.Forms.Padding(4);
+            this.txtStudentId.Location = new System.Drawing.Point(0, 13);
             this.txtStudentId.Name = "txtStudentId";
-            this.txtStudentId.Size = new System.Drawing.Size(316, 22);
+            this.txtStudentId.Size = new System.Drawing.Size(236, 20);
             this.txtStudentId.TabIndex = 0;
             this.txtStudentId.TabStop = false;
             this.txtStudentId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtStudentId_KeyDown);
@@ -165,19 +165,17 @@
             // 
             this.txtSearch.Dock = System.Windows.Forms.DockStyle.Top;
             this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearch.Location = new System.Drawing.Point(0, 17);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSearch.Location = new System.Drawing.Point(0, 13);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(301, 34);
+            this.txtSearch.Size = new System.Drawing.Size(225, 29);
             this.txtSearch.TabIndex = 3;
             this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
             // cmdAdd
             // 
-            this.cmdAdd.Location = new System.Drawing.Point(93, 616);
-            this.cmdAdd.Margin = new System.Windows.Forms.Padding(4);
+            this.cmdAdd.Location = new System.Drawing.Point(69, 500);
             this.cmdAdd.Name = "cmdAdd";
-            this.cmdAdd.Size = new System.Drawing.Size(100, 28);
+            this.cmdAdd.Size = new System.Drawing.Size(75, 23);
             this.cmdAdd.TabIndex = 13;
             this.cmdAdd.TabStop = false;
             this.cmdAdd.Text = "Add";
@@ -188,12 +186,11 @@
             // 
             this.txtLibReport.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtLibReport.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLibReport.Location = new System.Drawing.Point(0, 51);
-            this.txtLibReport.Margin = new System.Windows.Forms.Padding(4);
+            this.txtLibReport.Location = new System.Drawing.Point(0, 42);
             this.txtLibReport.Multiline = true;
             this.txtLibReport.Name = "txtLibReport";
             this.txtLibReport.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLibReport.Size = new System.Drawing.Size(301, 488);
+            this.txtLibReport.Size = new System.Drawing.Size(225, 394);
             this.txtLibReport.TabIndex = 2;
             this.txtLibReport.TabStop = false;
             this.txtLibReport.Text = "ctrl+up is spell check";
@@ -201,8 +198,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(4, 4);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
+            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -215,17 +211,16 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1073, 666);
-            this.splitContainer1.SplitterDistance = 316;
-            this.splitContainer1.SplitterWidth = 5;
+            this.splitContainer1.Size = new System.Drawing.Size(803, 539);
+            this.splitContainer1.SplitterDistance = 236;
             this.splitContainer1.TabIndex = 8;
             this.splitContainer1.TabStop = false;
             // 
             // splitContainer4
             // 
             this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer4.Location = new System.Drawing.Point(0, 70);
-            this.splitContainer4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.splitContainer4.Location = new System.Drawing.Point(0, 58);
+            this.splitContainer4.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer4.Name = "splitContainer4";
             this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -237,8 +232,9 @@
             // 
             this.splitContainer4.Panel2.Controls.Add(this.cmdSaveMarks);
             this.splitContainer4.Panel2.Controls.Add(this.flComponents);
-            this.splitContainer4.Size = new System.Drawing.Size(316, 596);
-            this.splitContainer4.SplitterDistance = 267;
+            this.splitContainer4.Size = new System.Drawing.Size(236, 481);
+            this.splitContainer4.SplitterDistance = 215;
+            this.splitContainer4.SplitterWidth = 3;
             this.splitContainer4.TabIndex = 15;
             // 
             // txtStudentreport
@@ -248,11 +244,11 @@
             this.txtStudentreport.ChangedColour = System.Drawing.Color.Empty;
             this.txtStudentreport.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtStudentreport.Location = new System.Drawing.Point(0, 0);
-            this.txtStudentreport.Margin = new System.Windows.Forms.Padding(5);
+            this.txtStudentreport.Margin = new System.Windows.Forms.Padding(4);
             this.txtStudentreport.MaxLength = 0;
             this.txtStudentreport.Name = "txtStudentreport";
             this.txtStudentreport.OriginalText = "";
-            this.txtStudentreport.Size = new System.Drawing.Size(316, 267);
+            this.txtStudentreport.Size = new System.Drawing.Size(236, 215);
             this.txtStudentreport.SpellCheck = true;
             this.txtStudentreport.TabIndex = 3;
             this.txtStudentreport.TabStop = false;
@@ -263,10 +259,9 @@
             // cmdSaveMarks
             // 
             this.cmdSaveMarks.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.cmdSaveMarks.Location = new System.Drawing.Point(0, 298);
-            this.cmdSaveMarks.Margin = new System.Windows.Forms.Padding(4);
+            this.cmdSaveMarks.Location = new System.Drawing.Point(0, 241);
             this.cmdSaveMarks.Name = "cmdSaveMarks";
-            this.cmdSaveMarks.Size = new System.Drawing.Size(316, 27);
+            this.cmdSaveMarks.Size = new System.Drawing.Size(236, 22);
             this.cmdSaveMarks.TabIndex = 6;
             this.cmdSaveMarks.Text = "Ok";
             this.cmdSaveMarks.UseVisualStyleBackColor = true;
@@ -277,9 +272,9 @@
             this.flComponents.AutoScroll = true;
             this.flComponents.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flComponents.Location = new System.Drawing.Point(0, 0);
-            this.flComponents.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.flComponents.Margin = new System.Windows.Forms.Padding(2);
             this.flComponents.Name = "flComponents";
-            this.flComponents.Size = new System.Drawing.Size(316, 325);
+            this.flComponents.Size = new System.Drawing.Size(236, 263);
             this.flComponents.TabIndex = 13;
             // 
             // panel2
@@ -287,19 +282,19 @@
             this.panel2.Controls.Add(this.button6);
             this.panel2.Controls.Add(this.button5);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 39);
-            this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel2.Location = new System.Drawing.Point(0, 33);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(316, 31);
+            this.panel2.Size = new System.Drawing.Size(236, 25);
             this.panel2.TabIndex = 17;
             // 
             // button6
             // 
             this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.Location = new System.Drawing.Point(156, 2);
-            this.button6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button6.Location = new System.Drawing.Point(116, 2);
+            this.button6.Margin = new System.Windows.Forms.Padding(2);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.Size = new System.Drawing.Size(56, 19);
             this.button6.TabIndex = 0;
             this.button6.Text = "-";
             this.button6.UseVisualStyleBackColor = true;
@@ -308,10 +303,10 @@
             // button5
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Location = new System.Drawing.Point(237, 2);
-            this.button5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button5.Location = new System.Drawing.Point(177, 2);
+            this.button5.Margin = new System.Windows.Forms.Padding(2);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.Size = new System.Drawing.Size(56, 19);
             this.button5.TabIndex = 1;
             this.button5.Text = "+";
             this.button5.UseVisualStyleBackColor = true;
@@ -322,9 +317,8 @@
             this.label6.AutoSize = true;
             this.label6.Dock = System.Windows.Forms.DockStyle.Top;
             this.label6.Location = new System.Drawing.Point(0, 0);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(61, 17);
+            this.label6.Size = new System.Drawing.Size(47, 13);
             this.label6.TabIndex = 12;
             this.label6.Text = "Student:";
             // 
@@ -332,7 +326,6 @@
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer2.Name = "splitContainer2";
             // 
             // splitContainer2.Panel1
@@ -346,9 +339,8 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel1);
             this.splitContainer2.Panel2.Controls.Add(this.label7);
-            this.splitContainer2.Size = new System.Drawing.Size(752, 666);
-            this.splitContainer2.SplitterDistance = 301;
-            this.splitContainer2.SplitterWidth = 5;
+            this.splitContainer2.Size = new System.Drawing.Size(563, 539);
+            this.splitContainer2.SplitterDistance = 225;
             this.splitContainer2.TabIndex = 0;
             this.splitContainer2.TabStop = false;
             // 
@@ -357,9 +349,8 @@
             this.label8.AutoSize = true;
             this.label8.Dock = System.Windows.Forms.DockStyle.Top;
             this.label8.Location = new System.Drawing.Point(0, 0);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(57, 17);
+            this.label8.Size = new System.Drawing.Size(44, 13);
             this.label8.TabIndex = 14;
             this.label8.Text = "Search:";
             // 
@@ -371,11 +362,9 @@
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.cmbDocuments);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox2.Location = new System.Drawing.Point(0, 539);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Location = new System.Drawing.Point(0, 436);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(301, 127);
+            this.groupBox2.Size = new System.Drawing.Size(225, 103);
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Documents downloaded";
@@ -383,10 +372,9 @@
             // cmdOpenOther
             // 
             this.cmdOpenOther.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdOpenOther.Location = new System.Drawing.Point(113, 54);
-            this.cmdOpenOther.Margin = new System.Windows.Forms.Padding(4);
+            this.cmdOpenOther.Location = new System.Drawing.Point(84, 44);
             this.cmdOpenOther.Name = "cmdOpenOther";
-            this.cmdOpenOther.Size = new System.Drawing.Size(87, 28);
+            this.cmdOpenOther.Size = new System.Drawing.Size(65, 23);
             this.cmdOpenOther.TabIndex = 5;
             this.cmdOpenOther.Text = "Other";
             this.cmdOpenOther.UseVisualStyleBackColor = true;
@@ -396,20 +384,18 @@
             // 
             this.relFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.relFolder.Location = new System.Drawing.Point(16, 57);
-            this.relFolder.Margin = new System.Windows.Forms.Padding(4);
+            this.relFolder.Location = new System.Drawing.Point(12, 46);
             this.relFolder.Name = "relFolder";
-            this.relFolder.Size = new System.Drawing.Size(88, 22);
+            this.relFolder.Size = new System.Drawing.Size(66, 20);
             this.relFolder.TabIndex = 4;
             this.relFolder.Text = "\\..\\1\\";
             // 
             // cmdCompare
             // 
             this.cmdCompare.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdCompare.Location = new System.Drawing.Point(208, 54);
-            this.cmdCompare.Margin = new System.Windows.Forms.Padding(4);
+            this.cmdCompare.Location = new System.Drawing.Point(155, 44);
             this.cmdCompare.Name = "cmdCompare";
-            this.cmdCompare.Size = new System.Drawing.Size(87, 28);
+            this.cmdCompare.Size = new System.Drawing.Size(65, 23);
             this.cmdCompare.TabIndex = 3;
             this.cmdCompare.Text = "Compare";
             this.cmdCompare.UseVisualStyleBackColor = true;
@@ -418,10 +404,9 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(208, 90);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Location = new System.Drawing.Point(155, 73);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(87, 28);
+            this.button2.Size = new System.Drawing.Size(65, 23);
             this.button2.TabIndex = 2;
             this.button2.Text = "Open";
             this.button2.UseVisualStyleBackColor = true;
@@ -433,10 +418,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbDocuments.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDocuments.FormattingEnabled = true;
-            this.cmbDocuments.Location = new System.Drawing.Point(16, 23);
-            this.cmbDocuments.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbDocuments.Location = new System.Drawing.Point(12, 19);
             this.cmbDocuments.Name = "cmbDocuments";
-            this.cmbDocuments.Size = new System.Drawing.Size(276, 24);
+            this.cmbDocuments.Size = new System.Drawing.Size(207, 21);
             this.cmbDocuments.TabIndex = 0;
             this.cmbDocuments.TabStop = false;
             // 
@@ -457,8 +441,7 @@
             this.tableLayoutPanel1.Controls.Add(this.cmdAdd, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.cmbComponentComment, 1, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 17);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 13);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -467,17 +450,16 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(446, 649);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(334, 526);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
             // label4
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(4, 556);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(3, 450);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(38, 17);
+            this.label4.Size = new System.Drawing.Size(29, 13);
             this.label4.TabIndex = 19;
             this.label4.Text = "Area";
             // 
@@ -485,10 +467,9 @@
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 526);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(3, 424);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 17);
+            this.label3.Size = new System.Drawing.Size(43, 13);
             this.label3.TabIndex = 18;
             this.label3.Text = "Section";
             // 
@@ -496,10 +477,9 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 373);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(3, 300);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(76, 34);
+            this.label2.Size = new System.Drawing.Size(58, 26);
             this.label2.TabIndex = 17;
             this.label2.Text = "subcomment";
             this.label2.Click += new System.EventHandler(this.label2_Click);
@@ -513,12 +493,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTextOrPointer.ChangedColour = System.Drawing.Color.Empty;
             this.txtTextOrPointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTextOrPointer.Location = new System.Drawing.Point(96, 6);
-            this.txtTextOrPointer.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.txtTextOrPointer.Location = new System.Drawing.Point(71, 5);
+            this.txtTextOrPointer.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtTextOrPointer.MaxLength = 0;
             this.txtTextOrPointer.Name = "txtTextOrPointer";
             this.txtTextOrPointer.OriginalText = "";
-            this.txtTextOrPointer.Size = new System.Drawing.Size(343, 248);
+            this.txtTextOrPointer.Size = new System.Drawing.Size(258, 199);
             this.txtTextOrPointer.SpellCheck = true;
             this.txtTextOrPointer.TabIndex = 4;
             this.txtTextOrPointer.TextCase = System.Windows.Forms.CharacterCasing.Normal;
@@ -536,12 +516,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAdditionalNote.ChangedColour = System.Drawing.Color.Empty;
             this.txtAdditionalNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAdditionalNote.Location = new System.Drawing.Point(96, 266);
-            this.txtAdditionalNote.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.txtAdditionalNote.Location = new System.Drawing.Point(71, 214);
+            this.txtAdditionalNote.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtAdditionalNote.MaxLength = 0;
             this.txtAdditionalNote.Name = "txtAdditionalNote";
             this.txtAdditionalNote.OriginalText = "";
-            this.txtAdditionalNote.Size = new System.Drawing.Size(343, 248);
+            this.txtAdditionalNote.Size = new System.Drawing.Size(258, 199);
             this.txtAdditionalNote.SpellCheck = true;
             this.txtAdditionalNote.TabIndex = 5;
             this.txtAdditionalNote.TextCase = System.Windows.Forms.CharacterCasing.Normal;
@@ -554,10 +534,9 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 121);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(3, 98);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 17);
+            this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 10;
             this.label1.Text = "ptr/text";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -565,20 +544,18 @@
             // txtSection
             // 
             this.txtSection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSection.Location = new System.Drawing.Point(93, 524);
-            this.txtSection.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSection.Location = new System.Drawing.Point(69, 421);
             this.txtSection.Name = "txtSection";
-            this.txtSection.Size = new System.Drawing.Size(349, 22);
+            this.txtSection.Size = new System.Drawing.Size(262, 20);
             this.txtSection.TabIndex = 11;
             this.txtSection.TabStop = false;
             // 
             // txtArea
             // 
             this.txtArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtArea.Location = new System.Drawing.Point(93, 554);
-            this.txtArea.Margin = new System.Windows.Forms.Padding(4);
+            this.txtArea.Location = new System.Drawing.Point(69, 447);
             this.txtArea.Name = "txtArea";
-            this.txtArea.Size = new System.Drawing.Size(349, 22);
+            this.txtArea.Size = new System.Drawing.Size(262, 20);
             this.txtArea.TabIndex = 12;
             this.txtArea.TabStop = false;
             // 
@@ -586,10 +563,9 @@
             // 
             this.label11.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(4, 587);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Location = new System.Drawing.Point(3, 477);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(55, 17);
+            this.label11.Size = new System.Drawing.Size(43, 13);
             this.label11.TabIndex = 20;
             this.label11.Text = "Section";
             // 
@@ -599,10 +575,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbComponentComment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbComponentComment.FormattingEnabled = true;
-            this.cmbComponentComment.Location = new System.Drawing.Point(93, 584);
-            this.cmbComponentComment.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbComponentComment.Location = new System.Drawing.Point(69, 473);
             this.cmbComponentComment.Name = "cmbComponentComment";
-            this.cmbComponentComment.Size = new System.Drawing.Size(349, 24);
+            this.cmbComponentComment.Size = new System.Drawing.Size(262, 21);
             this.cmbComponentComment.TabIndex = 21;
             this.cmbComponentComment.TabStop = false;
             // 
@@ -611,19 +586,17 @@
             this.label7.AutoSize = true;
             this.label7.Dock = System.Windows.Forms.DockStyle.Top;
             this.label7.Location = new System.Drawing.Point(0, 0);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(67, 17);
+            this.label7.Size = new System.Drawing.Size(51, 13);
             this.label7.TabIndex = 13;
             this.label7.Text = "Comment";
             // 
             // cmdSelectFile
             // 
             this.cmdSelectFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdSelectFile.Location = new System.Drawing.Point(1013, 6);
-            this.cmdSelectFile.Margin = new System.Windows.Forms.Padding(4);
+            this.cmdSelectFile.Location = new System.Drawing.Point(760, 5);
             this.cmdSelectFile.Name = "cmdSelectFile";
-            this.cmdSelectFile.Size = new System.Drawing.Size(32, 27);
+            this.cmdSelectFile.Size = new System.Drawing.Size(24, 22);
             this.cmdSelectFile.TabIndex = 10;
             this.cmdSelectFile.TabStop = false;
             this.cmdSelectFile.Text = "...";
@@ -633,11 +606,10 @@
             // txtExcelFileName
             // 
             this.txtExcelFileName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtExcelFileName.Location = new System.Drawing.Point(84, 6);
-            this.txtExcelFileName.Margin = new System.Windows.Forms.Padding(4);
+            this.txtExcelFileName.Location = new System.Drawing.Point(63, 5);
             this.txtExcelFileName.Multiline = true;
             this.txtExcelFileName.Name = "txtExcelFileName";
-            this.txtExcelFileName.Size = new System.Drawing.Size(921, 26);
+            this.txtExcelFileName.Size = new System.Drawing.Size(691, 22);
             this.txtExcelFileName.TabIndex = 9;
             this.txtExcelFileName.TabStop = false;
             this.txtExcelFileName.TextChanged += new System.EventHandler(this.txtExcelFileName_TextChanged);
@@ -645,10 +617,9 @@
             // cmdReload
             // 
             this.cmdReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdReload.Location = new System.Drawing.Point(1053, 6);
-            this.cmdReload.Margin = new System.Windows.Forms.Padding(4);
+            this.cmdReload.Location = new System.Drawing.Point(790, 5);
             this.cmdReload.Name = "cmdReload";
-            this.cmdReload.Size = new System.Drawing.Size(32, 27);
+            this.cmdReload.Size = new System.Drawing.Size(24, 22);
             this.cmdReload.TabIndex = 12;
             this.cmdReload.TabStop = false;
             this.cmdReload.Text = "R";
@@ -659,10 +630,9 @@
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 11);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(3, 9);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 17);
+            this.label5.Size = new System.Drawing.Size(42, 13);
             this.label5.TabIndex = 11;
             this.label5.Text = "SQLite ";
             this.label5.Click += new System.EventHandler(this.label5_Click);
@@ -677,21 +647,19 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 39);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControl1.Location = new System.Drawing.Point(0, 32);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1089, 703);
+            this.tabControl1.Size = new System.Drawing.Size(817, 571);
             this.tabControl1.TabIndex = 12;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.splitContainer1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(1081, 674);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(809, 545);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Marking";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -699,11 +667,10 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.splitContainer3);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(1081, 674);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(809, 545);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Emailing";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -711,8 +678,7 @@
             // splitContainer3
             // 
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer3.Location = new System.Drawing.Point(4, 4);
-            this.splitContainer3.Margin = new System.Windows.Forms.Padding(4);
+            this.splitContainer3.Location = new System.Drawing.Point(3, 3);
             this.splitContainer3.Name = "splitContainer3";
             // 
             // splitContainer3.Panel1
@@ -722,16 +688,15 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.tableLayoutPanel3);
-            this.splitContainer3.Size = new System.Drawing.Size(1073, 666);
-            this.splitContainer3.SplitterDistance = 431;
-            this.splitContainer3.SplitterWidth = 5;
+            this.splitContainer3.Size = new System.Drawing.Size(803, 539);
+            this.splitContainer3.SplitterDistance = 322;
             this.splitContainer3.TabIndex = 3;
             // 
             // splitContainer5
             // 
             this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer5.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.splitContainer5.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer5.Name = "splitContainer5";
             this.splitContainer5.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -743,8 +708,9 @@
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.StudImage);
-            this.splitContainer5.Size = new System.Drawing.Size(431, 666);
-            this.splitContainer5.SplitterDistance = 329;
+            this.splitContainer5.Size = new System.Drawing.Size(322, 539);
+            this.splitContainer5.SplitterDistance = 266;
+            this.splitContainer5.SplitterWidth = 3;
             this.splitContainer5.TabIndex = 14;
             // 
             // lstEmailSendSelection
@@ -760,10 +726,9 @@
             this.lstEmailSendSelection.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstEmailSendSelection.FullRowSelect = true;
             this.lstEmailSendSelection.GridLines = true;
-            this.lstEmailSendSelection.Location = new System.Drawing.Point(0, 37);
-            this.lstEmailSendSelection.Margin = new System.Windows.Forms.Padding(4);
+            this.lstEmailSendSelection.Location = new System.Drawing.Point(0, 30);
             this.lstEmailSendSelection.Name = "lstEmailSendSelection";
-            this.lstEmailSendSelection.Size = new System.Drawing.Size(431, 292);
+            this.lstEmailSendSelection.Size = new System.Drawing.Size(322, 236);
             this.lstEmailSendSelection.TabIndex = 3;
             this.lstEmailSendSelection.UseCompatibleStateImageBehavior = false;
             this.lstEmailSendSelection.View = System.Windows.Forms.View.Details;
@@ -807,22 +772,21 @@
             this.tableLayoutPanel2.Controls.Add(this.cmdSelectAll, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(431, 37);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(322, 30);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // cmdEmailRefreshStudents
             // 
             this.cmdEmailRefreshStudents.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdEmailRefreshStudents.Location = new System.Drawing.Point(4, 4);
-            this.cmdEmailRefreshStudents.Margin = new System.Windows.Forms.Padding(4);
+            this.cmdEmailRefreshStudents.Location = new System.Drawing.Point(3, 3);
             this.cmdEmailRefreshStudents.Name = "cmdEmailRefreshStudents";
-            this.cmdEmailRefreshStudents.Size = new System.Drawing.Size(135, 28);
+            this.cmdEmailRefreshStudents.Size = new System.Drawing.Size(101, 23);
             this.cmdEmailRefreshStudents.TabIndex = 2;
             this.cmdEmailRefreshStudents.Text = "Refresh";
             this.cmdEmailRefreshStudents.UseVisualStyleBackColor = true;
@@ -832,10 +796,9 @@
             // 
             this.cmdGetImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdGetImages.Location = new System.Drawing.Point(290, 4);
-            this.cmdGetImages.Margin = new System.Windows.Forms.Padding(4);
+            this.cmdGetImages.Location = new System.Drawing.Point(217, 3);
             this.cmdGetImages.Name = "cmdGetImages";
-            this.cmdGetImages.Size = new System.Drawing.Size(137, 28);
+            this.cmdGetImages.Size = new System.Drawing.Size(102, 23);
             this.cmdGetImages.TabIndex = 5;
             this.cmdGetImages.Text = "Img";
             this.cmdGetImages.UseVisualStyleBackColor = true;
@@ -845,10 +808,9 @@
             // 
             this.cmdSelectAll.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdSelectAll.Location = new System.Drawing.Point(147, 4);
-            this.cmdSelectAll.Margin = new System.Windows.Forms.Padding(4);
+            this.cmdSelectAll.Location = new System.Drawing.Point(110, 3);
             this.cmdSelectAll.Name = "cmdSelectAll";
-            this.cmdSelectAll.Size = new System.Drawing.Size(135, 28);
+            this.cmdSelectAll.Size = new System.Drawing.Size(101, 23);
             this.cmdSelectAll.TabIndex = 4;
             this.cmdSelectAll.Text = "All";
             this.cmdSelectAll.UseVisualStyleBackColor = true;
@@ -858,9 +820,9 @@
             // 
             this.StudImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StudImage.Location = new System.Drawing.Point(0, 0);
-            this.StudImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.StudImage.Margin = new System.Windows.Forms.Padding(2);
             this.StudImage.Name = "StudImage";
-            this.StudImage.Size = new System.Drawing.Size(431, 333);
+            this.StudImage.Size = new System.Drawing.Size(322, 270);
             this.StudImage.TabIndex = 13;
             this.StudImage.TabStop = false;
             // 
@@ -877,14 +839,14 @@
             this.tableLayoutPanel3.Controls.Add(this.chkEmailDryRun, 0, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 4;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(637, 666);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(477, 539);
             this.tableLayoutPanel3.TabIndex = 8;
             // 
             // tabControl2
@@ -895,11 +857,11 @@
             this.tableLayoutPanel3.SetColumnSpan(this.tabControl2, 2);
             this.tabControl2.Controls.Add(this.tabPage4);
             this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Location = new System.Drawing.Point(3, 94);
-            this.tabControl2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabControl2.Location = new System.Drawing.Point(2, 77);
+            this.tabControl2.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(631, 570);
+            this.tabControl2.Size = new System.Drawing.Size(473, 460);
             this.tabControl2.TabIndex = 7;
             // 
             // tabPage4
@@ -907,11 +869,11 @@
             this.tabPage4.Controls.Add(this.button1);
             this.tabPage4.Controls.Add(this.cmdSaveEmail);
             this.tabPage4.Controls.Add(this.txtEmailBody);
-            this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage4.Size = new System.Drawing.Size(623, 541);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage4.Size = new System.Drawing.Size(465, 434);
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "Template";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -919,10 +881,9 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(7, 506);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Location = new System.Drawing.Point(5, 410);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(172, 28);
+            this.button1.Size = new System.Drawing.Size(129, 23);
             this.button1.TabIndex = 9;
             this.button1.Text = "Default";
             this.button1.UseVisualStyleBackColor = true;
@@ -931,10 +892,9 @@
             // cmdSaveEmail
             // 
             this.cmdSaveEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdSaveEmail.Location = new System.Drawing.Point(187, 506);
-            this.cmdSaveEmail.Margin = new System.Windows.Forms.Padding(4);
+            this.cmdSaveEmail.Location = new System.Drawing.Point(140, 410);
             this.cmdSaveEmail.Name = "cmdSaveEmail";
-            this.cmdSaveEmail.Size = new System.Drawing.Size(172, 28);
+            this.cmdSaveEmail.Size = new System.Drawing.Size(129, 23);
             this.cmdSaveEmail.TabIndex = 8;
             this.cmdSaveEmail.Text = "Save";
             this.cmdSaveEmail.UseVisualStyleBackColor = true;
@@ -949,12 +909,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEmailBody.ChangedColour = System.Drawing.Color.Empty;
             this.txtEmailBody.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmailBody.Location = new System.Drawing.Point(5, 9);
-            this.txtEmailBody.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.txtEmailBody.Location = new System.Drawing.Point(4, 7);
+            this.txtEmailBody.Margin = new System.Windows.Forms.Padding(6);
             this.txtEmailBody.MaxLength = 0;
             this.txtEmailBody.Name = "txtEmailBody";
             this.txtEmailBody.OriginalText = "";
-            this.txtEmailBody.Size = new System.Drawing.Size(610, 486);
+            this.txtEmailBody.Size = new System.Drawing.Size(458, 394);
             this.txtEmailBody.SpellCheck = true;
             this.txtEmailBody.TabIndex = 6;
             this.txtEmailBody.TabStop = false;
@@ -965,11 +925,11 @@
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.txtEmailPreview);
-            this.tabPage5.Location = new System.Drawing.Point(4, 25);
-            this.tabPage5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage5.Size = new System.Drawing.Size(539, 473);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage5.Size = new System.Drawing.Size(465, 434);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "Output";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -980,12 +940,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEmailPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmailPreview.Location = new System.Drawing.Point(7, 7);
-            this.txtEmailPreview.Margin = new System.Windows.Forms.Padding(4);
+            this.txtEmailPreview.Location = new System.Drawing.Point(5, 6);
             this.txtEmailPreview.Multiline = true;
             this.txtEmailPreview.Name = "txtEmailPreview";
             this.txtEmailPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtEmailPreview.Size = new System.Drawing.Size(527, 452);
+            this.txtEmailPreview.Size = new System.Drawing.Size(459, 423);
             this.txtEmailPreview.TabIndex = 7;
             this.txtEmailPreview.TabStop = false;
             this.txtEmailPreview.Text = "Dear {SUB_FirstName}, \r\nThe marking and moderation process for BE1178 has been co" +
@@ -995,10 +954,9 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(186, 63);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
+            this.button3.Location = new System.Drawing.Point(144, 52);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(447, 25);
+            this.button3.Size = new System.Drawing.Size(330, 20);
             this.button3.TabIndex = 0;
             this.button3.Text = "Send";
             this.button3.UseVisualStyleBackColor = true;
@@ -1007,10 +965,9 @@
             // chkSendModerationNotice
             // 
             this.chkSendModerationNotice.AutoSize = true;
-            this.chkSendModerationNotice.Location = new System.Drawing.Point(4, 63);
-            this.chkSendModerationNotice.Margin = new System.Windows.Forms.Padding(4);
+            this.chkSendModerationNotice.Location = new System.Drawing.Point(3, 52);
             this.chkSendModerationNotice.Name = "chkSendModerationNotice";
-            this.chkSendModerationNotice.Size = new System.Drawing.Size(174, 21);
+            this.chkSendModerationNotice.Size = new System.Drawing.Size(135, 17);
             this.chkSendModerationNotice.TabIndex = 5;
             this.chkSendModerationNotice.Text = "Add Moderation Notice";
             this.chkSendModerationNotice.UseVisualStyleBackColor = true;
@@ -1019,20 +976,18 @@
             // 
             this.txtEmailSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtEmailSubject.Location = new System.Drawing.Point(186, 4);
-            this.txtEmailSubject.Margin = new System.Windows.Forms.Padding(4);
+            this.txtEmailSubject.Location = new System.Drawing.Point(144, 3);
             this.txtEmailSubject.Name = "txtEmailSubject";
-            this.txtEmailSubject.Size = new System.Drawing.Size(447, 22);
+            this.txtEmailSubject.Size = new System.Drawing.Size(330, 20);
             this.txtEmailSubject.TabIndex = 3;
             // 
             // label10
             // 
             this.label10.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(4, 6);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Location = new System.Drawing.Point(3, 6);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(55, 17);
+            this.label10.Size = new System.Drawing.Size(43, 13);
             this.label10.TabIndex = 2;
             this.label10.Text = "Subject";
             // 
@@ -1041,10 +996,9 @@
             this.chkEmailDryRun.AutoSize = true;
             this.chkEmailDryRun.Checked = true;
             this.chkEmailDryRun.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkEmailDryRun.Location = new System.Drawing.Point(4, 34);
-            this.chkEmailDryRun.Margin = new System.Windows.Forms.Padding(4);
+            this.chkEmailDryRun.Location = new System.Drawing.Point(3, 29);
             this.chkEmailDryRun.Name = "chkEmailDryRun";
-            this.chkEmailDryRun.Size = new System.Drawing.Size(82, 21);
+            this.chkEmailDryRun.Size = new System.Drawing.Size(65, 17);
             this.chkEmailDryRun.TabIndex = 4;
             this.chkEmailDryRun.Text = "Dry Run";
             this.chkEmailDryRun.UseVisualStyleBackColor = true;
@@ -1054,21 +1008,21 @@
             this.tabPage3.Controls.Add(this.button4);
             this.tabPage3.Controls.Add(this.zedGraphControl1);
             this.tabPage3.Controls.Add(this.groupBox3);
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage3.Size = new System.Drawing.Size(1081, 674);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage3.Size = new System.Drawing.Size(809, 545);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Tools";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(8, 231);
-            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button4.Location = new System.Drawing.Point(6, 219);
+            this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 69);
+            this.button4.Size = new System.Drawing.Size(56, 56);
             this.button4.TabIndex = 19;
             this.button4.Text = "Marks chart";
             this.button4.UseVisualStyleBackColor = true;
@@ -1079,8 +1033,8 @@
             this.zedGraphControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.zedGraphControl1.Location = new System.Drawing.Point(88, 231);
-            this.zedGraphControl1.Margin = new System.Windows.Forms.Padding(5);
+            this.zedGraphControl1.Location = new System.Drawing.Point(66, 219);
+            this.zedGraphControl1.Margin = new System.Windows.Forms.Padding(4);
             this.zedGraphControl1.Name = "zedGraphControl1";
             this.zedGraphControl1.ScrollGrace = 0D;
             this.zedGraphControl1.ScrollMaxX = 0D;
@@ -1089,12 +1043,13 @@
             this.zedGraphControl1.ScrollMinX = 0D;
             this.zedGraphControl1.ScrollMinY = 0D;
             this.zedGraphControl1.ScrollMinY2 = 0D;
-            this.zedGraphControl1.Size = new System.Drawing.Size(983, 408);
+            this.zedGraphControl1.Size = new System.Drawing.Size(737, 301);
             this.zedGraphControl1.TabIndex = 18;
             this.zedGraphControl1.UseExtendedPrintDialog = true;
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.chkImportSubmissions);
             this.groupBox3.Controls.Add(this.cmdGetFiles);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.elpSessionId);
@@ -1106,23 +1061,33 @@
             this.groupBox3.Controls.Add(this.txtSourceDataFile);
             this.groupBox3.Controls.Add(this.cmdSourceDataFile);
             this.groupBox3.Controls.Add(this.lblSourceData);
-            this.groupBox3.Location = new System.Drawing.Point(8, 15);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox3.Location = new System.Drawing.Point(6, 12);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox3.Size = new System.Drawing.Size(925, 213);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox3.Size = new System.Drawing.Size(694, 201);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Import data";
+            // 
+            // chkImportSubmissions
+            // 
+            this.chkImportSubmissions.AutoSize = true;
+            this.chkImportSubmissions.Location = new System.Drawing.Point(106, 127);
+            this.chkImportSubmissions.Margin = new System.Windows.Forms.Padding(2);
+            this.chkImportSubmissions.Name = "chkImportSubmissions";
+            this.chkImportSubmissions.Size = new System.Drawing.Size(114, 17);
+            this.chkImportSubmissions.TabIndex = 23;
+            this.chkImportSubmissions.Text = "Import submissions";
+            this.chkImportSubmissions.UseVisualStyleBackColor = true;
             // 
             // cmdGetFiles
             // 
             this.cmdGetFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdGetFiles.Enabled = false;
-            this.cmdGetFiles.Location = new System.Drawing.Point(615, 158);
-            this.cmdGetFiles.Margin = new System.Windows.Forms.Padding(4);
+            this.cmdGetFiles.Location = new System.Drawing.Point(461, 85);
             this.cmdGetFiles.Name = "cmdGetFiles";
-            this.cmdGetFiles.Size = new System.Drawing.Size(284, 28);
+            this.cmdGetFiles.Size = new System.Drawing.Size(213, 23);
             this.cmdGetFiles.TabIndex = 22;
             this.cmdGetFiles.Text = "Get available files";
             this.cmdGetFiles.UseVisualStyleBackColor = true;
@@ -1131,10 +1096,9 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(617, 107);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Location = new System.Drawing.Point(463, 40);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(97, 17);
+            this.label9.Size = new System.Drawing.Size(74, 13);
             this.label9.TabIndex = 21;
             this.label9.Text = "Elp session ID";
             // 
@@ -1142,20 +1106,19 @@
             // 
             this.elpSessionId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.elpSessionId.Location = new System.Drawing.Point(615, 128);
-            this.elpSessionId.Margin = new System.Windows.Forms.Padding(4);
+            this.elpSessionId.Location = new System.Drawing.Point(461, 57);
             this.elpSessionId.Multiline = true;
             this.elpSessionId.Name = "elpSessionId";
-            this.elpSessionId.Size = new System.Drawing.Size(284, 26);
+            this.elpSessionId.Size = new System.Drawing.Size(214, 22);
             this.elpSessionId.TabIndex = 20;
             this.elpSessionId.TextChanged += new System.EventHandler(this.elpSessionId_TextChanged);
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(615, 17);
-            this.button7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button7.Location = new System.Drawing.Point(461, 14);
+            this.button7.Margin = new System.Windows.Forms.Padding(2);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(284, 32);
+            this.button7.Size = new System.Drawing.Size(213, 26);
             this.button7.TabIndex = 19;
             this.button7.Text = "Get more submissions (from excel)";
             this.button7.UseVisualStyleBackColor = true;
@@ -1163,10 +1126,10 @@
             // 
             // btnCompleteData
             // 
-            this.btnCompleteData.Location = new System.Drawing.Point(615, 53);
-            this.btnCompleteData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCompleteData.Location = new System.Drawing.Point(461, 128);
+            this.btnCompleteData.Margin = new System.Windows.Forms.Padding(2);
             this.btnCompleteData.Name = "btnCompleteData";
-            this.btnCompleteData.Size = new System.Drawing.Size(284, 32);
+            this.btnCompleteData.Size = new System.Drawing.Size(213, 26);
             this.btnCompleteData.TabIndex = 18;
             this.btnCompleteData.Text = "Complete student data (not impl.)";
             this.btnCompleteData.UseVisualStyleBackColor = true;
@@ -1175,20 +1138,20 @@
             // chkImportComponents
             // 
             this.chkImportComponents.AutoSize = true;
-            this.chkImportComponents.Location = new System.Drawing.Point(141, 130);
-            this.chkImportComponents.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.chkImportComponents.Location = new System.Drawing.Point(106, 106);
+            this.chkImportComponents.Margin = new System.Windows.Forms.Padding(2);
             this.chkImportComponents.Name = "chkImportComponents";
-            this.chkImportComponents.Size = new System.Drawing.Size(185, 21);
+            this.chkImportComponents.Size = new System.Drawing.Size(142, 17);
             this.chkImportComponents.TabIndex = 17;
             this.chkImportComponents.Text = "Import mark components";
             this.chkImportComponents.UseVisualStyleBackColor = true;
             // 
             // cmdGetData
             // 
-            this.cmdGetData.Location = new System.Drawing.Point(141, 158);
-            this.cmdGetData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmdGetData.Location = new System.Drawing.Point(107, 157);
+            this.cmdGetData.Margin = new System.Windows.Forms.Padding(2);
             this.cmdGetData.Name = "cmdGetData";
-            this.cmdGetData.Size = new System.Drawing.Size(376, 32);
+            this.cmdGetData.Size = new System.Drawing.Size(282, 26);
             this.cmdGetData.TabIndex = 15;
             this.cmdGetData.Text = "Get Data";
             this.cmdGetData.UseVisualStyleBackColor = true;
@@ -1197,10 +1160,10 @@
             // chkCommentLib
             // 
             this.chkCommentLib.AutoSize = true;
-            this.chkCommentLib.Location = new System.Drawing.Point(141, 103);
-            this.chkCommentLib.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.chkCommentLib.Location = new System.Drawing.Point(106, 84);
+            this.chkCommentLib.Margin = new System.Windows.Forms.Padding(2);
             this.chkCommentLib.Name = "chkCommentLib";
-            this.chkCommentLib.Size = new System.Drawing.Size(180, 21);
+            this.chkCommentLib.Size = new System.Drawing.Size(136, 17);
             this.chkCommentLib.TabIndex = 16;
             this.chkCommentLib.Text = "Import Comment Library";
             this.chkCommentLib.UseVisualStyleBackColor = true;
@@ -1209,20 +1172,18 @@
             // 
             this.txtSourceDataFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSourceDataFile.Location = new System.Drawing.Point(141, 30);
-            this.txtSourceDataFile.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSourceDataFile.Location = new System.Drawing.Point(106, 24);
             this.txtSourceDataFile.Multiline = true;
             this.txtSourceDataFile.Name = "txtSourceDataFile";
-            this.txtSourceDataFile.Size = new System.Drawing.Size(376, 67);
+            this.txtSourceDataFile.Size = new System.Drawing.Size(283, 55);
             this.txtSourceDataFile.TabIndex = 12;
             // 
             // cmdSourceDataFile
             // 
             this.cmdSourceDataFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdSourceDataFile.Location = new System.Drawing.Point(484, 105);
-            this.cmdSourceDataFile.Margin = new System.Windows.Forms.Padding(4);
+            this.cmdSourceDataFile.Location = new System.Drawing.Point(363, 85);
             this.cmdSourceDataFile.Name = "cmdSourceDataFile";
-            this.cmdSourceDataFile.Size = new System.Drawing.Size(33, 27);
+            this.cmdSourceDataFile.Size = new System.Drawing.Size(25, 22);
             this.cmdSourceDataFile.TabIndex = 13;
             this.cmdSourceDataFile.Text = "...";
             this.cmdSourceDataFile.UseVisualStyleBackColor = true;
@@ -1231,41 +1192,39 @@
             // lblSourceData
             // 
             this.lblSourceData.AutoSize = true;
-            this.lblSourceData.Location = new System.Drawing.Point(23, 32);
-            this.lblSourceData.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSourceData.Location = new System.Drawing.Point(17, 26);
             this.lblSourceData.Name = "lblSourceData";
-            this.lblSourceData.Size = new System.Drawing.Size(111, 17);
+            this.lblSourceData.Size = new System.Drawing.Size(84, 13);
             this.lblSourceData.TabIndex = 14;
             this.lblSourceData.Text = "Source data file:";
             // 
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.ColumnCount = 4;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel4.Controls.Add(this.cmdReload, 3, 0);
             this.tableLayoutPanel4.Controls.Add(this.label5, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.cmdSelectFile, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.txtExcelFileName, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1089, 39);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(817, 32);
             this.tableLayoutPanel4.TabIndex = 13;
             // 
             // FrmAutomaticMarkingMachine
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1089, 742);
+            this.ClientSize = new System.Drawing.Size(817, 603);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.tableLayoutPanel4);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmAutomaticMarkingMachine";
             this.Text = "Marking Machine";
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -1404,6 +1363,7 @@
         private System.Windows.Forms.Button cmdGetFiles;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox elpSessionId;
+        private System.Windows.Forms.CheckBox chkImportSubmissions;
     }
 }
 
