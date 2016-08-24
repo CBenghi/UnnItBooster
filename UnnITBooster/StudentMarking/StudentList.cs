@@ -281,7 +281,9 @@ namespace StudentsFetcher.StudentMarking
                 sb.AppendFormat("{0} {1}\r\n", st.Forename, st.Surname);
                 sb.AppendFormat("First Name: {0}\r\n", st.Forename);
                 sb.AppendFormat("{0} {1}\r\n", st.Studentid, st.RouteCode);
-                sb.AppendFormat("{0}\r\n", st.Email);
+                sb.AppendFormat("{0}\r\n\r\n", st.Email);
+
+                sb.AppendFormat("OneLine:\t{0}\t{1}\t{2}\t{3}\r\n", st.Forename, st.Surname, st.Studentid, st.Email);
 
                 txtStudentInfo.Text = sb.ToString();
             }

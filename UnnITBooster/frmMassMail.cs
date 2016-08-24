@@ -42,26 +42,58 @@ namespace StudentMarking
 
         private void txtExcelFileName_TextChanged(object sender, EventArgs e)
         {
-            Reload();
+            ReloadDb();
         }
-
-
-
-        private void Reload()
+        
+        private OleDbConnection GetConn()
         {
             var f = new FileInfo(txtExcelFileName.Text);
             if (!f.Exists)
-                return;
+                return null;
             var con = new OleDbConnection(@"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + f.FullName + ";Extended Properties=Excel 8.0;"); // Extended Properties=Excel 8.0;
             con.Open();
-            var da = new OleDbDataAdapter("select * from [Sheet1$]", con);
-            var dt = new DataTable();
-            da.Fill(dt);
-            con.Close();
+            return con;
+        }
 
-            // var columns = dt.Columns;
+        private void ReloadDb()
+        {
+            using (var con = GetConn())
+            {
+                if (con == null)
+                    return;
+                var dt = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                if (dt == null)
+                {
+                    return ;
+                }
+                var excelSheets = new string[dt.Rows.Count];
+                int i = 0;
 
-            UpdateUI(dt);
+                // Add the sheet name to the string array.
+                foreach (DataRow row in dt.Rows)
+                {
+                    excelSheets[i] = row["TABLE_NAME"].ToString();
+                    i++;
+                }
+                con.Close();
+                cmbTableNames.DataSource = excelSheets;
+            }
+        }
+
+        private void ReloadTable()
+        {
+            if (cmbTableNames.SelectedItem == null)
+                return;
+            var tbname = cmbTableNames.SelectedItem.ToString();
+            using (var con = GetConn())
+            {
+                var cmd = $"select * from [{tbname}]";
+                var da = new OleDbDataAdapter(cmd, con);
+                var dt = new DataTable();
+                da.Fill(dt);
+                con.Close();
+                UpdateUI(dt);
+            }
         }
 
         private DataTable currenTable = null;
@@ -108,6 +140,7 @@ namespace StudentMarking
 
         private void UpdateList()
         {
+            // a regex to get the email from text
             Regex emaiRegex = new Regex(".+@.+\\..+");
             lstEmailSendSelection.Items.Clear();
             foreach (DataRow row in currenTable.Rows)
@@ -164,12 +197,15 @@ namespace StudentMarking
                 var row = (DataRow)studentId.Tag;
                 try
                 {
-                    var emailtext = Emailtext(replacements, row);
+                    var emailtext = replaceFields(txtEmailBody.Text, replacements, row);
+                    var emailSubject = replaceFields(txtEmailSubject.Text, replacements, row);
+                    
                     var destEmail = row[cmbEmailField.Text].ToString();
-                    if (!chkEmailDryRun.Checked)
-                        app.SendOutlookEmail(destEmail, txtEmailSubject.Text, emailtext, txtEmailCC.Text);
+                    if (chkEmailDryRun.Checked)
+                        app.SendOutlookEmail("claudio.benghi@gmail.com", emailSubject, emailtext, txtEmailCC.Text);
                     else
-                        Debug.WriteLine(emailtext);
+                        app.SendOutlookEmail(destEmail, emailSubject, emailtext, txtEmailCC.Text);
+
                 }
                 catch (Exception ex)
                 {
@@ -182,9 +218,9 @@ namespace StudentMarking
         }
 
 
-        private string Emailtext(IEnumerable<string> replacements, DataRow row)
+        private string replaceFields(string emailtext, IEnumerable<string> replacements, DataRow row)
         {
-            var emailtext = txtEmailBody.Text;
+            
             
             foreach (var item in replacements)
             {
@@ -201,12 +237,10 @@ namespace StudentMarking
             }
             return emailtext;
         }
-
        
-
         private void cmdReload_Click(object sender, EventArgs e)
         {
-            Reload();
+            ReloadDb();
         }
 
         private void cmdSelectAll_Click(object sender, EventArgs e)
@@ -266,7 +300,7 @@ namespace StudentMarking
             var replacements = GetReplacementList(txtEmailBody.Text);
             try
             {
-                var emailtext = Emailtext(replacements, row);
+                var emailtext = replaceFields(txtEmailBody.Text, replacements, row);
                 txtEmailPreview.Text = emailtext;
             }
             catch (Exception exception)
@@ -303,5 +337,10 @@ namespace StudentMarking
 
 
         #endregion
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ReloadTable();
+        }
     }
 }
