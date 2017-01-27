@@ -117,4 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="txtStudents.Text" xml:space="preserve">
+    <value>Paste here and Parse
+16043833/1	Gerard Edgar	Current NU Student	09/01/2017	31/01/2020	Construction Project Management with Building Information Modelling		Go
+16030596/1	Hamza Latif	Current NU Student	09/01/2017	31/01/2020	Project Management	
+No Photo
+Go</value>
+  </data>
 </root>

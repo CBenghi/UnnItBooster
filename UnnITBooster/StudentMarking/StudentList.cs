@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -21,74 +22,14 @@ namespace StudentsFetcher.StudentMarking
             RefreshModulesList();
             StudentsLoad();
         }
-
-        private class Student
-        {
-            public string Module;
-            public string Surname;
-            public string Forename;
-            public string RouteCode;
-            public string Studentid;
-            public string CourseYear;
-            public string Email;
-
-            public bool Matches(string filter)
-            {
-                if (Module == filter)
-                    return true;
-                if (
-                    Surname.Contains(filter)
-                    || Forename.Contains(filter)
-                    )
-                    return true;
-                return 
-                    Studentid.Contains(filter) 
-                    || Email.Contains(filter);
-            }
-
-            public string PictureName(string pictureFolder)
-            {
-                return Path.Combine(pictureFolder, String.Format("{0}.jpg", Studentid));
-            }
-        }
-
-        private List<Student> GetModuleStudents(FileInfo file)
-        {
-            var modName = file.Name.Replace(".stud.xml", "");
-            var doc = XDocument.Load(file.FullName);
-            var rows = doc.Descendants("student").Select(el => new Student
-            {
-                Module = modName,
-                Surname = GetField(el, "surname"),
-                Forename = GetField(el, "forename"),
-                RouteCode = GetField(el, "routeCode"),
-                Studentid = GetField(el, "studentid"),
-                CourseYear = GetField(el, "courseyear"),
-                Email = GetField(el, "email")
-            }).ToList();
-
-            //foreach (var item in rows)
-            //{
-            //    frmAutomaticMarkingMachine.GetImage(folder, item.Studentid);
-            //}
-            return rows;
-        }
-
-        private static string GetField(XContainer el, string fieldName)
-        {
-            var fld = el.Element(fieldName);
-            return fld != null 
-                ? fld.Value 
-                : "<Missing>";
-        }
-
+        
         private void SaveSettings()
         {
             Properties.Settings.Default.StudentsFolder = txtFolder.Text;
             Properties.Settings.Default.Save();
         }
 
-        private DirectoryInfo Folder
+        private DirectoryInfo ConfigurationFolder
         {
             get
             {
@@ -102,25 +43,31 @@ namespace StudentsFetcher.StudentMarking
             }
         }
 
+        readonly WebClient _webClient = new WebClient { UseDefaultCredentials = true };
+
         private void DwonloadFile(string moduleCode)
         {
-            var c = new WebClient {UseDefaultCredentials = true};
             var fileName = moduleCode + ".stud.xml";
-            fileName = Path.Combine(Folder.FullName, fileName);
+            fileName = Path.Combine(ConfigurationFolder.FullName, fileName);
             // i think semster = 3 means both
             var url = string.Format(
                     @"http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsOnModuleXML.php?moduleCode={0}&semester=3",
                     moduleCode);
-            c.DownloadFile(url, fileName);
+            _webClient.DownloadFile(url, fileName);
 
 
             fileName = moduleCode + ".routes.xml";
-            fileName = Path.Combine(Folder.FullName, fileName);
+            fileName = Path.Combine(ConfigurationFolder.FullName, fileName);
             // i think semster = 3 means both
             url = string.Format(
                     @"http://wheel.northumbria.ac.uk/amfphp/services/unn/getModuleRoutesUsingXML.php?moduleCode={0}",
                     moduleCode);
-            c.DownloadFile(url, fileName);
+            _webClient.DownloadFile(url, fileName);
+            // more commands: view-source:http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentModulesXML.php?studentID=16030596
+            // view-source:http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsByIDorName.php?studentID=16030596
+            // this used to work and does not anymore: http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsByIDorNameXML.php?fieldName=studentID&searchString=12024427
+            // this used to work and does not anymore: http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsByIDorNameXML.php?fieldName=studentName&searchString=asda
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -135,15 +82,13 @@ namespace StudentsFetcher.StudentMarking
         {
             _students.Clear();
             _routes.Clear();
-
             
-
             foreach (var checkedItem in lstModules.CheckedItems)
             {
-                var stFile = Folder.GetFiles(checkedItem + ".stud.xml").FirstOrDefault();
-                _students.AddRange(GetModuleStudents(stFile));
+                var stFile = ConfigurationFolder.GetFiles(checkedItem + ".stud.xml").FirstOrDefault();
+                _students.AddRange(StudentResolver.GetStudents(stFile));
 
-                var sRt = Folder.GetFiles(checkedItem + ".routes.xml").FirstOrDefault();
+                var sRt = ConfigurationFolder.GetFiles(checkedItem + ".routes.xml").FirstOrDefault();
                 AddRoutes(sRt);
 
             }
@@ -159,7 +104,8 @@ namespace StudentsFetcher.StudentMarking
 
         private void AddRoutes(FileInfo file)
         {
-            
+            if (file == null)
+                return;
             var doc = XDocument.Load(file.FullName);
             var rows = doc.Descendants("route");
             foreach (var xElement in rows)
@@ -211,14 +157,18 @@ namespace StudentsFetcher.StudentMarking
                 Text = string.Format("{0} {1}", student.Forename, student.Surname),
                 Tag = student
             };
-            li.SubItems.Add(student.Module);
+            li.SubItems.Add(student.Context);
             li.SubItems.Add(student.Studentid);
             li.SubItems.Add(student.Email);
             if (_routes.ContainsKey(student.RouteCode))
                 li.SubItems.Add(_routes[student.RouteCode]);
             else
                 li.SubItems.Add(student.RouteCode);
-            
+
+            li.SubItems.Add(student.CourseStart != DateTime.MinValue ? student.CourseStart.ToShortDateString() : "");
+            li.SubItems.Add(student.CourseFinish != DateTime.MinValue ? student.CourseFinish.ToShortDateString() : "");
+
+
             lstStudents.Items.Add(li);
         }
 
@@ -251,7 +201,7 @@ namespace StudentsFetcher.StudentMarking
         {
             get
             {
-                return Path.Combine(Folder.FullName, "Pictures");
+                return Path.Combine(ConfigurationFolder.FullName, "Pictures");
             }
         }
 
@@ -310,7 +260,7 @@ namespace StudentsFetcher.StudentMarking
         private void RefreshModulesList()
         {
             lstModules.Items.Clear();
-            foreach (var file in Folder.GetFiles("*.stud.xml"))
+            foreach (var file in ConfigurationFolder.GetFiles("*.stud.xml"))
             {
                 var modname = file.Name.Substring(0, 6);
                 lstModules.Items.Add(modname);
@@ -318,6 +268,71 @@ namespace StudentsFetcher.StudentMarking
 
             for (var i = 0; i < lstModules.Items.Count; i++)
                 lstModules.SetItemChecked(i, true);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < lstModules.Items.Count; i++)
+            {
+                lstModules.SetItemChecked(i, false);
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var s = new StudentResolver();
+
+            var stds = new List<Student>();
+
+            foreach (var oneLine in txtStudents.Lines)
+            {
+                var lineAsArr = oneLine.Split(new[] {"\t"}, StringSplitOptions.RemoveEmptyEntries);
+                var cnt = lineAsArr.Count();
+                if (cnt < 6)
+                    continue;
+
+                var fullName = lineAsArr[1];
+                var completeId = lineAsArr[0];
+                if (completeId.Contains("/"))
+                {
+                    completeId = completeId.Substring(0, completeId.IndexOf("/"));
+                }               
+                var stud = s.ResolveByName(fullName, "TUTEES", completeId);
+                if (stud == null)
+                {
+                    stud = new Student()
+                    {
+                        Surname = fullName,
+                        Studentid = completeId,
+                        Context = "TUTEES",
+                        RouteCode = lineAsArr[5] + " " + lineAsArr[2],
+                        
+                    };
+                }
+                    
+                
+                stud.CourseStart = DateTime.Parse(lineAsArr[3]);
+                stud.CourseFinish = DateTime.Parse(lineAsArr[4]);
+
+                stds.Add(stud);
+                _students.Add(stud);
+                AddStudent(stud);
+            }
+
+            var tuteesFileName = Path.Combine(ConfigurationFolder.FullName, "TUTEES.stud.xml");
+            StudentResolver.WriteList(stds, tuteesFileName);
+        }
+
+        private void txtStudents_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            var s = new StudentResolver();
+            var st = s.ResolveByName("Ampuan Nurul Atikah Ampuan Mumali", "freeSearch");
+
         }
     }
 }

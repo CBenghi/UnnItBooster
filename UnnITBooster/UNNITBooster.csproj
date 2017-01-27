@@ -125,12 +125,14 @@
     <Compile Include="StudentMarking\frmAutomaticMarkingMachine.Designer.cs">
       <DependentUpon>frmAutomaticMarkingMachine.cs</DependentUpon>
     </Compile>
+    <Compile Include="StudentMarking\Student.cs" />
     <Compile Include="StudentMarking\StudentList.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="StudentMarking\StudentList.Designer.cs">
       <DependentUpon>StudentList.cs</DependentUpon>
     </Compile>
+    <Compile Include="StudentMarking\StudentResolver.cs" />
     <Compile Include="StudentMarking\XDocument.cs" />
     <Compile Include="TimeTabling\Cal.cs" />
     <Compile Include="TimeTabling\CalItem.cs" />
