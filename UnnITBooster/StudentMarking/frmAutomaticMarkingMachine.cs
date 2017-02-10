@@ -232,6 +232,7 @@ namespace StudentsFetcher.StudentMarking
                 var m2 = Regex.Match(txtSearch.Text, "marks (\\d+)");
                 var m3 = Regex.Match(txtSearch.Text, "ids");
                 var m4 = Regex.Match(txtSearch.Text, @"WhoGotComment (\d+)");
+                var m5 = Regex.Match(txtSearch.Text, @"Remove (\d+)");
                 if (m.Success)
                 {
                     AddComponent(m);
@@ -248,6 +249,10 @@ namespace StudentsFetcher.StudentMarking
                 else if (m4.Success)
                 {
                     GetCommentUse(m4);
+                }
+                else if (m5.Success)
+                {
+                    RemoveComment(m5);
                 }
                 else if (txtSearch.Text == "missing")
                 {
@@ -276,6 +281,27 @@ namespace StudentsFetcher.StudentMarking
                     SearchCommentInLibrary();
                 }
             }
+        }
+
+        private void RemoveComment(Match m5)
+        {
+            if (GetStudentNumber() == -1)
+            {
+                MessageBox.Show("Need student");
+                return;
+            }
+
+            txtLibReport.Text = "Submissions:\r\n";
+            var sql = "delete from TB_SubComments where "
+                      + "SCOM_ptr_Submission = " + GetStudentNumber() 
+                      +" AND SCOM_ptr_Comment = " + m5.Groups[1].Value;
+
+
+            _config.Execute(sql);
+
+            UpdateStudentReport();
+
+
         }
 
         private void FindMissing()
@@ -1083,6 +1109,8 @@ Claudio
        
         private void cmdOpenOther_Click(object sender, EventArgs e)
         {
+            if (cmdCompare.Tag == null)
+                return;
             var fullname = Path.Combine(_config.GetFolderName() + relFolder.Text, cmdCompare.Tag.ToString());
             Process.Start(fullname);       
         }
