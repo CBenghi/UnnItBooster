@@ -1131,7 +1131,7 @@
             this.btnCompleteData.Name = "btnCompleteData";
             this.btnCompleteData.Size = new System.Drawing.Size(213, 26);
             this.btnCompleteData.TabIndex = 18;
-            this.btnCompleteData.Text = "Complete student data (not impl.)";
+            this.btnCompleteData.Text = "Complete student data (XML)";
             this.btnCompleteData.UseVisualStyleBackColor = true;
             this.btnCompleteData.Click += new System.EventHandler(this.btnCompleteData_Click);
             // 

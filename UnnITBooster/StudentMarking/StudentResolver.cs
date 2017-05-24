@@ -12,6 +12,19 @@ namespace StudentsFetcher.StudentMarking
     {
         readonly WebClient _webClient = new WebClient { UseDefaultCredentials = true };
 
+        internal Student ResolveById(string id)
+        {
+            if (id.StartsWith("w"))
+                id = id.Substring(1);
+
+            var url = $"http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsByIDorNameXML.php?fieldName=studentID&searchString={id}";
+            var s = _webClient.DownloadString(url);
+            var d = XDocument.Parse(s);
+            var stds = GetStudents(d, "");
+            return stds.FirstOrDefault();
+        }
+
+
         /// <summary>
         /// provide fullname with first names first
         /// </summary>

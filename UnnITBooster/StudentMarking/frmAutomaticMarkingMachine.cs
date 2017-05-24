@@ -1130,6 +1130,38 @@ Claudio
 
         private void btnCompleteData_Click(object sender, EventArgs e)
         {
+            int cntOk = 0;
+            int cntErr = 0;
+            var dt = _config.GetDataTable("select * from tb_submissions");
+            foreach (DataRow dataRow in dt.Rows)
+            {
+                var email = dataRow["SUB_email"].ToString();
+                var numericId = dataRow["SUB_NumericUserId"].ToString();
+                var northumbriaStringId = dataRow["SUB_UserId"].ToString();
+                var uid = dataRow["SUB_Id"].ToString();
+                if (!string.IsNullOrWhiteSpace(email))
+                    continue;
+                var sRes = new StudentResolver();
+                var student = sRes.ResolveById(northumbriaStringId);
+                if (student == null)
+                {
+                    cntErr++;
+                    continue;
+                }
+
+
+                var sql = "UPDATE TB_Submissions " +
+                    $"SET SUB_email = '{student.Email}', " +
+                    $"SUB_NumericUserId = '{student.Studentid}' " +
+                    $"WHERE SUB_Id = {uid} ";
+
+                _config.Execute(sql);
+
+                cntOk++;
+            }
+            MessageBox.Show($"Ok: {cntOk} Err: {cntErr}");
+
+
 
         }
 
@@ -1193,7 +1225,6 @@ Claudio
 
         private void cmdGetFiles_Click(object sender, EventArgs e)
         {
-
             string filesDir = Path.Combine(folder, _config.BareName);
             DirectoryInfo d = new DirectoryInfo(filesDir);
             if (!d.Exists)
