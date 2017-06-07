@@ -71,7 +71,7 @@ namespace StudentsFetcher.StudentMarking
             {
                 return "";
             }
-            sb.AppendFormat("{1} {2} {3} email: {4} (#{0})\r\n",
+            sb.AppendFormat("{1} {2} {3}\r\nemail: {4} (#{0})\r\n",
                stud["SUB_Id"],
                stud["SUB_FirstName"],
                stud["SUB_LastName"],

@@ -852,9 +852,6 @@ namespace StudentsFetcher.StudentMarking
 
         public void Boh()
         {
-
-
-
             //string[] wholenames = wholename.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             //string firstnames = wholenames[1];
             //string[] firstnamesA = firstnames.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -863,7 +860,6 @@ namespace StudentsFetcher.StudentMarking
             //string tutorName = row["Tutor"].ToString().ToLower();
             //string[] tArr = tutorName.Split(new char[] { ' ' });
             //string tName = textInfo.ToTitleCase(tArr[1] + " " + tArr[0]);
-
         }
 
         private void cmdGetData_Click(object sender, EventArgs e)
@@ -899,7 +895,6 @@ namespace StudentsFetcher.StudentMarking
             txtExcelFileName_TextChanged(null, null);
 
             MessageBox.Show("Done");
-            
         }
 
         private void cmdSourceDataFile_Click(object sender, EventArgs e)
@@ -911,7 +906,6 @@ namespace StudentsFetcher.StudentMarking
             {
                 txtSourceDataFile.Text = openFileDialog1.FileName;
             }
-            
         }
 
         private void cmdReload_Click(object sender, EventArgs e)
@@ -967,11 +961,6 @@ namespace StudentsFetcher.StudentMarking
         private void button6_Click(object sender, EventArgs e)
         {
             MoveStudent(-1);
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void cmdSelectAll_Click(object sender, EventArgs e)
