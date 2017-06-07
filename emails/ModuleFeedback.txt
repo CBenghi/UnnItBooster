@@ -1,0 +1,13 @@
+Dear {SUB_FirstName}, 
+
+as we have recently marked your BE1178 submission, I'm now writing to inform you of the outcome. 
+At this stage your mark is unconfirmed; marks become confirmed after the Programme Assessment Board, that is scheduled for the week commencing 12th of June.
+Your marks will be visible on formal transcripts shortly after that. 
+
+You will find your feedback and unconfirmed mark after my signature below. 
+I remain available for any questions you might have. 
+
+Best regards, 
+Claudio 
+
+{MarkReport}
