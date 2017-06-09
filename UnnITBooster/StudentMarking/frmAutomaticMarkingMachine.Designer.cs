@@ -635,7 +635,6 @@
             this.label5.Size = new System.Drawing.Size(42, 13);
             this.label5.TabIndex = 11;
             this.label5.Text = "SQLite ";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // openFileDialog1
             // 
