@@ -1,0 +1,27 @@
+Dear {First}, 
+
+as we have recently marked your KB7038 submissions, I'm now writing to inform you of the outcome. 
+
+At this stage your mark is unconfirmed; marks become confirmed after the Programme Assessment Board, scheduled for tomorrow, the 15th of June.
+Your marks will be visible on formal transcripts shortly after that. 
+
+You will find your feedback and unconfirmed mark after my signature below. 
+I remain available for any questions you might have. 
+
+Best regards, 
+Claudio 
+
+===
+Total mark: {TotalMark}
+
+This mark results from the weighed average of the two components as follows:
+- for the portfolio component your mark is {PortfolioMark} that counts for 70% of the total mark
+- for the poster component your mark is {PosterMark} that counts for 30% of the total mark
+
+=== Start of Portfolio feedback.
+{PortfolioFeedback}
+=== End of Portfolio feedback.
+
+=== Start of Poster feedback.
+{PosterFeedback}
+=== End of Poster feedback.

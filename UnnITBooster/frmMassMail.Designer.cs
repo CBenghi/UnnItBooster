@@ -92,11 +92,11 @@ namespace StudentMarking
             this.txtExcelFileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtExcelFileName.Location = new System.Drawing.Point(93, 3);
-            this.txtExcelFileName.Multiline = true;
             this.txtExcelFileName.Name = "txtExcelFileName";
-            this.txtExcelFileName.Size = new System.Drawing.Size(653, 23);
+            this.txtExcelFileName.Size = new System.Drawing.Size(653, 26);
             this.txtExcelFileName.TabIndex = 9;
             this.txtExcelFileName.TabStop = false;
+            this.txtExcelFileName.WordWrap = false;
             this.txtExcelFileName.TextChanged += new System.EventHandler(this.txtExcelFileName_TextChanged);
             // 
             // panel1
@@ -130,7 +130,7 @@ namespace StudentMarking
             // 
             this.cmbTableNames.FormattingEnabled = true;
             this.cmbTableNames.Location = new System.Drawing.Point(93, 31);
-            this.cmbTableNames.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbTableNames.Margin = new System.Windows.Forms.Padding(2);
             this.cmbTableNames.Name = "cmbTableNames";
             this.cmbTableNames.Size = new System.Drawing.Size(653, 28);
             this.cmbTableNames.TabIndex = 14;
@@ -185,7 +185,7 @@ namespace StudentMarking
             this.tabPage2.Controls.Add(this.splitContainer3);
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(846, 543);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Emailing";
@@ -236,7 +236,7 @@ namespace StudentMarking
             this.cmbEmailField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbEmailField.FormattingEnabled = true;
             this.cmbEmailField.Location = new System.Drawing.Point(57, 509);
-            this.cmbEmailField.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbEmailField.Margin = new System.Windows.Forms.Padding(2);
             this.cmbEmailField.Name = "cmbEmailField";
             this.cmbEmailField.Size = new System.Drawing.Size(208, 28);
             this.cmbEmailField.TabIndex = 5;
@@ -307,7 +307,7 @@ namespace StudentMarking
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.Location = new System.Drawing.Point(6, 96);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -319,7 +319,7 @@ namespace StudentMarking
             // 
             this.splitContainer1.Panel2.Controls.Add(this.txtEmailPreview);
             this.splitContainer1.Size = new System.Drawing.Size(561, 436);
-            this.splitContainer1.SplitterDistance = 217;
+            this.splitContainer1.SplitterDistance = 216;
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 11;
             // 
@@ -333,11 +333,11 @@ namespace StudentMarking
             this.txtEmailBody.ChangedColour = System.Drawing.Color.Empty;
             this.txtEmailBody.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtEmailBody.Location = new System.Drawing.Point(3, 4);
-            this.txtEmailBody.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtEmailBody.Margin = new System.Windows.Forms.Padding(6);
             this.txtEmailBody.MaxLength = 0;
             this.txtEmailBody.Name = "txtEmailBody";
             this.txtEmailBody.OriginalText = "";
-            this.txtEmailBody.Size = new System.Drawing.Size(551, 207);
+            this.txtEmailBody.Size = new System.Drawing.Size(551, 206);
             this.txtEmailBody.SpellCheck = true;
             this.txtEmailBody.TabIndex = 6;
             this.txtEmailBody.TabStop = false;
@@ -356,7 +356,7 @@ namespace StudentMarking
             this.txtEmailPreview.Multiline = true;
             this.txtEmailPreview.Name = "txtEmailPreview";
             this.txtEmailPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtEmailPreview.Size = new System.Drawing.Size(556, 212);
+            this.txtEmailPreview.Size = new System.Drawing.Size(556, 215);
             this.txtEmailPreview.TabIndex = 7;
             this.txtEmailPreview.TabStop = false;
             this.txtEmailPreview.Text = "Dear {SUB_FirstName}, \r\nThe marking and moderation process for BE1178 has been co" +
@@ -435,9 +435,9 @@ namespace StudentMarking
             // tabPage3
             // 
             this.tabPage3.Location = new System.Drawing.Point(4, 29);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage3.Size = new System.Drawing.Size(846, 543);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Tools";

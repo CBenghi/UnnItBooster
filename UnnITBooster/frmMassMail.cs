@@ -47,6 +47,8 @@ namespace StudentMarking
         
         private OleDbConnection GetConn()
         {
+            if (string.IsNullOrWhiteSpace(txtExcelFileName.Text))
+                return null;
             var f = new FileInfo(txtExcelFileName.Text);
             if (!f.Exists)
                 return null;
@@ -143,6 +145,8 @@ namespace StudentMarking
             // a regex to get the email from text
             Regex emaiRegex = new Regex(".+@.+\\..+");
             lstEmailSendSelection.Items.Clear();
+            if (currenTable == null)
+                return;
             foreach (DataRow row in currenTable.Rows)
             {
                 if (!string.IsNullOrEmpty(cmbEmailField.Text))
@@ -226,10 +230,12 @@ namespace StudentMarking
             {
                 var repvalue = "";
                 repvalue = row[item].ToString();
+                repvalue = repvalue.Replace("\n", "\r\n");
                 var oValue = row[item];
                 if (oValue.GetType() == typeof (double))
                 {
-                    repvalue = Math.Ceiling((double) oValue).ToString();
+                    // repvalue = Math.Ceiling((double) oValue).ToString();
+                    repvalue = Math.Round((double)oValue).ToString();
                 }
 
                 

@@ -126,12 +126,13 @@ namespace StudentsFetcher.StudentMarking
                         totmark
                         );
 
-                    sbDataUpload.AppendFormat("\"{0}\"\t\"{1}\"\t\"{2}\"\t\"{3}\"\t\t\t\t\"{4}.00\"\n",
+                    sbDataUpload.AppendFormat("\"{0}\"\t\"{1}\"\t\"{2}\"\t\"{3}\"\t\"{5}\"\t\t\t\"{4}.00\"\n",
                         item["SUB_LastName"],
                         item["SUB_FirstName"],
                         item["SUB_UserID"],
                         item["SUB_NumericUserID"],
-                        totmark
+                        totmark, 
+                        item["SUB_email"]
                         );
                 }
 
