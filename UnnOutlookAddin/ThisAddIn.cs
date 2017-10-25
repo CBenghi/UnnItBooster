@@ -1,69 +1,35 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Microsoft.Office.Interop;
-using Microsoft.Office.Interop.Outlook;
+using Outlook = Microsoft.Office.Interop.Outlook;
 using Exception = System.Exception;
-using Office = Microsoft.Office.Core;
+using UnnOutlookAddin.MailManagement;
 
 namespace UnnOutlookAddin
 {
     public partial class ThisAddIn
     {
-        Inspectors _inspectors;
-        Explorer _currentExplorer;
+        Outlook.Inspectors _inspectors;
+        Outlook.Explorer _currentExplorer;
 
         private void ThisAddIn_Startup(object sender, EventArgs e)
         {
+            
+            // tracking of new email creation?
             if (false)
             {
                 _inspectors = Application.Inspectors;
-                _inspectors.NewInspector +=
-                    Inspectors_NewInspector;
+                _inspectors.NewInspector += Inspectors_NewInspector;
             }
 
-            // selection change
-
-            _currentExplorer = Application.ActiveExplorer();
-            _currentExplorer.SelectionChange += CurrentExplorer_Event;
-
-
+            // registering events of selection change
+            if (false)
+            {
+                _currentExplorer = Application.ActiveExplorer();
+                _currentExplorer.SelectionChange += CurrentExplorer_Event;
+            }
         }
 
-        private string getSenderEmailAddress(MailItem mail)
-        {
-            AddressEntry sender = mail.Sender;
-            string SenderEmailAddress = "";
-
-            if (sender.AddressEntryUserType == OlAddressEntryUserType.olExchangeUserAddressEntry ||
-                sender.AddressEntryUserType == OlAddressEntryUserType.olExchangeRemoteUserAddressEntry)
-            {
-                ExchangeUser exchUser = sender.GetExchangeUser();
-                if (exchUser != null)
-                {
-                    SenderEmailAddress = exchUser.PrimarySmtpAddress;
-                    const string PR_EMS_AB_PROXY_ADDRESSES = "http://schemas.microsoft.com/mapi/proptag/0x800F101E";
-                    var addresses = exchUser.PropertyAccessor.GetProperty(PR_EMS_AB_PROXY_ADDRESSES) as string[];
-
-                    var r = new Regex(@"smtp:(\w\d{4,})@");
-                    foreach (var address in addresses)
-                    {
-                        var m = r.Match(address);
-                        if (m.Success)
-                        {
-                            // we've got a student address
-                            var id = m.Groups[1].Value;
-                        }    
-                    }
-                }
-            }
-            else
-            {
-                SenderEmailAddress = mail.SenderEmailAddress;
-            }
-            return SenderEmailAddress;
-        }
+       
 
         private void CurrentExplorer_Event()
         {
@@ -75,14 +41,12 @@ namespace UnnOutlookAddin
                 if (Application.ActiveExplorer().Selection.Count > 0)
                 {
                     object selObject = Application.ActiveExplorer().Selection[1];
-                    if (selObject is MailItem)
+                    if (selObject is Outlook.MailItem)
                     {
-                        var mailItem = selObject as MailItem;
+                        var mailItem = selObject as Outlook.MailItem;
                         // itemMessage = "The item is an e-mail message. The subject is " + mailItem.Subject + ".";
                         var add = mailItem.SenderEmailAddress;
-                        var snd = getSenderEmailAddress(mailItem);
-
-
+                        var snd = MessageExtensions.GetSenderEmailAddress(mailItem);
                         // mailItem.Display(false);
                     }
                     //else if (selObject is Outlook.ContactItem)
@@ -130,12 +94,12 @@ namespace UnnOutlookAddin
             //    must run when Outlook shuts down, see http://go.microsoft.com/fwlink/?LinkId=506785
         }
 
-        void Inspectors_NewInspector(Inspector Inspector)
+        void Inspectors_NewInspector(Outlook.Inspector Inspector)
         {
-            MailItem mailItem = Inspector.CurrentItem as MailItem;
+            Outlook.MailItem mailItem = Inspector.CurrentItem as Outlook.MailItem;
             if (mailItem != null)
             {
-                Debug.WriteLine(mailItem.ReceivedByEntryID);
+                // Debug.WriteLine(mailItem.ReceivedByEntryID);
                 if (mailItem.EntryID == null)
                 {
                     mailItem.Subject = "This text was added by using code";
