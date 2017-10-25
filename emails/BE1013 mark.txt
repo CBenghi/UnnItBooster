@@ -1,0 +1,16 @@
+Dear {SUB_FirstName}, 
+
+as we have recently marked your BE1013 submission, I'm now writing to inform you of the outcome. 
+
+At this stage your mark is unconfirmed; marks become confirmed after the MSc Surveying and Construction DL Programme Assessment Board, that is scheduled for Thursday the 9th of March.
+Your marks will be visible on formal transcripts shortly after that.
+
+With the occasion I'd like to apologise for the delay in the provision of feedback, I initially intended to return your mark much faster than the 20 working days expected turnaround time for the University, however I was not able to, and under pressure I've also made a couple of mistakes handling the relevant communication. I hope this was not a major inconvenience for you; please accept my apologies as I had to revert to the 20 working days deadline.
+
+You will find your feedback and unconfirmed mark after my signature below.
+I remain available for any questions you might have.
+
+Best regards, 
+Claudio 
+
+{MarkReport}
