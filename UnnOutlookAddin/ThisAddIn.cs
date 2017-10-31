@@ -11,9 +11,22 @@ namespace UnnOutlookAddin
         Outlook.Inspectors _inspectors;
         Outlook.Explorer _currentExplorer;
 
+        // new email related variables
+        Outlook.NameSpace outlookNameSpace;
+        Outlook.MAPIFolder inbox;
+        Outlook.Items items;
+
         private void ThisAddIn_Startup(object sender, EventArgs e)
-        {
-            
+        {            
+            if (Properties.Settings.Default.ClassifyOnNewItem)
+            {
+                outlookNameSpace = Application.GetNamespace("MAPI");
+                inbox = outlookNameSpace.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderInbox);
+
+                items = inbox.Items;
+                items.ItemAdd += new Outlook.ItemsEvents_ItemAddEventHandler(AutomaticClassificationHandler);
+            }
+
             // tracking of new email creation?
             if (false)
             {
@@ -29,7 +42,15 @@ namespace UnnOutlookAddin
             }
         }
 
-       
+        private void AutomaticClassificationHandler(object Item)
+        {
+            var messageEditor = new MessageEditor(_currentExplorer);
+            var emailItem = Item as Outlook.MailItem;
+            if (emailItem != null)
+            {
+                emailItem.Categorize(messageEditor);
+            }
+        }
 
         private void CurrentExplorer_Event()
         {

@@ -4,12 +4,12 @@ using System.Diagnostics;
 
 namespace UnnOutlookAddin.MailManagement
 {
-    public class MessageActions
+    public class MessageEditor
     {
 
         Outlook.Explorer _explorer;
 
-        public MessageActions(Outlook.Explorer explorer)
+        public MessageEditor(Outlook.Explorer explorer)
         {
             _explorer = explorer;
         }

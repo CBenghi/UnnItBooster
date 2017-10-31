@@ -34,9 +34,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnnButtons));
             this.tab1 = this.Factory.CreateRibbonTab();
             this.ClassificationGroup = this.Factory.CreateRibbonGroup();
             this.btnClassify = this.Factory.CreateRibbonButton();
+            this.CopyId = this.Factory.CreateRibbonButton();
+            this.button1 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.ClassificationGroup.SuspendLayout();
             this.SuspendLayout();
@@ -51,14 +54,31 @@
             // ClassificationGroup
             // 
             this.ClassificationGroup.Items.Add(this.btnClassify);
+            this.ClassificationGroup.Items.Add(this.CopyId);
+            this.ClassificationGroup.Items.Add(this.button1);
             this.ClassificationGroup.Label = "Classification";
             this.ClassificationGroup.Name = "ClassificationGroup";
             // 
             // btnClassify
             // 
+            this.btnClassify.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnClassify.Image = ((System.Drawing.Image)(resources.GetObject("btnClassify.Image")));
             this.btnClassify.Label = "Classify";
             this.btnClassify.Name = "btnClassify";
+            this.btnClassify.ShowImage = true;
             this.btnClassify.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnClassify_Click);
+            // 
+            // CopyId
+            // 
+            this.CopyId.Label = "Copy User ID";
+            this.CopyId.Name = "CopyId";
+            this.CopyId.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CopyId_Click);
+            // 
+            // button1
+            // 
+            this.button1.Label = "Copy User Number";
+            this.button1.Name = "button1";
+            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
             // 
             // UnnButtons
             // 
@@ -79,6 +99,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup ClassificationGroup;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnClassify;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton CopyId;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
     }
 
     //partial class ThisRibbonCollection
