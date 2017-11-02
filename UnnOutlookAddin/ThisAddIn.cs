@@ -8,13 +8,20 @@ namespace UnnOutlookAddin
 {
     public partial class ThisAddIn
     {
+        // fundamental
+        //
         Outlook.Inspectors _inspectors;
         Outlook.Explorer _currentExplorer;
 
         // new email related variables
+        //
         Outlook.NameSpace outlookNameSpace;
         Outlook.MAPIFolder inbox;
         Outlook.Items items;
+
+        //// custom UNN pane
+        //private UI.UnnStudent myStudentComponent;
+        //private Microsoft.Office.Tools.CustomTaskPane myCustomTaskPane;
 
         private void ThisAddIn_Startup(object sender, EventArgs e)
         {            
@@ -40,7 +47,15 @@ namespace UnnOutlookAddin
                 _currentExplorer = Application.ActiveExplorer();
                 _currentExplorer.SelectionChange += CurrentExplorer_Event;
             }
+
+            //// display the Students pane
+            ////
+            //myStudentComponent = new UI.UnnStudent();
+            //myCustomTaskPane = CustomTaskPanes.Add(myStudentComponent, "UnnStudentPane");
+            //myCustomTaskPane.Visible = true;
+
         }
+
 
         private void AutomaticClassificationHandler(object Item)
         {
@@ -112,7 +127,7 @@ namespace UnnOutlookAddin
         private void ThisAddIn_Shutdown(object sender, EventArgs e)
         {
             // Note: Outlook no longer raises this event. If you have code that 
-            //    must run when Outlook shuts down, see http://go.microsoft.com/fwlink/?LinkId=506785
+            // must run when Outlook shuts down, see http://go.microsoft.com/fwlink/?LinkId=506785
         }
 
         void Inspectors_NewInspector(Outlook.Inspector Inspector)

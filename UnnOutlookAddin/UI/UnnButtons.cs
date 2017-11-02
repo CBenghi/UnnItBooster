@@ -22,7 +22,7 @@ namespace UnnOutlookAddin.UI
             var messageEditor = new MessageEditor(e.Control.Context);
 
             var explorer = e.Control.Context as Outlook.Explorer;
-            if (explorer is null)
+            if (explorer == null)
                 return;
 
             foreach (var selectedMailMessage in explorer.Selection.OfType<Outlook.MailItem>())
@@ -39,7 +39,7 @@ namespace UnnOutlookAddin.UI
         private static void CopyUserId(RibbonControlEventArgs e, bool numberOnly = false)
         {
             var explorer = e.Control.Context as Outlook.Explorer;
-            if (explorer is null)
+            if (explorer == null)
                 return;
 
             StringBuilder sb = new StringBuilder();
