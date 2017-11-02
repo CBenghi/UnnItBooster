@@ -38,7 +38,6 @@ namespace UnnOutlookAddin.UI
 
         private static void CopyUserId(RibbonControlEventArgs e, bool numberOnly = false)
         {
-            Regex re = new Regex(@"(\d+)");
             var explorer = e.Control.Context as Outlook.Explorer;
             if (explorer is null)
                 return;
@@ -50,11 +49,7 @@ namespace UnnOutlookAddin.UI
                 var id = selectedMailMessage.GetUserProperty(MessageExtensions.userIdPropertyName);
                 if (numberOnly)
                 {
-                    var m = re.Match(id);
-                    if (m.Success)
-                    {
-                        id = m.Groups[1].Value;
-                    }
+                    id = Unn.Students.StudentId.NumericFromString(id);
                 }
                 sb.AppendLine(id);
             }

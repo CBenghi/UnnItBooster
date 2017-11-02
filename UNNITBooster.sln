@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UNNITBooster", "UnnITBooster\UNNITBooster.csproj", "{4F6802FC-4CE4-48F4-AC77-DBB8A833E617}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedTextBox", "ExtendedTextBox\ExtendedTextBox.csproj", "{0C7C5D10-74AA-4A92-B75F-EBBFC9156172}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnnOutlookAddin", "UnnOutlookAddin\UnnOutlookAddin.csproj", "{82F44136-9C6D-4F33-B388-692145DF48A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnnFunctions", "UnnFunctions\UnnFunctions.csproj", "{5091BAD3-4425-4C77-941E-0F3690FF8989}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,8 +41,19 @@ Global
 		{82F44136-9C6D-4F33-B388-692145DF48A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{82F44136-9C6D-4F33-B388-692145DF48A7}.Release|x86.ActiveCfg = Release|Any CPU
 		{82F44136-9C6D-4F33-B388-692145DF48A7}.Release|x86.Build.0 = Release|Any CPU
+		{5091BAD3-4425-4C77-941E-0F3690FF8989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5091BAD3-4425-4C77-941E-0F3690FF8989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5091BAD3-4425-4C77-941E-0F3690FF8989}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5091BAD3-4425-4C77-941E-0F3690FF8989}.Debug|x86.Build.0 = Debug|Any CPU
+		{5091BAD3-4425-4C77-941E-0F3690FF8989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5091BAD3-4425-4C77-941E-0F3690FF8989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5091BAD3-4425-4C77-941E-0F3690FF8989}.Release|x86.ActiveCfg = Release|Any CPU
+		{5091BAD3-4425-4C77-941E-0F3690FF8989}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {11773BEC-FCE4-4BFE-8A49-3974C24EC1C2}
 	EndGlobalSection
 EndGlobal

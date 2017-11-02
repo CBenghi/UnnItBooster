@@ -14,32 +14,11 @@ namespace StudentsFetcher.StudentMarking
 
         internal Student ResolveById(string id)
         {
-            //R - 05
-            //S - 06
-            //T-> 07 
-            //U-> 08 
-            //V-> 09
-
-            if (id.StartsWith("w"))
-                id = id.Substring(1);
-            else if (id.StartsWith("n"))
-                id = "01" + id.Substring(1);
-            else if (id.StartsWith("o"))
-                id = "02" + id.Substring(1);
-            else if (id.StartsWith("p"))
-                id = "03" + id.Substring(1);
-            else if (id.StartsWith("q"))
-                id = "04" + id.Substring(1);
-            else if (id.StartsWith("r"))
-                id = "05" + id.Substring(1);
-            else if (id.StartsWith("s"))
-                id = "06" + id.Substring(1);
-            else if (id.StartsWith("t"))
-                id = "07" + id.Substring(1);
-            else if (id.StartsWith("u"))
-                id = "08" + id.Substring(1);
-            else if (id.StartsWith("v"))
-                id = "09" + id.Substring(1);
+            var identified = Unn.Students.StudentId.NumericFromString(id);
+            if (!string.IsNullOrEmpty( id))
+            {
+                id = identified;
+            }
             else
             {
                 

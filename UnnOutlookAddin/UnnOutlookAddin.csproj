@@ -204,6 +204,12 @@
   <ItemGroup>
     <Resource Include="Resources\Classify.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UnnFunctions\UnnFunctions.csproj">
+      <Project>{5091bad3-4425-4c77-941e-0f3690ff8989}</Project>
+      <Name>UnnFunctions</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
