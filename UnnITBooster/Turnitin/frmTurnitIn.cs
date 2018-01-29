@@ -278,84 +278,6 @@ namespace StudentsFetcher
 
         internal Modes CurrentMode = Modes.Undefined;
 
-        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-        {
-            var s = e.Url.ToString();
-            System.Diagnostics.Debug.WriteLine(s);
-            // return;
-
-            //_urlSuccessfulLoginPage = "--https://elp.northumbria.ac.uk/webapps/portal/execute/topframe?tab_tab_group_id=_2_1&frameSize=LARGE";
-            if (CurrentMode == Modes.SearchingUser)
-            {
-                CurrentMode = Modes.GettingUserData;
-                webBrowser1.Document.Forms[1].InvokeMember("submit");
-            }
-            else if (s == _urlSuccessfulLoginPage)
-            {
-                try
-                {
-                    if (webBrowser1.Url.ToString() != _urlSuccessfulLoginPage)
-                    {
-                        webBrowser1.Navigate(_urlSuccessfulLoginPage);
-                        return;
-                    }
-                    var cont = webBrowser1.DocumentText;
-                    var studid = Regex.Match(cont, "href=\"([^\"]*).*check enr.*", RegexOptions.IgnoreCase).Groups[1].ToString();
-                    // students[fd_CurrentId].NumericUserID = studid;
-                    var newurl = e.Url.GetLeftPart(UriPartial.Authority);
-                    newurl += studid;
-                    // e.Url.PathAndQuery = studid;
-                    _urlStudentSearchFormSubmitter = newurl;
-                    cmdGetFurtherData.Enabled = true;
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else if (s == _urlStudentSearchFormSubmitter)
-            {
-                // id=userInfoSearchText
-                var nxt = GetNext();
-                if (nxt != "")
-                {
-                    // post next search
-                    CurrentMode = Modes.SearchingUser;
-                    webBrowser1.Document.GetElementById("userInfoSearchText").SetAttribute("value", nxt);
-                    webBrowser1.Document.Forms[0].InvokeMember("submit");
-                }
-                
-            }
-            else if (CurrentMode == Modes.GettingUserData)
-            {
-                try
-                {
-                    var cont = webBrowser1.DocumentText;
-                    var studid = Regex.Match(cont, "Student id[^\\d]*(\\d*)", RegexOptions.IgnoreCase).Groups[1].ToString();
-                    students[fd_CurrentId].NumericUserId = studid;
-
-                    var email = Regex.Match(cont, "Email Address:([^<]*<[^>]*>){0,2}\\s*([^<]*)", RegexOptions.IgnoreCase).Groups[2].ToString();
-                    students[fd_CurrentId].Email = email;
-                }
-                catch (Exception)
-                {
-
-                }
-                finally
-                {
-                    GetNextFurtherData();
-                }
-            }
-        }
-
-        
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            
-            webBrowser1.Navigate(txtUrl.Text);
-            
-        }
 
         private void webBrowser1_Navigating(object sender, WebBrowserNavigatingEventArgs e)
         {
@@ -378,7 +300,6 @@ namespace StudentsFetcher
             var filesDir = Path.Combine(folder, ReportName);
             foreach (var item in students)
             {
-                
                 var d = new DirectoryInfo(filesDir);
                 if (!d.Exists)
                 {
@@ -387,9 +308,14 @@ namespace StudentsFetcher
                 var ret = d.GetFiles(item.UserId + "*.*");
                 if (ret.Length == 0)
                 {
-                    item.DownloadDocument(filesDir, textBox1.Text);
+                    txtReport.Text += "Attempting " + item.FirstName + " " + item.LastName + "... ";
+                    txtReport.Refresh();
+                    var res = item.DownloadDocument(filesDir, textBox1.Text);
+                    txtReport.Text += (res ? "Ok" : "=== ERROR ===") + "\r\n";
+                    txtReport.Refresh();
                 }
             }
+            txtReport.Text += "Completed.";
         }
 
 
@@ -399,44 +325,7 @@ namespace StudentsFetcher
         private string fd_otherparams = "";
         private int fd_CurrentId = -1;
         // private string 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            fd_CurrentId = -1;
-            GetNextFurtherData();
-        }
-
-
-        private string GetNext()
-        {
-            if (fd_CurrentId < 0)
-                return "";
-            if (fd_CurrentId < students.Count)
-            {
-                return students[fd_CurrentId].UserId;
-            }
-            return "";
-        }
-
-        private void GetNextFurtherData()
-        {
-            fd_CurrentId++;
-            if (fd_CurrentId < students.Count)
-            {
-                CurrentMode = Modes.Undefined;
-                webBrowser1.Navigate(_urlStudentSearchFormSubmitter);
-                
-            }
-            else
-            {
-                MessageBox.Show("Completed");
-            }
-        }
-
-        private void frmTurnitIn_Load(object sender, EventArgs e)
-        {
-            webBrowser1.Navigate(_urlLoginPage);
-        }
-
+       
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             if (textBox1.Text.Length != 32)
@@ -445,35 +334,10 @@ namespace StudentsFetcher
                 cmdGetFiles.Enabled = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var s = "https://elp.northumbria.ac.uk/webapps/unn-managementsuite-bb_bb60/module/check_enrolments.jsp?tab_tab_group_id=_2_1&module_id=_788_1&tabURL=/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_2_1&tabId=_2_1&forwardUrl=index.jsp";
-
-            var PostDataStr =
-                "tab_tab_group_id=_2_1&" +
-                "module_id=_788_1&" +
-                "tabURL=/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_2_1&" +
-                "action=SEARCH&" +
-                "numResults=25&" +
-                "my_user_id=w11025490";
-            var PostDataByte = Encoding.UTF8.GetBytes(PostDataStr);
-            var AdditionalHeaders = "Content-Type: application/x-www-form-urlencoded" + Environment.NewLine;
-            webBrowser1.Navigate(
-                fd_PageUrl, 
-                "", 
-                PostDataByte, 
-                AdditionalHeaders
-                );      
-        }
-
         private void button3_Click_1(object sender, EventArgs e)
         {
             var s = "https://elp.northumbria.ac.uk/webapps/unn-managementsuite-bb_bb60/module/check_enrolments.jsp?tab_tab_group_id=_2_1&module_id=_788_1&tabURL=/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_2_1&tabId=_2_1&forwardUrl=index.jsp";
         }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }
