@@ -43,7 +43,6 @@ namespace UnnOutlookAddin.UI
                 return;
 
             StringBuilder sb = new StringBuilder();
-
             foreach (var selectedMailMessage in explorer.Selection.OfType<Outlook.MailItem>())
             {
                 var id = selectedMailMessage.GetUserProperty(MessageExtensions.userIdPropertyName);
@@ -59,6 +58,12 @@ namespace UnnOutlookAddin.UI
         private void button1_Click(object sender, RibbonControlEventArgs e)
         {
             CopyUserId(e, true);
+        }
+
+        private void btnSettings_Click(object sender, RibbonControlEventArgs e)
+        {
+            frmSettings s = new frmSettings();
+            s.ShowDialog();
         }
     }
 }
