@@ -37,11 +37,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnnButtons));
             this.tab1 = this.Factory.CreateRibbonTab();
             this.ClassificationGroup = this.Factory.CreateRibbonGroup();
+            this.btnPerson = this.Factory.CreateRibbonButton();
             this.btnClassify = this.Factory.CreateRibbonButton();
             this.CopyId = this.Factory.CreateRibbonButton();
             this.button1 = this.Factory.CreateRibbonButton();
             this.btnSettings = this.Factory.CreateRibbonButton();
-            this.btnPerson = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.ClassificationGroup.SuspendLayout();
             this.SuspendLayout();
@@ -62,6 +62,15 @@
             this.ClassificationGroup.Items.Add(this.btnSettings);
             this.ClassificationGroup.Label = "Classification";
             this.ClassificationGroup.Name = "ClassificationGroup";
+            // 
+            // btnPerson
+            // 
+            this.btnPerson.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnPerson.Image = ((System.Drawing.Image)(resources.GetObject("btnPerson.Image")));
+            this.btnPerson.Label = "Person information";
+            this.btnPerson.Name = "btnPerson";
+            this.btnPerson.ShowImage = true;
+            this.btnPerson.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnPerson_Click);
             // 
             // btnClassify
             // 
@@ -89,14 +98,6 @@
             this.btnSettings.Label = "Settings";
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSettings_Click);
-            // 
-            // btnPerson
-            // 
-            this.btnPerson.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.btnPerson.Image = ((System.Drawing.Image)(resources.GetObject("btnPerson.Image")));
-            this.btnPerson.Label = "Person information";
-            this.btnPerson.Name = "btnPerson";
-            this.btnPerson.ShowImage = true;
             // 
             // UnnButtons
             // 

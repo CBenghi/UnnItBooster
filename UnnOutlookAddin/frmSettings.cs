@@ -21,12 +21,12 @@ namespace UnnOutlookAddin
 
         private void LoadSettings()
         {
-            txtConfigFolder.Text = Properties.Settings.Default.ConfigFolder;
+            txtConfigFolder.Text = Properties.Settings.Default.StudentsFolder;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.ConfigFolder = txtConfigFolder.Text;
+            Properties.Settings.Default.StudentsFolder = txtConfigFolder.Text;
             Properties.Settings.Default.Save();
         }
     }

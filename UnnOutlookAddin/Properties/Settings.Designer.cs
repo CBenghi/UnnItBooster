@@ -38,12 +38,12 @@ namespace UnnOutlookAddin.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ConfigFolder {
+        public string StudentsFolder {
             get {
-                return ((string)(this["ConfigFolder"]));
+                return ((string)(this["StudentsFolder"]));
             }
             set {
-                this["ConfigFolder"] = value;
+                this["StudentsFolder"] = value;
             }
         }
     }

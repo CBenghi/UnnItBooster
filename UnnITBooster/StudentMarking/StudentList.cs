@@ -70,6 +70,11 @@ namespace StudentsFetcher.StudentMarking
 
         }
 
+        public void SetSearch(string uid)
+        {
+            txtSearch.Text = uid;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             StudentsLoad();

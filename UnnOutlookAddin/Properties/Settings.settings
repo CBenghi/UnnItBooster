@@ -5,7 +5,7 @@
     <Setting Name="ClassifyOnNewItem" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="ConfigFolder" Type="System.String" Scope="User">
+    <Setting Name="StudentsFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

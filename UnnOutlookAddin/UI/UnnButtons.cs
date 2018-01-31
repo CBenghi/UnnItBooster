@@ -7,6 +7,7 @@ using Outlook = Microsoft.Office.Interop.Outlook;
 using UnnOutlookAddin.MailManagement;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using StudentsFetcher.StudentMarking;
 
 namespace UnnOutlookAddin.UI
 {
@@ -38,11 +39,25 @@ namespace UnnOutlookAddin.UI
 
         private static void CopyUserId(RibbonControlEventArgs e, bool numberOnly = false)
         {
+            var t = getId(e, numberOnly);
+            Clipboard.SetText(t);
+        }
+
+        private static string getId(RibbonControlEventArgs e, bool numberOnly = false)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in GetUserIds(e, numberOnly))
+            {
+                sb.AppendLine(item);
+            }
+            return sb.ToString();
+        }
+
+        private static IEnumerable<string> GetUserIds(RibbonControlEventArgs e, bool numberOnly)
+        {
             var explorer = e.Control.Context as Outlook.Explorer;
             if (explorer == null)
-                return;
-
-            StringBuilder sb = new StringBuilder();
+                yield break;
             foreach (var selectedMailMessage in explorer.Selection.OfType<Outlook.MailItem>())
             {
                 var id = selectedMailMessage.GetUserProperty(MessageExtensions.userIdPropertyName);
@@ -50,9 +65,8 @@ namespace UnnOutlookAddin.UI
                 {
                     id = Unn.Students.StudentId.NumericFromString(id);
                 }
-                sb.AppendLine(id);
+                yield return id;
             }
-            Clipboard.SetText(sb.ToString());
         }
 
         private void button1_Click(object sender, RibbonControlEventArgs e)
@@ -64,6 +78,16 @@ namespace UnnOutlookAddin.UI
         {
             frmSettings s = new frmSettings();
             s.ShowDialog();
+        }
+
+        private void btnPerson_Click(object sender, RibbonControlEventArgs e)
+        {
+            var uid = GetUserIds(e, true).FirstOrDefault();
+            if (string.IsNullOrEmpty(uid))
+                return;
+            var t = new StudentList();
+            t.SetSearch(uid);
+            t.Show();
         }
     }
 }
