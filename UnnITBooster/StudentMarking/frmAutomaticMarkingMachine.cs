@@ -106,12 +106,17 @@ namespace StudentsFetcher.StudentMarking
                         "SUB_email like '%" + txtStudentId.Text.Replace("'", "''") + "%'";
                 }
 
-                var mc =  _config.GetMarkCalculator();
-                
+                var dt = _config.GetDataTable(sql);
+                if (dt.Rows.Count == 1)
+                {
+                    txtStudentId.Text = dt.Rows[0]["SUB_id"].ToString();
+                    UpdateStudentReport();
+                    return;
+                }
 
+                var mc =  _config.GetMarkCalculator();
                 var sb = new StringBuilder();
                 var sbDataUpload = new StringBuilder();
-                var dt = _config.GetDataTable(sql);
                 foreach (DataRow item in dt.Rows)
                 {
                     var totmark = mc.GetFinalMark(item["SUB_NumericUserId"].ToString(), _config);
