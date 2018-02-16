@@ -137,9 +137,9 @@
             // 
             this.cmdGo.Location = new System.Drawing.Point(253, 444);
             this.cmdGo.Name = "cmdGo";
-            this.cmdGo.Size = new System.Drawing.Size(112, 31);
+            this.cmdGo.Size = new System.Drawing.Size(208, 31);
             this.cmdGo.TabIndex = 6;
-            this.cmdGo.Text = "Find matches";
+            this.cmdGo.Text = "Match by string end";
             this.cmdGo.UseVisualStyleBackColor = true;
             this.cmdGo.Click += new System.EventHandler(this.Go_Click);
             // 
