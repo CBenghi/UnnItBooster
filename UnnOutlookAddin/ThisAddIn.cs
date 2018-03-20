@@ -63,7 +63,8 @@ namespace UnnOutlookAddin
             var emailItem = Item as Outlook.MailItem;
             if (emailItem != null)
             {
-                emailItem.Categorize(messageEditor);
+                if (emailItem.UnRead)
+                    emailItem.Categorize(messageEditor);
             }
         }
 

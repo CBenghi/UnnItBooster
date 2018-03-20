@@ -83,10 +83,9 @@ namespace UnnOutlookAddin.UI
         private void btnPerson_Click(object sender, RibbonControlEventArgs e)
         {
             var uid = GetUserIds(e, true).FirstOrDefault();
-            if (string.IsNullOrEmpty(uid))
-                return;
             var t = new StudentList();
-            t.SetSearch(uid);
+            if (!string.IsNullOrEmpty(uid))
+                t.SetSearch(uid);
             t.Show();
         }
     }
