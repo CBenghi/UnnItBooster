@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Net.Mime;
 using System.Text.RegularExpressions;
 
 namespace StudentsFetcher.Turnitin
@@ -32,6 +33,12 @@ namespace StudentsFetcher.Turnitin
             Title = paperTitle;
         }
 
+        enum downloadType
+        {
+            Original = 0,
+            Pdf = 1
+        }
+
         //public string GetUrl(ItemFormat format)
         public bool DownloadDocument(string folder, string sessionId)
         {
@@ -62,10 +69,20 @@ namespace StudentsFetcher.Turnitin
                 destfilename = UserId + ".pdf"; ;
             
             destfilename = System.IO.Path.Combine(folder, destfilename);
-           
-            if (!System.IO.File.Exists(destfilename))
-                req.DownloadFile(url, destfilename);
 
+            if (!System.IO.File.Exists(destfilename))
+            {
+                System.Diagnostics.Debug.WriteLine($"===== {url}");
+                req.DownloadFile(url, destfilename);
+                var resp = req.ResponseHeaders;
+                foreach (var key in resp)
+                {
+                    System.Diagnostics.Debug.WriteLine($"{key}: {resp[key.ToString()]}");
+                }
+            }
+
+
+            
             return true;           
         }
 

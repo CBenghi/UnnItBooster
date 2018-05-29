@@ -9,7 +9,7 @@ namespace StudentsFetcher.StudentMarking
         public string Surname;
         public string Forename;
         public string RouteCode;
-        public string Studentid;
+        public string NumericStudentId;
         public string CourseYear;
         public string Email;
         public DateTime CourseStart = DateTime.MinValue;
@@ -23,7 +23,7 @@ namespace StudentsFetcher.StudentMarking
                 return true;
             if (Forename != null && Forename.Contains(filter))
                 return true;
-            if (Studentid != null && Studentid.Contains(filter))
+            if (NumericStudentId != null && NumericStudentId.Contains(filter))
                 return true;
             if (Email != null && Email.Contains(filter))
                 return true;
@@ -32,7 +32,7 @@ namespace StudentsFetcher.StudentMarking
 
         public string PictureName(string pictureFolder)
         {
-            return Path.Combine(pictureFolder, String.Format("{0}.jpg", Studentid));
+            return Path.Combine(pictureFolder, String.Format("{0}.jpg", NumericStudentId));
         }
     }
 }

@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using LateBindingTest;
 using StudentsFetcher.Properties;
 using StudentsFetcher.Turnitin;
+using StudentsFetcher.Webdata;
 using ZedGraph;
 
 namespace StudentsFetcher.StudentMarking
@@ -1049,7 +1050,7 @@ namespace StudentsFetcher.StudentMarking
         private void ShowUserImage(string numeriCuserID)
         {
             var NumId = numeriCuserID + ".jpg";
-            var filesDir = Path.Combine(folder, "Pics");
+            var filesDir = StudentsData.PictureFolder;
             var fullName = Path.Combine(filesDir, NumId);
             if (File.Exists(fullName))
                 StudImage.Load(fullName);
@@ -1147,7 +1148,7 @@ Claudio
 
                 var sql = "UPDATE TB_Submissions " +
                     $"SET SUB_email = '{student.Email}', " +
-                    $"SUB_NumericUserId = '{student.Studentid}' " +
+                    $"SUB_NumericUserId = '{student.NumericStudentId}' " +
                     $"WHERE SUB_Id = {uid} ";
 
                 _config.Execute(sql);

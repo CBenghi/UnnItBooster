@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StudentsFetcher.Webdata;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,22 +13,35 @@ namespace StudentsFetcher.StudentMarking
     {
         readonly WebClient _webClient = new WebClient { UseDefaultCredentials = true };
 
-        internal Student ResolveById(string id)
+        StudentsData _stud = new StudentsData();
+
+        internal Student ResolveById(string letterStartingId)
         {
-            var identified = Unn.Students.StudentId.NumericFromString(id);
-            if (!string.IsNullOrEmpty( id))
+            Student std = null;
+            var numericOnlyId = Unn.Students.StudentId.NumericFromString(letterStartingId);
+            
+            if (!string.IsNullOrEmpty(numericOnlyId))
+                std = GetStudentByIdViaWheel(numericOnlyId);
+            if (std == null)
+                std = _stud.GetStudentById(numericOnlyId);
+            return std;
+        }
+
+        private Student GetStudentByIdViaWheel(string numericId)
+        {
+            try
             {
-                id = identified;
+                var url = $"http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsByIDorNameXML.php?fieldName=studentID&searchString={numericId}";
+                var s = _webClient.DownloadString(url);
+                var d = XDocument.Parse(s);
+                var stds = GetStudents(d, "");
+                var std = stds.FirstOrDefault();
+                return std;
             }
-            else
+            catch (Exception)
             {
-                
-            }
-            var url = $"http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsByIDorNameXML.php?fieldName=studentID&searchString={id}";
-            var s = _webClient.DownloadString(url);
-            var d = XDocument.Parse(s);
-            var stds = GetStudents(d, "");
-            return stds.FirstOrDefault();
+                return null;
+            }            
         }
 
 
@@ -61,7 +75,7 @@ namespace StudentsFetcher.StudentMarking
                 {
                     foreach (var student in stud)
                     {
-                        if (student.Studentid == verifyId)
+                        if (student.NumericStudentId == verifyId)
                             return student;
                     }
                 }
@@ -102,7 +116,7 @@ namespace StudentsFetcher.StudentMarking
 		<surname>{student.Surname}</surname>
 		<forename>{student.Forename}</forename>
 		<routeCode>{student.RouteCode}</routeCode>
-		<studentid>{student.Studentid}</studentid>
+		<studentid>{student.NumericStudentId}</studentid>
 		<courseyear>{student.CourseYear}</courseyear>
 		<email>{student.Email}</email>
         <CourseStart>{student.CourseStart}</CourseStart>
@@ -122,7 +136,7 @@ namespace StudentsFetcher.StudentMarking
                 Surname = GetField(el, "surname"),
                 Forename = GetField(el, "forename"),
                 RouteCode = GetField(el, "routeCode"),
-                Studentid = GetField(el, "studentid"),
+                NumericStudentId = GetField(el, "studentid"),
                 CourseYear = GetField(el, "courseyear"),
                 Email = GetField(el, "email"),
                 CourseStart = GetDate(el, "CourseStart"),

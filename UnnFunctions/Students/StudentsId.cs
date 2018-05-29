@@ -31,7 +31,7 @@ namespace Unn.Students
             else if (stringId.StartsWith("v"))
                 stringId = "09" + stringId.Substring(1);
             else
-                return string.Empty;
+                throw new Exception("unknown student code");
             return stringId;
         }
     }
