@@ -57,6 +57,10 @@ namespace StudentsFetcher.Turnitin
             
             if (!System.IO.Directory.Exists(folder))
                 System.IO.Directory.CreateDirectory(folder);
+
+            if (destfilename.Length  + folder.Length > 259)
+                destfilename = UserId + ".pdf"; ;
+            
             destfilename = System.IO.Path.Combine(folder, destfilename);
            
             if (!System.IO.File.Exists(destfilename))
