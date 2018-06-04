@@ -184,6 +184,7 @@
             // 
             // txtLibReport
             // 
+            this.txtLibReport.BackColor = System.Drawing.Color.LightYellow;
             this.txtLibReport.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtLibReport.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLibReport.Location = new System.Drawing.Point(0, 42);
