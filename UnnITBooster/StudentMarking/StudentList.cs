@@ -24,7 +24,7 @@ namespace StudentsFetcher.StudentMarking
             studentsRepo = new StudentsData();
             txtFolder.Text = studentsRepo.DataFolder;
 
-            var studs = studentsRepo.LoadStudents(lstModules);
+            var studs = studentsRepo.LoadStudents();
 
             UpdateStudentList();
             RefreshModulesList();
