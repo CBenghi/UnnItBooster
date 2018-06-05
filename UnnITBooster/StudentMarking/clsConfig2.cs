@@ -120,7 +120,6 @@ namespace StudentsFetcher.StudentMarking
                             componentComments += string.Format(commentTemplate, markAbility[bandMark]) + "\r\n";
                         }
                     }
-
                 }
                 else
                 {

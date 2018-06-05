@@ -80,9 +80,6 @@ namespace StudentsFetcher.Turnitin
                     System.Diagnostics.Debug.WriteLine($"{key}: {resp[key.ToString()]}");
                 }
             }
-
-
-            
             return true;           
         }
 

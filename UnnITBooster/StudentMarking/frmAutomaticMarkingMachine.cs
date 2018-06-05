@@ -15,6 +15,7 @@ using LateBindingTest;
 using StudentsFetcher.Properties;
 using StudentsFetcher.Turnitin;
 using StudentsFetcher.Webdata;
+using UnnFunctions.MCRF;
 using ZedGraph;
 
 namespace StudentsFetcher.StudentMarking
@@ -92,7 +93,6 @@ namespace StudentsFetcher.StudentMarking
                     var numericUserId = dt.Rows[0][0].ToString();
                     ShowUserImage(numericUserId);
                 }
-                
             }
             else
             {
@@ -153,7 +153,6 @@ namespace StudentsFetcher.StudentMarking
                     sb.Append(_config.GetStudentReport(id, chkSendModerationNotice.Checked));
                 }
                 txtStudentreport.Text = sb.ToString();
-
             }
         }
 
@@ -165,7 +164,6 @@ namespace StudentsFetcher.StudentMarking
                 return;
             var sId = stud["sub_userid"].ToString();
             var folderName = _config.GetFolderName();
-
 
             // this submission files
             var validFiles = GetValidFiles(folderName, sId).ToArray();
@@ -257,6 +255,7 @@ namespace StudentsFetcher.StudentMarking
                 {
                     GetCommentUse(m4);
                 }
+
                 else if (m5.Success)
                 {
                     RemoveComment(m5);
@@ -264,6 +263,14 @@ namespace StudentsFetcher.StudentMarking
                 else if (txtSearch.Text == "missing")
                 {
                     FindMissing();
+                }
+                else if (txtSearch.Text == "WriteFeedbackFile")
+                {
+                    WriteFeedbackFile();
+                }
+                else if (txtSearch.Text == "mcrfcheck")
+                {
+                    CleanMcrf();
                 }
                 else if (txtSearch.Text == "help")
                 {
@@ -278,9 +285,14 @@ namespace StudentsFetcher.StudentMarking
                         "   lists students that got a specific comment in their feedback\r\n " +
                         "ids\r\n" +
                         "   produces 2 list of ids (numeric and alfanumeric versions)\r\n" +
+                        "WriteFeedbackFile\r\n" +
+                        "   writes student feedback each in an individual file\r\n" +
+                        "mcrfcheck\r\n" +
+                        "   grabs the values copied from an MCRF cut and paste and tidies it up\r\n" +
                         "missing\r\n" +
                         "   finds marks not added to mcrf (use all relevant lists)" +
                         "   required ids in textbox (one per row, e.g. '11039298/1')\r\n ";
+
 
                 }
                 else
@@ -288,6 +300,34 @@ namespace StudentsFetcher.StudentMarking
                     SearchCommentInLibrary();
                 }
             }
+        }
+
+        private void WriteFeedbackFile()
+        {
+            var folderName = Path.Combine(_config.GetFolderName(), "Feedback");
+            var di = new DirectoryInfo(folderName);
+            if (!di.Exists)
+                di.Create();
+            var sql = "select  *, (SELECT count(*) FROM tb_marks WHERE mark_ptr_submission=sub_id) as marks from tb_submissions";
+            var dt = _config.GetDataTable(sql);
+
+            foreach (DataRow item in dt.Rows)
+            {
+                var id = Convert.ToInt32(item["SUB_id"]);
+                var stringId = item["SUB_UserId"].ToString();
+                var fi = new FileInfo(Path.Combine(folderName, stringId + ".txt"));
+                using (var w = fi.CreateText())
+                {
+                    w.WriteLine(_config.GetStudentReport(id, chkSendModerationNotice.Checked));
+                }
+            }
+        }
+
+        private void CleanMcrf()
+        {
+            McrfTextParser p = new McrfTextParser();
+            var t = p.ParseComponents(txtStudentreport.Text, 2);
+            txtLibReport.Text = t;
         }
 
         private void RemoveComment(Match m5)
@@ -1257,11 +1297,5 @@ Claudio
             }
             cmdGetFiles.Enabled = (elpSessionId.Text.Length == 32);
         }
-
-        #region emailing
-
-
-
-        #endregion
     }
 }
