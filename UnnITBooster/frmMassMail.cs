@@ -47,14 +47,22 @@ namespace StudentMarking
         
         private OleDbConnection GetConn()
         {
-            if (string.IsNullOrWhiteSpace(txtExcelFileName.Text))
+            var f = GetExcelFileInfo();
+            if (f == null)
                 return null;
-            var f = new FileInfo(txtExcelFileName.Text);
             if (!f.Exists)
                 return null;
             var con = new OleDbConnection(@"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + f.FullName + ";Extended Properties=Excel 8.0;"); // Extended Properties=Excel 8.0;
             con.Open();
             return con;
+        }
+
+        private FileInfo GetExcelFileInfo()
+        {
+            if (string.IsNullOrWhiteSpace(txtExcelFileName.Text))
+                return null;
+            var f = new FileInfo(txtExcelFileName.Text);
+            return f;
         }
 
         private void ReloadDb()
@@ -201,9 +209,10 @@ namespace StudentMarking
                 var row = (DataRow)studentId.Tag;
                 try
                 {
-                    var emailtext = replaceFields(txtEmailBody.Text, replacements, row);
+                    string emailtext = GetMailBody(replacements, row);
+
                     var emailSubject = replaceFields(txtEmailSubject.Text, replacements, row);
-                    
+
                     var destEmail = row[cmbEmailField.Text].ToString();
                     if (chkEmailDryRun.Checked)
                         app.SendOutlookEmail("claudio.benghi@gmail.com", emailSubject, emailtext, txtEmailCC.Text);
@@ -221,6 +230,39 @@ namespace StudentMarking
             MessageBox.Show("Done.");
         }
 
+        private string GetMailBody(List<string> replacements, DataRow row)
+        {
+            var ret = replaceFields(txtEmailBody.Text, replacements, row);
+            var ex = GetExcelFileInfo();
+            if (ex != null)
+            {
+                ret = replaceFile(ret, ex.Directory);
+            }
+            return ret;
+        }
+
+        private string replaceFile(string ret, DirectoryInfo directory)
+        {
+            Regex r = new Regex("FILE<<(.*)>>");
+            foreach (Match m in r.Matches(ret))
+            {
+                var toRep = m.Groups[0].Value;
+                var fname = m.Groups[1].Value;
+
+                var fullFName = Path.Combine(directory.FullName, fname);
+                string rep = "";
+                FileInfo f = new FileInfo(fullFName);
+                if (f.Exists)
+                {
+                    using (var reader = f.OpenText())
+                    {
+                        rep = reader.ReadToEnd();
+                    }
+                }
+                ret = ret.Replace(toRep, rep);
+            }
+            return ret;
+        }
 
         private string replaceFields(string emailtext, IEnumerable<string> replacements, DataRow row)
         {
@@ -306,7 +348,7 @@ namespace StudentMarking
             var replacements = GetReplacementList(txtEmailBody.Text);
             try
             {
-                var emailtext = replaceFields(txtEmailBody.Text, replacements, row);
+                var emailtext = GetMailBody(replacements, row);
                 txtEmailPreview.Text = emailtext;
             }
             catch (Exception exception)
