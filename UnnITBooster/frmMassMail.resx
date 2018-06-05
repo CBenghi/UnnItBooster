@@ -120,4 +120,26 @@
   <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="txtEmailPreview.Text" xml:space="preserve">
+    <value>Dear {First}, 
+
+The marking and moderation process for KB5022 has been completed a few days ago. 
+
+The mark for your groupwork was: {GroupMark} (valued at 40% of the module).
+Your Individual mark was: {IndividualMark } (valued at 60% of the module).
+
+So your final mark for KB5022 is {TotalMark}.
+
+These marks are not confirmed at this moment as they are going to be evaluated by external examiners in the coming days.
+
+Please find comments and detailed marks for the individual submission after my signature below.
+I remain available for any queries in the coming weeks. 
+
+Best regards, 
+Claudio
+
+NOTE: the overall mark below refers to the individual submission only.
+
+FILE&lt;&lt;{ID}.txt&gt;&gt;</value>
+  </data>
 </root>

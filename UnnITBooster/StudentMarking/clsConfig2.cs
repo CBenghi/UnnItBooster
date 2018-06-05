@@ -109,7 +109,7 @@ namespace StudentsFetcher.StudentMarking
                     if (order == -1)
                         continue;
 
-                    sb.AppendFormat("Component {3} ({0} {1}% of total mark): {2}\r\n", cpntName, percent, mark, order);
+                    sb.AppendFormat("Component {3} ({1}% of total mark for {0}): {2}\r\n", cpntName, percent, mark, order);
 
                     if (mark > 10)
                     {
@@ -161,12 +161,22 @@ namespace StudentsFetcher.StudentMarking
                     prevSection = thisSection;
                 }
                 var basecomment = item["COMM_Text"].ToString().Trim();
-                if (basecomment.EndsWith("."))
+                var lastchar = basecomment.Substring(basecomment.Length-1);
+                if (
+                    lastchar == "." ||
+                    lastchar == "?" ||
+                    lastchar == "!"
+                    )
+                {
                     basecomment = basecomment.Substring(0, basecomment.Length - 1);
+                }
+                else
+                {
+                    lastchar = "";
+                }
                 var addNote = item["SCOM_AddNote"].ToString().Trim();
                 if (addNote.EndsWith("."))
                     addNote = addNote.Substring(0, addNote.Length - 1);
-
                 if (basecomment == "")
                 {
                     basecomment = addNote;
@@ -175,16 +185,11 @@ namespace StudentsFetcher.StudentMarking
                 string thisComment;
                 if (addNote.Length > 0)
                 {
-                    thisComment  = string.Format(" - {0} ({1}).",
-                        basecomment,
-                        addNote
-                        );
+                    thisComment  = $" - {basecomment} ({addNote}){lastchar}";
                 }
                 else
                 {
-                    thisComment = string.Format(" - {0}.",
-                        basecomment
-                        );
+                    thisComment = $" - {basecomment}{lastchar}";
                 }
                 sb.AppendLine(thisComment);
             }

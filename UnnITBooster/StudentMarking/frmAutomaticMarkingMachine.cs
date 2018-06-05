@@ -29,6 +29,7 @@ namespace StudentsFetcher.StudentMarking
         {
             InitializeComponent();
             LoadSettings();
+            
         }
         
         #region marking

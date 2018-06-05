@@ -30,6 +30,7 @@ namespace StudentMarking
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMassMail));
             this.cmdSelectFile = new System.Windows.Forms.Button();
             this.txtExcelFileName = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -53,8 +54,8 @@ namespace StudentMarking
             this.cmdEmailRefreshStudents = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.txtEmailBody = new ExtendedTextBox.ExtTextBox();
-            this.txtEmailPreview = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.txtEmailPreview = new System.Windows.Forms.TextBox();
             this.txtEmailCC = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.chkEmailDryRun = new System.Windows.Forms.CheckBox();
@@ -208,7 +209,6 @@ namespace StudentMarking
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer1);
-            this.splitContainer3.Panel2.Controls.Add(this.button1);
             this.splitContainer3.Panel2.Controls.Add(this.txtEmailCC);
             this.splitContainer3.Panel2.Controls.Add(this.label2);
             this.splitContainer3.Panel2.Controls.Add(this.chkEmailDryRun);
@@ -314,6 +314,7 @@ namespace StudentMarking
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.txtEmailBody);
+            this.splitContainer1.Panel1.Controls.Add(this.button1);
             // 
             // splitContainer1.Panel2
             // 
@@ -337,7 +338,7 @@ namespace StudentMarking
             this.txtEmailBody.MaxLength = 0;
             this.txtEmailBody.Name = "txtEmailBody";
             this.txtEmailBody.OriginalText = "";
-            this.txtEmailBody.Size = new System.Drawing.Size(669, 269);
+            this.txtEmailBody.Size = new System.Drawing.Size(670, 240);
             this.txtEmailBody.SpellCheck = true;
             this.txtEmailBody.TabIndex = 6;
             this.txtEmailBody.TabStop = false;
@@ -345,6 +346,17 @@ namespace StudentMarking
             this.txtEmailBody.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
             this.txtEmailBody.Wrapping = true;
             this.txtEmailBody.TextChanged += new System.EventHandler(this.txtEmailBody_TextChanged);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(538, 248);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(135, 24);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Save";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // txtEmailPreview
             // 
@@ -356,22 +368,10 @@ namespace StudentMarking
             this.txtEmailPreview.Multiline = true;
             this.txtEmailPreview.Name = "txtEmailPreview";
             this.txtEmailPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtEmailPreview.Size = new System.Drawing.Size(674, 282);
+            this.txtEmailPreview.Size = new System.Drawing.Size(674, 286);
             this.txtEmailPreview.TabIndex = 7;
             this.txtEmailPreview.TabStop = false;
-            this.txtEmailPreview.Text = "Dear {SUB_FirstName}, \r\nThe marking and moderation process for BE1178 has been co" +
-    "mpleted a few days ago. \r\nPlease find your feedback after my signature.\r\nBest re" +
-    "gards, \r\nClaudio \r\n\r\n{MarkReport}";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(148, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(135, 24);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Save";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.txtEmailPreview.Text = resources.GetString("txtEmailPreview.Text");
             // 
             // txtEmailCC
             // 
@@ -396,7 +396,7 @@ namespace StudentMarking
             this.chkEmailDryRun.AutoSize = true;
             this.chkEmailDryRun.Checked = true;
             this.chkEmailDryRun.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkEmailDryRun.Location = new System.Drawing.Point(290, 6);
+            this.chkEmailDryRun.Location = new System.Drawing.Point(74, 11);
             this.chkEmailDryRun.Name = "chkEmailDryRun";
             this.chkEmailDryRun.Size = new System.Drawing.Size(86, 24);
             this.chkEmailDryRun.TabIndex = 4;
@@ -424,7 +424,8 @@ namespace StudentMarking
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(6, 3);
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.Location = new System.Drawing.Point(544, 6);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(135, 24);
             this.button3.TabIndex = 0;

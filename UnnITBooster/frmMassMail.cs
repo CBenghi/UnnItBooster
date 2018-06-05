@@ -24,11 +24,9 @@ namespace StudentMarking
             txtEmailBody.Text = StudentsFetcher.Properties.Settings.Default.emailBody;
             txtEmailSubject.Text = StudentsFetcher.Properties.Settings.Default.emailSubject;
             txtEmailCC.Text = StudentsFetcher.Properties.Settings.Default.emailCC;
+            
         }
 
-       
-
-        
         private void cmdSelectFile_Click(object sender, EventArgs e)
         {
             openFileDialog1.DefaultExt = "*.xlsx";
