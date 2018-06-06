@@ -20,7 +20,7 @@ using ZedGraph;
 
 namespace StudentsFetcher.StudentMarking
 {
-    [AMMFormAttributes(ButtonText = "Automatic marking machine", Order = 1)] 
+    [AMMFormAttributes(ButtonText = "Automatic marking machine", Order = 1)]
     public partial class FrmAutomaticMarkingMachine : Form
     {
         private ClsConfig _config;
@@ -29,11 +29,11 @@ namespace StudentsFetcher.StudentMarking
         {
             InitializeComponent();
             LoadSettings();
-            
+
         }
-        
+
         #region marking
-        
+
         void txtStudentId_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -70,7 +70,7 @@ namespace StudentsFetcher.StudentMarking
 
                     if (cmp == -1)
                         cmp = 0;
-                    
+
                     var m = flComponents.Controls[cmp] as ucComponentMark;
                     m.TabStop = false;
                     m.MarkValue = val;
@@ -87,7 +87,7 @@ namespace StudentsFetcher.StudentMarking
                 UpdateDocumentsList();
 
                 // show student picure.
-                
+
                 var dt = _config.GetDataTable("SELECT SUB_NumericUserId from tb_submissions where SUB_Id = " + GetStudentNumber());
                 if (dt.Rows.Count == 1)
                 {
@@ -116,14 +116,14 @@ namespace StudentsFetcher.StudentMarking
                     return;
                 }
 
-                var mc =  _config.GetMarkCalculator();
+                var mc = _config.GetMarkCalculator();
                 var sb = new StringBuilder();
                 var sbDataUpload = new StringBuilder();
                 foreach (DataRow item in dt.Rows)
                 {
                     var totmark = mc.GetFinalMark(item["SUB_NumericUserId"].ToString(), _config);
 
-                    sb.AppendFormat("{0}\t{1}\t{2}\t{3}\t{5}\t{4}\t{6}\r\n", 
+                    sb.AppendFormat("{0}\t{1}\t{2}\t{3}\t{5}\t{4}\t{6}\r\n",
                         item["SUB_id"],
                         item["SUB_LastName"],
                         item["SUB_FirstName"],
@@ -138,7 +138,7 @@ namespace StudentsFetcher.StudentMarking
                         item["SUB_FirstName"],
                         item["SUB_UserID"],
                         item["SUB_NumericUserID"],
-                        totmark, 
+                        totmark,
                         item["SUB_email"]
                         );
                 }
@@ -187,9 +187,9 @@ namespace StudentsFetcher.StudentMarking
                 cmbDocuments.SelectedIndex = 0;
             }
 
-            cmbDocuments.ForeColor = 
-                cmbDocuments.Items.Count > 1 
-                ? Color.Red 
+            cmbDocuments.ForeColor =
+                cmbDocuments.Items.Count > 1
+                ? Color.Red
                 : Color.Black;
 
         }
@@ -201,7 +201,7 @@ namespace StudentsFetcher.StudentMarking
             if (!d.Exists)
                 return validFiles;
             var dirs = d.GetDirectories();
-            
+
             foreach (var item in dirs)
             {
                 var files = item.GetFiles(sId + "*.*");
@@ -209,7 +209,7 @@ namespace StudentsFetcher.StudentMarking
                 {
                     var subfile = Path.Combine(item.Name, file.Name);
                     validFiles.Add(subfile);
-                    
+
                 }
             }
             return validFiles;
@@ -261,6 +261,10 @@ namespace StudentsFetcher.StudentMarking
                 {
                     RemoveComment(m5);
                 }
+                else if (txtSearch.Text == "CopyFilesById")
+                {
+                    CopyFilesById();
+                }
                 else if (txtSearch.Text == "missing")
                 {
                     FindMissing();
@@ -282,6 +286,8 @@ namespace StudentsFetcher.StudentMarking
                         "   required ids in textbox (one per row)\r\n " +
                         "CommentCount\r\n" +
                         "   SELECT count(scom_id) as count, SCOM_ptr_Submission FROM TB_SubComments group by SCOM_ptr_Submission order by count(scom_id) desc\r\n" +
+                        "CopyFilesById\r\n" +
+                        "   used to copy files to clipboard for the module box (by userid)\r\n " +
                         "WhoGotComment <#>\r\n" +
                         "   lists students that got a specific comment in their feedback\r\n " +
                         "ids\r\n" +
@@ -293,14 +299,18 @@ namespace StudentsFetcher.StudentMarking
                         "missing\r\n" +
                         "   finds marks not added to mcrf (use all relevant lists)" +
                         "   required ids in textbox (one per row, e.g. '11039298/1')\r\n ";
-
-
                 }
                 else
                 {
                     SearchCommentInLibrary();
                 }
             }
+        }
+
+        private void CopyFilesById()
+        {
+            var allIds = txtLibReport.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            CopyFiles(allIds);
         }
 
         private void WriteFeedbackFile()
@@ -341,8 +351,8 @@ namespace StudentsFetcher.StudentMarking
 
             txtLibReport.Text = "Submissions:\r\n";
             var sql = "delete from TB_SubComments where "
-                      + "SCOM_ptr_Submission = " + GetStudentNumber() 
-                      +" AND SCOM_ptr_Comment = " + m5.Groups[1].Value;
+                      + "SCOM_ptr_Submission = " + GetStudentNumber()
+                      + " AND SCOM_ptr_Comment = " + m5.Groups[1].Value;
 
 
             _config.Execute(sql);
@@ -363,7 +373,7 @@ namespace StudentsFetcher.StudentMarking
             {
                 var lookForId = r["sub_numericUserId"].ToString();
 
-                var rEx = new Regex("" + lookForId +@"/(\d)");
+                var rEx = new Regex("" + lookForId + @"/(\d)");
 
                 var bFound = false;
                 foreach (var reqId in allIds)
@@ -384,11 +394,42 @@ namespace StudentsFetcher.StudentMarking
         private void GetCommentUse(Match m4)
         {
             txtLibReport.Text = "Submissions:\r\n";
-            var sql = "SELECT SCOM_ptr_Submission FROM TB_SubComments where SCOM_ptr_comment = " + m4.Groups[1].Value;
+            var sql = "SELECT SCOM_ptr_Submission, TB_Submissions.SUB_UserID FROM TB_SubComments inner join TB_Submissions on SCOM_ptr_Submission = SUB_ID where SCOM_ptr_comment = " + m4.Groups[1].Value;
             var dt = _config.GetDataTable(sql);
+
+            var reqIds = new List<string>();
+
             foreach (DataRow item in dt.Rows)
             {
-                txtLibReport.Text += item[0] + "\r\n";
+                txtLibReport.Text += $"{item[0]}\t{item[1]}\r\n";
+                // this submission's files
+                reqIds.Add(item[1].ToString());
+            }
+            // also copy files to clipboard
+            //
+            CopyFiles(reqIds);
+        }
+
+        private void CopyFiles(IEnumerable<string> reqIds)
+        {
+            var fNames = new List<string>();
+            var folderName = _config.GetFolderName();
+            foreach (var sId in reqIds)
+            {
+
+                var validFiles = GetValidFiles(folderName, sId).ToArray();
+
+                foreach (var file in validFiles)
+                {
+                    fNames.Add(Path.Combine(folderName, file));
+                }
+
+            }
+            if (fNames.Any())
+            {
+                Clipboard.Clear();
+                Clipboard.SetData(DataFormats.FileDrop, fNames.ToArray());
+                txtLibReport.Text += $"{fNames.Count} Files copied to clipboard.";
             }
         }
 
