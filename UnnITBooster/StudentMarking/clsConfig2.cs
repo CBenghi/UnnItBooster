@@ -160,19 +160,23 @@ namespace StudentsFetcher.StudentMarking
                     sb.AppendFormat("{0}\r\n\r\n", thisSection);
                     prevSection = thisSection;
                 }
+                string lastchar = "";
                 var basecomment = item["COMM_Text"].ToString().Trim();
-                var lastchar = basecomment.Substring(basecomment.Length-1);
-                if (
-                    lastchar == "." ||
-                    lastchar == "?" ||
-                    lastchar == "!"
-                    )
+                if (!string.IsNullOrEmpty(basecomment))
                 {
-                    basecomment = basecomment.Substring(0, basecomment.Length - 1);
-                }
-                else
-                {
-                    lastchar = "";
+                    lastchar = basecomment.Substring(basecomment.Length - 1);
+                    if (
+                        lastchar == "." ||
+                        lastchar == "?" ||
+                        lastchar == "!"
+                        )
+                    {
+                        basecomment = basecomment.Substring(0, basecomment.Length - 1);
+                    }
+                    else
+                    {
+                        lastchar = "";
+                    }
                 }
                 var addNote = item["SCOM_AddNote"].ToString().Trim();
                 if (addNote.EndsWith("."))
