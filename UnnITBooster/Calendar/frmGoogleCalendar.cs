@@ -108,6 +108,10 @@ namespace StudentsFetcher
 
         string AddeventAUAS(DateTime day, int timeHour, int durationHours, string location, string name, string addtext)
         {
+            // fail
+
+            throw new Exception("Not implemented");
+
             day = day.AddHours(9);
             day = day.AddMinutes(20);
 
