@@ -98,6 +98,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AMMFormAttributes.cs" />
+    <Compile Include="Calendar\DateFix.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calendar\DateFix.Designer.cs">
+      <DependentUpon>DateFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Calendar\frmGoogleCalendar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -215,6 +221,9 @@
     </Compile>
     <Compile Include="Turnitin\TurnitInSubmission.cs" />
     <Compile Include="Webdata\StudentsData.cs" />
+    <EmbeddedResource Include="Calendar\DateFix.resx">
+      <DependentUpon>DateFix.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Calendar\frmGoogleCalendar.resx">
       <DependentUpon>frmGoogleCalendar.cs</DependentUpon>
       <SubType>Designer</SubType>
