@@ -135,7 +135,6 @@ namespace StudentsFetcher.StudentMarking
         {
             var rows = doc.Descendants("student").Select(el => new Student
             {
-                Context = modName,
                 Surname = GetField(el, "surname"),
                 Forename = GetField(el, "forename"),
                 RouteCode = GetField(el, "routeCode"),

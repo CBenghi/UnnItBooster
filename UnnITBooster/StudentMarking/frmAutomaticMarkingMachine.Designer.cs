@@ -505,7 +505,6 @@
 			this.txtTextOrPointer.TextCase = System.Windows.Forms.CharacterCasing.Normal;
 			this.txtTextOrPointer.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
 			this.txtTextOrPointer.Wrapping = true;
-			this.txtTextOrPointer.OnCtrlEnter += new ExtendedTextBox.ExtTextBox.CtrlEnterPressed(this.txtTextOrPointer_OnCtrlEnter);
 			this.txtTextOrPointer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
 			// 
 			// txtAdditionalNote
@@ -528,7 +527,6 @@
 			this.txtAdditionalNote.TextCase = System.Windows.Forms.CharacterCasing.Normal;
 			this.txtAdditionalNote.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
 			this.txtAdditionalNote.Wrapping = true;
-			this.txtAdditionalNote.OnCtrlEnter += new ExtendedTextBox.ExtTextBox.CtrlEnterPressed(this.txtAdditionalNote_OnCtrlEnter);
 			this.txtAdditionalNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
 			// 
 			// label1

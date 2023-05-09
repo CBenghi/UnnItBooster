@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -81,7 +82,7 @@ namespace StudentsFetcher.StudentMarking
 				Text = string.Format("{0} {1}", student.Forename, student.Surname),
 				Tag = student
 			};
-			li.SubItems.Add(student.Context);
+			li.SubItems.Add(student.FullName);
 			li.SubItems.Add(student.NumericStudentId);
 			li.SubItems.Add(student.Email);
 			li.SubItems.Add(studentsRepo.GetPrettyRoute(student.RouteCode));
@@ -230,25 +231,42 @@ namespace StudentsFetcher.StudentMarking
 
 		private void button2_Click(object sender, EventArgs e)
 		{
+			var students = new List<Student>();
+
 			var content = Clipboard.GetText();
 			HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
 			doc.LoadHtml(content);
+			bool hasHeader = false;
 			HtmlNodeCollection rows = doc.DocumentNode.SelectNodes("//tr");
 			foreach (var row in rows) 
 			{
 				var headers = row.SelectNodes("th");
 				if (!(headers is null))
 				{
+					if (headers[0].InnerText != "ID")
+						return;
+					hasHeader = true;
 					continue;
 				}
+				if (!hasHeader)
+					return;
 				var cols = row.SelectNodes("td");
 				if (cols is null)
 					continue;
 
+				var idNode = cols[0].SelectNodes("ID");
+
+				string id = cols[0].InnerText.Replace("&nbsp;", "");
+				string name = cols[1].InnerText;
+				string email = cols[3].InnerText;
+
+				Student s = new Student();
+				s.NumericStudentId = id;
+				s.FullName = name;
+				s.Email = email;
+				students.Add(s);
 			}
 
-
-			// 	Regex r = new Regex("<td")
 		}
 	}
 }

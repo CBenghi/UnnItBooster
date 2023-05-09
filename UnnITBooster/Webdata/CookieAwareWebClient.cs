@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace StudentsFetcher
+namespace StudentsFetcher.Webdata
 {
     public class CookieAwareWebClient : WebClient
     {

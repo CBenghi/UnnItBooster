@@ -3,32 +3,19 @@
     <TargetFramework>net48</TargetFramework>
     <OutputType>WinExe</OutputType>
     <RootNamespace>StudentsFetcher</RootNamespace>
-    <SignAssembly>true</SignAssembly>
     <UseWindowsForms>true</UseWindowsForms>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <BaseIntermediateOutputPath />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="SelectAllTextbox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="StudentMarking\ucComponentMark.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Turnitin\MyWebClient.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="CookieAwareWebClient.cs">
-      <SubType>Component</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="License-LGPL.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ExtendedTextBox\ExtendedTextBox.csproj" />
     <ProjectReference Include="..\UnnFunctions\UnnFunctions.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -42,5 +29,4 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  <PropertyGroup />
 </Project>

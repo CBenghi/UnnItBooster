@@ -5,7 +5,7 @@ namespace StudentsFetcher.StudentMarking
 {
     class Student
     {
-        public string Context { get; set; }
+        public string FullName { get; set; }
         public string Surname { get; set; }
 		public string Forename { get; set; }
 		public string RouteCode { get; set; }
@@ -17,7 +17,7 @@ namespace StudentsFetcher.StudentMarking
 
         public bool Matches(string filter)
         {
-            if (Context == filter)
+            if (FullName == filter)
                 return true;
             if (Surname != null && Surname.Contains(filter))
                 return true;
