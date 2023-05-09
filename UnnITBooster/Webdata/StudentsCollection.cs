@@ -1,18 +1,24 @@
 ﻿using StudentsFetcher.StudentMarking;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace StudentsFetcher.Webdata
 {
-    public class StudentsData
+	public class StudentsCollection
     {
         public string DataFolder => Properties.Settings.Default.StudentsFolder;
+
+        public IEnumerable<string> GetCollections()
+        {
+            foreach (var item in ConfigurationFolder.GetDirectories())
+            {
+                yield return item.Name;
+            }
+		}
 
         List<Student> _students = new List<Student>();
 
@@ -24,7 +30,7 @@ namespace StudentsFetcher.Webdata
             }
         }
 
-        public StudentsData()
+        public StudentsCollection()
         {
             LoadStudents();
         }
@@ -55,32 +61,6 @@ namespace StudentsFetcher.Webdata
             }
             return null;
         }
-
-        internal void DwonloadFile(string moduleCode)
-        {
-            var fileName = moduleCode + ".stud.xml";
-            fileName = Path.Combine(ConfigurationFolder.FullName, fileName);
-            // i think semster = 3 means both
-            var url = string.Format(
-                    @"http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsOnModuleXML.php?moduleCode={0}&semester=3",
-                    moduleCode);
-            _webClient.DownloadFile(url, fileName);
-
-
-            fileName = moduleCode + ".routes.xml";
-            fileName = Path.Combine(ConfigurationFolder.FullName, fileName);
-            // i think semster = 3 means both
-            url = string.Format(
-                    @"http://wheel.northumbria.ac.uk/amfphp/services/unn/getModuleRoutesUsingXML.php?moduleCode={0}",
-                    moduleCode);
-            _webClient.DownloadFile(url, fileName);
-            // more commands: view-source:http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentModulesXML.php?studentID=16030596
-            // view-source:http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsByIDorName.php?studentID=16030596
-            // this used to work and does not anymore: http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsByIDorNameXML.php?fieldName=studentID&searchString=12024427
-            // this used to work and does not anymore: http://wheel.northumbria.ac.uk/amfphp/services/unn/getStudentsByIDorNameXML.php?fieldName=studentName&searchString=asda
-
-        }
-
 
         private void AddRoutes(FileInfo file)
         {

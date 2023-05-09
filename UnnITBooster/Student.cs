@@ -5,15 +5,15 @@ namespace StudentsFetcher.StudentMarking
 {
     class Student
     {
-        public string Context;
-        public string Surname;
-        public string Forename;
-        public string RouteCode;
-        public string NumericStudentId;
-        public string CourseYear;
-        public string Email;
-        public DateTime CourseStart = DateTime.MinValue;
-        public DateTime CourseFinish = DateTime.MinValue;
+        public string Context { get; set; }
+        public string Surname { get; set; }
+		public string Forename { get; set; }
+		public string RouteCode { get; set; }
+		public string NumericStudentId { get; set; }
+		public string CourseYear { get; set; }
+		public string Email { get; set; }
+		public DateTime CourseStart { get; set; } = DateTime.MinValue;
+        public DateTime CourseFinish { get; set; } = DateTime.MinValue;
 
         public bool Matches(string filter)
         {

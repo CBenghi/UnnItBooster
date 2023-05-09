@@ -13,7 +13,7 @@ namespace StudentsFetcher.StudentMarking
     {
         readonly WebClient _webClient = new WebClient { UseDefaultCredentials = true };
 
-        StudentsData _stud = new StudentsData();
+        StudentsCollection _stud = new StudentsCollection();
 
         internal Student ResolveById(string letterStartingId)
         {

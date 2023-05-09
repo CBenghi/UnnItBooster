@@ -15,7 +15,6 @@ namespace UnnOutlookAddin
         public frmSettings()
         {
             InitializeComponent();
-
             LoadSettings();
         }
 

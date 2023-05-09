@@ -878,10 +878,6 @@ namespace StudentsFetcher.StudentMarking
                         repvalue = mcalc.GetFinalMark(row["SUB_NumericUserId"].ToString(), _config).ToString();
                         break;
                     case "AllMarks":
-                    {
-                        var p = new Programme(row["SUB_NumericUserId"].ToString());
-                        repvalue = p.ShortMarksReport();
-                    }
                         break;
                     default:
                         try
@@ -1132,7 +1128,7 @@ namespace StudentsFetcher.StudentMarking
         private void ShowUserImage(string numeriCuserID)
         {
             var NumId = numeriCuserID + ".jpg";
-            var filesDir = StudentsData.PictureFolder;
+            var filesDir = StudentsCollection.PictureFolder;
             var fullName = Path.Combine(filesDir, NumId);
             if (File.Exists(fullName))
                 StudImage.Load(fullName);

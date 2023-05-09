@@ -23,8 +23,7 @@ namespace ExtendedTextBox
 
         public event CtrlEnterPressed OnCtrlEnter;
 
-        private bool _mandatory;
-        private string _originalText="";
+		private string _originalText="";
         private TextTypes _textType = TextTypes.String;
         private System.Drawing.Color _ChangedColour;
         private ErrorProvider errorProvider;

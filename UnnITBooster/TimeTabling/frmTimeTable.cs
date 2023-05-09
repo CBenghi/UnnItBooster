@@ -30,31 +30,6 @@ namespace StudentsFetcher
             }
         }
 
-        private void DataWebGet()
-        {
-            
-
-            string[] studs = txtStudentId.Text.Split(
-                new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries
-                );
-            
-            
-            foreach (var item in studs)
-            {
-                
-                Cal c = Cal.getStudent(item, (int)nudFromWeek.Value, (int)nudToWeek.Value);
-                dic.Add(item, c);
-                // DebugReport(ts, item, c);
-            }
-
-            XmlSerializer ser = new XmlSerializer(typeof(SerializableDictionary<string, Cal>));
-            var s = Utf8XML.XMLSerializer(ser, dic);
-            using (TextWriter writer = File.CreateText("LastData.xml"))
-            {
-                writer.Write(s);
-            }
-        }
-
         private static void DebugReport(TimeSlot[] ts, string item, Cal c)
         {
             string stud = item + "\t";
@@ -84,11 +59,6 @@ namespace StudentsFetcher
                     stud += "\t";
             }
             Debug.WriteLine(stud);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            DataWebGet();
         }
 
         private void button2_Click(object sender, EventArgs e)
