@@ -19,11 +19,11 @@ namespace StudentsFetcher.StudentMarking
         {
             Student std = null;
             var numericOnlyId = Unn.Students.StudentId.NumericFromString(letterStartingId);
-            
-            if (!string.IsNullOrEmpty(numericOnlyId))
-                std = GetStudentByIdViaWheel(numericOnlyId);
             if (std == null)
                 std = _stud.GetStudentById(numericOnlyId);
+            if (std == null && !string.IsNullOrEmpty(numericOnlyId))
+                std = GetStudentByIdViaWheel(numericOnlyId);
+
             return std;
         }
 
@@ -98,6 +98,9 @@ namespace StudentsFetcher.StudentMarking
         internal static List<Student> GetStudents(FileInfo xmlFile)
         {
             var modName = xmlFile.Name.Replace(".stud.xml", "");
+            if (!xmlFile.Exists)
+                return null;
+            
             var doc = XDocument.Load(xmlFile.FullName);
 
             return GetStudents(doc, modName);

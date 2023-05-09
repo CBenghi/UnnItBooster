@@ -10,6 +10,7 @@ using LateBindingTest;
 using System.Threading;
 using StudentsFetcher;
 using System.Net;
+using System.DirectoryServices;
 
 namespace StudentMarking
 {
@@ -50,9 +51,30 @@ namespace StudentMarking
                 return null;
             if (!f.Exists)
                 return null;
-            var con = new OleDbConnection(@"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + f.FullName + ";Extended Properties=Excel 8.0;"); // Extended Properties=Excel 8.0;
-            con.Open();
-            return con;
+            OleDbConnection con = null;
+
+            string[] options = new[]
+            {
+                //$@"Provider=Microsoft.Jet.OLEDB.4.0;Data Source={f.FullName};Extended Properties=Excel 8.0;",
+                $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={f.FullName};Extended Properties=""Excel 12.0 Xml;HDR=YES"";",
+                $@"Excel File={f.FullName};"
+            };
+
+            for (int i = 0; i < options.Length; i++)
+            {
+                string item = options[i];
+                try
+                {
+                    con = new OleDbConnection(item); // Extended Properties=Excel 8.0;
+                    con.Open();
+                    return con;
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            return null;            
         }
 
         private FileInfo GetExcelFileInfo()

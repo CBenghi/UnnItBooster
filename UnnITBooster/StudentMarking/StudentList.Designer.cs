@@ -43,6 +43,8 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.StudImage = new System.Windows.Forms.PictureBox();
@@ -58,6 +60,8 @@
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.txtStudentInfo = new System.Windows.Forms.TextBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.button7 = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button6 = new System.Windows.Forms.Button();
@@ -65,10 +69,6 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.lstModules = new System.Windows.Forms.CheckedListBox();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.button7 = new System.Windows.Forms.Button();
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StudImage)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -82,9 +82,9 @@
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtModuleCode
@@ -174,6 +174,7 @@
             this.columnHeader7});
             this.lstStudents.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstStudents.FullRowSelect = true;
+            this.lstStudents.HideSelection = false;
             this.lstStudents.Location = new System.Drawing.Point(0, 30);
             this.lstStudents.Name = "lstStudents";
             this.lstStudents.Size = new System.Drawing.Size(565, 497);
@@ -206,6 +207,14 @@
             // 
             this.columnHeader5.Text = "Route";
             this.columnHeader5.Width = 200;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Start";
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "Finish";
             // 
             // txtSearch
             // 
@@ -341,6 +350,7 @@
             this.columnHeader10});
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.FullRowSelect = true;
+            this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(3, 3);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(332, 495);
@@ -377,6 +387,27 @@
             this.txtStudentInfo.Name = "txtStudentInfo";
             this.txtStudentInfo.Size = new System.Drawing.Size(332, 495);
             this.txtStudentInfo.TabIndex = 0;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.button7);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(338, 501);
+            this.tabPage6.TabIndex = 3;
+            this.tabPage6.Text = "Search";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(6, 90);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(164, 23);
+            this.button7.TabIndex = 0;
+            this.button7.Text = "button7";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // tabPage2
             // 
@@ -458,35 +489,6 @@
             this.lstModules.Size = new System.Drawing.Size(120, 199);
             this.lstModules.TabIndex = 17;
             // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.button7);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(338, 501);
-            this.tabPage6.TabIndex = 3;
-            this.tabPage6.Text = "Search";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(6, 90);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(164, 23);
-            this.button7.TabIndex = 0;
-            this.button7.Text = "button7";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "Start";
-            // 
-            // columnHeader7
-            // 
-            this.columnHeader7.Text = "Finish";
-            // 
             // StudentList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -494,7 +496,6 @@
             this.ClientSize = new System.Drawing.Size(926, 557);
             this.Controls.Add(this.tabControl1);
             this.Name = "StudentList";
-            this.Text = "StudentList";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StudImage)).EndInit();
@@ -511,11 +512,11 @@
             this.tabPage4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.tabPage6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

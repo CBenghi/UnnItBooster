@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace StudentsFetcher
@@ -17,7 +18,7 @@ namespace StudentsFetcher
         {
             txtMatched.Text = "";
 
-            int MatchDigits = 6;
+            int MatchDigits = Convert.ToInt32(nudChars.Value);
 
             string[] MainArray = txtMain.Text.Split(new string[] { "\r\n" }, StringSplitOptions.None);
             string[] RepoArray = txtToMatch.Text.Split(new string[] { "\r\n" }, StringSplitOptions.None);
@@ -64,6 +65,23 @@ namespace StudentsFetcher
             string tmp = txtMain.Text;
             txtMain.Text = txtToMatch.Text;
             txtToMatch.Text = tmp;
+        }
+
+        private void matchByContains_Click(object sender, EventArgs e)
+        {
+            txtMatched.Text = "";
+            string[] MainArray = txtMain.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            string[] RepoArray = txtToMatch.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            foreach (var mainString in MainArray)
+            {
+                if (mainString == "")
+                {
+                    txtMatched.Text += "\r\n";
+                    continue;
+                }
+                string[] ret = RepoArray.Where(x=>x.Contains(mainString)).ToArray();
+                txtMatched.Text += string.Format($"{mainString}\t{string.Join("\t", ret)}\r\n");
+            }
         }
     }
 }

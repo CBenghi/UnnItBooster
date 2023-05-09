@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MCRF\McrfTextParser.cs" />
+    <Compile Include="Students\Student.cs" />
+    <Compile Include="Students\StudentRelation.cs" />
+    <Compile Include="Students\StudentsArchive.cs" />
     <Compile Include="Students\StudentsId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
