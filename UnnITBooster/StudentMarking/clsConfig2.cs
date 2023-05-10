@@ -7,7 +7,7 @@ using System.Text;
 
 namespace StudentsFetcher.StudentMarking
 {
-    public class ClsConfig
+    public class MarkingConfig
     {
         public string DbName { get; set; }
 

@@ -241,21 +241,14 @@
 			// txtStudentreport
 			// 
 			this.txtStudentreport.AcceptsReturn = true;
-			this.txtStudentreport.AcceptsTab = false;
-			this.txtStudentreport.ChangedColour = System.Drawing.Color.Empty;
 			this.txtStudentreport.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.txtStudentreport.Location = new System.Drawing.Point(0, 0);
 			this.txtStudentreport.Margin = new System.Windows.Forms.Padding(4);
 			this.txtStudentreport.MaxLength = 0;
 			this.txtStudentreport.Name = "txtStudentreport";
-			this.txtStudentreport.OriginalText = "";
-			this.txtStudentreport.Size = new System.Drawing.Size(236, 215);
-			this.txtStudentreport.SpellCheck = true;
+			this.txtStudentreport.Size = new System.Drawing.Size(236, 20);
 			this.txtStudentreport.TabIndex = 3;
 			this.txtStudentreport.TabStop = false;
-			this.txtStudentreport.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-			this.txtStudentreport.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-			this.txtStudentreport.Wrapping = true;
 			// 
 			// cmdSaveMarks
 			// 
@@ -488,45 +481,31 @@
 			// txtTextOrPointer
 			// 
 			this.txtTextOrPointer.AcceptsReturn = true;
-			this.txtTextOrPointer.AcceptsTab = false;
 			this.txtTextOrPointer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtTextOrPointer.ChangedColour = System.Drawing.Color.Empty;
 			this.txtTextOrPointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtTextOrPointer.Location = new System.Drawing.Point(71, 5);
-			this.txtTextOrPointer.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+			this.txtTextOrPointer.Margin = new System.Windows.Forms.Padding(5);
 			this.txtTextOrPointer.MaxLength = 0;
 			this.txtTextOrPointer.Name = "txtTextOrPointer";
-			this.txtTextOrPointer.OriginalText = "";
-			this.txtTextOrPointer.Size = new System.Drawing.Size(258, 199);
-			this.txtTextOrPointer.SpellCheck = true;
+			this.txtTextOrPointer.Size = new System.Drawing.Size(258, 28);
 			this.txtTextOrPointer.TabIndex = 4;
-			this.txtTextOrPointer.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-			this.txtTextOrPointer.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-			this.txtTextOrPointer.Wrapping = true;
 			this.txtTextOrPointer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
 			// 
 			// txtAdditionalNote
 			// 
 			this.txtAdditionalNote.AcceptsReturn = true;
-			this.txtAdditionalNote.AcceptsTab = false;
 			this.txtAdditionalNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtAdditionalNote.ChangedColour = System.Drawing.Color.Empty;
 			this.txtAdditionalNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtAdditionalNote.Location = new System.Drawing.Point(71, 214);
-			this.txtAdditionalNote.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+			this.txtAdditionalNote.Margin = new System.Windows.Forms.Padding(5);
 			this.txtAdditionalNote.MaxLength = 0;
 			this.txtAdditionalNote.Name = "txtAdditionalNote";
-			this.txtAdditionalNote.OriginalText = "";
-			this.txtAdditionalNote.Size = new System.Drawing.Size(258, 199);
-			this.txtAdditionalNote.SpellCheck = true;
+			this.txtAdditionalNote.Size = new System.Drawing.Size(258, 28);
 			this.txtAdditionalNote.TabIndex = 5;
-			this.txtAdditionalNote.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-			this.txtAdditionalNote.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-			this.txtAdditionalNote.Wrapping = true;
 			this.txtAdditionalNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
 			// 
 			// label1
@@ -799,9 +778,8 @@
 			this.cmdGetImages.Name = "cmdGetImages";
 			this.cmdGetImages.Size = new System.Drawing.Size(102, 23);
 			this.cmdGetImages.TabIndex = 5;
-			this.cmdGetImages.Text = "Img";
+			this.cmdGetImages.Text = "DISABLED";
 			this.cmdGetImages.UseVisualStyleBackColor = true;
-			this.cmdGetImages.Click += new System.EventHandler(this.cmdGetImages_Click);
 			// 
 			// cmdSelectAll
 			// 
@@ -906,20 +884,14 @@
 			this.txtEmailBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtEmailBody.ChangedColour = System.Drawing.Color.Empty;
 			this.txtEmailBody.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtEmailBody.Location = new System.Drawing.Point(4, 7);
 			this.txtEmailBody.Margin = new System.Windows.Forms.Padding(6);
 			this.txtEmailBody.MaxLength = 0;
 			this.txtEmailBody.Name = "txtEmailBody";
-			this.txtEmailBody.OriginalText = "";
-			this.txtEmailBody.Size = new System.Drawing.Size(458, 394);
-			this.txtEmailBody.SpellCheck = true;
+			this.txtEmailBody.Size = new System.Drawing.Size(458, 26);
 			this.txtEmailBody.TabIndex = 6;
 			this.txtEmailBody.TabStop = false;
-			this.txtEmailBody.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-			this.txtEmailBody.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-			this.txtEmailBody.Wrapping = true;
 			// 
 			// tabPage5
 			// 
@@ -1232,6 +1204,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			this.splitContainer4.Panel1.ResumeLayout(false);
+			this.splitContainer4.Panel1.PerformLayout();
 			this.splitContainer4.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
 			this.splitContainer4.ResumeLayout(false);
@@ -1263,6 +1236,7 @@
 			this.tableLayoutPanel3.PerformLayout();
 			this.tabControl2.ResumeLayout(false);
 			this.tabPage4.ResumeLayout(false);
+			this.tabPage4.PerformLayout();
 			this.tabPage5.ResumeLayout(false);
 			this.tabPage5.PerformLayout();
 			this.tabPage3.ResumeLayout(false);

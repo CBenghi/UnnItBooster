@@ -2,28 +2,22 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using HtmlAgilityPack;
-using StudentsFetcher.Webdata;
+using UnnItBooster.Models;
 
 namespace StudentsFetcher.StudentMarking
 {
 	[AMMFormAttributes(ButtonText = "Student list", Order = -5)]
 	public partial class StudentListForm : Form
 	{
-		private StudentsCollection studentsRepo;
+		private StudentsRepository studentsRepo;
 
 		public StudentListForm()
 		{
 			InitializeComponent();
-			studentsRepo = new StudentsCollection();
-			txtFolder.Text = studentsRepo.DataFolder;
-
-			var studs = studentsRepo.LoadStudents();
-
+			studentsRepo = new StudentsRepository(Properties.Settings.Default.StudentsFolder);
+			txtFolder.Text = studentsRepo.ConfigurationFolder.FullName;
 			UpdateStudentList();
 			RefreshModulesList();
 		}
@@ -32,17 +26,12 @@ namespace StudentsFetcher.StudentMarking
 		{
 			Properties.Settings.Default.StudentsFolder = txtFolder.Text;
 			Properties.Settings.Default.Save();
-			studentsRepo = new StudentsCollection();
+			studentsRepo = new StudentsRepository(Properties.Settings.Default.StudentsFolder);
 		}
 
 		public void SetSearch(string uid)
 		{
 			txtSearch.Text = uid;
-		}
-
-		private void button1_Click(object sender, EventArgs e)
-		{
-			studentsRepo.LoadStudents(lstModules);
 		}
 
 		private void button3_Click(object sender, EventArgs e)
@@ -59,7 +48,7 @@ namespace StudentsFetcher.StudentMarking
 		{
 			lstStudents.Items.Clear();
 			var flt = txtSearch.Text.Trim();
-			if (flt == "")
+			if (string.IsNullOrEmpty(flt))
 			{
 				foreach (var student in studentsRepo.Students)
 				{
@@ -85,10 +74,9 @@ namespace StudentsFetcher.StudentMarking
 			li.SubItems.Add(student.FullName);
 			li.SubItems.Add(student.NumericStudentId);
 			li.SubItems.Add(student.Email);
-			li.SubItems.Add(studentsRepo.GetPrettyRoute(student.RouteCode));
-			li.SubItems.Add(student.CourseStart != DateTime.MinValue ? student.CourseStart.ToShortDateString() : "");
-			li.SubItems.Add(student.CourseFinish != DateTime.MinValue ? student.CourseFinish.ToShortDateString() : "");
-
+			li.SubItems.Add(student.Route);
+			li.SubItems.Add(student.DSSR ? "DSSR" : "");
+			li.SubItems.Add($"{student.Module} {student.Occurrence}");
 			lstStudents.Items.Add(li);
 		}
 
@@ -114,14 +102,11 @@ namespace StudentsFetcher.StudentMarking
 		private void TryShowStudent(Student st)
 		{
 			// load the picture
-			var fname = st.PictureName(StudentsCollection.PictureFolder);
-			if (!File.Exists(fname))
-				FrmAutomaticMarkingMachine.GetImage(StudentsCollection.PictureFolder, st.NumericStudentId);
-			if (File.Exists(fname))
+			if (studentsRepo.HasImage(st, out var image))
 			{
 				try
 				{
-					StudImage.Load(fname);
+					StudImage.Load(image);
 				}
 				catch
 				{ }
@@ -131,23 +116,20 @@ namespace StudentsFetcher.StudentMarking
 
 			if (lstStudents.SelectedItems.Count == 1)
 			{
-
 				// var outlook = new OutlookEmailerLateBinding();
 				var sb = new StringBuilder();
-				sb.AppendFormat("{0} {1}\r\n", st.Forename, st.Surname);
-				sb.AppendFormat("First Name: {0}\r\n", st.Forename);
-				sb.AppendFormat("{0} {1}\r\n", st.NumericStudentId, st.RouteCode);
-				sb.AppendFormat("{0}\r\n\r\n", st.Email);
-
-				sb.AppendFormat("OneLine:\t{0}\t{1}\t{2}\t{3}\r\n", st.Forename, st.Surname, st.NumericStudentId, st.Email);
-
+				sb.AppendLine($"{st.Forename} {st.Surname}\r\n");
+				sb.AppendLine($"First Name: {st.Forename}\r\n");
+				sb.AppendLine($"{st.NumericStudentId} {st.Route}\r\n");
+				sb.AppendLine($"{st.Email}");
+				sb.AppendLine($"");
+				sb.AppendLine($"OneLine:\t{st.Forename}\t{st.Surname}\t{st.NumericStudentId}\t{st.Email}");
 				txtStudentInfo.Text = sb.ToString();
 			}
 			else
 			{
 				var sb = new StringBuilder();
-				var Cohort = studentsRepo.GetPrettyRoute(st.RouteCode);
-				sb.AppendFormat("{0}\t{1}\t{2}\t{3}\t{4}\r\n", st.Forename, st.Surname, st.NumericStudentId, Cohort, st.Email);
+				sb.AppendLine($"{st.Forename}\t{st.Surname}\t{st.NumericStudentId}\t{st.Route}\t{st.Email}");
 				txtStudentInfo.Text += sb.ToString();
 			}
 		}
@@ -160,12 +142,11 @@ namespace StudentsFetcher.StudentMarking
 		private void RefreshModulesList()
 		{
 			lstModules.Items.Clear();
-			foreach (var file in StudentsCollection.ConfigurationFolder.GetFiles("*.stud.xml"))
+			studentsRepo.Reload();
+			foreach (var coll in studentsRepo.GetCollections())
 			{
-				var modname = file.Name.Substring(0, 6);
-				lstModules.Items.Add(modname);
+				lstModules.Items.Add(coll.Name);
 			}
-
 			for (var i = 0; i < lstModules.Items.Count; i++)
 				lstModules.SetItemChecked(i, true);
 		}
@@ -178,95 +159,60 @@ namespace StudentsFetcher.StudentMarking
 			}
 		}
 
-		private void button6_Click(object sender, EventArgs e)
-		{
-			MessageBox.Show("code suspended. fixme.");
-			//var s = new StudentResolver();
-			//var stds = new List<Student>();
-
-			//foreach (var oneLine in txtStudents.Lines)
-			//{
-			//    var lineAsArr = oneLine.Split(new[] {"\t"}, StringSplitOptions.RemoveEmptyEntries);
-			//    var cnt = lineAsArr.Count();
-			//    if (cnt < 6)
-			//        continue;
-
-			//    var fullName = lineAsArr[1];
-			//    var completeId = lineAsArr[0];
-			//    if (completeId.Contains("/"))
-			//    {
-			//        completeId = completeId.Substring(0, completeId.IndexOf("/"));
-			//    }               
-			//    var stud = s.ResolveByName(fullName, "TUTEES", completeId);
-			//    if (stud == null)
-			//    {
-			//        stud = new Student()
-			//        {
-			//            Surname = fullName,
-			//            Studentid = completeId,
-			//            Context = "TUTEES",
-			//            RouteCode = lineAsArr[5] + " " + lineAsArr[2],
-
-			//        };
-			//    }
-
-
-			//    stud.CourseStart = DateTime.Parse(lineAsArr[3]);
-			//    stud.CourseFinish = DateTime.Parse(lineAsArr[4]);
-
-			//    stds.Add(stud);
-			//    _students.Add(stud);
-			//    AddStudent(stud);
-			//}
-
-			//var tuteesFileName = Path.Combine(ConfigurationFolder.FullName, "TUTEES.stud.xml");
-			//StudentResolver.WriteList(stds, tuteesFileName);
-		}
-
-		private void button7_Click(object sender, EventArgs e)
-		{
-			var s = new StudentResolver();
-			var st = s.ResolveByName("Ampuan Nurul Atikah Ampuan Mumali", "freeSearch");
-		}
-
 		private void button2_Click(object sender, EventArgs e)
 		{
-			var students = new List<Student>();
+			var students = UnnItBooster.ModelConversions.eVision.GetStudentsFromEvisionClipboard(Clipboard.GetText());
+			ConsiderNewStudents(students);
+		}
 
-			var content = Clipboard.GetText();
-			HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-			doc.LoadHtml(content);
-			bool hasHeader = false;
-			HtmlNodeCollection rows = doc.DocumentNode.SelectNodes("//tr");
-			foreach (var row in rows) 
+		private void ConsiderNewStudents(IEnumerable<Student> students)
+		{
+			if (string.IsNullOrEmpty(txtModuleCode.Text))
+				return;
+			if (!students.Any())
+				return;
+			
+			var coll = studentsRepo.GetCollections().FirstOrDefault(x => x.Name == txtModuleCode.Text);
+			if (coll is null)
 			{
-				var headers = row.SelectNodes("th");
-				if (!(headers is null))
+				if (studentsRepo.IsValidNewCollectionName(txtModuleCode.Text, out var containerFullName))
 				{
-					if (headers[0].InnerText != "ID")
-						return;
-					hasHeader = true;
-					continue;
+					// if new and valid
+					_ = StudentJsonCollection.Create(containerFullName, students);
 				}
-				if (!hasHeader)
-					return;
-				var cols = row.SelectNodes("td");
-				if (cols is null)
-					continue;
-
-				var idNode = cols[0].SelectNodes("ID");
-
-				string id = cols[0].InnerText.Replace("&nbsp;", "");
-				string name = cols[1].InnerText;
-				string email = cols[3].InnerText;
-
-				Student s = new Student();
-				s.NumericStudentId = id;
-				s.FullName = name;
-				s.Email = email;
-				students.Add(s);
 			}
+			else
+			{
+				// if update and exists
+				var studs = coll.Students.MergeInformation(students);
+				coll.Students = studs.ToList();
+				coll.Save();
+			}
+			studentsRepo.Reload();
+			RefreshModulesList();
+		}
 
+		private void cmdSelectSource_Click(object sender, EventArgs e)
+		{
+			using (OpenFileDialog openFileDialog = new OpenFileDialog())
+			{
+				openFileDialog.Filter = "All files (*.*)|*.*";
+				openFileDialog.FilterIndex = 2;
+				openFileDialog.RestoreDirectory = true;
+				if (openFileDialog.ShowDialog() == DialogResult.OK)
+				{
+					txtInputSource.Text = openFileDialog.FileName;					
+				}
+			}
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			var f = new FileInfo(txtInputSource.Text);
+			if (!f.Exists)
+				return;
+			var students = UnnItBooster.ModelConversions.TurnItIn.GetStudentsFromGradebook(f.FullName);
+			ConsiderNewStudents(students);
 		}
 	}
 }

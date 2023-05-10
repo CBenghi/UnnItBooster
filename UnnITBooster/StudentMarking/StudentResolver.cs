@@ -1,4 +1,4 @@
-﻿using StudentsFetcher.Webdata;
+﻿using StudentsFetcher.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Xml.Linq;
+using UnnItBooster.Models;
 
 namespace StudentsFetcher.StudentMarking
 {
@@ -13,7 +14,12 @@ namespace StudentsFetcher.StudentMarking
     {
         readonly WebClient _webClient = new WebClient { UseDefaultCredentials = true };
 
-        StudentsCollection _stud = new StudentsCollection();
+        StudentsRepository _stud;
+
+        public StudentResolver()
+        {
+            _stud = new StudentsRepository(Settings.Default.StudentsFolder);
+		}
 
         internal Student ResolveById(string letterStartingId)
         {
@@ -106,43 +112,17 @@ namespace StudentsFetcher.StudentMarking
             return GetStudents(doc, modName);
         }
 
-        internal static void WriteList(List<Student> studsList, string filename)
-        {
-            var f = new FileInfo(filename);
-            using (var fw = f.CreateText())
-            {
-                fw.WriteLine(@"<?xml version=""1.0"" encoding=""UTF-8"" ?>");
-                fw.WriteLine("<root>");
-                foreach (var student in studsList)
-                {
-                    var s = $@"<student>
-		<surname>{student.Surname}</surname>
-		<forename>{student.Forename}</forename>
-		<routeCode>{student.RouteCode}</routeCode>
-		<studentid>{student.NumericStudentId}</studentid>
-		<courseyear>{student.CourseYear}</courseyear>
-		<email>{student.Email}</email>
-        <CourseStart>{student.CourseStart}</CourseStart>
-        <CourseFinish>{student.CourseFinish}</CourseFinish>
-	</student>";
-                    fw.WriteLine(s);
-                }
-                fw.WriteLine("</root>");
-            }
-        }
-
         private static List<Student> GetStudents(XDocument doc, string modName)
         {
             var rows = doc.Descendants("student").Select(el => new Student
             {
                 Surname = GetField(el, "surname"),
                 Forename = GetField(el, "forename"),
-                RouteCode = GetField(el, "routeCode"),
+                Route = GetField(el, "routeCode"),
                 NumericStudentId = GetField(el, "studentid"),
                 CourseYear = GetField(el, "courseyear"),
                 Email = GetField(el, "email"),
-                CourseStart = GetDate(el, "CourseStart"),
-                CourseFinish = GetDate(el, "CourseFinish"),
+                
 
             }).ToList();
 

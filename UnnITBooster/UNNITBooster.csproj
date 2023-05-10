@@ -2,9 +2,9 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>StudentsFetcher</RootNamespace>
+    <RootNamespace>UnnItBooster</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
-    <BaseIntermediateOutputPath />
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
@@ -24,7 +24,10 @@
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.98.1" />
     <PackageReference Include="System.DirectoryServices" Version="7.0.1" />
+    <PackageReference Include="System.Text.Json" Version="7.0.2" />
     <PackageReference Include="ZedGraph" Version="5.1.7" />
+    <PackageReference Include="EPPlus" Version="4.5.3.3" />
+    <PackageReference Include="LumenWorksCsvReader" Version="4.0.0" />
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.421302">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

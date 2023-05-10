@@ -10,7 +10,7 @@ namespace StudentsFetcher.StudentMarking
 {
     public partial class FrmReporting : Form
     {
-        private ClsConfig clsConfig;
+        private MarkingConfig clsConfig;
 
         public FrmReporting()
         {

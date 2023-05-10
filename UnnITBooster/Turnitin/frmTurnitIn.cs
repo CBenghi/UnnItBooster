@@ -324,7 +324,6 @@ namespace StudentsFetcher
         private string fd_PageUrl = "";
         private string fd_fieldname = "";
         private string fd_otherparams = "";
-        private int fd_CurrentId = -1;
         // private string 
        
         private void textBox1_TextChanged(object sender, EventArgs e)

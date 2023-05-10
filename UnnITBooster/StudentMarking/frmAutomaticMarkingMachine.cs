@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
@@ -14,8 +15,8 @@ using System.Windows.Forms;
 using LateBindingTest;
 using StudentsFetcher.Properties;
 using StudentsFetcher.Turnitin;
-using StudentsFetcher.Webdata;
 using UnnFunctions.MCRF;
+using UnnItBooster.Models;
 using ZedGraph;
 
 namespace StudentsFetcher.StudentMarking
@@ -23,18 +24,20 @@ namespace StudentsFetcher.StudentMarking
     [AMMFormAttributes(ButtonText = "Automatic marking machine", Order = 1)]
     public partial class FrmAutomaticMarkingMachine : Form
     {
-        private ClsConfig _config;
+        private MarkingConfig _config;
+        StudentsRepository studentRepository;
 
-        public FrmAutomaticMarkingMachine()
+
+		public FrmAutomaticMarkingMachine()
         {
             InitializeComponent();
             LoadSettings();
+			studentRepository = new StudentsRepository(Settings.Default.StudentsFolder);
+		}
 
-        }
+		#region marking
 
-        #region marking
-
-        void txtStudentId_KeyDown(object sender, KeyEventArgs e)
+		void txtStudentId_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -642,7 +645,7 @@ namespace StudentsFetcher.StudentMarking
         {
             if (!File.Exists(txtExcelFileName.Text))
                 return;
-            _config = new ClsConfig();
+            _config = new MarkingConfig();
             _config.DbName = txtExcelFileName.Text;
             UpdateComponents();
         }
@@ -1056,54 +1059,11 @@ namespace StudentsFetcher.StudentMarking
             }
         }
 
-        private void cmdGetImages_Click(object sender, EventArgs e)
-        {
-            var filesDir = Path.Combine(folder, "Pics");
-            var dt = _config.GetDataTable("SELECT * from tb_submissions");
-            var iOk = 0;
-            var iErr = 0;
-            foreach (DataRow item in dt.Rows)
-            {
-                if (GetImage(filesDir, item["SUB_NumericUserID"].ToString()))
-                    iOk++;
-                else
-                {
-                    iErr++;
-                }
-            }
-            MessageBox.Show(string.Format("OK: {0}\r\nErr:{1}", iOk, iErr), "Info", MessageBoxButtons.OK);
-        }
-
         private string folder
         {
             get
             {
                 return new FileInfo(txtExcelFileName.Text).DirectoryName;
-            }
-        }
-
-        static internal bool GetImage(string destfolder, string sid)
-        {
-            var req = new WebClient();
-            var url = string.Format(@"http://nuweb2.northumbria.ac.uk/photoids/{0}.jpg", sid);
-
-
-            var destfilename = sid + ".jpg";
-
-            if (!Directory.Exists(destfolder))
-                Directory.CreateDirectory(destfolder);
-            destfilename = Path.Combine(destfolder, destfilename);
-            try
-            {
-                if (!File.Exists(destfilename))
-                {
-                    req.DownloadFile(url, destfilename);
-                }
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
             }
         }
 
@@ -1127,11 +1087,9 @@ namespace StudentsFetcher.StudentMarking
 
         private void ShowUserImage(string numeriCuserID)
         {
-            var NumId = numeriCuserID + ".jpg";
-            var filesDir = StudentsCollection.PictureFolder;
-            var fullName = Path.Combine(filesDir, NumId);
-            if (File.Exists(fullName))
-                StudImage.Load(fullName);
+            var student = studentRepository.GetStudentById(numeriCuserID);
+            if (student is not null && studentRepository.HasImage(student, out var imagePath)) 
+				StudImage.Load(imagePath);
             else
                 StudImage.Image = null;
         }
@@ -1234,9 +1192,6 @@ Claudio
                 cntOk++;
             }
             MessageBox.Show($"Ok: {cntOk} Err: {cntErr}");
-
-
-
         }
 
         private void button7_Click(object sender, EventArgs e)
