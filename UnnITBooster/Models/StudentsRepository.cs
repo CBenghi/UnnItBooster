@@ -21,9 +21,7 @@ public class StudentsRepository
 		Reload();
 	}
 
-	
-
-	internal void Reload(IEnumerable<string>? nameFilters = null)
+	public void Reload(IEnumerable<string>? nameFilters = null)
 	{
 		List<string>? filters = null;
 		if (nameFilters is not null)
@@ -52,7 +50,7 @@ public class StudentsRepository
 		}
 	}
 
-	internal IEnumerable<Student> Students
+	public IEnumerable<Student> Students
 	{
 		get
 		{
@@ -60,7 +58,7 @@ public class StudentsRepository
 		}
 	}
 
-	internal DirectoryInfo ConfigurationFolder
+	public DirectoryInfo ConfigurationFolder
 	{
 		get
 		{
@@ -73,7 +71,7 @@ public class StudentsRepository
 		}
 	}
 
-	internal bool HasImage(Student student, out string imagePath)
+	public bool HasImage(Student student, out string imagePath)
 	{
 		imagePath = "";
 		DirectoryInfo d = new DirectoryInfo(dataFolder);

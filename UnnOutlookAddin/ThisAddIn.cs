@@ -42,29 +42,29 @@ namespace UnnOutlookAddin
             }
 
             // registering events of selection change
-            if (false)
-            {
-                _currentExplorer = Application.ActiveExplorer();
-                _currentExplorer.SelectionChange += CurrentExplorer_Event;
-            }
+            _currentExplorer = Application.ActiveExplorer();
+            _currentExplorer.SelectionChange += CurrentExplorer_Event;
 
-            //// display the Students pane
-            ////
-            //myStudentComponent = new UI.UnnStudent();
-            //myCustomTaskPane = CustomTaskPanes.Add(myStudentComponent, "UnnStudentPane");
-            //myCustomTaskPane.Visible = true;
 
+			// display the Students pane
+			//
+			myStudentComponent = new UI.UnnStudent();
+            var myCustomTaskPane = CustomTaskPanes.Add(myStudentComponent, "UnnStudentPane");
+            myCustomTaskPane.Visible = true;
         }
 
+        UI.UnnStudent myStudentComponent = null;
 
-        private void AutomaticClassificationHandler(object Item)
+		private void AutomaticClassificationHandler(object Item)
         {
-            var messageEditor = new MessageEditor(_currentExplorer);
             var emailItem = Item as Outlook.MailItem;
             if (emailItem != null)
             {
                 if (emailItem.UnRead)
-                    emailItem.Categorize(messageEditor);
+                {
+					var messageEditor = new MessageEditor(_currentExplorer);
+					emailItem.Categorize(messageEditor);
+                }
             }
         }
 
@@ -84,8 +84,10 @@ namespace UnnOutlookAddin
                         // itemMessage = "The item is an e-mail message. The subject is " + mailItem.Subject + ".";
                         var add = mailItem.SenderEmailAddress;
                         var snd = MessageExtensions.GetSenderEmailAddress(mailItem);
-                        // mailItem.Display(false);
-                    }
+						// mailItem.Display(false);
+						myStudentComponent.SetEmail(snd);
+
+					}
                     //else if (selObject is Outlook.ContactItem)
                     //{
                     //    Outlook.ContactItem contactItem =

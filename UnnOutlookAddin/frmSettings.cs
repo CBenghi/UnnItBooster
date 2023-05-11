@@ -27,6 +27,7 @@ namespace UnnOutlookAddin
         {
             Properties.Settings.Default.StudentsFolder = txtConfigFolder.Text;
             Properties.Settings.Default.Save();
+            Close();
         }
     }
 }

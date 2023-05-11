@@ -8,6 +8,7 @@ using UnnOutlookAddin.MailManagement;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using StudentsFetcher.StudentMarking;
+using System.Diagnostics;
 
 namespace UnnOutlookAddin.UI
 {
@@ -82,11 +83,19 @@ namespace UnnOutlookAddin.UI
 
         private void btnPerson_Click(object sender, RibbonControlEventArgs e)
         {
-            var uid = GetUserIds(e, true).FirstOrDefault();
-            var t = new StudentListForm();
-            if (!string.IsNullOrEmpty(uid))
-                t.SetSearch(uid);
-            t.Show();
+            try
+            {
+				var uid = GetUserIds(e, true).FirstOrDefault();
+				var t = new StudentListForm();
+                if (!string.IsNullOrEmpty(uid))
+                    t.SetSearch(uid);
+                t.Show();
+			}
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            
         }
     }
 }
