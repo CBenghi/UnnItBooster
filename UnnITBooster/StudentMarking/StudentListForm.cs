@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Input;
 using UnnItBooster.Models;
 
 namespace StudentsFetcher.StudentMarking
@@ -144,9 +145,8 @@ namespace StudentsFetcher.StudentMarking
 			lstModules.Items.Clear();
 			studentsRepo.Reload();
 			foreach (var coll in studentsRepo.GetCollections())
-			{
-				lstModules.Items.Add(coll.Name);
-			}
+				lstModules.Items.Add($"{coll.Name} - {coll.Students.Count}");
+			
 			for (var i = 0; i < lstModules.Items.Count; i++)
 				lstModules.SetItemChecked(i, true);
 		}
@@ -168,16 +168,24 @@ namespace StudentsFetcher.StudentMarking
 		private void ConsiderNewStudents(IEnumerable<Student> students)
 		{
 			if (string.IsNullOrEmpty(txtModuleCode.Text))
+			{
+				txtReport.Text += $"No destination code.\r\n";
 				return;
+			}
 			if (!students.Any())
+			{
+				txtReport.Text += $"No students to process.\r\n";
 				return;
-			
+			}
+
+			txtReport.Text += $"Processing {students.Count()} records.\r\n";
 			var coll = studentsRepo.GetCollections().FirstOrDefault(x => x.Name == txtModuleCode.Text);
 			if (coll is null)
 			{
 				if (studentsRepo.IsValidNewCollectionName(txtModuleCode.Text, out var containerFullName))
 				{
 					// if new and valid
+					txtReport.Text += $"New container {containerFullName}\r\n";
 					_ = StudentJsonCollection.Create(containerFullName, students);
 				}
 			}
@@ -186,6 +194,7 @@ namespace StudentsFetcher.StudentMarking
 				// if update and exists
 				var studs = coll.Students.MergeInformation(students);
 				coll.Students = studs.ToList();
+				txtReport.Text += $"Merged in existing container, total of {studs.Count()} records.\r\n";
 				coll.Save();
 			}
 			studentsRepo.Reload();
@@ -212,6 +221,7 @@ namespace StudentsFetcher.StudentMarking
 			if (!f.Exists)
 				return;
 			var students = UnnItBooster.ModelConversions.TurnItIn.GetStudentsFromGradebook(f.FullName);
+
 			ConsiderNewStudents(students);
 		}
 	}

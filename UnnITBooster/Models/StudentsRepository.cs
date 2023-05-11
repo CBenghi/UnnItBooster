@@ -9,6 +9,11 @@ public class StudentsRepository
 {
 	private List<IStudentCollection> collections = new List<IStudentCollection>();
 
+	public static StudentsRepository GetRespository()
+	{
+		return new StudentsRepository(StudentsFetcher.Properties.Settings.Default.StudentsFolder);
+	}
+
 	public StudentsRepository(string dataFolder)
 	{
 		this.dataFolder = dataFolder ?? string.Empty;

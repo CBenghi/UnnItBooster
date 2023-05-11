@@ -34,6 +34,17 @@
 			this.txtFolder = new System.Windows.Forms.TextBox();
 			this.button2 = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.label10 = new System.Windows.Forms.Label();
+			this.label9 = new System.Windows.Forms.Label();
+			this.txtReport = new System.Windows.Forms.TextBox();
+			this.label8 = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.cmdSelectSource = new System.Windows.Forms.Button();
+			this.txtInputSource = new System.Windows.Forms.TextBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.button1 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
 			this.lstStudents = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -41,6 +52,8 @@
 			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.txtSearch = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.StudImage = new System.Windows.Forms.PictureBox();
@@ -60,12 +73,6 @@
 			this.button5 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.lstModules = new System.Windows.Forms.CheckedListBox();
-			this.button1 = new System.Windows.Forms.Button();
-			this.txtInputSource = new System.Windows.Forms.TextBox();
-			this.label4 = new System.Windows.Forms.Label();
-			this.cmdSelectSource = new System.Windows.Forms.Button();
-			this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.StudImage)).BeginInit();
 			this.tabControl1.SuspendLayout();
@@ -135,6 +142,13 @@
 			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox1.Controls.Add(this.label10);
+			this.groupBox1.Controls.Add(this.label9);
+			this.groupBox1.Controls.Add(this.txtReport);
+			this.groupBox1.Controls.Add(this.label8);
+			this.groupBox1.Controls.Add(this.label7);
+			this.groupBox1.Controls.Add(this.label6);
+			this.groupBox1.Controls.Add(this.label5);
 			this.groupBox1.Controls.Add(this.cmdSelectSource);
 			this.groupBox1.Controls.Add(this.txtInputSource);
 			this.groupBox1.Controls.Add(this.label4);
@@ -148,6 +162,110 @@
 			this.groupBox1.TabIndex = 14;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Collection";
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Location = new System.Drawing.Point(139, 250);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(138, 13);
+			this.label10.TabIndex = 24;
+			this.label10.Text = "This adds the email address";
+			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Location = new System.Drawing.Point(11, 305);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(39, 13);
+			this.label9.TabIndex = 23;
+			this.label9.Text = "Report";
+			// 
+			// txtReport
+			// 
+			this.txtReport.Location = new System.Drawing.Point(100, 305);
+			this.txtReport.Multiline = true;
+			this.txtReport.Name = "txtReport";
+			this.txtReport.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.txtReport.Size = new System.Drawing.Size(557, 133);
+			this.txtReport.TabIndex = 22;
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(139, 124);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(150, 13);
+			this.label8.TabIndex = 21;
+			this.label8.Text = "save pictures with chrome tool";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(139, 111);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(189, 13);
+			this.label7.TabIndex = 20;
+			this.label7.Text = "copy module with pictures to add email";
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(139, 98);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(120, 13);
+			this.label6.TabIndex = 19;
+			this.label6.Text = "copy module student list";
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(97, 85);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(135, 13);
+			this.label5.TabIndex = 18;
+			this.label5.Text = "Process: Start from e-vision";
+			// 
+			// cmdSelectSource
+			// 
+			this.cmdSelectSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdSelectSource.Location = new System.Drawing.Point(582, 195);
+			this.cmdSelectSource.Name = "cmdSelectSource";
+			this.cmdSelectSource.Size = new System.Drawing.Size(75, 23);
+			this.cmdSelectSource.TabIndex = 17;
+			this.cmdSelectSource.Text = "Select";
+			this.cmdSelectSource.UseVisualStyleBackColor = true;
+			this.cmdSelectSource.Click += new System.EventHandler(this.cmdSelectSource_Click);
+			// 
+			// txtInputSource
+			// 
+			this.txtInputSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtInputSource.Location = new System.Drawing.Point(100, 197);
+			this.txtInputSource.Name = "txtInputSource";
+			this.txtInputSource.Size = new System.Drawing.Size(476, 20);
+			this.txtInputSource.TabIndex = 15;
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(11, 200);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(41, 13);
+			this.label4.TabIndex = 16;
+			this.label4.Text = "Source";
+			// 
+			// button1
+			// 
+			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.button1.Location = new System.Drawing.Point(100, 224);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(557, 23);
+			this.button1.TabIndex = 14;
+			this.button1.Text = "turnitin Gradebook";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// button3
 			// 
@@ -205,6 +323,14 @@
 			// 
 			this.columnHeader5.Text = "Route";
 			this.columnHeader5.Width = 200;
+			// 
+			// columnHeader6
+			// 
+			this.columnHeader6.Text = "DSSR";
+			// 
+			// columnHeader7
+			// 
+			this.columnHeader7.Text = "Extra";
 			// 
 			// txtSearch
 			// 
@@ -327,7 +453,7 @@
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(556, 532);
+			this.tabPage4.Size = new System.Drawing.Size(306, 560);
 			this.tabPage4.TabIndex = 1;
 			this.tabPage4.Text = "email";
 			this.tabPage4.UseVisualStyleBackColor = true;
@@ -342,7 +468,7 @@
 			this.listView1.HideSelection = false;
 			this.listView1.Location = new System.Drawing.Point(3, 3);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(550, 526);
+			this.listView1.Size = new System.Drawing.Size(300, 554);
 			this.listView1.TabIndex = 17;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
@@ -363,7 +489,7 @@
 			this.tabPage5.Location = new System.Drawing.Point(4, 22);
 			this.tabPage5.Name = "tabPage5";
 			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage5.Size = new System.Drawing.Size(556, 532);
+			this.tabPage5.Size = new System.Drawing.Size(306, 560);
 			this.tabPage5.TabIndex = 2;
 			this.tabPage5.Text = "Info";
 			this.tabPage5.UseVisualStyleBackColor = true;
@@ -374,7 +500,7 @@
 			this.txtStudentInfo.Location = new System.Drawing.Point(3, 3);
 			this.txtStudentInfo.Multiline = true;
 			this.txtStudentInfo.Name = "txtStudentInfo";
-			this.txtStudentInfo.Size = new System.Drawing.Size(550, 526);
+			this.txtStudentInfo.Size = new System.Drawing.Size(300, 554);
 			this.txtStudentInfo.TabIndex = 0;
 			// 
 			// tabPage2
@@ -426,55 +552,6 @@
 			this.lstModules.Name = "lstModules";
 			this.lstModules.Size = new System.Drawing.Size(120, 454);
 			this.lstModules.TabIndex = 17;
-			// 
-			// button1
-			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(100, 234);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(557, 23);
-			this.button1.TabIndex = 14;
-			this.button1.Text = "turnitin Gradebook";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
-			// 
-			// txtInputSource
-			// 
-			this.txtInputSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtInputSource.Location = new System.Drawing.Point(100, 197);
-			this.txtInputSource.Name = "txtInputSource";
-			this.txtInputSource.Size = new System.Drawing.Size(476, 20);
-			this.txtInputSource.TabIndex = 15;
-			this.txtInputSource.Text = "C:\\Data\\Dev\\Unn\\UnnItBooster\\Data\\TurnitinGradeBoox.csv";
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(11, 200);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(41, 13);
-			this.label4.TabIndex = 16;
-			this.label4.Text = "Source";
-			// 
-			// cmdSelectSource
-			// 
-			this.cmdSelectSource.Location = new System.Drawing.Point(582, 195);
-			this.cmdSelectSource.Name = "cmdSelectSource";
-			this.cmdSelectSource.Size = new System.Drawing.Size(75, 23);
-			this.cmdSelectSource.TabIndex = 17;
-			this.cmdSelectSource.Text = "Select";
-			this.cmdSelectSource.UseVisualStyleBackColor = true;
-			this.cmdSelectSource.Click += new System.EventHandler(this.cmdSelectSource_Click);
-			// 
-			// columnHeader6
-			// 
-			this.columnHeader6.Text = "DSSR";
-			// 
-			// columnHeader7
-			// 
-			this.columnHeader7.Text = "Extra";
 			// 
 			// StudentListForm
 			// 
@@ -545,5 +622,12 @@
 		private System.Windows.Forms.Button cmdSelectSource;
 		private System.Windows.Forms.ColumnHeader columnHeader6;
 		private System.Windows.Forms.ColumnHeader columnHeader7;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label label9;
+		private System.Windows.Forms.TextBox txtReport;
+		private System.Windows.Forms.Label label10;
 	}
 }

@@ -102,9 +102,6 @@
 			this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.chkImportSubmissions = new System.Windows.Forms.CheckBox();
-			this.cmdGetFiles = new System.Windows.Forms.Button();
-			this.label9 = new System.Windows.Forms.Label();
-			this.elpSessionId = new System.Windows.Forms.TextBox();
 			this.button7 = new System.Windows.Forms.Button();
 			this.btnCompleteData = new System.Windows.Forms.Button();
 			this.chkImportComponents = new System.Windows.Forms.CheckBox();
@@ -114,6 +111,8 @@
 			this.cmdSourceDataFile = new System.Windows.Forms.Button();
 			this.lblSourceData = new System.Windows.Forms.Label();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+			this.txtSourceTurnitin = new System.Windows.Forms.TextBox();
+			this.button8 = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -1020,10 +1019,9 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.button8);
+			this.groupBox3.Controls.Add(this.txtSourceTurnitin);
 			this.groupBox3.Controls.Add(this.chkImportSubmissions);
-			this.groupBox3.Controls.Add(this.cmdGetFiles);
-			this.groupBox3.Controls.Add(this.label9);
-			this.groupBox3.Controls.Add(this.elpSessionId);
 			this.groupBox3.Controls.Add(this.button7);
 			this.groupBox3.Controls.Add(this.btnCompleteData);
 			this.groupBox3.Controls.Add(this.chkImportComponents);
@@ -1036,7 +1034,7 @@
 			this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-			this.groupBox3.Size = new System.Drawing.Size(694, 201);
+			this.groupBox3.Size = new System.Drawing.Size(796, 201);
 			this.groupBox3.TabIndex = 17;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Import data";
@@ -1052,55 +1050,27 @@
 			this.chkImportSubmissions.Text = "Import submissions";
 			this.chkImportSubmissions.UseVisualStyleBackColor = true;
 			// 
-			// cmdGetFiles
-			// 
-			this.cmdGetFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdGetFiles.Enabled = false;
-			this.cmdGetFiles.Location = new System.Drawing.Point(461, 85);
-			this.cmdGetFiles.Name = "cmdGetFiles";
-			this.cmdGetFiles.Size = new System.Drawing.Size(213, 23);
-			this.cmdGetFiles.TabIndex = 22;
-			this.cmdGetFiles.Text = "Get available files";
-			this.cmdGetFiles.UseVisualStyleBackColor = true;
-			this.cmdGetFiles.Click += new System.EventHandler(this.cmdGetFiles_Click);
-			// 
-			// label9
-			// 
-			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(463, 40);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(74, 13);
-			this.label9.TabIndex = 21;
-			this.label9.Text = "Elp session ID";
-			// 
-			// elpSessionId
-			// 
-			this.elpSessionId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.elpSessionId.Location = new System.Drawing.Point(461, 57);
-			this.elpSessionId.Multiline = true;
-			this.elpSessionId.Name = "elpSessionId";
-			this.elpSessionId.Size = new System.Drawing.Size(214, 22);
-			this.elpSessionId.TabIndex = 20;
-			this.elpSessionId.TextChanged += new System.EventHandler(this.elpSessionId_TextChanged);
-			// 
 			// button7
 			// 
-			this.button7.Location = new System.Drawing.Point(461, 14);
+			this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.button7.Location = new System.Drawing.Point(459, 127);
 			this.button7.Margin = new System.Windows.Forms.Padding(2);
 			this.button7.Name = "button7";
-			this.button7.Size = new System.Drawing.Size(213, 26);
+			this.button7.Size = new System.Drawing.Size(315, 26);
 			this.button7.TabIndex = 19;
-			this.button7.Text = "Get more submissions (from excel)";
+			this.button7.Text = "Init database";
 			this.button7.UseVisualStyleBackColor = true;
 			this.button7.Click += new System.EventHandler(this.button7_Click);
 			// 
 			// btnCompleteData
 			// 
-			this.btnCompleteData.Location = new System.Drawing.Point(461, 128);
+			this.btnCompleteData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCompleteData.Location = new System.Drawing.Point(459, 157);
 			this.btnCompleteData.Margin = new System.Windows.Forms.Padding(2);
 			this.btnCompleteData.Name = "btnCompleteData";
-			this.btnCompleteData.Size = new System.Drawing.Size(213, 26);
+			this.btnCompleteData.Size = new System.Drawing.Size(315, 26);
 			this.btnCompleteData.TabIndex = 18;
 			this.btnCompleteData.Text = "Complete student data (XML)";
 			this.btnCompleteData.UseVisualStyleBackColor = true;
@@ -1141,8 +1111,6 @@
 			// 
 			// txtSourceDataFile
 			// 
-			this.txtSourceDataFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSourceDataFile.Location = new System.Drawing.Point(106, 24);
 			this.txtSourceDataFile.Multiline = true;
 			this.txtSourceDataFile.Name = "txtSourceDataFile";
@@ -1151,7 +1119,6 @@
 			// 
 			// cmdSourceDataFile
 			// 
-			this.cmdSourceDataFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmdSourceDataFile.Location = new System.Drawing.Point(363, 85);
 			this.cmdSourceDataFile.Name = "cmdSourceDataFile";
 			this.cmdSourceDataFile.Size = new System.Drawing.Size(25, 22);
@@ -1165,9 +1132,9 @@
 			this.lblSourceData.AutoSize = true;
 			this.lblSourceData.Location = new System.Drawing.Point(17, 26);
 			this.lblSourceData.Name = "lblSourceData";
-			this.lblSourceData.Size = new System.Drawing.Size(84, 13);
+			this.lblSourceData.Size = new System.Drawing.Size(69, 13);
 			this.lblSourceData.TabIndex = 14;
-			this.lblSourceData.Text = "Source data file:";
+			this.lblSourceData.Text = "sqlite source:";
 			// 
 			// tableLayoutPanel4
 			// 
@@ -1188,6 +1155,24 @@
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel4.Size = new System.Drawing.Size(817, 32);
 			this.tableLayoutPanel4.TabIndex = 13;
+			// 
+			// txtSourceTurnitin
+			// 
+			this.txtSourceTurnitin.Location = new System.Drawing.Point(461, 23);
+			this.txtSourceTurnitin.Multiline = true;
+			this.txtSourceTurnitin.Name = "txtSourceTurnitin";
+			this.txtSourceTurnitin.Size = new System.Drawing.Size(313, 56);
+			this.txtSourceTurnitin.TabIndex = 24;
+			// 
+			// button8
+			// 
+			this.button8.Location = new System.Drawing.Point(750, 84);
+			this.button8.Name = "button8";
+			this.button8.Size = new System.Drawing.Size(25, 22);
+			this.button8.TabIndex = 25;
+			this.button8.Text = "...";
+			this.button8.UseVisualStyleBackColor = true;
+			this.button8.Click += new System.EventHandler(this.button8_Click);
 			// 
 			// FrmAutomaticMarkingMachine
 			// 
@@ -1333,10 +1318,9 @@
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.Button btnCompleteData;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button cmdGetFiles;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox elpSessionId;
         private System.Windows.Forms.CheckBox chkImportSubmissions;
-    }
+		private System.Windows.Forms.TextBox txtSourceTurnitin;
+		private System.Windows.Forms.Button button8;
+	}
 }
 
