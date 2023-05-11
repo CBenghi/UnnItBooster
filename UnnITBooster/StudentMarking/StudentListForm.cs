@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Input;
 using UnnItBooster.Models;
@@ -149,6 +150,8 @@ namespace StudentsFetcher.StudentMarking
 			
 			for (var i = 0; i < lstModules.Items.Count; i++)
 				lstModules.SetItemChecked(i, true);
+
+			UpdateStudentList();
 		}
 
 		private void button5_Click(object sender, EventArgs e)
@@ -223,6 +226,14 @@ namespace StudentsFetcher.StudentMarking
 			var students = UnnItBooster.ModelConversions.TurnItIn.GetStudentsFromGradebook(f.FullName);
 
 			ConsiderNewStudents(students);
+		}
+
+		private void button6_Click(object sender, EventArgs e)
+		{
+			Regex r = new Regex(@"(.*) - \d+");
+			var items = lstModules.CheckedItems.Cast<string>().Select(x => r.Match(x).Groups[1].Value);
+			studentsRepo.Reload(items);
+			UpdateStudentList();
 		}
 	}
 }

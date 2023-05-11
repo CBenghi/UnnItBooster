@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Text;
+using System.Web.UI.WebControls.WebParts;
 
 namespace StudentsFetcher.StudentMarking
 {
@@ -24,17 +25,29 @@ namespace StudentsFetcher.StudentMarking
 
         internal DataTable GetDataTable(string sql)
         {
-
-            var dt = new DataTable();
             var c = GetConn();
             c.Open();
             var da = new SQLiteDataAdapter(sql, c);
+            var dt = new DataTable();
             da.Fill(dt);
             c.Close();
             return dt;
         }
 
-        internal DataRow GetStudentRow(int id)
+        internal static List<string> GetVector(string sql, SQLiteConnection conn)
+        {
+			using var da = new SQLiteDataAdapter(sql, conn);
+			using var dt = new DataTable();
+			da.Fill(dt);
+            var ret = new List<string>();   
+            foreach (DataRow item in dt.Rows)
+            {
+                ret.Add(item[0].ToString().Trim());
+            }
+            return ret;
+		}
+
+        internal DataRow? GetStudentRow(int id)
         {
             var dt = new DataTable();
             var c = GetConn();
@@ -47,7 +60,7 @@ namespace StudentsFetcher.StudentMarking
                 : null;
         }
 
-        internal DataRow GetStudentRow(string uid)
+        internal DataRow? GetStudentRow(string uid)
         {
             var dt = new DataTable();
             var c = GetConn();
@@ -65,21 +78,15 @@ namespace StudentsFetcher.StudentMarking
         {
             var sb = new StringBuilder();
             sb.AppendLine("================");
-            // txtStudentreport.Text = "No student selected.";
             var stud = GetStudentRow(id);
             if (stud == null)
             {
                 return "";
             }
-            sb.AppendFormat("{1} {2} {3}\r\nemail: {4} (#{0})\r\n",
-               stud["SUB_Id"],
-               stud["SUB_FirstName"],
-               stud["SUB_LastName"],
-               stud["SUB_UserId"],
-               stud["SUB_email"]
-               );
-            sb.AppendFormat("\r\n");
-
+            sb.AppendLine($"{stud["SUB_FirstName"]} {stud["SUB_LastName"]} {stud["SUB_UserId"]}");
+            sb.AppendLine($"email: {stud["SUB_email"]} (#{stud["SUB_Id"]})");
+            sb.AppendLine($"Submission ID: {stud["SUB_PaperID"]}");
+            sb.AppendLine();
 
             var componentComments = "";
             var markAbility = new Dictionary<string, string>
@@ -202,14 +209,13 @@ namespace StudentsFetcher.StudentMarking
             {
                 sb.AppendLine("---------------");
                 sb.AppendLine();
-                sb.AppendLine(
-                    "Mark is subject to moderation, external examiner approval and confirmation by examination board");
+                sb.AppendLine("Mark is subject to moderation, external examiner approval and confirmation by examination board");
             }
             var s = sb.ToString();
             return s;
         }
 
-        internal void Execute(string sql, SQLiteConnection c = null)
+        internal void Execute(string sql, SQLiteConnection? c = null)
         {
             var bClose = false;
             if (c == null)
@@ -225,7 +231,7 @@ namespace StudentsFetcher.StudentMarking
                 c.Close();
         }
 
-        internal int ExecuteScalar(string sql, SQLiteConnection c = null)
+        internal int ExecuteScalar(string sql, SQLiteConnection? c = null)
         {
             var bClose = false;
             if (c == null) { 

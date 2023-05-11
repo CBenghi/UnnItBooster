@@ -15,6 +15,7 @@ using LateBindingTest;
 using StudentsFetcher.Properties;
 using UnnFunctions.MCRF;
 using UnnItBooster.Models;
+using UnnItBooster.ModelConversions;
 using ZedGraph;
 
 namespace StudentsFetcher.StudentMarking;
@@ -1062,45 +1063,26 @@ Claudio
             );
     }
 
-    private void btnCompleteData_Click(object sender, EventArgs e)
-    {
-        int cntOk = 0;
-        int cntErr = 0;
-        var dt = _config.GetDataTable("select * from tb_submissions");
-        foreach (DataRow dataRow in dt.Rows)
-        {
-            var email = dataRow["SUB_email"].ToString();
-            var numericId = dataRow["SUB_NumericUserId"].ToString();
-            var northumbriaStringId = dataRow["SUB_UserId"].ToString();
-            var uid = dataRow["SUB_Id"].ToString();
-            if (!string.IsNullOrWhiteSpace(email))
-                continue;
-            var sRes = new StudentResolver();
-            var student = sRes.ResolveById(northumbriaStringId);
-            if (student == null)
-            {
-                cntErr++;
-                continue;
-            }
-            var sql = "UPDATE TB_Submissions " +
-                $"SET SUB_email = '{student.Email}', " +
-                $"SUB_NumericUserId = '{student.NumericStudentId}' " +
-                $"WHERE SUB_Id = {uid} ";
-
-            _config.Execute(sql);
-
-            cntOk++;
-        }
-        MessageBox.Show($"Ok: {cntOk} Err: {cntErr}");
-    }
+    
 
     private void button7_Click(object sender, EventArgs e)
     {
-        FileInfo f = new FileInfo(txtSourceTurnitin.Text);
+        var f = new FileInfo(txtSourceTurnitin.Text);
         if (!f.Exists)
             return;
-        var t = UnnItBooster.ModelConversions.TurnItIn.GetSubmissionsFromLearningAnalytics(f).ToList();
-        UnnItBooster.ModelConversions.TurnItIn.PopulateDatabase(txtExcelFileName.Text, t);
+        var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f).ToList();
+        TurnItIn.PopulateDatabase(txtExcelFileName.Text, submissions);
+		Reload();
+	}
+
+	private void btnCompleteData_Click(object sender, EventArgs e)
+	{
+        var f = new FileInfo(txtSourceTurnitin.Text);
+        if (!f.Exists)
+            return;
+        var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f).ToList();
+        TurnItIn.UpdateDatabase(txtExcelFileName.Text, submissions);
+		Reload();
 	}
 
 	private void button8_Click(object sender, EventArgs e)
@@ -1113,4 +1095,5 @@ Claudio
 			txtSourceTurnitin.Text = openFileDialog1.FileName;
 		}
 	}
+
 }

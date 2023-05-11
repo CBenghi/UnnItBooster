@@ -81,7 +81,6 @@
 			this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.cmdEmailRefreshStudents = new System.Windows.Forms.Button();
-			this.cmdGetImages = new System.Windows.Forms.Button();
 			this.cmdSelectAll = new System.Windows.Forms.Button();
 			this.StudImage = new System.Windows.Forms.PictureBox();
 			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -101,6 +100,8 @@
 			this.button4 = new System.Windows.Forms.Button();
 			this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.button8 = new System.Windows.Forms.Button();
+			this.txtSourceTurnitin = new System.Windows.Forms.TextBox();
 			this.chkImportSubmissions = new System.Windows.Forms.CheckBox();
 			this.button7 = new System.Windows.Forms.Button();
 			this.btnCompleteData = new System.Windows.Forms.Button();
@@ -111,8 +112,6 @@
 			this.cmdSourceDataFile = new System.Windows.Forms.Button();
 			this.lblSourceData = new System.Windows.Forms.Label();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-			this.txtSourceTurnitin = new System.Windows.Forms.TextBox();
-			this.button8 = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -172,7 +171,7 @@
 			// 
 			// cmdAdd
 			// 
-			this.cmdAdd.Location = new System.Drawing.Point(69, 500);
+			this.cmdAdd.Location = new System.Drawing.Point(78, 500);
 			this.cmdAdd.Name = "cmdAdd";
 			this.cmdAdd.Size = new System.Drawing.Size(75, 23);
 			this.cmdAdd.TabIndex = 13;
@@ -244,8 +243,9 @@
 			this.txtStudentreport.Location = new System.Drawing.Point(0, 0);
 			this.txtStudentreport.Margin = new System.Windows.Forms.Padding(4);
 			this.txtStudentreport.MaxLength = 0;
+			this.txtStudentreport.Multiline = true;
 			this.txtStudentreport.Name = "txtStudentreport";
-			this.txtStudentreport.Size = new System.Drawing.Size(236, 20);
+			this.txtStudentreport.Size = new System.Drawing.Size(236, 215);
 			this.txtStudentreport.TabIndex = 3;
 			this.txtStudentreport.TabStop = false;
 			// 
@@ -420,8 +420,8 @@
 			// tableLayoutPanel1
 			// 
 			this.tableLayoutPanel1.ColumnCount = 2;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.45509F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 77.54491F));
 			this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
 			this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
 			this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
@@ -470,9 +470,9 @@
 			// 
 			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(3, 300);
+			this.label2.Location = new System.Drawing.Point(3, 307);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(58, 26);
+			this.label2.Size = new System.Drawing.Size(67, 13);
 			this.label2.TabIndex = 17;
 			this.label2.Text = "subcomment";
 			this.label2.Click += new System.EventHandler(this.label2_Click);
@@ -484,11 +484,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtTextOrPointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtTextOrPointer.Location = new System.Drawing.Point(71, 5);
+			this.txtTextOrPointer.Location = new System.Drawing.Point(80, 5);
 			this.txtTextOrPointer.Margin = new System.Windows.Forms.Padding(5);
 			this.txtTextOrPointer.MaxLength = 0;
+			this.txtTextOrPointer.Multiline = true;
 			this.txtTextOrPointer.Name = "txtTextOrPointer";
-			this.txtTextOrPointer.Size = new System.Drawing.Size(258, 28);
+			this.txtTextOrPointer.Size = new System.Drawing.Size(249, 199);
 			this.txtTextOrPointer.TabIndex = 4;
 			this.txtTextOrPointer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
 			// 
@@ -499,11 +500,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtAdditionalNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtAdditionalNote.Location = new System.Drawing.Point(71, 214);
+			this.txtAdditionalNote.Location = new System.Drawing.Point(80, 214);
 			this.txtAdditionalNote.Margin = new System.Windows.Forms.Padding(5);
 			this.txtAdditionalNote.MaxLength = 0;
+			this.txtAdditionalNote.Multiline = true;
 			this.txtAdditionalNote.Name = "txtAdditionalNote";
-			this.txtAdditionalNote.Size = new System.Drawing.Size(258, 28);
+			this.txtAdditionalNote.Size = new System.Drawing.Size(249, 199);
 			this.txtAdditionalNote.TabIndex = 5;
 			this.txtAdditionalNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
 			// 
@@ -521,18 +523,18 @@
 			// txtSection
 			// 
 			this.txtSection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtSection.Location = new System.Drawing.Point(69, 421);
+			this.txtSection.Location = new System.Drawing.Point(78, 421);
 			this.txtSection.Name = "txtSection";
-			this.txtSection.Size = new System.Drawing.Size(262, 20);
+			this.txtSection.Size = new System.Drawing.Size(253, 20);
 			this.txtSection.TabIndex = 11;
 			this.txtSection.TabStop = false;
 			// 
 			// txtArea
 			// 
 			this.txtArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtArea.Location = new System.Drawing.Point(69, 447);
+			this.txtArea.Location = new System.Drawing.Point(78, 447);
 			this.txtArea.Name = "txtArea";
-			this.txtArea.Size = new System.Drawing.Size(262, 20);
+			this.txtArea.Size = new System.Drawing.Size(253, 20);
 			this.txtArea.TabIndex = 12;
 			this.txtArea.TabStop = false;
 			// 
@@ -552,9 +554,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmbComponentComment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbComponentComment.FormattingEnabled = true;
-			this.cmbComponentComment.Location = new System.Drawing.Point(69, 473);
+			this.cmbComponentComment.Location = new System.Drawing.Point(78, 473);
 			this.cmbComponentComment.Name = "cmbComponentComment";
-			this.cmbComponentComment.Size = new System.Drawing.Size(262, 21);
+			this.cmbComponentComment.Size = new System.Drawing.Size(253, 21);
 			this.cmbComponentComment.TabIndex = 21;
 			this.cmbComponentComment.TabStop = false;
 			// 
@@ -745,7 +747,6 @@
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
 			this.tableLayoutPanel2.Controls.Add(this.cmdEmailRefreshStudents, 0, 0);
-			this.tableLayoutPanel2.Controls.Add(this.cmdGetImages, 2, 0);
 			this.tableLayoutPanel2.Controls.Add(this.cmdSelectAll, 1, 0);
 			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
@@ -768,17 +769,6 @@
 			this.cmdEmailRefreshStudents.Text = "Refresh";
 			this.cmdEmailRefreshStudents.UseVisualStyleBackColor = true;
 			this.cmdEmailRefreshStudents.Click += new System.EventHandler(this.cmdEmailRefreshStudents_Click);
-			// 
-			// cmdGetImages
-			// 
-			this.cmdGetImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdGetImages.Location = new System.Drawing.Point(217, 3);
-			this.cmdGetImages.Name = "cmdGetImages";
-			this.cmdGetImages.Size = new System.Drawing.Size(102, 23);
-			this.cmdGetImages.TabIndex = 5;
-			this.cmdGetImages.Text = "DISABLED";
-			this.cmdGetImages.UseVisualStyleBackColor = true;
 			// 
 			// cmdSelectAll
 			// 
@@ -887,8 +877,9 @@
 			this.txtEmailBody.Location = new System.Drawing.Point(4, 7);
 			this.txtEmailBody.Margin = new System.Windows.Forms.Padding(6);
 			this.txtEmailBody.MaxLength = 0;
+			this.txtEmailBody.Multiline = true;
 			this.txtEmailBody.Name = "txtEmailBody";
-			this.txtEmailBody.Size = new System.Drawing.Size(458, 26);
+			this.txtEmailBody.Size = new System.Drawing.Size(458, 394);
 			this.txtEmailBody.TabIndex = 6;
 			this.txtEmailBody.TabStop = false;
 			// 
@@ -1039,6 +1030,24 @@
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Import data";
 			// 
+			// button8
+			// 
+			this.button8.Location = new System.Drawing.Point(750, 84);
+			this.button8.Name = "button8";
+			this.button8.Size = new System.Drawing.Size(25, 22);
+			this.button8.TabIndex = 25;
+			this.button8.Text = "...";
+			this.button8.UseVisualStyleBackColor = true;
+			this.button8.Click += new System.EventHandler(this.button8_Click);
+			// 
+			// txtSourceTurnitin
+			// 
+			this.txtSourceTurnitin.Location = new System.Drawing.Point(461, 23);
+			this.txtSourceTurnitin.Multiline = true;
+			this.txtSourceTurnitin.Name = "txtSourceTurnitin";
+			this.txtSourceTurnitin.Size = new System.Drawing.Size(313, 56);
+			this.txtSourceTurnitin.TabIndex = 24;
+			// 
 			// chkImportSubmissions
 			// 
 			this.chkImportSubmissions.AutoSize = true;
@@ -1059,7 +1068,7 @@
 			this.button7.Name = "button7";
 			this.button7.Size = new System.Drawing.Size(315, 26);
 			this.button7.TabIndex = 19;
-			this.button7.Text = "Init database";
+			this.button7.Text = "Initialize database from gradebook";
 			this.button7.UseVisualStyleBackColor = true;
 			this.button7.Click += new System.EventHandler(this.button7_Click);
 			// 
@@ -1072,7 +1081,7 @@
 			this.btnCompleteData.Name = "btnCompleteData";
 			this.btnCompleteData.Size = new System.Drawing.Size(315, 26);
 			this.btnCompleteData.TabIndex = 18;
-			this.btnCompleteData.Text = "Complete student data (XML)";
+			this.btnCompleteData.Text = "Update database from gradebook";
 			this.btnCompleteData.UseVisualStyleBackColor = true;
 			this.btnCompleteData.Click += new System.EventHandler(this.btnCompleteData_Click);
 			// 
@@ -1155,24 +1164,6 @@
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel4.Size = new System.Drawing.Size(817, 32);
 			this.tableLayoutPanel4.TabIndex = 13;
-			// 
-			// txtSourceTurnitin
-			// 
-			this.txtSourceTurnitin.Location = new System.Drawing.Point(461, 23);
-			this.txtSourceTurnitin.Multiline = true;
-			this.txtSourceTurnitin.Name = "txtSourceTurnitin";
-			this.txtSourceTurnitin.Size = new System.Drawing.Size(313, 56);
-			this.txtSourceTurnitin.TabIndex = 24;
-			// 
-			// button8
-			// 
-			this.button8.Location = new System.Drawing.Point(750, 84);
-			this.button8.Name = "button8";
-			this.button8.Size = new System.Drawing.Size(25, 22);
-			this.button8.TabIndex = 25;
-			this.button8.Text = "...";
-			this.button8.UseVisualStyleBackColor = true;
-			this.button8.Click += new System.EventHandler(this.button8_Click);
 			// 
 			// FrmAutomaticMarkingMachine
 			// 
@@ -1296,7 +1287,6 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button cmdSelectAll;
-        private System.Windows.Forms.Button cmdGetImages;
         private System.Windows.Forms.PictureBox StudImage;
         private System.Windows.Forms.CheckBox chkSendModerationNotice;
         private System.Windows.Forms.ColumnHeader columnHeader4;

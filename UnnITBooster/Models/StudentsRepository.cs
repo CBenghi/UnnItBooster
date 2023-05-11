@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,13 +21,24 @@ public class StudentsRepository
 		Reload();
 	}
 
-	internal void Reload()
+	
+
+	internal void Reload(IEnumerable<string>? nameFilters = null)
 	{
+		List<string>? filters = null;
+		if (nameFilters is not null)
+			filters = nameFilters.ToList();
+
 		collections = new List<IStudentCollection>();
 		foreach (var item in ConfigurationFolder.GetDirectories())
 		{
-			if (StudentJsonCollection.IsValid(item))
-				collections.Add(new StudentJsonCollection(item));
+			if (filters is null || filters.Any(x => filters.Contains(item.Name)))
+			{
+				if (StudentJsonCollection.IsValid(item))
+				{
+					collections.Add(new StudentJsonCollection(item));
+				}
+			}
 		}
 	}
 
@@ -96,4 +108,5 @@ public class StudentsRepository
 		return !d.Exists; 
 	}
 
+	
 }
