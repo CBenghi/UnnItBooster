@@ -1,8 +1,6 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -17,10 +15,11 @@ using UnnFunctions.MCRF;
 using UnnItBooster.Models;
 using UnnItBooster.ModelConversions;
 using ZedGraph;
+using System.IO.Compression;
 
 namespace StudentsFetcher.StudentMarking;
 
-[AMMFormAttributes(ButtonText = "Automatic marking machine", Order = 1)]
+[AmmFormAttributes("Automatic marking machine", 1)]
 public partial class FrmAutomaticMarkingMachine : Form
 {
     private MarkingConfig _config;
@@ -68,8 +67,11 @@ public partial class FrmAutomaticMarkingMachine : Form
                     cmp = 0;
 
                 var m = flComponents.Controls[cmp] as ucComponentMark;
-                m.TabStop = false;
-                m.MarkValue = val;
+                if (m is not null)
+                {
+                    m.TabStop = false;
+                    m.MarkValue = val;
+                }
             }
             cmdSaveMarks.BackColor = Color.Transparent;
         }
@@ -79,8 +81,14 @@ public partial class FrmAutomaticMarkingMachine : Form
     {
         if (GetStudentNumber() != -1)
         {
-            txtStudentreport.Text = _config.GetStudentReport(GetStudentNumber(), chkSendModerationNotice.Checked);
-            UpdateDocumentsList();
+			var submission = GetCurrentSubmission();
+            if (submission is null)
+            {
+                txtStudentreport.Text = "none";
+				return;
+            }
+			txtStudentreport.Text = _config.GetStudentReport(GetStudentNumber(), chkSendModerationNotice.Checked);
+            UpdateDocumentsList(submission);
             // show student picure.
             var dt = _config.GetDataTable("SELECT SUB_NumericUserId from tb_submissions where SUB_Id = " + GetStudentNumber());
             if (dt.Rows.Count == 1)
@@ -150,56 +158,24 @@ public partial class FrmAutomaticMarkingMachine : Form
         }
     }
 
-    private void UpdateDocumentsList()
+	private TurnitInSubmission? GetCurrentSubmission()
+	{
+        var numb = GetStudentNumber();
+        if (numb == -1)
+            return null;
+        var r = _config.GetStudentRow(numb);
+        if (r == null) 
+            return null;
+        return TurnitInSubmission.FromRow(r);
+	}
+
+	private void UpdateDocumentsList(TurnitInSubmission submission)
     {
         cmbDocuments.Items.Clear();
-        var stud = _config.GetStudentRow(GetStudentNumber());
-        if (stud == null)
-            return;
-        var sId = stud["sub_userid"].ToString();
-        var folderName = _config.GetFolderName();
+        // todo: populate document
+        cmbDocuments.Items.Add(submission.Title);
+	}
 
-        // this submission files
-        var validFiles = GetValidFiles(folderName, sId).ToArray();
-        cmbDocuments.Items.AddRange(validFiles);
-
-        var other = folderName + relFolder.Text;
-        var otherFiles = GetValidFiles(other, sId).ToArray();
-        if (otherFiles.Length == 1)
-        {
-            cmdCompare.Tag = otherFiles[0];
-            cmdCompare.Enabled = true;
-        }
-        else
-            cmdCompare.Enabled = false;
-
-        if (cmbDocuments.Items.Count > 0)
-            cmbDocuments.SelectedIndex = 0;
-
-        cmbDocuments.ForeColor = cmbDocuments.Items.Count > 1
-            ? Color.Red
-            : Color.Black;
-    }
-
-    private List<string> GetValidFiles(string fname, string sId)
-    {
-        var validFiles = new List<string>();
-        var d = new DirectoryInfo(fname);
-        if (!d.Exists)
-            return validFiles;
-        var dirs = d.GetDirectories();
-
-        foreach (var item in dirs)
-        {
-            var files = item.GetFiles(sId + "*.*");
-            foreach (var file in files)
-            {
-                var subfile = Path.Combine(item.Name, file.Name);
-                validFiles.Add(subfile);
-            }
-        }
-        return validFiles;
-    }
 
     private int GetStudentNumber()
     {
@@ -247,10 +223,6 @@ public partial class FrmAutomaticMarkingMachine : Form
             {
                 RemoveComment(m5);
             }
-            else if (txtSearch.Text == "CopyFilesById")
-            {
-                CopyFilesById();
-            }
             else if (txtSearch.Text == "missing")
             {
                 FindMissing();
@@ -291,12 +263,6 @@ public partial class FrmAutomaticMarkingMachine : Form
                 SearchCommentInLibrary();
             }
         }
-    }
-
-    private void CopyFilesById()
-    {
-        var allIds = txtLibReport.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-        CopyFiles(allIds);
     }
 
     private void WriteFeedbackFile()
@@ -376,7 +342,6 @@ public partial class FrmAutomaticMarkingMachine : Form
         txtLibReport.Text = "Submissions:\r\n";
         var sql = "SELECT SCOM_ptr_Submission, TB_Submissions.SUB_UserID FROM TB_SubComments inner join TB_Submissions on SCOM_ptr_Submission = SUB_ID where SCOM_ptr_comment = " + m4.Groups[1].Value;
         var dt = _config.GetDataTable(sql);
-
         var reqIds = new List<string>();
 
         foreach (DataRow item in dt.Rows)
@@ -384,32 +349,6 @@ public partial class FrmAutomaticMarkingMachine : Form
             txtLibReport.Text += $"{item[0]}\t{item[1]}\r\n";
             // this submission's files
             reqIds.Add(item[1].ToString());
-        }
-        // also copy files to clipboard
-        //
-        CopyFiles(reqIds);
-    }
-
-    private void CopyFiles(IEnumerable<string> reqIds)
-    {
-        var fNames = new List<string>();
-        var folderName = _config.GetFolderName();
-        foreach (var sId in reqIds)
-        {
-
-            var validFiles = GetValidFiles(folderName, sId).ToArray();
-
-            foreach (var file in validFiles)
-            {
-                fNames.Add(Path.Combine(folderName, file));
-            }
-
-        }
-        if (fNames.Any())
-        {
-            Clipboard.Clear();
-            Clipboard.SetData(DataFormats.FileDrop, fNames.ToArray());
-            txtLibReport.Text += $"{fNames.Count} Files copied to clipboard.";
         }
     }
 
@@ -610,10 +549,16 @@ public partial class FrmAutomaticMarkingMachine : Form
         if (openFileDialog1.FileName != "")
         {
             txtExcelFileName.Text = openFileDialog1.FileName;
-        }
+            FileInfo f = new FileInfo(openFileDialog1.FileName);
+            var g = f.Directory.GetFiles(TurnItIn.GradebookStandardName).FirstOrDefault();
+            if (g!= null)
+                txtSourceTurnitin.Text = g.FullName;
+
+
+		}
     }
 
-    private void txtExcelFileName_TextChanged(object sender, EventArgs e)
+    private void txtExcelFileName_TextChanged(object? sender, EventArgs? e)
     {
         Reload();
     }
@@ -622,8 +567,7 @@ public partial class FrmAutomaticMarkingMachine : Form
     {
         if (!File.Exists(txtExcelFileName.Text))
             return;
-        _config = new MarkingConfig();
-        _config.DbName = txtExcelFileName.Text;
+        _config = new MarkingConfig(txtExcelFileName.Text);
         UpdateComponents();
     }
 
@@ -632,7 +576,7 @@ public partial class FrmAutomaticMarkingMachine : Form
         // combo 
     
         cmbComponentComment.Items.Clear();
-        var cid = new comboId { text = "<general>", value = -1, percent = 0};
+        var cid = new ComboId("<general>", 0, -1);
         cmbComponentComment.Items.Add(cid);
         
 
@@ -654,13 +598,11 @@ public partial class FrmAutomaticMarkingMachine : Form
             {
                 var order = Convert.ToInt32(item["CPNT_Order"]);
                 var ipercent = Convert.ToInt32(item["CPNT_Percent"]);
-                var c = new comboId
-                { 
-                    text = item["CPNT_Name"].ToString(), 
-                    value = order, 
-                    percent = ipercent 
-                };
-                // cmbComponentMark.Items.Add(c);
+                var c = new ComboId(
+                    item["CPNT_Name"].ToString(),
+                    ipercent,
+                    order
+                );
                 cmbComponentComment.Items.Add(c);
 
                 cmp = new ucComponentMark();
@@ -676,21 +618,9 @@ public partial class FrmAutomaticMarkingMachine : Form
         }
     }
 
-    void cmp_onUserChange(object sender, EventArgs e)
+    void cmp_onUserChange(object? sender, EventArgs? e)
     {
         cmdSaveMarks.BackColor = Color.Red;
-    }
-
-    class comboId
-    {
-        public string text;
-        public int value;
-        public int percent;
-
-        public override string ToString()
-        {
-            return string.Format("{0} (#{1} - {2}%)", text, value, percent);
-        }
     }
 
     int GetComponentComment()
@@ -698,7 +628,7 @@ public partial class FrmAutomaticMarkingMachine : Form
         var iComponent = -1;
         if (cmbComponentComment.SelectedItem != null)
         {
-            iComponent = ((comboId)cmbComponentComment.SelectedItem).value;
+            iComponent = ((ComboId)cmbComponentComment.SelectedItem).value;
         }
         return iComponent;
     }
@@ -777,14 +707,15 @@ public partial class FrmAutomaticMarkingMachine : Form
                 continue;
 
             var iStudentId = (int)studentId.Tag;
-            DataRow row;
-            var emailtext = Emailtext(replacements, iStudentId, mcalc, out row);
-            var DestEmail = row["SUB_email"].ToString();
-
-            if (!chkEmailDryRun.Checked)
-                app.SendOutlookEmail(DestEmail, txtEmailSubject.Text, emailtext);
-            else
-                Debug.WriteLine(emailtext);
+            var emailtext = Emailtext(replacements, iStudentId, mcalc, out var row);
+            if (row is not null)
+            {
+                var DestEmail = row["SUB_email"].ToString();
+                if (!chkEmailDryRun.Checked)
+                    app.SendOutlookEmail(DestEmail, txtEmailSubject.Text, emailtext);
+                else
+                    Debug.WriteLine(emailtext);
+            }
         }
 
         MessageBox.Show("Done");
@@ -794,15 +725,16 @@ public partial class FrmAutomaticMarkingMachine : Form
     {
         var mcalc = _config.GetMarkCalculator();
         var replacements = GetReplacementList(txtEmailBody.Text);
-        DataRow row;
-        var emailtext = Emailtext(replacements, iStudentId, mcalc, out row);
+        var emailtext = Emailtext(replacements, iStudentId, mcalc, out _);
         return emailtext;
     }
 
-    private string Emailtext(IEnumerable<string> replacements, int iStudentId, MarksCalculator mcalc, out DataRow row)
+    private string Emailtext(IEnumerable<string> replacements, int iStudentId, MarksCalculator mcalc, out DataRow? row)
     {
         var emailtext = txtEmailBody.Text;
         row = _config.GetStudentRow(iStudentId);
+        if (row is null)
+            return emailtext;
         foreach (var item in replacements)
         {
             var repvalue = "";
@@ -821,7 +753,7 @@ public partial class FrmAutomaticMarkingMachine : Form
                     {
                         repvalue = row[item].ToString();
                     }
-                    catch (Exception ex)
+                    catch
                     {
                     }
                     break;
@@ -1042,32 +974,15 @@ Claudio
 {MarkReport}";
     }
    
-    private void cmdOpenOther_Click(object sender, EventArgs e)
-    {
-        if (cmdCompare.Tag == null)
-            return;
-        var fullname = Path.Combine(_config.GetFolderName() + relFolder.Text, cmdCompare.Tag.ToString());
-        Process.Start(fullname);       
-    }
-
-    private void cmdCompare_Click(object sender, EventArgs e)
-    {
-        var com1 = Path.Combine(_config.GetFolderName(), cmbDocuments.Text);
-        var com2 = Path.Combine(_config.GetFolderName() + relFolder.Text, cmdCompare.Tag.ToString());
-
-        var pars = string.Format("\"{0}\" \"{1}\"", com1, com2);
-
-        Process.Start(
-            @"C:\Program Files (x86)\WinMerge\WinMergeU.exe",
-            pars
-            );
-    }
+    
 
     
 
     private void button7_Click(object sender, EventArgs e)
     {
-        var f = new FileInfo(txtSourceTurnitin.Text);
+		if (string.IsNullOrEmpty(txtSourceTurnitin.Text))
+			return;
+		var f = new FileInfo(txtSourceTurnitin.Text);
         if (!f.Exists)
             return;
         var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f).ToList();
@@ -1077,11 +992,13 @@ Claudio
 
 	private void btnCompleteData_Click(object sender, EventArgs e)
 	{
+        if (string.IsNullOrEmpty(txtSourceTurnitin.Text))
+            return;
         var f = new FileInfo(txtSourceTurnitin.Text);
         if (!f.Exists)
             return;
         var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f).ToList();
-        TurnItIn.UpdateDatabase(txtExcelFileName.Text, submissions);
+        txtReport.Text = TurnItIn.UpdateDatabase(txtExcelFileName.Text, submissions);
 		Reload();
 	}
 
@@ -1096,4 +1013,47 @@ Claudio
 		}
 	}
 
+	private void button9_Click(object sender, EventArgs e)
+	{
+        StringBuilder sb = new StringBuilder();
+		var folderName = _config.GetFolderName();
+		var folder = new DirectoryInfo(folderName);
+		var zipPath = folder.GetFiles("*.zip").FirstOrDefault();
+		if (zipPath == null)
+			return;
+        var extractPath = zipPath.FullName.ToLowerInvariant().Replace(".zip", "");
+        var outDir = new DirectoryInfo(extractPath);
+        outDir.Create();
+		using ZipArchive archive = ZipFile.OpenRead(zipPath.FullName);
+		foreach (ZipArchiveEntry entry in archive.Entries)
+		{
+            Debug.WriteLine(entry.FullName);
+			// Gets the full path to ensure that relative segments are removed.
+			string destinationPath = Path.GetFullPath(Path.Combine(extractPath, entry.FullName));
+            // Ordinal match is safest, case-sensitive volumes can be mounted within volumes that
+            // are case-insensitive.
+            if (destinationPath.StartsWith(extractPath, StringComparison.Ordinal)
+                && !File.Exists(destinationPath)
+                ) 
+            {
+                entry.ExtractToFile(destinationPath);
+                sb.AppendLine($"Extracted: {entry.FullName}");
+            }
+		}
+        txtReport.Text = sb.ToString();
+	}
+
+	private void button10_Click(object sender, EventArgs e)
+	{
+		var folderName = _config.GetFolderName();
+		var folder = new DirectoryInfo(folderName);
+		var manifests = folder.GetFiles("manifest.txt", SearchOption.AllDirectories);
+
+        txtReport.Text = "";
+        foreach (var manifest in manifests)
+        {
+            var files = TurnItIn.GetFilesFromManifest(manifest).ToList();
+			txtReport.Text += _config.UpdateDatabase(files);
+		}
+	}
 }

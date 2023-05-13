@@ -20,7 +20,7 @@ namespace UnnItBooster.Models
 			{
 				if (!string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(FullName))
 				{
-					if (FullName.EndsWith(value, StringComparison.OrdinalIgnoreCase))
+					if (FullName!.EndsWith(value, StringComparison.OrdinalIgnoreCase))
 					{
 						var index = FullName.IndexOf(value, StringComparison.OrdinalIgnoreCase);
 						var fn = FullName.Substring(0, index).Trim();

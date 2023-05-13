@@ -1,6 +1,7 @@
 ﻿using Outlook = Microsoft.Office.Interop.Outlook;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System;
 
 namespace UnnOutlookAddin.MailManagement
 {
@@ -77,7 +78,7 @@ namespace UnnOutlookAddin.MailManagement
                     }
                     eMail.Move(destFolder);
                 }
-                catch (System.Exception ex)
+                catch (Exception)
                 {
 
                 }

@@ -8,20 +8,11 @@ namespace UnnOutlookAddin
 {
     public partial class ThisAddIn
     {
-        // fundamental
-        //
-        Outlook.Inspectors _inspectors;
         Outlook.Explorer _currentExplorer;
-
-        // new email related variables
-        //
         Outlook.NameSpace outlookNameSpace;
         Outlook.MAPIFolder inbox;
         Outlook.Items items;
 
-        //// custom UNN pane
-        //private UI.UnnStudent myStudentComponent;
-        //private Microsoft.Office.Tools.CustomTaskPane myCustomTaskPane;
 
         private void ThisAddIn_Startup(object sender, EventArgs e)
         {            
@@ -34,12 +25,12 @@ namespace UnnOutlookAddin
                 items.ItemAdd += new Outlook.ItemsEvents_ItemAddEventHandler(AutomaticClassificationHandler);
             }
 
-            // tracking of new email creation?
-            if (false)
-            {
-                _inspectors = Application.Inspectors;
-                _inspectors.NewInspector += Inspectors_NewInspector;
-            }
+            //// tracking of new email creation?
+            //if (false)
+            //{
+            //    _inspectors = Application.Inspectors;
+            //    _inspectors.NewInspector += Inspectors_NewInspector;
+            //}
 
             // registering events of selection change
             _currentExplorer = Application.ActiveExplorer();
@@ -78,15 +69,10 @@ namespace UnnOutlookAddin
                 if (Application.ActiveExplorer().Selection.Count > 0)
                 {
                     object selObject = Application.ActiveExplorer().Selection[1];
-                    if (selObject is Outlook.MailItem)
+                    if (selObject is Outlook.MailItem mailItem)
                     {
-                        var mailItem = selObject as Outlook.MailItem;
                         // itemMessage = "The item is an e-mail message. The subject is " + mailItem.Subject + ".";
-                        var add = mailItem.SenderEmailAddress;
-                        var snd = MessageExtensions.GetSenderEmailAddress(mailItem);
-						// mailItem.Display(false);
-						myStudentComponent.SetEmail(snd);
-
+                        myStudentComponent.SetMessage(mailItem);
 					}
                     //else if (selObject is Outlook.ContactItem)
                     //{

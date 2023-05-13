@@ -5,12 +5,16 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Windows.Media;
 using UnnItBooster.Models;
 
 namespace UnnItBooster.ModelConversions;
 
-internal class TurnItIn
+internal partial class TurnItIn
 {
+	public const string GradebookStandardName = "Coursework submission-Learning Analytics.xlsx";
+
 	internal static IEnumerable<Student> GetStudentsFromGradebook(string csvSource)
 	{
 		// open the file "data.csv" which is a CSV file with headers
@@ -142,30 +146,9 @@ internal class TurnItIn
 		c.Close();
 	}
 
-	private class SqlCouple
-	{
-		public SqlCouple(string fld, string val)
-		{
-			Field = fld;
-			Value = val;
-		}
-		public string Field { get; set; }
-		public string Value { get; set; }
-
-		internal string GetValue()
-		{
-			return "'" + Value.Replace("'", "''") + "'";
-		}
-		internal string GetSetCommand()
-		{
-			return $"{Field} = {GetValue()}";
-		}
-	}
-
-	internal static IEnumerable<TurnitInSubmission> GetSubmissionsFromLearningAnalytics(FileInfo learningAnalytics)
+	internal static IEnumerable<TurnitInSubmission> GetSubmissionsFromLearningAnalytics(FileInfo learningAnalytics, StringBuilder? reporter = null)
 	{
 		var repo = StudentsRepository.GetRespository();
-
 		using var package = new ExcelPackage(learningAnalytics);
 		// prepare question dictionary
 		List<TurnitInSubmission> lst = new List<TurnitInSubmission>();
@@ -209,6 +192,8 @@ internal class TurnItIn
 	private static void SyncStudentProperties(StudentsRepository repo, TurnitInSubmission seek)
 	{
 		var stude = repo.Students.FirstOrDefault(x => x.Email == seek.Email);
+		if (stude is null)
+			stude = repo.Students.FirstOrDefault(x => x.FullName is not null && x.FullName.Equals(seek.FullName, System.StringComparison.OrdinalIgnoreCase));		
 		if (stude is not null)
 		{
 			if (!string.IsNullOrEmpty(stude.Forename))
@@ -228,7 +213,7 @@ internal class TurnItIn
 		var table = package.Workbook.Worksheets.FirstOrDefault(x => x.Name == "Submissions");
 		if (table is null)
 			return;
-		int i = 0;
+		int i = 1;
 		do
 		{
 			var magicNumber = table.Cells[$"A{i}"].Text;
@@ -252,7 +237,7 @@ internal class TurnItIn
 				seek = new TurnitInSubmission();
 				lst.Add(seek);
 			}
-
+			seek.FullName = table.Cells[$"A{i}"].Text;
 			seek.Email = table.Cells[$"B{i}"].Text;
 			seek.DateUploaded = table.Cells[$"C{i}"].Text;
 			seek.Overlap = table.Cells[$"D{i}"].Text;
@@ -276,7 +261,7 @@ internal class TurnItIn
 		c.Open();
 		foreach (var item in submissions)
 		{
-			var vc = GetSqlCouples(item);
+			var vc = TurnitInSubmission.GetSqlCouples(item);
 			var flds = string.Join(", ", vc.Select(x => x.Field));
 			var vals = string.Join(", ", vc.Select(x => x.GetValue()));
 			var sql = $"insert into TB_Submissions ({flds}) values ({vals})";
@@ -286,19 +271,26 @@ internal class TurnItIn
 		c.Close();
 	}
 
-	internal static void UpdateDatabase(string fullname, List<TurnitInSubmission> submissions)
+	internal static string UpdateDatabase(string fullname, List<TurnitInSubmission> submissions)
 	{
 		var filename = Path.ChangeExtension(fullname, "sqlite");
 		if (!File.Exists(filename))
-			return;
+			return "not found";
 
 		using var c = new SQLiteConnection("Data source=" + filename + ";");
 		c.Open();
 		var ids = "select SUB_email from TB_Submissions";
 		var existingEmails = MarkingConfig.GetVector(ids, c);
+
+		int prevCount = existingEmails.Count;
+		int tallyUpdate = 0;
+		int tallyAdd = 0;
+
+		StringBuilder sb = new StringBuilder();
+
 		foreach (var item in submissions)
 		{
-			var vc = GetSqlCouples(item);
+			var vc = TurnitInSubmission.GetSqlCouples(item).Where(x=>!string.IsNullOrWhiteSpace(x.Value));
 			if (existingEmails.Contains(item.Email))
 			{
 				// update
@@ -306,6 +298,8 @@ internal class TurnItIn
 				var sql = $"UPDATE TB_Submissions SET {flds} WHERE SUB_email = '{item.Email}'";
 				var cmd = new SQLiteCommand(sql, c);
 				cmd.ExecuteNonQuery();
+				tallyUpdate++;
+				sb.AppendLine($"{item.Email} updated");
 			}
 			else
 			{
@@ -315,28 +309,44 @@ internal class TurnItIn
 				var sql = $"insert into TB_Submissions ({flds}) values ({vals})";
 				var cmd = new SQLiteCommand(sql, c);
 				cmd.ExecuteNonQuery();
+				tallyAdd++;
+				sb.AppendLine($"{item.Email} added");
 			}
 		}
 		c.Close();
+		sb.AppendLine($"===");
+		sb.AppendLine($"Existing: {prevCount}");
+		sb.AppendLine($"Modified: {tallyUpdate}");
+		sb.AppendLine($"Added   : {tallyAdd}");
+		sb.AppendLine($"Total   : {tallyUpdate + tallyAdd}");
+		return sb.ToString();
 	}
 
-	private static SqlCouple[] GetSqlCouples(TurnitInSubmission item)
+	internal static IEnumerable<SubmittedFile> GetFilesFromManifest(FileInfo manifest)
 	{
-		return new[] {
-			new SqlCouple("SUB_LastName", item.LastName),
-			new SqlCouple("SUB_FirstName", item.FirstName),
-			new SqlCouple("SUB_UserID",  item.UserId),
-			new SqlCouple("SUB_TurnitinUserID",  item.TurnitinUserId),
-			new SqlCouple("SUB_Title",  item.Title),
-			new SqlCouple("SUB_PaperID", item.PaperId),
-			new SqlCouple("SUB_DateUploaded",  item.DateUploaded),
-			new SqlCouple("SUB_Grade",  item.Grade),
-			new SqlCouple("SUB_Overlap",  item.Overlap),
-			new SqlCouple("SUB_InternetOverlap",  item.InternetOverlap),
-			new SqlCouple("SUB_PublicationsOverlap",  item.PublicationsOverlap),
-			new SqlCouple("SUB_StudentPapersOverlap",  item.StudentPapersOverlap),
-			new SqlCouple("SUB_NumericUserID",  item.NumericUserId),
-			new SqlCouple("SUB_email", item.Email)
-			};
+		if (!manifest.Exists)
+			yield break;
+		var lines = File.ReadAllLines(manifest.FullName);
+		var processFiles = false;
+		var split = new [] { " - SUCCESS" };
+		foreach (var line in lines)
+		{
+			if (processFiles == true)
+			{
+				var procline = line.Trim();
+				if (!procline.EndsWith(" - SUCCESS"))
+					continue;				
+				var t = procline.Split(split, System.StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+				if (t == null)
+					continue;				
+				var fullPath = Path.Combine(manifest.Directory.FullName, t);
+				if (!File.Exists(fullPath))
+					continue;
+				var subId = t.Substring(0, t.IndexOf(" "));
+				yield return new SubmittedFile(fullPath, subId);
+			}
+			else if (line == "Files")
+				processFiles = true;
+		}
 	}
 }

@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
+using System.Linq;
 using System.Text;
-using System.Web.UI.WebControls.WebParts;
+using UnnItBooster.ModelConversions;
+using UnnItBooster.Models;
 
 namespace StudentsFetcher.StudentMarking
 {
-    public class MarkingConfig
+	public class MarkingConfig
     {
+        public MarkingConfig(string dbName)
+        {
+            DbName = dbName;
+        }
+
         public string DbName { get; set; }
 
         internal string GetFolderName()
@@ -33,6 +40,15 @@ namespace StudentsFetcher.StudentMarking
             c.Close();
             return dt;
         }
+
+        internal List<string> GetVector(string sql)
+        {
+			var c = GetConn();
+			c.Open();
+            var t = GetVector(sql, c);
+            c.Close();
+            return t;
+		}
 
         internal static List<string> GetVector(string sql, SQLiteConnection conn)
         {
@@ -60,20 +76,6 @@ namespace StudentsFetcher.StudentMarking
                 : null;
         }
 
-        internal DataRow? GetStudentRow(string uid)
-        {
-            var dt = new DataTable();
-            var c = GetConn();
-
-            var sql = string.Format("select * from TB_Submissions where SUB_UserID = '{0}'", uid);
-            var da = new SQLiteDataAdapter(sql, c);
-            da.Fill(dt);
-            // c.Close();
-            return dt.Rows.Count == 1 
-                ? dt.Rows[0] 
-                : null;
-        }
-
         internal string GetStudentReport(int id, bool sendModerationNotice)
         {
             var sb = new StringBuilder();
@@ -86,6 +88,7 @@ namespace StudentsFetcher.StudentMarking
             sb.AppendLine($"{stud["SUB_FirstName"]} {stud["SUB_LastName"]} {stud["SUB_UserId"]}");
             sb.AppendLine($"email: {stud["SUB_email"]} (#{stud["SUB_Id"]})");
             sb.AppendLine($"Submission ID: {stud["SUB_PaperID"]}");
+            sb.AppendLine($"Submission Title: {stud["SUB_Title"]}");
             sb.AppendLine();
 
             var componentComments = "";
@@ -99,7 +102,7 @@ namespace StudentsFetcher.StudentMarking
                 {"6", "good"},
                 {"7", "excellent"},
                 {"8", "outstanding"},
-                {"9", "outstanding"}
+                {"9", "exceptional"}
             };
 
 
@@ -255,8 +258,6 @@ namespace StudentsFetcher.StudentMarking
         internal MarksCalculator GetMarkCalculator()
         {      
             var ret = new MarksCalculator();
-            if (ret.Marks == null)
-                ret.Marks = new List<MarkComponent>();
             var dt = GetDataTable("Select * from TB_Components");
             foreach (DataRow row in dt.Rows)
             {
@@ -271,7 +272,47 @@ namespace StudentsFetcher.StudentMarking
             return ret;
         }
 
-        public string BareName
+		internal string UpdateDatabase(List<SubmittedFile> files)
+		{
+			var c = GetConn();
+			c.Open();
+			var ids = "select SUB_PaperId from TB_Submissions";
+			var existingIds = GetVector(ids);
+
+			int prevCount = existingIds.Count;
+			int tallyUpdate = 0;
+			int tallyNotFound = 0;
+
+			StringBuilder sb = new StringBuilder();
+			foreach (var item in files)
+			{
+                var relative = item.FullPath.Substring(GetFolderName().Length);
+                relative = relative.Trim(new[] { Path.DirectorySeparatorChar });
+                var vc = new[] { new SqlCouple("SUB_Title", relative) };
+				if (existingIds.Contains(item.SubmissionId))
+				{
+					// update
+					var flds = string.Join(", ", vc.Select(x => x.GetSetCommand()));
+					var sql = $"UPDATE TB_Submissions SET {flds} WHERE SUB_PaperId = '{item.SubmissionId}'";
+					var cmd = new SQLiteCommand(sql, c);
+					cmd.ExecuteNonQuery();
+					tallyUpdate++;
+				}
+				else
+				{
+					tallyNotFound++;
+                    sb.AppendLine($"{item.SubmissionId} not found for {item.FullPath}");
+				}
+			}
+			c.Close();
+			sb.AppendLine($"===");
+			sb.AppendLine($"Existing: {prevCount}");
+			sb.AppendLine($"Modified: {tallyUpdate}");
+			sb.AppendLine($"Missed  : {tallyNotFound}");
+			return sb.ToString();
+		}
+
+		public string BareName
         {
             get
             {

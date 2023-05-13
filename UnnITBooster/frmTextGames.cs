@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace StudentsFetcher
 {
-    [AMMFormAttributes(ButtonText = "Play with text")] 
+    [AmmFormAttributes("Play with text")] 
     public partial class frmTextGames : Form
     {
         public frmTextGames()

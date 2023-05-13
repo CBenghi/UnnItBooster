@@ -10,7 +10,7 @@ using UnnItBooster.Models;
 
 namespace StudentsFetcher.StudentMarking
 {
-	[AMMFormAttributes(ButtonText = "Student list", Order = -5)]
+	[AmmFormAttributes("Student list", -5)]
 	public partial class StudentListForm : Form
 	{
 		private StudentsRepository studentsRepo;

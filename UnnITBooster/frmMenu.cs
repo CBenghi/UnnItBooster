@@ -13,18 +13,13 @@ namespace StudentsFetcher
 
 
             var q = from type in Assembly.GetExecutingAssembly().GetTypes()
-                    where Attribute.IsDefined(type, typeof(AMMFormAttributes))
+                    where Attribute.IsDefined(type, typeof(AmmFormAttributes))
                     select type;
 
             var menuData = (from item in q
-                let atts = item.GetCustomAttributes(false)
-                let att = atts[0] as AMMFormAttributes
-                select new MenuData()
-                {
-                    Att = att,
-                    Type = item
-                }).ToList().OrderBy(x => x.Att.Order);
-
+                            let atts = item.GetCustomAttributes(false)
+                            let att = atts[0] as AmmFormAttributes
+                            select new MenuData(att, item)).ToList().OrderBy(x => x.Att.Order);
             foreach (var menuitem in menuData)
             {
                 AddButton(menuitem);
@@ -38,12 +33,18 @@ namespace StudentsFetcher
 
         private class MenuData
         {
-            public AMMFormAttributes Att;
+            public MenuData(AmmFormAttributes att, Type type)
+            {
+                Att =   att; 
+                Type = type;
+            }
+
+            public AmmFormAttributes Att;
             public Type Type;
         }
 
 
-        private void AddButton(AMMFormAttributes att, Type item)
+        private void AddButton(AmmFormAttributes att, Type item)
         {
             // create the button
             //

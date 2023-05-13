@@ -6,7 +6,13 @@ namespace StudentsFetcher.StudentMarking
 {
     public class MarksCalculator
     {
-        public List<MarkComponent> Marks;
+        public MarksCalculator()
+        {
+            Marks = new List<MarkComponent>();
+        }
+
+        public List<MarkComponent> Marks { get; private set; }  
+
         public int GetFinalMark(string NumericUserId, MarkingConfig cfg)
         {
             double totPerc = 0;

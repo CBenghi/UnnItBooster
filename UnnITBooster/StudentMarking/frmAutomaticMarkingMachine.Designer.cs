@@ -45,9 +45,6 @@
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.label8 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.cmdOpenOther = new System.Windows.Forms.Button();
-			this.relFolder = new System.Windows.Forms.TextBox();
-			this.cmdCompare = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.cmbDocuments = new System.Windows.Forms.ComboBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -100,18 +97,25 @@
 			this.button4 = new System.Windows.Forms.Button();
 			this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.button8 = new System.Windows.Forms.Button();
+			this.txtReport = new System.Windows.Forms.TextBox();
+			this.tabControl3 = new System.Windows.Forms.TabControl();
+			this.tabPage6 = new System.Windows.Forms.TabPage();
 			this.txtSourceTurnitin = new System.Windows.Forms.TextBox();
-			this.chkImportSubmissions = new System.Windows.Forms.CheckBox();
-			this.button7 = new System.Windows.Forms.Button();
+			this.button8 = new System.Windows.Forms.Button();
 			this.btnCompleteData = new System.Windows.Forms.Button();
+			this.button7 = new System.Windows.Forms.Button();
+			this.tabPage7 = new System.Windows.Forms.TabPage();
+			this.txtSourceDataFile = new System.Windows.Forms.TextBox();
+			this.chkImportSubmissions = new System.Windows.Forms.CheckBox();
+			this.lblSourceData = new System.Windows.Forms.Label();
 			this.chkImportComponents = new System.Windows.Forms.CheckBox();
+			this.cmdSourceDataFile = new System.Windows.Forms.Button();
 			this.cmdGetData = new System.Windows.Forms.Button();
 			this.chkCommentLib = new System.Windows.Forms.CheckBox();
-			this.txtSourceDataFile = new System.Windows.Forms.TextBox();
-			this.cmdSourceDataFile = new System.Windows.Forms.Button();
-			this.lblSourceData = new System.Windows.Forms.Label();
+			this.tabPage8 = new System.Windows.Forms.TabPage();
+			this.button9 = new System.Windows.Forms.Button();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+			this.button10 = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -146,6 +150,10 @@
 			this.tabPage5.SuspendLayout();
 			this.tabPage3.SuspendLayout();
 			this.groupBox3.SuspendLayout();
+			this.tabControl3.SuspendLayout();
+			this.tabPage6.SuspendLayout();
+			this.tabPage7.SuspendLayout();
+			this.tabPage8.SuspendLayout();
 			this.tableLayoutPanel4.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -349,9 +357,6 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.cmdOpenOther);
-			this.groupBox2.Controls.Add(this.relFolder);
-			this.groupBox2.Controls.Add(this.cmdCompare);
 			this.groupBox2.Controls.Add(this.button2);
 			this.groupBox2.Controls.Add(this.cmbDocuments);
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -361,38 +366,6 @@
 			this.groupBox2.TabIndex = 15;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Documents downloaded";
-			// 
-			// cmdOpenOther
-			// 
-			this.cmdOpenOther.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdOpenOther.Location = new System.Drawing.Point(84, 44);
-			this.cmdOpenOther.Name = "cmdOpenOther";
-			this.cmdOpenOther.Size = new System.Drawing.Size(65, 23);
-			this.cmdOpenOther.TabIndex = 5;
-			this.cmdOpenOther.Text = "Other";
-			this.cmdOpenOther.UseVisualStyleBackColor = true;
-			this.cmdOpenOther.Click += new System.EventHandler(this.cmdOpenOther_Click);
-			// 
-			// relFolder
-			// 
-			this.relFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.relFolder.Location = new System.Drawing.Point(12, 46);
-			this.relFolder.Name = "relFolder";
-			this.relFolder.Size = new System.Drawing.Size(66, 20);
-			this.relFolder.TabIndex = 4;
-			this.relFolder.Text = "\\..\\1\\";
-			// 
-			// cmdCompare
-			// 
-			this.cmdCompare.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdCompare.Location = new System.Drawing.Point(155, 44);
-			this.cmdCompare.Name = "cmdCompare";
-			this.cmdCompare.Size = new System.Drawing.Size(65, 23);
-			this.cmdCompare.TabIndex = 3;
-			this.cmdCompare.Text = "Compare";
-			this.cmdCompare.UseVisualStyleBackColor = true;
-			this.cmdCompare.Click += new System.EventHandler(this.cmdCompare_Click);
 			// 
 			// button2
 			// 
@@ -980,7 +953,7 @@
 			// 
 			// button4
 			// 
-			this.button4.Location = new System.Drawing.Point(6, 219);
+			this.button4.Location = new System.Drawing.Point(6, 260);
 			this.button4.Margin = new System.Windows.Forms.Padding(2);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(56, 56);
@@ -994,7 +967,7 @@
 			this.zedGraphControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.zedGraphControl1.Location = new System.Drawing.Point(66, 219);
+			this.zedGraphControl1.Location = new System.Drawing.Point(66, 260);
 			this.zedGraphControl1.Margin = new System.Windows.Forms.Padding(4);
 			this.zedGraphControl1.Name = "zedGraphControl1";
 			this.zedGraphControl1.ScrollGrace = 0D;
@@ -1004,35 +977,68 @@
 			this.zedGraphControl1.ScrollMinX = 0D;
 			this.zedGraphControl1.ScrollMinY = 0D;
 			this.zedGraphControl1.ScrollMinY2 = 0D;
-			this.zedGraphControl1.Size = new System.Drawing.Size(737, 301);
+			this.zedGraphControl1.Size = new System.Drawing.Size(737, 260);
 			this.zedGraphControl1.TabIndex = 18;
 			this.zedGraphControl1.UseExtendedPrintDialog = true;
 			// 
 			// groupBox3
 			// 
-			this.groupBox3.Controls.Add(this.button8);
-			this.groupBox3.Controls.Add(this.txtSourceTurnitin);
-			this.groupBox3.Controls.Add(this.chkImportSubmissions);
-			this.groupBox3.Controls.Add(this.button7);
-			this.groupBox3.Controls.Add(this.btnCompleteData);
-			this.groupBox3.Controls.Add(this.chkImportComponents);
-			this.groupBox3.Controls.Add(this.cmdGetData);
-			this.groupBox3.Controls.Add(this.chkCommentLib);
-			this.groupBox3.Controls.Add(this.txtSourceDataFile);
-			this.groupBox3.Controls.Add(this.cmdSourceDataFile);
-			this.groupBox3.Controls.Add(this.lblSourceData);
+			this.groupBox3.Controls.Add(this.txtReport);
+			this.groupBox3.Controls.Add(this.tabControl3);
 			this.groupBox3.Location = new System.Drawing.Point(6, 12);
 			this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-			this.groupBox3.Size = new System.Drawing.Size(796, 201);
+			this.groupBox3.Size = new System.Drawing.Size(796, 230);
 			this.groupBox3.TabIndex = 17;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Import data";
 			// 
+			// txtReport
+			// 
+			this.txtReport.Location = new System.Drawing.Point(418, 40);
+			this.txtReport.Multiline = true;
+			this.txtReport.Name = "txtReport";
+			this.txtReport.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.txtReport.Size = new System.Drawing.Size(373, 181);
+			this.txtReport.TabIndex = 26;
+			// 
+			// tabControl3
+			// 
+			this.tabControl3.Controls.Add(this.tabPage6);
+			this.tabControl3.Controls.Add(this.tabPage7);
+			this.tabControl3.Controls.Add(this.tabPage8);
+			this.tabControl3.Location = new System.Drawing.Point(5, 18);
+			this.tabControl3.Name = "tabControl3";
+			this.tabControl3.SelectedIndex = 0;
+			this.tabControl3.Size = new System.Drawing.Size(407, 207);
+			this.tabControl3.TabIndex = 26;
+			// 
+			// tabPage6
+			// 
+			this.tabPage6.Controls.Add(this.txtSourceTurnitin);
+			this.tabPage6.Controls.Add(this.button8);
+			this.tabPage6.Controls.Add(this.btnCompleteData);
+			this.tabPage6.Controls.Add(this.button7);
+			this.tabPage6.Location = new System.Drawing.Point(4, 22);
+			this.tabPage6.Name = "tabPage6";
+			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage6.Size = new System.Drawing.Size(399, 181);
+			this.tabPage6.TabIndex = 0;
+			this.tabPage6.Text = "Gradebook";
+			this.tabPage6.UseVisualStyleBackColor = true;
+			// 
+			// txtSourceTurnitin
+			// 
+			this.txtSourceTurnitin.Location = new System.Drawing.Point(23, 17);
+			this.txtSourceTurnitin.Multiline = true;
+			this.txtSourceTurnitin.Name = "txtSourceTurnitin";
+			this.txtSourceTurnitin.Size = new System.Drawing.Size(337, 56);
+			this.txtSourceTurnitin.TabIndex = 24;
+			// 
 			// button8
 			// 
-			this.button8.Location = new System.Drawing.Point(750, 84);
+			this.button8.Location = new System.Drawing.Point(335, 78);
 			this.button8.Name = "button8";
 			this.button8.Size = new System.Drawing.Size(25, 22);
 			this.button8.TabIndex = 25;
@@ -1040,18 +1046,61 @@
 			this.button8.UseVisualStyleBackColor = true;
 			this.button8.Click += new System.EventHandler(this.button8_Click);
 			// 
-			// txtSourceTurnitin
+			// btnCompleteData
 			// 
-			this.txtSourceTurnitin.Location = new System.Drawing.Point(461, 23);
-			this.txtSourceTurnitin.Multiline = true;
-			this.txtSourceTurnitin.Name = "txtSourceTurnitin";
-			this.txtSourceTurnitin.Size = new System.Drawing.Size(313, 56);
-			this.txtSourceTurnitin.TabIndex = 24;
+			this.btnCompleteData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCompleteData.Location = new System.Drawing.Point(21, 135);
+			this.btnCompleteData.Margin = new System.Windows.Forms.Padding(2);
+			this.btnCompleteData.Name = "btnCompleteData";
+			this.btnCompleteData.Size = new System.Drawing.Size(339, 26);
+			this.btnCompleteData.TabIndex = 18;
+			this.btnCompleteData.Text = "Update database from gradebook";
+			this.btnCompleteData.UseVisualStyleBackColor = true;
+			this.btnCompleteData.Click += new System.EventHandler(this.btnCompleteData_Click);
+			// 
+			// button7
+			// 
+			this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.button7.Location = new System.Drawing.Point(21, 105);
+			this.button7.Margin = new System.Windows.Forms.Padding(2);
+			this.button7.Name = "button7";
+			this.button7.Size = new System.Drawing.Size(339, 26);
+			this.button7.TabIndex = 19;
+			this.button7.Text = "Initialize database from gradebook";
+			this.button7.UseVisualStyleBackColor = true;
+			this.button7.Click += new System.EventHandler(this.button7_Click);
+			// 
+			// tabPage7
+			// 
+			this.tabPage7.Controls.Add(this.txtSourceDataFile);
+			this.tabPage7.Controls.Add(this.chkImportSubmissions);
+			this.tabPage7.Controls.Add(this.lblSourceData);
+			this.tabPage7.Controls.Add(this.chkImportComponents);
+			this.tabPage7.Controls.Add(this.cmdSourceDataFile);
+			this.tabPage7.Controls.Add(this.cmdGetData);
+			this.tabPage7.Controls.Add(this.chkCommentLib);
+			this.tabPage7.Location = new System.Drawing.Point(4, 22);
+			this.tabPage7.Name = "tabPage7";
+			this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage7.Size = new System.Drawing.Size(399, 181);
+			this.tabPage7.TabIndex = 1;
+			this.tabPage7.Text = "Other AMM database";
+			this.tabPage7.UseVisualStyleBackColor = true;
+			// 
+			// txtSourceDataFile
+			// 
+			this.txtSourceDataFile.Location = new System.Drawing.Point(100, 17);
+			this.txtSourceDataFile.Multiline = true;
+			this.txtSourceDataFile.Name = "txtSourceDataFile";
+			this.txtSourceDataFile.Size = new System.Drawing.Size(283, 55);
+			this.txtSourceDataFile.TabIndex = 12;
 			// 
 			// chkImportSubmissions
 			// 
 			this.chkImportSubmissions.AutoSize = true;
-			this.chkImportSubmissions.Location = new System.Drawing.Point(106, 127);
+			this.chkImportSubmissions.Location = new System.Drawing.Point(100, 120);
 			this.chkImportSubmissions.Margin = new System.Windows.Forms.Padding(2);
 			this.chkImportSubmissions.Name = "chkImportSubmissions";
 			this.chkImportSubmissions.Size = new System.Drawing.Size(114, 17);
@@ -1059,36 +1108,19 @@
 			this.chkImportSubmissions.Text = "Import submissions";
 			this.chkImportSubmissions.UseVisualStyleBackColor = true;
 			// 
-			// button7
+			// lblSourceData
 			// 
-			this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.button7.Location = new System.Drawing.Point(459, 127);
-			this.button7.Margin = new System.Windows.Forms.Padding(2);
-			this.button7.Name = "button7";
-			this.button7.Size = new System.Drawing.Size(315, 26);
-			this.button7.TabIndex = 19;
-			this.button7.Text = "Initialize database from gradebook";
-			this.button7.UseVisualStyleBackColor = true;
-			this.button7.Click += new System.EventHandler(this.button7_Click);
-			// 
-			// btnCompleteData
-			// 
-			this.btnCompleteData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCompleteData.Location = new System.Drawing.Point(459, 157);
-			this.btnCompleteData.Margin = new System.Windows.Forms.Padding(2);
-			this.btnCompleteData.Name = "btnCompleteData";
-			this.btnCompleteData.Size = new System.Drawing.Size(315, 26);
-			this.btnCompleteData.TabIndex = 18;
-			this.btnCompleteData.Text = "Update database from gradebook";
-			this.btnCompleteData.UseVisualStyleBackColor = true;
-			this.btnCompleteData.Click += new System.EventHandler(this.btnCompleteData_Click);
+			this.lblSourceData.AutoSize = true;
+			this.lblSourceData.Location = new System.Drawing.Point(11, 19);
+			this.lblSourceData.Name = "lblSourceData";
+			this.lblSourceData.Size = new System.Drawing.Size(69, 13);
+			this.lblSourceData.TabIndex = 14;
+			this.lblSourceData.Text = "sqlite source:";
 			// 
 			// chkImportComponents
 			// 
 			this.chkImportComponents.AutoSize = true;
-			this.chkImportComponents.Location = new System.Drawing.Point(106, 106);
+			this.chkImportComponents.Location = new System.Drawing.Point(100, 99);
 			this.chkImportComponents.Margin = new System.Windows.Forms.Padding(2);
 			this.chkImportComponents.Name = "chkImportComponents";
 			this.chkImportComponents.Size = new System.Drawing.Size(142, 17);
@@ -1096,9 +1128,19 @@
 			this.chkImportComponents.Text = "Import mark components";
 			this.chkImportComponents.UseVisualStyleBackColor = true;
 			// 
+			// cmdSourceDataFile
+			// 
+			this.cmdSourceDataFile.Location = new System.Drawing.Point(357, 78);
+			this.cmdSourceDataFile.Name = "cmdSourceDataFile";
+			this.cmdSourceDataFile.Size = new System.Drawing.Size(25, 22);
+			this.cmdSourceDataFile.TabIndex = 13;
+			this.cmdSourceDataFile.Text = "...";
+			this.cmdSourceDataFile.UseVisualStyleBackColor = true;
+			this.cmdSourceDataFile.Click += new System.EventHandler(this.cmdSourceDataFile_Click);
+			// 
 			// cmdGetData
 			// 
-			this.cmdGetData.Location = new System.Drawing.Point(107, 157);
+			this.cmdGetData.Location = new System.Drawing.Point(101, 150);
 			this.cmdGetData.Margin = new System.Windows.Forms.Padding(2);
 			this.cmdGetData.Name = "cmdGetData";
 			this.cmdGetData.Size = new System.Drawing.Size(282, 26);
@@ -1110,7 +1152,7 @@
 			// chkCommentLib
 			// 
 			this.chkCommentLib.AutoSize = true;
-			this.chkCommentLib.Location = new System.Drawing.Point(106, 84);
+			this.chkCommentLib.Location = new System.Drawing.Point(100, 77);
 			this.chkCommentLib.Margin = new System.Windows.Forms.Padding(2);
 			this.chkCommentLib.Name = "chkCommentLib";
 			this.chkCommentLib.Size = new System.Drawing.Size(136, 17);
@@ -1118,32 +1160,26 @@
 			this.chkCommentLib.Text = "Import Comment Library";
 			this.chkCommentLib.UseVisualStyleBackColor = true;
 			// 
-			// txtSourceDataFile
+			// tabPage8
 			// 
-			this.txtSourceDataFile.Location = new System.Drawing.Point(106, 24);
-			this.txtSourceDataFile.Multiline = true;
-			this.txtSourceDataFile.Name = "txtSourceDataFile";
-			this.txtSourceDataFile.Size = new System.Drawing.Size(283, 55);
-			this.txtSourceDataFile.TabIndex = 12;
+			this.tabPage8.Controls.Add(this.button10);
+			this.tabPage8.Controls.Add(this.button9);
+			this.tabPage8.Location = new System.Drawing.Point(4, 22);
+			this.tabPage8.Name = "tabPage8";
+			this.tabPage8.Size = new System.Drawing.Size(399, 181);
+			this.tabPage8.TabIndex = 2;
+			this.tabPage8.Text = "DocumentArchive";
+			this.tabPage8.UseVisualStyleBackColor = true;
 			// 
-			// cmdSourceDataFile
+			// button9
 			// 
-			this.cmdSourceDataFile.Location = new System.Drawing.Point(363, 85);
-			this.cmdSourceDataFile.Name = "cmdSourceDataFile";
-			this.cmdSourceDataFile.Size = new System.Drawing.Size(25, 22);
-			this.cmdSourceDataFile.TabIndex = 13;
-			this.cmdSourceDataFile.Text = "...";
-			this.cmdSourceDataFile.UseVisualStyleBackColor = true;
-			this.cmdSourceDataFile.Click += new System.EventHandler(this.cmdSourceDataFile_Click);
-			// 
-			// lblSourceData
-			// 
-			this.lblSourceData.AutoSize = true;
-			this.lblSourceData.Location = new System.Drawing.Point(17, 26);
-			this.lblSourceData.Name = "lblSourceData";
-			this.lblSourceData.Size = new System.Drawing.Size(69, 13);
-			this.lblSourceData.TabIndex = 14;
-			this.lblSourceData.Text = "sqlite source:";
+			this.button9.Location = new System.Drawing.Point(18, 13);
+			this.button9.Name = "button9";
+			this.button9.Size = new System.Drawing.Size(362, 23);
+			this.button9.TabIndex = 0;
+			this.button9.Text = "Expand";
+			this.button9.UseVisualStyleBackColor = true;
+			this.button9.Click += new System.EventHandler(this.button9_Click);
 			// 
 			// tableLayoutPanel4
 			// 
@@ -1164,6 +1200,16 @@
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel4.Size = new System.Drawing.Size(817, 32);
 			this.tableLayoutPanel4.TabIndex = 13;
+			// 
+			// button10
+			// 
+			this.button10.Location = new System.Drawing.Point(18, 42);
+			this.button10.Name = "button10";
+			this.button10.Size = new System.Drawing.Size(362, 23);
+			this.button10.TabIndex = 1;
+			this.button10.Text = "Get manifest information";
+			this.button10.UseVisualStyleBackColor = true;
+			this.button10.Click += new System.EventHandler(this.button10_Click);
 			// 
 			// FrmAutomaticMarkingMachine
 			// 
@@ -1192,7 +1238,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
 			this.splitContainer2.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
-			this.groupBox2.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
@@ -1218,6 +1263,12 @@
 			this.tabPage3.ResumeLayout(false);
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
+			this.tabControl3.ResumeLayout(false);
+			this.tabPage6.ResumeLayout(false);
+			this.tabPage6.PerformLayout();
+			this.tabPage7.ResumeLayout(false);
+			this.tabPage7.PerformLayout();
+			this.tabPage8.ResumeLayout(false);
 			this.tableLayoutPanel4.ResumeLayout(false);
 			this.tableLayoutPanel4.PerformLayout();
 			this.ResumeLayout(false);
@@ -1302,15 +1353,19 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.Button cmdCompare;
-        private System.Windows.Forms.TextBox relFolder;
-        private System.Windows.Forms.Button cmdOpenOther;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.Button btnCompleteData;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.CheckBox chkImportSubmissions;
 		private System.Windows.Forms.TextBox txtSourceTurnitin;
 		private System.Windows.Forms.Button button8;
+		private System.Windows.Forms.TextBox txtReport;
+		private System.Windows.Forms.TabControl tabControl3;
+		private System.Windows.Forms.TabPage tabPage6;
+		private System.Windows.Forms.TabPage tabPage7;
+		private System.Windows.Forms.TabPage tabPage8;
+		private System.Windows.Forms.Button button9;
+		private System.Windows.Forms.Button button10;
 	}
 }
 

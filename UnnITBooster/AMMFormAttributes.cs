@@ -1,10 +1,10 @@
 ﻿namespace StudentsFetcher
 {
-    internal class AMMFormAttributes : System.Attribute
+    internal class AmmFormAttributes : System.Attribute
     {
         public string ButtonText { get; set; }
 
-        private double order = double.PositiveInfinity;
+        private double order;
 
         public double Order
         {
@@ -12,9 +12,10 @@
             set { order = value; }
         }
 
-        public AMMFormAttributes()
+        public AmmFormAttributes(string buttonText, double order = double.PositiveInfinity)
         {
-            
+            ButtonText = buttonText;
+            Order = order;
         }
     }
 }

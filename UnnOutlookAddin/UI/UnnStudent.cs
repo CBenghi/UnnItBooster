@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UnnItBooster.Models;
+using Microsoft.Office.Interop.Outlook;
+using UnnOutlookAddin.MailManagement;
+using System.Diagnostics;
 
 namespace UnnOutlookAddin.UI
 {
@@ -35,7 +38,7 @@ namespace UnnOutlookAddin.UI
 
 		StudentsRepository repository;
 
-		public void SetEmail(string email)
+		public string SetEmail(string email)
         {
 			SetPicture(false);
 			var students = repository.Students.Where(x => x.Email == email).ToList();
@@ -55,7 +58,7 @@ namespace UnnOutlookAddin.UI
 				stringBuilder.AppendLine($"Full: {stud.FullName}");
 				stringBuilder.AppendLine();
 			}
-			txtInformation.Text = stringBuilder.ToString();
+			return stringBuilder.ToString();
 		}
 
 		string imagePath = null;
@@ -85,6 +88,18 @@ namespace UnnOutlookAddin.UI
 		private void tabControl1_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
 			SetPicture(txtInformation.Visible);
+		}
+
+		internal void SetMessage(MailItem mailItem)
+		{
+			var snd = MessageExtensions.GetSenderEmailAddress(mailItem);
+			var txt = SetEmail(snd);
+			var folder = mailItem.Parent as MAPIFolder;
+			if (folder != null)
+			{
+				txt += $"\r\nFolder: {folder.Name}";
+			}
+			txtInformation.Text = txt;
 		}
 	}
 }

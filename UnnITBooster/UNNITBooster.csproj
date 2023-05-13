@@ -24,6 +24,7 @@
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
     <PackageReference Include="System.DirectoryServices" Version="7.0.1" />
+    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
     <PackageReference Include="System.Text.Json" Version="7.0.2" />
     <PackageReference Include="ZedGraph" Version="5.1.7" />
     <PackageReference Include="EPPlus" Version="4.5.3.3" />

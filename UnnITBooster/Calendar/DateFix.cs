@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace StudentsFetcher.Calendar
 {
-    [AMMFormAttributes(ButtonText = "Fix dates")]
+    [AmmFormAttributes("Fix dates")]
     public partial class DateFix : Form
     {
         public DateFix()

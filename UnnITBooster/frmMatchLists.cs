@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace StudentsFetcher
 {
-    [AMMFormAttributes(ButtonText = "Match lists", Order = 5)] 
+    [AmmFormAttributes("Match lists", 5)] 
     public partial class frmMatchLists : Form
     {
         public frmMatchLists()

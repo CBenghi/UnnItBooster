@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace StudentsFetcher
 {
-    [AMMFormAttributes(ButtonText = "Mass Rename")]
+    [AmmFormAttributes("Mass Rename")]
     public partial class frmRename : Form
     {
         public frmRename()

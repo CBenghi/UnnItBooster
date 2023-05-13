@@ -7,39 +7,34 @@ namespace LateBindingTest
 {
     internal class OutlookEmailerLateBinding
     {
-        private object oApp;
-        private object oNameSpace;
-        private object oOutboxFolder;
+        private object? oApp;
 
         public OutlookEmailerLateBinding()
         {
             Type outlook_app_type;
-            object[] parameter = new object[1];
-            //Get the excel object
-            outlook_app_type = Type.GetTypeFromProgID("Outlook.Application");
-            if (outlook_app_type == null)
+			//Get the excel object
+			outlook_app_type = Type.GetTypeFromProgID("Outlook.Application");
+			if (outlook_app_type == null)
                 return;
-            //Create instance of excel
             oApp = Activator.CreateInstance(outlook_app_type);
-            //Set the parameter which u want to set
-            parameter[0] = "MAPI";
-            //Set the Visible property
-            oNameSpace = outlook_app_type.InvokeMember("GetNamespace", BindingFlags.InvokeMethod, null, oApp, parameter);
+            if (oApp is null) 
+                return;
 
-            var Logon_parameter = new object[4] {null, null, true, true};
+            object[] parameter = new object[] { "MAPI" };
+            var oNameSpace = outlook_app_type.InvokeMember("GetNamespace", BindingFlags.InvokeMethod, null, oApp, parameter);
+
+            var Logon_parameter = new object?[4] {null, null, true, true};
             oNameSpace.GetType().InvokeMember("Logon", BindingFlags.InvokeMethod, null, oNameSpace, Logon_parameter);
 
-            var GetDefaultFolder_parameter = new object[1] {6};
-            oOutboxFolder = oNameSpace.GetType()
-                .InvokeMember("GetDefaultFolder", BindingFlags.InvokeMethod, null, oNameSpace,
-                    GetDefaultFolder_parameter);
-
-            // Console.WriteLine("Press enter to exit");
+            var GetDefaultFolder_parameter = new object[] { 6 };
+            var oOutboxFolder = oNameSpace.GetType().InvokeMember("GetDefaultFolder", BindingFlags.InvokeMethod, null, oNameSpace, GetDefaultFolder_parameter);
         }
 
         public void SendOutlookEmail(string toValue, string subjectValue, string bodyValue, string cc = "")
         {
-            var CreateItem_parameter = new object[1] {0};
+            if (oApp is null)
+                return;
+            var CreateItem_parameter = new object[1] { 0 };
             object oMailItem = oApp.GetType()
                 .InvokeMember("CreateItem", BindingFlags.InvokeMethod, null, oApp, CreateItem_parameter);
 
@@ -49,10 +44,10 @@ namespace LateBindingTest
                 new object[] {subjectValue});
             mail_item_type.InvokeMember("Body", BindingFlags.SetProperty, null, oMailItem, new object[] {bodyValue});
             mail_item_type.InvokeMember("Send", BindingFlags.InvokeMethod, null, oMailItem, null);
-            if (!string.IsNullOrEmpty(cc))
-            {
-                // mail_item_type.InvokeMember("CC", BindingFlags.SetProperty, null, oMailItem, new object[] { cc });
-            }
+            //if (!string.IsNullOrEmpty(cc))
+            //{
+            //    mail_item_type.InvokeMember("CC", BindingFlags.SetProperty, null, oMailItem, new object[] { cc });
+            //}
         }
     }
 }

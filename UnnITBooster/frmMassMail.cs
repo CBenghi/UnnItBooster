@@ -14,7 +14,7 @@ using System.DirectoryServices;
 
 namespace StudentMarking
 {
-    [AMMFormAttributes(ButtonText = "Mass mailing", Order = 3)] 
+    [AmmFormAttributes("Mass mailing", 3)] 
     public partial class frmMassMail : Form
     {
         
@@ -44,16 +44,14 @@ namespace StudentMarking
             ReloadDb();
         }
         
-        private OleDbConnection GetConn()
+        private OleDbConnection? GetConn()
         {
             var f = GetExcelFileInfo();
             if (f == null)
                 return null;
             if (!f.Exists)
                 return null;
-            OleDbConnection con = null;
-
-            string[] options = new[]
+			string[] options = new[]
             {
                 //$@"Provider=Microsoft.Jet.OLEDB.4.0;Data Source={f.FullName};Extended Properties=Excel 8.0;",
                 $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={f.FullName};Extended Properties=""Excel 12.0 Xml;HDR=YES"";",
@@ -65,8 +63,8 @@ namespace StudentMarking
                 string item = options[i];
                 try
                 {
-                    con = new OleDbConnection(item); // Extended Properties=Excel 8.0;
-                    con.Open();
+					var con = new OleDbConnection(item);
+					con.Open();
                     return con;
                 }
                 catch (Exception)
@@ -77,7 +75,7 @@ namespace StudentMarking
             return null;            
         }
 
-        private FileInfo GetExcelFileInfo()
+        private FileInfo? GetExcelFileInfo()
         {
             if (string.IsNullOrWhiteSpace(txtExcelFileName.Text))
                 return null;
@@ -115,18 +113,18 @@ namespace StudentMarking
             if (cmbTableNames.SelectedItem == null)
                 return;
             var tbname = cmbTableNames.SelectedItem.ToString();
-            using (var con = GetConn())
-            {
-                var cmd = $"select * from [{tbname}]";
-                var da = new OleDbDataAdapter(cmd, con);
-                var dt = new DataTable();
-                da.Fill(dt);
-                con.Close();
-                UpdateUI(dt);
-            }
-        }
+			using var con = GetConn();
+            if (con is null)
+                return;
+			var cmd = $"select * from [{tbname}]";
+			var da = new OleDbDataAdapter(cmd, con);
+			var dt = new DataTable();
+			da.Fill(dt);
+			con.Close();
+			UpdateUI(dt);
+		}
 
-        private DataTable currenTable = null;
+        private DataTable? currenTable = null;
 
         private void UpdateUI(DataTable dt)
         {
@@ -144,17 +142,20 @@ namespace StudentMarking
             cmbEmailField.Items.Clear();
             lstEmailSendSelection.Columns.Clear();
             lstEmailSendSelection.Columns.Add("FirstCol");
-            foreach (DataColumn clm in currenTable.Columns)
+            if (currenTable is not null)
             {
-                if (string.IsNullOrEmpty(curr))
+                foreach (DataColumn clm in currenTable.Columns)
                 {
-                    if (clm.ColumnName.ToLowerInvariant().Contains(@"email"))
+                    if (string.IsNullOrEmpty(curr))
                     {
-                        curr = clm.ColumnName.ToString();
+                        if (clm.ColumnName.ToLowerInvariant().Contains(@"email"))
+                        {
+                            curr = clm.ColumnName.ToString();
+                        }
                     }
+                    cmbEmailField.Items.Add(clm.ColumnName.ToString());
+                    lstEmailSendSelection.Columns.Add(clm.ColumnName.ToString());
                 }
-                cmbEmailField.Items.Add(clm.ColumnName.ToString());
-                lstEmailSendSelection.Columns.Add(clm.ColumnName.ToString());
             }
             try
             {
