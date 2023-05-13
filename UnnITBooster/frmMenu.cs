@@ -60,13 +60,13 @@ namespace StudentsFetcher
 				UseVisualStyleBackColor = true,
 				Tag = item
 			};
-			addButton.Click += addButton_Click;
+			addButton.Click += AddButton_Click;
 
 			flowLayoutPanel1.Controls.Add(addButton);
 		}
 
 
-		void addButton_Click(object sender, EventArgs e)
+		void AddButton_Click(object sender, EventArgs e)
 		{
 			var t = ((Button)sender).Tag as Type;
 			if (t == null)
@@ -74,10 +74,7 @@ namespace StudentsFetcher
 			var instance = Activator.CreateInstance(t);
 			var f = instance as Form;
 
-			if (f != null)
-			{
-				f.Show();
-			}
+			f?.Show();
 		}
 	}
 }

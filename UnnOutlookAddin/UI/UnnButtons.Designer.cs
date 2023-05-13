@@ -70,7 +70,7 @@
 			this.btnPerson.Label = "Person information";
 			this.btnPerson.Name = "btnPerson";
 			this.btnPerson.ShowImage = true;
-			this.btnPerson.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnPerson_Click);
+			this.btnPerson.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BtnPerson_Click);
 			// 
 			// btnClassify
 			// 
@@ -79,7 +79,7 @@
 			this.btnClassify.Label = "Classify";
 			this.btnClassify.Name = "btnClassify";
 			this.btnClassify.ShowImage = true;
-			this.btnClassify.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnClassify_Click);
+			this.btnClassify.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BtnClassify_Click);
 			// 
 			// CopyId
 			// 
@@ -91,13 +91,13 @@
 			// 
 			this.button1.Label = "Copy User Number";
 			this.button1.Name = "button1";
-			this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
+			this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CopyUserNumber_Click);
 			// 
 			// btnSettings
 			// 
 			this.btnSettings.Label = "Settings";
 			this.btnSettings.Name = "btnSettings";
-			this.btnSettings.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSettings_Click);
+			this.btnSettings.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BtnSettings_Click);
 			// 
 			// UnnButtons
 			// 

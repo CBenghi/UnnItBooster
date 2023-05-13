@@ -23,7 +23,7 @@ namespace UnnOutlookAddin
 			txtConfigFolder.Text = Properties.Settings.Default.StudentsFolder;
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void ButtonOk_Click(object sender, EventArgs e)
 		{
 			Properties.Settings.Default.StudentsFolder = txtConfigFolder.Text;
 			Properties.Settings.Default.Save();

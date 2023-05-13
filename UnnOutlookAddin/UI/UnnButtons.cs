@@ -14,12 +14,7 @@ namespace UnnOutlookAddin.UI
 {
 	public partial class UnnButtons
 	{
-		private void UnnButtons_Load(object sender, RibbonUIEventArgs e)
-		{
-
-		}
-
-		private void btnClassify_Click(object sender, RibbonControlEventArgs e)
+		private void BtnClassify_Click(object sender, RibbonControlEventArgs e)
 		{
 			var messageEditor = new MessageEditor(e.Control.Context);
 
@@ -70,18 +65,18 @@ namespace UnnOutlookAddin.UI
 			}
 		}
 
-		private void button1_Click(object sender, RibbonControlEventArgs e)
+		private void CopyUserNumber_Click(object sender, RibbonControlEventArgs e)
 		{
 			CopyUserId(e, true);
 		}
 
-		private void btnSettings_Click(object sender, RibbonControlEventArgs e)
+		private void BtnSettings_Click(object sender, RibbonControlEventArgs e)
 		{
 			frmSettings s = new frmSettings();
 			s.ShowDialog();
 		}
 
-		private void btnPerson_Click(object sender, RibbonControlEventArgs e)
+		private void BtnPerson_Click(object sender, RibbonControlEventArgs e)
 		{
 			try
 			{

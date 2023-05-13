@@ -11,7 +11,7 @@ namespace UnnOutlookAddin.MailManagement
 {
 	public static class MessageExtensions
 	{
-		static Regex regexStudentEmailPattern = new Regex(@"smtp:([a-zA-Z]\d{4,})@", RegexOptions.Compiled);
+		static readonly Regex regexStudentEmailPattern = new Regex(@"smtp:([a-zA-Z]\d{4,})@", RegexOptions.Compiled);
 
 		internal static bool SenderHasStudentId(this Outlook.MailItem mail)
 		{
@@ -83,7 +83,7 @@ namespace UnnOutlookAddin.MailManagement
 			}
 			else
 			{
-				mail.AddUserProperty(userIdPropertyName, "-");
+				mail.AddUserProperty(userIdPropertyName, userIdNotFound);
 			}
 		}
 

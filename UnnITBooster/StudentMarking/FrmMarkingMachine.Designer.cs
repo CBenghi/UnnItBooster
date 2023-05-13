@@ -274,7 +274,7 @@ namespace StudentsFetcher.StudentMarking
 			this.cmdSaveMarks.TabIndex = 6;
 			this.cmdSaveMarks.Text = "Ok";
 			this.cmdSaveMarks.UseVisualStyleBackColor = true;
-			this.cmdSaveMarks.Click += new System.EventHandler(this.button1_Click_1);
+			this.cmdSaveMarks.Click += new System.EventHandler(this.CmdSaveMarks_Click);
 			// 
 			// flComponents
 			// 
@@ -319,7 +319,7 @@ namespace StudentsFetcher.StudentMarking
 			this.button5.TabIndex = 1;
 			this.button5.Text = "+";
 			this.button5.UseVisualStyleBackColor = true;
-			this.button5.Click += new System.EventHandler(this.button5_Click);
+			this.button5.Click += new System.EventHandler(this.Next_Click);
 			// 
 			// label6
 			// 
@@ -384,7 +384,7 @@ namespace StudentsFetcher.StudentMarking
 			this.button2.TabIndex = 2;
 			this.button2.Text = "Open";
 			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click);
+			this.button2.Click += new System.EventHandler(this.Open_Click);
 			// 
 			// cmbDocuments
 			// 
@@ -1084,7 +1084,7 @@ namespace StudentsFetcher.StudentMarking
 			this.btnCompleteData.TabIndex = 18;
 			this.btnCompleteData.Text = "Update database from gradebook";
 			this.btnCompleteData.UseVisualStyleBackColor = true;
-			this.btnCompleteData.Click += new System.EventHandler(this.btnCompleteData_Click);
+			this.btnCompleteData.Click += new System.EventHandler(this.BtnCompleteData_Click);
 			// 
 			// button7
 			// 
@@ -1097,7 +1097,7 @@ namespace StudentsFetcher.StudentMarking
 			this.button7.TabIndex = 19;
 			this.button7.Text = "Initialize database from gradebook";
 			this.button7.UseVisualStyleBackColor = true;
-			this.button7.Click += new System.EventHandler(this.button7_Click);
+			this.button7.Click += new System.EventHandler(this.Button7_Click);
 			// 
 			// tabPage7
 			// 
@@ -1206,7 +1206,7 @@ namespace StudentsFetcher.StudentMarking
 			this.button10.TabIndex = 1;
 			this.button10.Text = "Get manifest information";
 			this.button10.UseVisualStyleBackColor = true;
-			this.button10.Click += new System.EventHandler(this.button10_Click);
+			this.button10.Click += new System.EventHandler(this.Button10_Click);
 			// 
 			// button9
 			// 

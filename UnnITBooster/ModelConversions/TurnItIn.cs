@@ -18,7 +18,7 @@ internal partial class TurnItIn
 	internal static IEnumerable<Student> GetStudentsFromGradebook(string csvSource)
 	{
 		// open the file "data.csv" which is a CSV file with headers
-		List<Student> students = new List<Student>();
+		var students = new List<Student>();
 		using (var csv = new CachedCsvReader(new StreamReader(csvSource), true))
 		{
 			// Field headers will automatically be used as column names
@@ -127,12 +127,12 @@ internal partial class TurnItIn
 		c.Close();
 	}
 
-	internal static IEnumerable<TurnitInSubmission> GetSubmissionsFromLearningAnalytics(FileInfo learningAnalytics, StringBuilder? reporter = null)
+	internal static IEnumerable<TurnitInSubmission> GetSubmissionsFromLearningAnalytics(FileInfo learningAnalytics)
 	{
 		var repo = StudentsRepository.GetRespository();
 		using var package = new ExcelPackage(learningAnalytics);
 		// prepare question dictionary
-		List<TurnitInSubmission> lst = new List<TurnitInSubmission>();
+		var lst = new List<TurnitInSubmission>();
 		UpdateStudentInfo(ref lst, package, repo);
 		UpdateStudentSubmissionId(ref lst, package, repo);
 		return lst;
@@ -271,7 +271,7 @@ internal partial class TurnItIn
 		int tallyUpdate = 0;
 		int tallyAdd = 0;
 
-		StringBuilder sb = new StringBuilder();
+		var sb = new StringBuilder();
 
 		foreach (var item in submissions)
 		{

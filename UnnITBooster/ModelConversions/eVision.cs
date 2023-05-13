@@ -27,7 +27,7 @@ namespace UnnItBooster.ModelConversions
 		{
 			var students = new List<Student>();
 
-			HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+			var doc = new HtmlAgilityPack.HtmlDocument();
 			doc.LoadHtml(htmlSource);
 			HeaderStyle detectedStyle = HeaderStyle.notFound;
 			HtmlNodeCollection rows = doc.DocumentNode.SelectNodes("//tr");
@@ -62,7 +62,7 @@ namespace UnnItBooster.ModelConversions
 				if (cols is null)
 					continue;
 
-				Student s = new Student();
+				var s = new Student();
 				if (detectedStyle == HeaderStyle.withPhotos)
 				{
 					s.NumericStudentId = System.Web.HttpUtility.HtmlDecode(cols[0].InnerText).Trim();

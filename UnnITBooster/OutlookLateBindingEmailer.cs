@@ -7,7 +7,7 @@ namespace LateBindingTest
 {
 	internal class OutlookLateBindingEmailer
 	{
-		private object? oApp;
+		private readonly object? oApp;
 
 		public OutlookLateBindingEmailer()
 		{
@@ -27,7 +27,7 @@ namespace LateBindingTest
 			oNameSpace.GetType().InvokeMember("Logon", BindingFlags.InvokeMethod, null, oNameSpace, Logon_parameter);
 
 			var GetDefaultFolder_parameter = new object[] { 6 };
-			var oOutboxFolder = oNameSpace.GetType().InvokeMember("GetDefaultFolder", BindingFlags.InvokeMethod, null, oNameSpace, GetDefaultFolder_parameter);
+			_ = oNameSpace.GetType().InvokeMember("GetDefaultFolder", BindingFlags.InvokeMethod, null, oNameSpace, GetDefaultFolder_parameter);
 		}
 
 		public void SendOutlookEmail(string toValue, string subjectValue, string bodyValue, string cc = "")

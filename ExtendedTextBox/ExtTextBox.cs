@@ -26,10 +26,6 @@ namespace ExtendedTextBox
 		private string _originalText = "";
 		private TextTypes _textType = TextTypes.String;
 		private System.Drawing.Color _ChangedColour;
-		private ErrorProvider errorProvider;
-		private string lastError = "";
-
-		public event KeyEventHandler TextBoxKeyDown;
 
 		/// <summary>
 		/// Possible types for the textbox

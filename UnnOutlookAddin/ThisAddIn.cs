@@ -48,8 +48,7 @@ namespace UnnOutlookAddin
 
 		private void AutomaticClassificationHandler(object Item)
 		{
-			var emailItem = Item as Outlook.MailItem;
-			if (emailItem != null)
+			if (Item is Outlook.MailItem emailItem)
 			{
 				if (emailItem.UnRead)
 				{
@@ -104,7 +103,7 @@ namespace UnnOutlookAddin
 					//                  "The subject is " + meetingItem.Subject + ".";
 					//}
 				}
-				expMessage = expMessage + itemMessage;
+				expMessage += itemMessage;
 			}
 			catch (Exception ex)
 			{
@@ -117,20 +116,6 @@ namespace UnnOutlookAddin
 		{
 			// Note: Outlook no longer raises this event. If you have code that 
 			// must run when Outlook shuts down, see http://go.microsoft.com/fwlink/?LinkId=506785
-		}
-
-		void Inspectors_NewInspector(Outlook.Inspector Inspector)
-		{
-			Outlook.MailItem mailItem = Inspector.CurrentItem as Outlook.MailItem;
-			if (mailItem != null)
-			{
-				// Debug.WriteLine(mailItem.ReceivedByEntryID);
-				if (mailItem.EntryID == null)
-				{
-					mailItem.Subject = "This text was added by using code";
-					mailItem.Body = "This text was added by using code";
-				}
-			}
 		}
 
 		#region VSTO generated code

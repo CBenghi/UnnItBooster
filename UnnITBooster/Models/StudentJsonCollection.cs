@@ -14,7 +14,7 @@ namespace UnnItBooster.Models
 	{
 		private const string StandardCollectionName = "students.json";
 
-		private DirectoryInfo directory;
+		private readonly DirectoryInfo directory;
 
 		public List<Student> Students { get; set; } = new List<Student>();
 
@@ -55,7 +55,7 @@ namespace UnnItBooster.Models
 
 		internal static StudentJsonCollection Create(string containerFullName, IEnumerable<Student> students)
 		{
-			DirectoryInfo d = new DirectoryInfo(containerFullName);
+			var d = new DirectoryInfo(containerFullName);
 			d.Create();
 			Save(students, d);
 

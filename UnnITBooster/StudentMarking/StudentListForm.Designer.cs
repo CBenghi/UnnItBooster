@@ -64,9 +64,6 @@
 			this.tabControl2 = new System.Windows.Forms.TabControl();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
-			this.listView1 = new System.Windows.Forms.ListView();
-			this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.txtStudentInfo = new System.Windows.Forms.TextBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -74,6 +71,8 @@
 			this.button5 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.lstModules = new System.Windows.Forms.CheckedListBox();
+			this.btnAddEmail = new System.Windows.Forms.Button();
+			this.txtAlternativeEmail = new System.Windows.Forms.TextBox();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.StudImage)).BeginInit();
 			this.tabControl1.SuspendLayout();
@@ -453,7 +452,8 @@
 			// 
 			// tabPage4
 			// 
-			this.tabPage4.Controls.Add(this.listView1);
+			this.tabPage4.Controls.Add(this.txtAlternativeEmail);
+			this.tabPage4.Controls.Add(this.btnAddEmail);
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -461,31 +461,6 @@
 			this.tabPage4.TabIndex = 1;
 			this.tabPage4.Text = "email";
 			this.tabPage4.UseVisualStyleBackColor = true;
-			// 
-			// listView1
-			// 
-			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader9,
-            this.columnHeader10});
-			this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listView1.FullRowSelect = true;
-			this.listView1.HideSelection = false;
-			this.listView1.Location = new System.Drawing.Point(3, 3);
-			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(300, 560);
-			this.listView1.TabIndex = 17;
-			this.listView1.UseCompatibleStateImageBehavior = false;
-			this.listView1.View = System.Windows.Forms.View.Details;
-			// 
-			// columnHeader9
-			// 
-			this.columnHeader9.Text = "Title";
-			this.columnHeader9.Width = 200;
-			// 
-			// columnHeader10
-			// 
-			this.columnHeader10.Text = "Date";
-			this.columnHeader10.Width = 200;
 			// 
 			// tabPage5
 			// 
@@ -535,7 +510,7 @@
 			this.button6.TabIndex = 20;
 			this.button6.Text = "Load selected";
 			this.button6.UseVisualStyleBackColor = true;
-			this.button6.Click += new System.EventHandler(this.button6_Click);
+			this.button6.Click += new System.EventHandler(this.Button6_Click);
 			// 
 			// button5
 			// 
@@ -569,6 +544,23 @@
 			this.lstModules.Size = new System.Drawing.Size(120, 439);
 			this.lstModules.TabIndex = 17;
 			// 
+			// btnAddEmail
+			// 
+			this.btnAddEmail.Location = new System.Drawing.Point(169, 34);
+			this.btnAddEmail.Name = "btnAddEmail";
+			this.btnAddEmail.Size = new System.Drawing.Size(131, 34);
+			this.btnAddEmail.TabIndex = 0;
+			this.btnAddEmail.Text = "Add alternative email";
+			this.btnAddEmail.UseVisualStyleBackColor = true;
+			this.btnAddEmail.Click += new System.EventHandler(this.BtnAddEmail_Click);
+			// 
+			// txtAlternativeEmail
+			// 
+			this.txtAlternativeEmail.Location = new System.Drawing.Point(6, 8);
+			this.txtAlternativeEmail.Name = "txtAlternativeEmail";
+			this.txtAlternativeEmail.Size = new System.Drawing.Size(294, 20);
+			this.txtAlternativeEmail.TabIndex = 1;
+			// 
 			// StudentListForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -590,6 +582,7 @@
 			this.tabControl2.ResumeLayout(false);
 			this.tabPage3.ResumeLayout(false);
 			this.tabPage4.ResumeLayout(false);
+			this.tabPage4.PerformLayout();
 			this.tabPage5.ResumeLayout(false);
 			this.tabPage5.PerformLayout();
 			this.tabPage2.ResumeLayout(false);
@@ -624,9 +617,6 @@
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader columnHeader9;
-        private System.Windows.Forms.ColumnHeader columnHeader10;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TextBox txtStudentInfo;
         private System.Windows.Forms.CheckedListBox lstModules;
@@ -646,5 +636,7 @@
 		private System.Windows.Forms.TextBox txtReport;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.Button button6;
+		private System.Windows.Forms.TextBox txtAlternativeEmail;
+		private System.Windows.Forms.Button btnAddEmail;
 	}
 }

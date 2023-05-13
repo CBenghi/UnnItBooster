@@ -36,7 +36,7 @@ namespace UnnOutlookAddin.UI
 			txtSystemInfo.Text = stringBuilder.ToString();
 		}
 
-		StudentsRepository repository;
+		readonly StudentsRepository repository;
 
 		public string SetEmail(string email)
 		{

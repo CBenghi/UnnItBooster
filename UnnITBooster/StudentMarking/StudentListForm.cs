@@ -15,6 +15,8 @@ namespace StudentsFetcher.StudentMarking
 	{
 		private StudentsRepository studentsRepo;
 
+		Student? displayedStudent = null;
+
 		public StudentListForm()
 		{
 			InitializeComponent();
@@ -104,6 +106,7 @@ namespace StudentsFetcher.StudentMarking
 		private void TryShowStudent(Student st)
 		{
 			// load the picture
+			
 			if (studentsRepo.HasImage(st, out var image))
 			{
 				try
@@ -118,18 +121,26 @@ namespace StudentsFetcher.StudentMarking
 
 			if (lstStudents.SelectedItems.Count == 1)
 			{
-				// var outlook = new OutlookEmailerLateBinding();
+				displayedStudent = st;
 				var sb = new StringBuilder();
 				sb.AppendLine($"{st.Forename} {st.Surname}\r\n");
 				sb.AppendLine($"First Name: {st.Forename}\r\n");
 				sb.AppendLine($"{st.NumericStudentId} {st.Route}\r\n");
 				sb.AppendLine($"{st.Email}");
+				if (st.AlternativeEmails != null)
+				{
+					foreach (var item in st.AlternativeEmails)
+					{
+						sb.AppendLine($"Alternative email: {st.Email}");
+					}
+				}
 				sb.AppendLine($"");
 				sb.AppendLine($"OneLine:\t{st.Forename}\t{st.Surname}\t{st.NumericStudentId}\t{st.Email}");
 				txtStudentInfo.Text = sb.ToString();
 			}
 			else
 			{
+				displayedStudent = null;
 				var sb = new StringBuilder();
 				sb.AppendLine($"{st.Forename}\t{st.Surname}\t{st.NumericStudentId}\t{st.Route}\t{st.Email}");
 				txtStudentInfo.Text += sb.ToString();
@@ -206,15 +217,13 @@ namespace StudentsFetcher.StudentMarking
 
 		private void cmdSelectSource_Click(object sender, EventArgs e)
 		{
-			using (OpenFileDialog openFileDialog = new OpenFileDialog())
+			using var openFileDialog = new OpenFileDialog();
+			openFileDialog.Filter = "All files (*.*)|*.*";
+			openFileDialog.FilterIndex = 2;
+			openFileDialog.RestoreDirectory = true;
+			if (openFileDialog.ShowDialog() == DialogResult.OK)
 			{
-				openFileDialog.Filter = "All files (*.*)|*.*";
-				openFileDialog.FilterIndex = 2;
-				openFileDialog.RestoreDirectory = true;
-				if (openFileDialog.ShowDialog() == DialogResult.OK)
-				{
-					txtInputSource.Text = openFileDialog.FileName;
-				}
+				txtInputSource.Text = openFileDialog.FileName;
 			}
 		}
 
@@ -228,12 +237,22 @@ namespace StudentsFetcher.StudentMarking
 			ConsiderNewStudents(students);
 		}
 
-		private void button6_Click(object sender, EventArgs e)
+		private void Button6_Click(object sender, EventArgs e)
 		{
-			Regex r = new Regex(@"(.*) - \d+");
+			var r = new Regex(@"(.*) - \d+");
 			var items = lstModules.CheckedItems.Cast<string>().Select(x => r.Match(x).Groups[1].Value);
 			studentsRepo.Reload(items);
 			UpdateStudentList();
+		}
+
+		private void BtnAddEmail_Click(object sender, EventArgs e)
+		{
+			if (displayedStudent == null)
+				return;
+			studentsRepo.AddAlternativeEmail(
+				displayedStudent,
+				txtAlternativeEmail.Text
+				);
 		}
 	}
 }

@@ -73,14 +73,17 @@ namespace UnnItBooster.Models
 		public string? Email { get; set; } = string.Empty;
 		public List<string>? AlternativeEmails { get; set; } = null;
 
-		public void AddAlternativeEmail(string newEmail)
+		public bool AddAlternativeEmail(string newEmail)
 		{
+			if (string.IsNullOrWhiteSpace(newEmail))
+				return false;
 			if (AlternativeEmails == null)
 			{
 				AlternativeEmails = new List<string> { newEmail };
 			}
 			else
 				AlternativeEmails.Add(newEmail);
+			return true;
 		}
 
 		public void RemoveAlternativeEmail(string email)
@@ -102,6 +105,8 @@ namespace UnnItBooster.Models
 			if (NumericStudentId != null && NumericStudentId.Contains(filter))
 				return true;
 			if (Email != null && Email.Contains(filter))
+				return true;
+			if (AlternativeEmails is not null && AlternativeEmails.Any(x=>x.Contains(filter)))
 				return true;
 			return false;
 		}

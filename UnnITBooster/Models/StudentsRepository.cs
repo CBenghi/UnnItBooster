@@ -8,7 +8,7 @@ namespace UnnItBooster.Models;
 
 public class StudentsRepository
 {
-	private List<IStudentCollection> collections = new List<IStudentCollection>();
+	private List<IStudentCollection> collections = new();
 
 	public static StudentsRepository GetRespository()
 	{
@@ -40,7 +40,7 @@ public class StudentsRepository
 		}
 	}
 
-	private string dataFolder;
+	private readonly string dataFolder;
 
 	public IEnumerable<IStudentCollection> GetCollections()
 	{
@@ -74,7 +74,7 @@ public class StudentsRepository
 	public bool HasImage(Student student, out string imagePath)
 	{
 		imagePath = "";
-		DirectoryInfo d = new DirectoryInfo(dataFolder);
+		var d = new DirectoryInfo(dataFolder);
 		var fl = d.GetFiles($"{student.NumericStudentId}.jpg", SearchOption.AllDirectories).FirstOrDefault();
 		if (fl is null)
 			return false;
@@ -106,18 +106,24 @@ public class StudentsRepository
 		return !d.Exists;
 	}
 
-	internal void AddAlternativeEmail(Student stude, string newEmail)
+	/// <returns>the count of affected students</returns>
+	internal int AddAlternativeEmail(Student stude, string newEmail)
 	{
+		int tally = 0;
 		foreach (var collection in collections)
 		{
 			var any = false;
 			foreach (var stud in collection.Students.Where(x => x.Email == stude.Email))
 			{
-				stud.AddAlternativeEmail(newEmail);
-				any = true;
+				if (stud.AddAlternativeEmail(newEmail))
+				{
+					tally++;
+					any = true;
+				}
 			}
 			if (any)
 				collection.Save();
 		}
+		return tally;
 	}
 }

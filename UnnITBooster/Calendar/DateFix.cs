@@ -18,7 +18,7 @@ namespace StudentsFetcher.Calendar
 			InitializeComponent();
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void Button1_Click(object sender, EventArgs e)
 		{
 			var n = @"C:\Users\Claudio\Dropbox (Northumbria University)\Amsterdam\Courses\AT7026 - People in project management\Module Box\AT7026 - Internal and External Sample Moderation Form (MOD3) 001.docx";
 			File.SetLastWriteTime(n, new DateTime(2019, 01, 22, 15, 07, 20));

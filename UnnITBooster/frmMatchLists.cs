@@ -32,7 +32,7 @@ namespace StudentsFetcher
 
 		private string[] FindMatches(string mainString, string[] RepoArray, int MatchDigits)
 		{
-			List<string> ret = new List<string>();
+			var ret = new List<string>();
 			string toFind = Sub(mainString, MatchDigits);
 			if (toFind != "")
 			{
@@ -55,19 +55,17 @@ namespace StudentsFetcher
 			return val;
 		}
 
-		private void cmdCopyClip_Click(object sender, EventArgs e)
+		private void CmdCopyClip_Click(object sender, EventArgs e)
 		{
 			Clipboard.SetText(txtMatched.Text);
 		}
 
-		private void cmdSwap_Click(object sender, EventArgs e)
+		private void CmdSwap_Click(object sender, EventArgs e)
 		{
-			string tmp = txtMain.Text;
-			txtMain.Text = txtToMatch.Text;
-			txtToMatch.Text = tmp;
+			(txtToMatch.Text, txtMain.Text) = (txtMain.Text, txtToMatch.Text);
 		}
 
-		private void matchByContains_Click(object sender, EventArgs e)
+		private void MatchByContains_Click(object sender, EventArgs e)
 		{
 			txtMatched.Text = "";
 			string[] MainArray = txtMain.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);

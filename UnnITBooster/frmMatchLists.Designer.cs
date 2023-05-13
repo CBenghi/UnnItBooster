@@ -144,7 +144,7 @@
 			this.cmdSwap.TabIndex = 9;
 			this.cmdSwap.Text = "<->";
 			this.cmdSwap.UseVisualStyleBackColor = true;
-			this.cmdSwap.Click += new System.EventHandler(this.cmdSwap_Click);
+			this.cmdSwap.Click += new System.EventHandler(this.CmdSwap_Click);
 			// 
 			// cmdGo
 			// 
@@ -165,7 +165,7 @@
 			this.cmdCopyClip.TabIndex = 10;
 			this.cmdCopyClip.Text = "Copy matched to clipboard";
 			this.cmdCopyClip.UseVisualStyleBackColor = true;
-			this.cmdCopyClip.Click += new System.EventHandler(this.cmdCopyClip_Click);
+			this.cmdCopyClip.Click += new System.EventHandler(this.CmdCopyClip_Click);
 			// 
 			// panel1
 			// 
@@ -205,7 +205,7 @@
 			this.button1.TabIndex = 11;
 			this.button1.Text = "Match by contains";
 			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.matchByContains_Click);
+			this.button1.Click += new System.EventHandler(this.MatchByContains_Click);
 			// 
 			// frmMatchLists
 			// 

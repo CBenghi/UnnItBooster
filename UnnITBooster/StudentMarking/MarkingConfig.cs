@@ -284,7 +284,7 @@ namespace StudentsFetcher.StudentMarking
 			int tallyUpdate = 0;
 			int tallyNotFound = 0;
 
-			StringBuilder sb = new StringBuilder();
+			var sb = new StringBuilder();
 			foreach (var item in files)
 			{
 				var relative = item.FullPath.Substring(GetFolderName().Length);

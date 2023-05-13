@@ -85,27 +85,25 @@ namespace StudentMarking
 
 		private void ReloadDb()
 		{
-			using (var con = GetConn())
+			using var con = GetConn();
+			if (con == null)
+				return;
+			var dt = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+			if (dt == null)
 			{
-				if (con == null)
-					return;
-				var dt = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-				if (dt == null)
-				{
-					return;
-				}
-				var excelSheets = new string[dt.Rows.Count];
-				int i = 0;
-
-				// Add the sheet name to the string array.
-				foreach (DataRow row in dt.Rows)
-				{
-					excelSheets[i] = row["TABLE_NAME"].ToString();
-					i++;
-				}
-				con.Close();
-				cmbTableNames.DataSource = excelSheets;
+				return;
 			}
+			var excelSheets = new string[dt.Rows.Count];
+			int i = 0;
+
+			// Add the sheet name to the string array.
+			foreach (DataRow row in dt.Rows)
+			{
+				excelSheets[i] = row["TABLE_NAME"].ToString();
+				i++;
+			}
+			con.Close();
+			cmbTableNames.DataSource = excelSheets;
 		}
 
 		private void ReloadTable()
@@ -172,7 +170,7 @@ namespace StudentMarking
 		private void UpdateList()
 		{
 			// a regex to get the email from text
-			Regex emaiRegex = new Regex(".+@.+\\..+");
+			var emaiRegex = new Regex(".+@.+\\..+");
 			lstEmailSendSelection.Items.Clear();
 			if (currenTable == null)
 				return;
@@ -195,7 +193,7 @@ namespace StudentMarking
 
 		List<string> GetReplacementList(string emailbody)
 		{
-			List<string> ret = new List<string>();
+			var ret = new List<string>();
 
 			MatchCollection mts = Regex.Matches(emailbody, "{([^}]*)}");
 			foreach (Match match in mts)
@@ -264,7 +262,7 @@ namespace StudentMarking
 
 		private string replaceFile(string ret, DirectoryInfo directory)
 		{
-			Regex r = new Regex("FILE<<(.*)>>");
+			var r = new Regex("FILE<<(.*)>>");
 			foreach (Match m in r.Matches(ret))
 			{
 				var toRep = m.Groups[0].Value;
@@ -272,13 +270,11 @@ namespace StudentMarking
 
 				var fullFName = Path.Combine(directory.FullName, fname);
 				string rep = "";
-				FileInfo f = new FileInfo(fullFName);
+				var f = new FileInfo(fullFName);
 				if (f.Exists)
 				{
-					using (var reader = f.OpenText())
-					{
-						rep = reader.ReadToEnd();
-					}
+					using var reader = f.OpenText();
+					rep = reader.ReadToEnd();
 				}
 				ret = ret.Replace(toRep, rep);
 			}
@@ -330,7 +326,7 @@ namespace StudentMarking
 
 		private bool GetImage(string destfolder, string sid)
 		{
-			WebClient req = new WebClient();
+			var req = new WebClient();
 			string url = string.Format(@"http://nuweb2.northumbria.ac.uk/photoids/{0}.jpg", sid);
 
 
@@ -396,7 +392,7 @@ namespace StudentMarking
 			SaveSettings();
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void Button1_Click(object sender, EventArgs e)
 		{
 			SaveSettings();
 		}

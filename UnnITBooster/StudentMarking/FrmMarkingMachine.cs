@@ -23,7 +23,7 @@ namespace StudentsFetcher.StudentMarking;
 public partial class FrmMarkingMachine : Form
 {
 	private MarkingConfig _config;
-	StudentsRepository studentRepository;
+	readonly StudentsRepository studentRepository;
 
 	public FrmMarkingMachine()
 	{
@@ -299,16 +299,14 @@ public partial class FrmMarkingMachine : Form
 			var id = Convert.ToInt32(item["SUB_id"]);
 			var stringId = item["SUB_UserId"].ToString();
 			var fi = new FileInfo(Path.Combine(feedBackfolderName, stringId + ".txt"));
-			using (var w = fi.CreateText())
-			{
-				w.WriteLine(_config.GetStudentReport(id, chkSendModerationNotice.Checked));
-			}
+			using var w = fi.CreateText();
+			w.WriteLine(_config.GetStudentReport(id, chkSendModerationNotice.Checked));
 		}
 	}
 
 	private void CleanMcrf()
 	{
-		McrfTextParser p = new McrfTextParser();
+		var p = new McrfTextParser();
 		var t = p.ParseComponents(txtStudentreport.Text, 2);
 		txtLibReport.Text = t;
 	}
@@ -568,7 +566,7 @@ public partial class FrmMarkingMachine : Form
 		if (openFileDialog1.FileName != "")
 		{
 			txtExcelFileName.Text = openFileDialog1.FileName;
-			FileInfo f = new FileInfo(openFileDialog1.FileName);
+			var f = new FileInfo(openFileDialog1.FileName);
 			var g = f.Directory.GetFiles(TurnItIn.GradebookStandardName).FirstOrDefault();
 			if (g != null)
 				txtSourceTurnitin.Text = g.FullName;
@@ -652,7 +650,7 @@ public partial class FrmMarkingMachine : Form
 		return iComponent;
 	}
 
-	private void button1_Click_1(object sender, EventArgs e)
+	private void CmdSaveMarks_Click(object sender, EventArgs e)
 	{
 		if (GetStudentNumber() == -1)
 		{
@@ -683,7 +681,7 @@ public partial class FrmMarkingMachine : Form
 		UpdateStudentReport();
 	}
 
-	private void button2_Click(object sender, EventArgs e)
+	private void Open_Click(object sender, EventArgs e)
 	{
 		if (cmbDocuments.Text != "")
 		{
@@ -903,7 +901,7 @@ public partial class FrmMarkingMachine : Form
 		zedGraphControl1.Refresh();
 	}
 
-	private void button5_Click(object sender, EventArgs e)
+	private void Next_Click(object sender, EventArgs e)
 	{
 		MoveStudent(1);
 	}
@@ -980,25 +978,22 @@ public partial class FrmMarkingMachine : Form
 
 	private void button1_Click(object sender, EventArgs e)
 	{
-		txtEmailBody.Text =
-@"Dear {SUB_FirstName}, 
-as we have recently marked your XXXX submission, I'm now writing to inform you of the outcome. 
-At this stage your mark is unconfirmed; marks become confirmed after the Progression and Awards Board for your programme, that is scheduled for the XXXXX.
-Your marks will be visible on formal trascripts shortly after that.
+		txtEmailBody.Text = """
+			Dear {SUB_FirstName}, 
+			as we have recently marked your submission for XXXX, I'm now writing to inform you of the outcome. 
+			At this stage your mark is unconfirmed; marks become confirmed after the Progression and Awards Board for your programme, that is scheduled for the XXXXX.
+			Your marks will be visible on formal trascripts shortly after that.
 
-Please find your feedback and unconfirmed mark after my signature.
+			Please find your feedback and unconfirmed mark after my signature.
 
-Best regards, 
-Claudio 
+			Best regards, 
+			Claudio 
 
-{MarkReport}";
+			{MarkReport}
+			""";
 	}
 
-
-
-
-
-	private void button7_Click(object sender, EventArgs e)
+	private void Button7_Click(object sender, EventArgs e)
 	{
 		if (string.IsNullOrEmpty(txtSourceTurnitin.Text))
 			return;
@@ -1010,7 +1005,7 @@ Claudio
 		Reload();
 	}
 
-	private void btnCompleteData_Click(object sender, EventArgs e)
+	private void BtnCompleteData_Click(object sender, EventArgs e)
 	{
 		if (string.IsNullOrEmpty(txtSourceTurnitin.Text))
 			return;
@@ -1035,7 +1030,7 @@ Claudio
 
 	private void button9_Click(object sender, EventArgs e)
 	{
-		StringBuilder sb = new StringBuilder();
+		var sb = new StringBuilder();
 		var folderName = _config.GetFolderName();
 		var folder = new DirectoryInfo(folderName);
 		var zipPath = folder.GetFiles("*.zip").FirstOrDefault();
@@ -1063,7 +1058,7 @@ Claudio
 		txtReport.Text = sb.ToString();
 	}
 
-	private void button10_Click(object sender, EventArgs e)
+	private void Button10_Click(object sender, EventArgs e)
 	{
 		var folderName = _config.GetFolderName();
 		var folder = new DirectoryInfo(folderName);

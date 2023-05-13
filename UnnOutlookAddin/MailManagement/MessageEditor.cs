@@ -7,8 +7,7 @@ namespace UnnOutlookAddin.MailManagement
 {
 	public class MessageEditor
 	{
-
-		Outlook.Explorer _explorer;
+		readonly Outlook.Explorer _explorer;
 
 		public MessageEditor(Outlook.Explorer explorer)
 		{
