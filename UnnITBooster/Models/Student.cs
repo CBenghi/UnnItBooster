@@ -1,7 +1,9 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Web.UI.WebControls.WebParts;
 
 namespace UnnItBooster.Models
@@ -10,8 +12,6 @@ namespace UnnItBooster.Models
 	public class Student
 	{
         public string? FullName { get; set; }
-		
-		
 		private string? surname;
 		public string? Surname
 		{
@@ -71,6 +71,25 @@ namespace UnnItBooster.Models
 		public string? Occurrence { get; set; } = string.Empty;
 		public string? Module { get; set; } = string.Empty;
 		public string? Email { get; set; } = string.Empty;
+		public List<string>? AlternativeEmails { get; set; } = null;
+
+		public void AddAlternativeEmail(string newEmail)
+		{
+			if (AlternativeEmails == null)
+			{
+				AlternativeEmails = new List<string> { newEmail };
+			}
+			else
+				AlternativeEmails.Add(newEmail);
+		}
+
+		public void RemoveAlternativeEmail(string email)
+		{
+			AlternativeEmails?.Remove(email);
+			if (AlternativeEmails != null && !AlternativeEmails.Any())
+				AlternativeEmails = null;
+		}
+
 		public bool DSSR { get; set; } = false;
 		public bool Matches(string filter)
 		{
@@ -90,6 +109,15 @@ namespace UnnItBooster.Models
 		public string PictureName(string pictureFolder)
 		{
 			return Path.Combine(pictureFolder, string.Format("{0}.jpg", NumericStudentId));
+		}
+
+		internal bool HasEmail(string seekEmail)
+		{
+			if (Email == seekEmail)
+				return true;
+			if (AlternativeEmails == null)
+				return false;
+			return AlternativeEmails.Any(x => x == seekEmail);
 		}
 	}
 }

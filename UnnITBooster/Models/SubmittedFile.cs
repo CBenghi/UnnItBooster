@@ -16,6 +16,5 @@ namespace UnnItBooster.Models
 
         public string FullPath { get; set; }
 		public string SubmissionId  { get; set; }
-
 	}
 }

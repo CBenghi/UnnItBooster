@@ -99,6 +99,7 @@ public partial class FrmAutomaticMarkingMachine : Form
         }
         else
         {
+            // searches for a student by name or other methods
             var sql = "select  *, (SELECT count(*) FROM tb_marks WHERE mark_ptr_submission=sub_id) as marks from tb_submissions";
             if (txtStudentId.Text != "")
             {
@@ -179,7 +180,9 @@ public partial class FrmAutomaticMarkingMachine : Form
 
     private int GetStudentNumber()
     {
-        try
+        if (_config == null || !File.Exists(_config.DbName))
+            return -1;
+		try
         {
             var i = Convert.ToInt32(txtStudentId.Text);
             if (i > 999)
@@ -196,32 +199,40 @@ public partial class FrmAutomaticMarkingMachine : Form
     {
         if (e.KeyCode == Keys.Enter)
         {
-            var m = Regex.Match(txtSearch.Text, "component (\\d+) (\\d+) (.*)");
-            var m2 = Regex.Match(txtSearch.Text, "marks (\\d+)");
-            var m3 = Regex.Match(txtSearch.Text, "ids");
-            var m4 = Regex.Match(txtSearch.Text, @"WhoGotComment (\d+)");
-            var m5 = Regex.Match(txtSearch.Text, @"Remove (\d+)");
-            if (m.Success)
+            var addComponentMatch = Regex.Match(txtSearch.Text, "component (\\d+) (\\d+) (.*)");
+            var setComponentCommentMatch = Regex.Match(txtSearch.Text, "componentComment (\\d+) (.*)");
+            var marksMatch = Regex.Match(txtSearch.Text, "marks (\\d+)");
+            var idsMatch = Regex.Match(txtSearch.Text, "ids");
+            var whoGotMatch = Regex.Match(txtSearch.Text, @"WhoGotComment (\d+)");
+            var removeMatch = Regex.Match(txtSearch.Text, @"Remove (\d+)");
+            if (addComponentMatch.Success)
             {
-                AddComponent(m);
+                AddComponent(addComponentMatch);
                 UpdateComponents();
             }
-            else if (m2.Success)
+            else if (setComponentCommentMatch.Success)
             {
-                GetMarks(m2);
+                int order = Convert.ToInt32(setComponentCommentMatch.Groups[1].Value);
+                string comment = setComponentCommentMatch.Groups[2].Value;
+                _config.SetComponentComment(order, comment);
+                UpdateComponents();
+			}
+            else if (marksMatch.Success)
+            {
+                GetMarks(marksMatch);
             }
-            else if (m3.Success)
+            else if (idsMatch.Success)
             {
                 GetIds();
             }
-            else if (m4.Success)
+            else if (whoGotMatch.Success)
             {
-                GetCommentUse(m4);
+                GetCommentUse(whoGotMatch);
             }
 
-            else if (m5.Success)
+            else if (removeMatch.Success)
             {
-                RemoveComment(m5);
+                RemoveComment(removeMatch);
             }
             else if (txtSearch.Text == "missing")
             {
@@ -237,26 +248,35 @@ public partial class FrmAutomaticMarkingMachine : Form
             }
             else if (txtSearch.Text == "help")
             {
-                txtLibReport.Text =
-                    "component <order#> <percent> <Name>\r\n" +
-                    "marks <component#>\r\n" +
-                    "   use 'marks 0' for MCRF\r\n" +
-                    "   required ids in textbox (one per row)\r\n " +
-                    "CommentCount\r\n" +
-                    "   SELECT count(scom_id) as count, SCOM_ptr_Submission FROM TB_SubComments group by SCOM_ptr_Submission order by count(scom_id) desc\r\n" +
-                    "CopyFilesById\r\n" +
-                    "   used to copy files to clipboard for the module box (by userid)\r\n " +
-                    "WhoGotComment <#>\r\n" +
-                    "   lists students that got a specific comment in their feedback\r\n " +
-                    "ids\r\n" +
-                    "   produces 2 list of ids (numeric and alfanumeric versions)\r\n" +
-                    "WriteFeedbackFile\r\n" +
-                    "   writes student feedback each in an individual file\r\n" +
-                    "mcrfcheck\r\n" +
-                    "   grabs the values copied from an MCRF cut and paste and tidies it up\r\n" +
-                    "missing\r\n" +
-                    "   finds marks not added to mcrf (use all relevant lists)" +
-                    "   required ids in textbox (one per row, e.g. '11039298/1')\r\n ";
+                txtLibReport.Text = """
+                    component <order#> <percent> <Name>
+
+                    componentComment <order#> <comment> 
+                        comment can be in the form: - {0} ability to
+
+                    marks <component#>
+                       use 'marks 0' for MCRF
+                       required ids in textbox (one per row)
+
+                    Remove <commentId>
+                       removes the comment from the current student by the ID of the comment
+
+                    WhoGotComment <#>
+                       lists students that got a specific comment in their feedback
+
+                    ids
+                       produces 2 list of ids (numeric and alfanumeric versions)
+
+                    WriteFeedbackFile
+                       writes student feedback each in an individual file (subfolder named Feedback)
+
+                    mcrfcheck
+                       grabs the values copied from an MCRF cut and paste and tidies it up
+
+                    missing
+                       finds marks not added to mcrf (use all relevant lists)   
+                       requires ids in textbox (one per row, e.g. '11039298/1') 
+                    """;
             }
             else
             {
@@ -267,8 +287,8 @@ public partial class FrmAutomaticMarkingMachine : Form
 
     private void WriteFeedbackFile()
     {
-        var folderName = Path.Combine(_config.GetFolderName(), "Feedback");
-        var di = new DirectoryInfo(folderName);
+        var feedBackfolderName = Path.Combine(_config.GetFolderName(), "Feedback");
+        var di = new DirectoryInfo(feedBackfolderName);
         if (!di.Exists)
             di.Create();
         var sql = "select  *, (SELECT count(*) FROM tb_marks WHERE mark_ptr_submission=sub_id) as marks from tb_submissions";
@@ -278,7 +298,7 @@ public partial class FrmAutomaticMarkingMachine : Form
         {
             var id = Convert.ToInt32(item["SUB_id"]);
             var stringId = item["SUB_UserId"].ToString();
-            var fi = new FileInfo(Path.Combine(folderName, stringId + ".txt"));
+            var fi = new FileInfo(Path.Combine(feedBackfolderName, stringId + ".txt"));
             using (var w = fi.CreateText())
             {
                 w.WriteLine(_config.GetStudentReport(id, chkSendModerationNotice.Checked));
@@ -300,7 +320,6 @@ public partial class FrmAutomaticMarkingMachine : Form
             MessageBox.Show("Need student");
             return;
         }
-        txtLibReport.Text = "Submissions:\r\n";
         var sql = "delete from TB_SubComments where "
                   + "SCOM_ptr_Submission = " + GetStudentNumber()
                   + " AND SCOM_ptr_Comment = " + m5.Groups[1].Value;
@@ -827,7 +846,12 @@ public partial class FrmAutomaticMarkingMachine : Form
 
         if (chkImportSubmissions.Checked)
         {
-            sql += "insert into TB_Submissions (SUB_LastName, SUB_FirstName, SUB_UserID, SUB_TurnitinUserID, SUB_NumericUserID, SUB_email, SUB_Title, SUB_PaperID, SUB_DateUploaded, SUB_Grade, SUB_Overlap, SUB_InternetOverlap, SUB_PublicationsOverlap, SUB_StudentPapersOverlap) select SUB_LastName, SUB_FirstName, SUB_UserID, SUB_TurnitinUserID, SUB_NumericUserID, SUB_email, SUB_Title, SUB_PaperID, SUB_DateUploaded, SUB_Grade, SUB_Overlap, SUB_InternetOverlap, SUB_PublicationsOverlap, SUB_StudentPapersOverlap from OTHERDB.TB_Submissions; ";
+            var submissionFields = string.Join(", ", TurnitInSubmission.Fields);
+            sql += "insert into TB_Submissions (" +
+                $"{submissionFields}" +
+                ") select " +
+                $"{submissionFields}" +
+                "from OTHERDB.TB_Submissions; ";
             //Config.Execute(sql);
         }
 

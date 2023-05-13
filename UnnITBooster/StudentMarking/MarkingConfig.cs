@@ -312,6 +312,13 @@ namespace StudentsFetcher.StudentMarking
 			return sb.ToString();
 		}
 
+		internal void SetComponentComment(int order, string comment)
+		{
+            comment = comment.Replace("'", "''");
+            var sql = $"update TB_Components set CPNT_Comment = '{comment}' where CPNT_Order = {order}";
+			Execute(sql);
+		}
+
 		public string BareName
         {
             get

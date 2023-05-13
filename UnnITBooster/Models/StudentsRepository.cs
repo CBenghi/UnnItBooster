@@ -106,5 +106,18 @@ public class StudentsRepository
 		return !d.Exists; 
 	}
 
-	
+	internal void AddAlternativeEmail(Student stude, string newEmail)
+	{
+		foreach (var collection in collections)
+		{
+			var any = false;
+			foreach(var stud in collection.Students.Where(x=>x.Email == stude.Email))
+			{
+				stud.AddAlternativeEmail(newEmail);
+				any = true;
+			}
+			if (any)
+				collection.Save();
+		}
+	}
 }

@@ -63,7 +63,6 @@ internal partial class TurnItIn
 				"SUB_LastName text, " +
 				"SUB_FirstName text, " +
 				"SUB_UserID text, " +
-				"SUB_TurnitinUserID text, " +
 				"SUB_NumericUserID text, " +
 				"SUB_email text, " +
 				"SUB_Title text, " +
@@ -84,24 +83,6 @@ internal partial class TurnItIn
 				"MARK_ptr_Component INT, " +
 				"MARK_Value INT, " +
 				"MARK_Date DATETIME" +
-				")";
-			cmd.CommandText = sql;
-			cmd.ExecuteNonQuery();
-
-			sql = "CREATE TABLE IF NOT EXISTS TB_Submissions (" +
-				"SUB_ID INTEGER PRIMARY KEY, " +
-				"SUB_LastName text, " +
-				"SUB_FirstName text, " +
-				"SUB_UserID text, " +
-				"SUB_TurnitinUserID text, " +
-				"SUB_Title text, " +
-				"SUB_PaperID text, " +
-				"SUB_DateUploaded text, " +
-				"SUB_Grade text, " +
-				"SUB_Overlap text, " +
-				"SUB_InternetOverlap text, " +
-				"SUB_PublicationsOverlap text, " +
-				"SUB_StudentPapersOverlap text" +
 				")";
 			cmd.CommandText = sql;
 			cmd.ExecuteNonQuery();
@@ -191,9 +172,13 @@ internal partial class TurnItIn
 
 	private static void SyncStudentProperties(StudentsRepository repo, TurnitInSubmission seek)
 	{
-		var stude = repo.Students.FirstOrDefault(x => x.Email == seek.Email);
+		var stude = repo.Students.FirstOrDefault(x => x.HasEmail(seek.Email));
 		if (stude is null)
-			stude = repo.Students.FirstOrDefault(x => x.FullName is not null && x.FullName.Equals(seek.FullName, System.StringComparison.OrdinalIgnoreCase));		
+		{
+			stude = repo.Students.FirstOrDefault(x => x.FullName is not null && x.FullName.Equals(seek.FullName, System.StringComparison.OrdinalIgnoreCase));
+			if (stude != null)
+				repo.AddAlternativeEmail(stude, seek.Email);
+		}
 		if (stude is not null)
 		{
 			if (!string.IsNullOrEmpty(stude.Forename))

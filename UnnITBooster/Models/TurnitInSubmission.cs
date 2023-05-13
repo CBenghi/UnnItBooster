@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlTypes;
+using System.Linq;
 using UnnItBooster.ModelConversions;
 
 namespace UnnItBooster.Models;
@@ -11,7 +13,6 @@ class TurnitInSubmission
     public string LastName = "";
     public string FullName = "";
     public string UserId = "";
-    public string TurnitinUserId = "";
     public string Title = "";
     public string PaperId = "";
     public string DateUploaded = "";
@@ -29,7 +30,6 @@ class TurnitInSubmission
 		item.LastName = Some("SUB_LastName", row);
 		item.FirstName = Some("SUB_FirstName", row);
 		item.UserId = Some("SUB_UserID", row);
-		item.TurnitinUserId = Some("SUB_TurnitinUserID", row);
 		item.Title = Some("SUB_Title", row);
 		item.PaperId = Some("SUB_PaperID", row);
 		item.DateUploaded = Some("SUB_DateUploaded", row);
@@ -48,23 +48,24 @@ class TurnitInSubmission
 		return row[field].ToString();
 	}
 
-	internal static SqlCouple[] GetSqlCouples(TurnitInSubmission item)
+	internal static IEnumerable<string> Fields => GetSqlCouples().Select(x => x.Field);
+
+	internal static SqlCouple[] GetSqlCouples(TurnitInSubmission? item = null)
 	{
 		return new[] {
-			new SqlCouple("SUB_LastName", item.LastName),
-			new SqlCouple("SUB_FirstName", item.FirstName),
-			new SqlCouple("SUB_UserID",  item.UserId),
-			new SqlCouple("SUB_TurnitinUserID",  item.TurnitinUserId),
-			new SqlCouple("SUB_Title",  item.Title),
-			new SqlCouple("SUB_PaperID", item.PaperId),
-			new SqlCouple("SUB_DateUploaded",  item.DateUploaded),
-			new SqlCouple("SUB_Grade",  item.Grade),
-			new SqlCouple("SUB_Overlap",  item.Overlap),
-			new SqlCouple("SUB_InternetOverlap",  item.InternetOverlap),
-			new SqlCouple("SUB_PublicationsOverlap",  item.PublicationsOverlap),
-			new SqlCouple("SUB_StudentPapersOverlap",  item.StudentPapersOverlap),
-			new SqlCouple("SUB_NumericUserID",  item.NumericUserId),
-			new SqlCouple("SUB_email", item.Email)
+			new SqlCouple("SUB_LastName", item?.LastName ?? ""),
+			new SqlCouple("SUB_FirstName", item?.FirstName?? ""),
+			new SqlCouple("SUB_UserID",  item?.UserId?? ""),
+			new SqlCouple("SUB_Title",  item?.Title?? ""),
+			new SqlCouple("SUB_PaperID", item?.PaperId?? ""),
+			new SqlCouple("SUB_DateUploaded",  item?.DateUploaded?? ""),
+			new SqlCouple("SUB_Grade",  item?.Grade?? ""),
+			new SqlCouple("SUB_Overlap",  item?.Overlap?? ""),
+			new SqlCouple("SUB_InternetOverlap",  item?.InternetOverlap?? ""),
+			new SqlCouple("SUB_PublicationsOverlap",  item?.PublicationsOverlap?? ""),
+			new SqlCouple("SUB_StudentPapersOverlap",  item?.StudentPapersOverlap?? ""),
+			new SqlCouple("SUB_NumericUserID",  item?.NumericUserId?? ""),
+			new SqlCouple("SUB_email", item?.Email?? "")
 			};
 	}
 }
