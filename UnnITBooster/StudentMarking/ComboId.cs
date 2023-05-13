@@ -6,21 +6,21 @@ namespace StudentsFetcher.StudentMarking;
 
 class ComboId
 {
-    public ComboId(string text, int percentValue, int order)
-    {
-        Text = text;
-        value = percentValue;
-        position = order;
-    }
+	public ComboId(string text, int percentValue, int order)
+	{
+		Text = text;
+		value = percentValue;
+		position = order;
+	}
 
-    public string Text { get; private set; }
-    public int value { get; private set; }
+	public string Text { get; private set; }
+	public int value { get; private set; }
 	public int position { get; private set; }
 
 	public override string ToString()
-    {
-        return $"{Text} (#{position} - {value}%)";
-    }
+	{
+		return $"{Text} (#{position} - {value}%)";
+	}
 }
 
 

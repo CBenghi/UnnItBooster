@@ -12,90 +12,90 @@ using System.Diagnostics;
 
 namespace UnnOutlookAddin.UI
 {
-    public partial class UnnButtons
-    {
-        private void UnnButtons_Load(object sender, RibbonUIEventArgs e)
-        {
+	public partial class UnnButtons
+	{
+		private void UnnButtons_Load(object sender, RibbonUIEventArgs e)
+		{
 
-        }
+		}
 
-        private void btnClassify_Click(object sender, RibbonControlEventArgs e)
-        {
-            var messageEditor = new MessageEditor(e.Control.Context);
+		private void btnClassify_Click(object sender, RibbonControlEventArgs e)
+		{
+			var messageEditor = new MessageEditor(e.Control.Context);
 
-            var explorer = e.Control.Context as Outlook.Explorer;
-            if (explorer == null)
-                return;
+			var explorer = e.Control.Context as Outlook.Explorer;
+			if (explorer == null)
+				return;
 
-            foreach (var selectedMailMessage in explorer.Selection.OfType<Outlook.MailItem>())
-            {
-                selectedMailMessage.Categorize(messageEditor);
-            }
-        }
+			foreach (var selectedMailMessage in explorer.Selection.OfType<Outlook.MailItem>())
+			{
+				selectedMailMessage.Categorize(messageEditor);
+			}
+		}
 
-        private void CopyId_Click(object sender, RibbonControlEventArgs e)
-        {
-            CopyUserId(e);
-        }
+		private void CopyId_Click(object sender, RibbonControlEventArgs e)
+		{
+			CopyUserId(e);
+		}
 
-        private static void CopyUserId(RibbonControlEventArgs e, bool numberOnly = false)
-        {
-            var t = getId(e, numberOnly);
-            Clipboard.SetText(t);
-        }
+		private static void CopyUserId(RibbonControlEventArgs e, bool numberOnly = false)
+		{
+			var t = GetId(e, numberOnly);
+			Clipboard.SetText(t);
+		}
 
-        private static string getId(RibbonControlEventArgs e, bool numberOnly = false)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (var item in GetUserIds(e, numberOnly))
-            {
-                sb.AppendLine(item);
-            }
-            return sb.ToString();
-        }
+		private static string GetId(RibbonControlEventArgs e, bool numberOnly = false)
+		{
+			StringBuilder sb = new StringBuilder();
+			foreach (var item in GetUserIds(e, numberOnly))
+			{
+				sb.AppendLine(item);
+			}
+			return sb.ToString();
+		}
 
-        private static IEnumerable<string> GetUserIds(RibbonControlEventArgs e, bool numberOnly)
-        {
-            var explorer = e.Control.Context as Outlook.Explorer;
-            if (explorer == null)
-                yield break;
-            foreach (var selectedMailMessage in explorer.Selection.OfType<Outlook.MailItem>())
-            {
-                var id = selectedMailMessage.GetUserProperty(MessageExtensions.userIdPropertyName);
-                if (numberOnly)
-                {
-                    id = Unn.Students.StudentId.NumericFromString(id);
-                }
-                yield return id;
-            }
-        }
+		private static IEnumerable<string> GetUserIds(RibbonControlEventArgs e, bool numberOnly)
+		{
+			var explorer = e.Control.Context as Outlook.Explorer;
+			if (explorer == null)
+				yield break;
+			foreach (var selectedMailMessage in explorer.Selection.OfType<Outlook.MailItem>())
+			{
+				var id = selectedMailMessage.GetUserProperty(MessageExtensions.userIdPropertyName);
+				if (numberOnly)
+				{
+					id = Unn.Students.StudentId.NumericFromString(id);
+				}
+				yield return id;
+			}
+		}
 
-        private void button1_Click(object sender, RibbonControlEventArgs e)
-        {
-            CopyUserId(e, true);
-        }
+		private void button1_Click(object sender, RibbonControlEventArgs e)
+		{
+			CopyUserId(e, true);
+		}
 
-        private void btnSettings_Click(object sender, RibbonControlEventArgs e)
-        {
-            frmSettings s = new frmSettings();
-            s.ShowDialog();
-        }
+		private void btnSettings_Click(object sender, RibbonControlEventArgs e)
+		{
+			frmSettings s = new frmSettings();
+			s.ShowDialog();
+		}
 
-        private void btnPerson_Click(object sender, RibbonControlEventArgs e)
-        {
-            try
-            {
+		private void btnPerson_Click(object sender, RibbonControlEventArgs e)
+		{
+			try
+			{
 				var uid = GetUserIds(e, true).FirstOrDefault();
 				var t = new StudentListForm();
-                if (!string.IsNullOrEmpty(uid))
-                    t.SetSearch(uid);
-                t.Show();
+				if (!string.IsNullOrEmpty(uid))
+					t.SetSearch(uid);
+				t.Show();
 			}
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-            
-        }
-    }
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.Message);
+			}
+
+		}
+	}
 }

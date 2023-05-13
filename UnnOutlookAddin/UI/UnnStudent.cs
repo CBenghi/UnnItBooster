@@ -14,11 +14,11 @@ using System.Diagnostics;
 
 namespace UnnOutlookAddin.UI
 {
-    public partial class UnnStudent : UserControl
-    {
-        public UnnStudent()
-        {
-            InitializeComponent();
+	public partial class UnnStudent : UserControl
+	{
+		public UnnStudent()
+		{
+			InitializeComponent();
 			repository = StudentsRepository.GetRespository();
 			SystemReport();
 		}
@@ -39,7 +39,7 @@ namespace UnnOutlookAddin.UI
 		StudentsRepository repository;
 
 		public string SetEmail(string email)
-        {
+		{
 			SetPicture(false);
 			var students = repository.Students.Where(x => x.Email == email).ToList();
 			StringBuilder stringBuilder = new StringBuilder();
@@ -71,13 +71,13 @@ namespace UnnOutlookAddin.UI
 				StudImage.Visible = true;
 				StudImage.Load(imagePath);
 			}
-            else
-            {
+			else
+			{
 				imagePath = null;
 				txtInformation.Visible = true;
 				StudImage.Visible = false;
 			}
-        }
+		}
 
 		private void label2_Click(object sender, EventArgs e)
 		{

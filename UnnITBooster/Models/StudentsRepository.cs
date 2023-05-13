@@ -102,8 +102,8 @@ public class StudentsRepository
 				shortName);
 		var d = new DirectoryInfo(folderName);
 		if (!d.Exists)
-			containerFullName = d.FullName;			
-		return !d.Exists; 
+			containerFullName = d.FullName;
+		return !d.Exists;
 	}
 
 	internal void AddAlternativeEmail(Student stude, string newEmail)
@@ -111,7 +111,7 @@ public class StudentsRepository
 		foreach (var collection in collections)
 		{
 			var any = false;
-			foreach(var stud in collection.Students.Where(x=>x.Email == stude.Email))
+			foreach (var stud in collection.Students.Where(x => x.Email == stude.Email))
 			{
 				stud.AddAlternativeEmail(newEmail);
 				any = true;

@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace StudentsFetcher.StudentMarking
 {
-    partial class FrmAutomaticMarkingMachine
+    partial class FrmMarkingMachine
     {
         /// <summary>
         /// Required designer variable.
@@ -203,7 +203,6 @@ namespace StudentsFetcher.StudentMarking
 			this.txtLibReport.Size = new System.Drawing.Size(225, 394);
 			this.txtLibReport.TabIndex = 2;
 			this.txtLibReport.TabStop = false;
-			this.txtLibReport.Text = "";
 			// 
 			// splitContainer1
 			// 

@@ -8,13 +8,13 @@ namespace UnnItBooster.Models
 {
 	internal record SubmittedFile
 	{
-        public SubmittedFile(string fullPath, string submissionId )
-        {
-            FullPath = fullPath;
-            SubmissionId = submissionId;
-        }
+		public SubmittedFile(string fullPath, string submissionId)
+		{
+			FullPath = fullPath;
+			SubmissionId = submissionId;
+		}
 
-        public string FullPath { get; set; }
-		public string SubmissionId  { get; set; }
+		public string FullPath { get; set; }
+		public string SubmissionId { get; set; }
 	}
 }

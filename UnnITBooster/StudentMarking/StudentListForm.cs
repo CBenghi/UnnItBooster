@@ -10,7 +10,7 @@ using UnnItBooster.Models;
 
 namespace StudentsFetcher.StudentMarking
 {
-	[AmmFormAttributes("Student list", -5)]
+	[AmmFormAttributes("Student list", 2)]
 	public partial class StudentListForm : Form
 	{
 		private StudentsRepository studentsRepo;
@@ -147,7 +147,7 @@ namespace StudentsFetcher.StudentMarking
 			studentsRepo.Reload();
 			foreach (var coll in studentsRepo.GetCollections())
 				lstModules.Items.Add($"{coll.Name} - {coll.Students.Count}");
-			
+
 			for (var i = 0; i < lstModules.Items.Count; i++)
 				lstModules.SetItemChecked(i, true);
 
@@ -213,7 +213,7 @@ namespace StudentsFetcher.StudentMarking
 				openFileDialog.RestoreDirectory = true;
 				if (openFileDialog.ShowDialog() == DialogResult.OK)
 				{
-					txtInputSource.Text = openFileDialog.FileName;					
+					txtInputSource.Text = openFileDialog.FileName;
 				}
 			}
 		}

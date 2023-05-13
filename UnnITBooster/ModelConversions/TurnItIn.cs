@@ -144,7 +144,7 @@ internal partial class TurnItIn
 		var table = package.Workbook.Worksheets.FirstOrDefault(x => x.Name == "Rubric Form - Qualitative");
 		if (table is null)
 			return;
-		
+
 		if (table.Cells[$"B1"].Text != "Email")
 			return;
 		if (table.Cells[$"C1"].Text != "Paper id")
@@ -275,7 +275,7 @@ internal partial class TurnItIn
 
 		foreach (var item in submissions)
 		{
-			var vc = TurnitInSubmission.GetSqlCouples(item).Where(x=>!string.IsNullOrWhiteSpace(x.Value));
+			var vc = TurnitInSubmission.GetSqlCouples(item).Where(x => !string.IsNullOrWhiteSpace(x.Value));
 			if (existingEmails.Contains(item.Email))
 			{
 				// update
@@ -313,17 +313,17 @@ internal partial class TurnItIn
 			yield break;
 		var lines = File.ReadAllLines(manifest.FullName);
 		var processFiles = false;
-		var split = new [] { " - SUCCESS" };
+		var split = new[] { " - SUCCESS" };
 		foreach (var line in lines)
 		{
 			if (processFiles == true)
 			{
 				var procline = line.Trim();
 				if (!procline.EndsWith(" - SUCCESS"))
-					continue;				
+					continue;
 				var t = procline.Split(split, System.StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
 				if (t == null)
-					continue;				
+					continue;
 				var fullPath = Path.Combine(manifest.Directory.FullName, t);
 				if (!File.Exists(fullPath))
 					continue;

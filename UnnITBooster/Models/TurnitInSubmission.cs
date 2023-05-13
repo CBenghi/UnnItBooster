@@ -9,24 +9,24 @@ namespace UnnItBooster.Models;
 
 class TurnitInSubmission
 {
-    public string FirstName = "";
-    public string LastName = "";
-    public string FullName = "";
-    public string UserId = "";
-    public string Title = "";
-    public string PaperId = "";
-    public string DateUploaded = "";
-    public string Grade = "";
-    public string Overlap = "";
-    public string InternetOverlap = "";
-    public string PublicationsOverlap = "";
-    public string StudentPapersOverlap = "";
-    public string NumericUserId = "";
-    public string Email = "";
+	public string FirstName = "";
+	public string LastName = "";
+	public string FullName = "";
+	public string UserId = "";
+	public string Title = "";
+	public string PaperId = "";
+	public string DateUploaded = "";
+	public string Grade = "";
+	public string Overlap = "";
+	public string InternetOverlap = "";
+	public string PublicationsOverlap = "";
+	public string StudentPapersOverlap = "";
+	public string NumericUserId = "";
+	public string Email = "";
 
-    public static TurnitInSubmission FromRow(DataRow row)
-    {
-        var item = new TurnitInSubmission();
+	public static TurnitInSubmission FromRow(DataRow row)
+	{
+		var item = new TurnitInSubmission();
 		item.LastName = Some("SUB_LastName", row);
 		item.FirstName = Some("SUB_FirstName", row);
 		item.UserId = Some("SUB_UserID", row);
@@ -40,7 +40,7 @@ class TurnitInSubmission
 		item.StudentPapersOverlap = Some("SUB_StudentPapersOverlap", row);
 		item.NumericUserId = Some("SUB_NumericUserID", row);
 		item.Email = Some("SUB_email", row);
-		return item; 
+		return item;
 	}
 
 	private static string Some(string field, DataRow row)

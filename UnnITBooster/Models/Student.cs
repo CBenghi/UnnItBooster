@@ -11,11 +11,11 @@ namespace UnnItBooster.Models
 	[DebuggerDisplay("{FullName} {NumericStudentId} {Email}")]
 	public class Student
 	{
-        public string? FullName { get; set; }
+		public string? FullName { get; set; }
 		private string? surname;
 		public string? Surname
 		{
-			get => surname; 
+			get => surname;
 			set
 			{
 				if (!string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(FullName))
@@ -29,7 +29,7 @@ namespace UnnItBooster.Models
 					}
 				}
 				else if (!string.IsNullOrEmpty(value) && string.IsNullOrEmpty(FullName))
-				{ 
+				{
 					FullName = value;
 				}
 				surname = value;
@@ -37,13 +37,13 @@ namespace UnnItBooster.Models
 		}
 		public string? Forename
 		{
-			get => forename; 
+			get => forename;
 			set
 			{
 				forename = value;
 			}
 		}
-		public string? Route { get; set; } 
+		public string? Route { get; set; }
 
 		private string numericStudentId = string.Empty;
 		private string? forename;

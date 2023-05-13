@@ -20,7 +20,7 @@ internal static class StudentListExtensions
 				extra.Add(source);
 				continue;
 			}
-			if (!string.IsNullOrEmpty( source.Email) && dest.Email != source.Email)
+			if (!string.IsNullOrEmpty(source.Email) && dest.Email != source.Email)
 				dest.Email = source.Email;
 			if (!string.IsNullOrEmpty(source.Surname) && dest.Surname != source.Surname)
 				dest.Surname = source.Surname;
