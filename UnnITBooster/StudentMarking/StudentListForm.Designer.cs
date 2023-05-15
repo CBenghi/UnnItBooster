@@ -64,6 +64,8 @@
 			this.tabControl2 = new System.Windows.Forms.TabControl();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.txtAlternativeEmail = new System.Windows.Forms.TextBox();
+			this.btnAddEmail = new System.Windows.Forms.Button();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.txtStudentInfo = new System.Windows.Forms.TextBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -71,8 +73,7 @@
 			this.button5 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.lstModules = new System.Windows.Forms.CheckedListBox();
-			this.btnAddEmail = new System.Windows.Forms.Button();
-			this.txtAlternativeEmail = new System.Windows.Forms.TextBox();
+			this.cmdTest = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.StudImage)).BeginInit();
 			this.tabControl1.SuspendLayout();
@@ -142,6 +143,7 @@
 			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox1.Controls.Add(this.cmdTest);
 			this.groupBox1.Controls.Add(this.label10);
 			this.groupBox1.Controls.Add(this.label9);
 			this.groupBox1.Controls.Add(this.txtReport);
@@ -462,6 +464,23 @@
 			this.tabPage4.Text = "email";
 			this.tabPage4.UseVisualStyleBackColor = true;
 			// 
+			// txtAlternativeEmail
+			// 
+			this.txtAlternativeEmail.Location = new System.Drawing.Point(6, 8);
+			this.txtAlternativeEmail.Name = "txtAlternativeEmail";
+			this.txtAlternativeEmail.Size = new System.Drawing.Size(294, 20);
+			this.txtAlternativeEmail.TabIndex = 1;
+			// 
+			// btnAddEmail
+			// 
+			this.btnAddEmail.Location = new System.Drawing.Point(169, 34);
+			this.btnAddEmail.Name = "btnAddEmail";
+			this.btnAddEmail.Size = new System.Drawing.Size(131, 34);
+			this.btnAddEmail.TabIndex = 0;
+			this.btnAddEmail.Text = "Add alternative email";
+			this.btnAddEmail.UseVisualStyleBackColor = true;
+			this.btnAddEmail.Click += new System.EventHandler(this.BtnAddEmail_Click);
+			// 
 			// tabPage5
 			// 
 			this.tabPage5.Controls.Add(this.txtStudentInfo);
@@ -544,22 +563,15 @@
 			this.lstModules.Size = new System.Drawing.Size(120, 439);
 			this.lstModules.TabIndex = 17;
 			// 
-			// btnAddEmail
+			// cmdTest
 			// 
-			this.btnAddEmail.Location = new System.Drawing.Point(169, 34);
-			this.btnAddEmail.Name = "btnAddEmail";
-			this.btnAddEmail.Size = new System.Drawing.Size(131, 34);
-			this.btnAddEmail.TabIndex = 0;
-			this.btnAddEmail.Text = "Add alternative email";
-			this.btnAddEmail.UseVisualStyleBackColor = true;
-			this.btnAddEmail.Click += new System.EventHandler(this.BtnAddEmail_Click);
-			// 
-			// txtAlternativeEmail
-			// 
-			this.txtAlternativeEmail.Location = new System.Drawing.Point(6, 8);
-			this.txtAlternativeEmail.Name = "txtAlternativeEmail";
-			this.txtAlternativeEmail.Size = new System.Drawing.Size(294, 20);
-			this.txtAlternativeEmail.TabIndex = 1;
+			this.cmdTest.Location = new System.Drawing.Point(515, 113);
+			this.cmdTest.Name = "cmdTest";
+			this.cmdTest.Size = new System.Drawing.Size(75, 23);
+			this.cmdTest.TabIndex = 25;
+			this.cmdTest.Text = "test";
+			this.cmdTest.UseVisualStyleBackColor = true;
+			this.cmdTest.Click += new System.EventHandler(this.cmdTest_Click);
 			// 
 			// StudentListForm
 			// 
@@ -638,5 +650,6 @@
 		private System.Windows.Forms.Button button6;
 		private System.Windows.Forms.TextBox txtAlternativeEmail;
 		private System.Windows.Forms.Button btnAddEmail;
+		private System.Windows.Forms.Button cmdTest;
 	}
 }

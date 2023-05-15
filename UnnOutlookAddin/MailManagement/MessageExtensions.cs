@@ -6,10 +6,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using UnnItBooster.Models;
 
 namespace UnnOutlookAddin.MailManagement
 {
-	public static class MessageExtensions
+	public static class MessageClassificationExtensions
 	{
 		static readonly Regex regexStudentEmailPattern = new Regex(@"smtp:([a-zA-Z]\d{4,})@", RegexOptions.Compiled);
 
@@ -75,7 +76,17 @@ namespace UnnOutlookAddin.MailManagement
 		{
 			if (messageEditor == null)
 				return;
-			if (mail.SenderHasStudentId())
+			bool isStudent = false;
+			if (StudentsRepository.Repo != null)
+			{
+				isStudent = StudentsRepository.Repo.TryGetStudentByEmail(mail.GetSenderEmailAddress(), out _);
+			}
+			if (!isStudent && mail.SenderHasStudentId())
+			{
+				isStudent = true;
+			}
+			// tag if it is a student
+			if (isStudent)
 			{
 				messageEditor.SetCategory(mail, "Students");
 				var id = mail.GetSenderStudentId();

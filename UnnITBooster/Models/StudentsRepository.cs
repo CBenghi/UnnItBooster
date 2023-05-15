@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 
@@ -10,9 +11,15 @@ public class StudentsRepository
 {
 	private List<IStudentCollection> collections = new();
 
-	public static StudentsRepository GetRespository()
+	private static StudentsRepository? repo = null;
+
+	public static StudentsRepository Repo
 	{
-		return new StudentsRepository(StudentsFetcher.Properties.Settings.Default.StudentsFolder);
+		get
+		{
+			repo ??= new StudentsRepository(StudentsFetcher.Properties.Settings.Default.StudentsFolder);
+			return repo;
+		}
 	}
 
 	public StudentsRepository(string dataFolder)
@@ -42,7 +49,7 @@ public class StudentsRepository
 
 	private readonly string dataFolder;
 
-	public IEnumerable<IStudentCollection> GetCollections()
+	public IEnumerable<IStudentCollection> GetPersonCollections()
 	{
 		foreach (var item in collections)
 		{
@@ -125,5 +132,11 @@ public class StudentsRepository
 				collection.Save();
 		}
 		return tally;
+	}
+
+	public bool TryGetStudentByEmail(string seekingEmail, [NotNullWhen(true)]out Student? returnStudent)
+	{
+		returnStudent = Students.FirstOrDefault(x => x.HasEmail(seekingEmail));
+		return returnStudent != null;
 	}
 }

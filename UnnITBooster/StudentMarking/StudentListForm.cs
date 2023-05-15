@@ -156,7 +156,7 @@ namespace StudentsFetcher.StudentMarking
 		{
 			lstModules.Items.Clear();
 			studentsRepo.Reload();
-			foreach (var coll in studentsRepo.GetCollections())
+			foreach (var coll in studentsRepo.GetPersonCollections())
 				lstModules.Items.Add($"{coll.Name} - {coll.Students.Count}");
 
 			for (var i = 0; i < lstModules.Items.Count; i++)
@@ -193,7 +193,7 @@ namespace StudentsFetcher.StudentMarking
 			}
 
 			txtReport.Text += $"Processing {students.Count()} records.\r\n";
-			var coll = studentsRepo.GetCollections().FirstOrDefault(x => x.Name == txtModuleCode.Text);
+			var coll = studentsRepo.GetPersonCollections().FirstOrDefault(x => x.Name == txtModuleCode.Text);
 			if (coll is null)
 			{
 				if (studentsRepo.IsValidNewCollectionName(txtModuleCode.Text, out var containerFullName))
@@ -206,7 +206,7 @@ namespace StudentsFetcher.StudentMarking
 			else
 			{
 				// if update and exists
-				var studs = coll.Students.MergeInformation(students);
+				var studs = coll.Students.OfType<Student>().MergeInformation(students);
 				coll.Students = studs.ToList();
 				txtReport.Text += $"Merged in existing container, total of {studs.Count()} records.\r\n";
 				coll.Save();

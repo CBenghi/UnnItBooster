@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using UnnItBooster.Models;
 using Microsoft.Office.Interop.Outlook;
 using UnnOutlookAddin.MailManagement;
+using System.Web;
+using System.Threading.Tasks;
 using System.Diagnostics;
 
 namespace UnnOutlookAddin.UI
@@ -19,7 +17,6 @@ namespace UnnOutlookAddin.UI
 		public UnnStudent()
 		{
 			InitializeComponent();
-			repository = StudentsRepository.GetRespository();
 			SystemReport();
 		}
 
@@ -29,16 +26,16 @@ namespace UnnOutlookAddin.UI
 			stringBuilder.AppendLine($"Students folder: {repository.ConfigurationFolder.FullName}");
 			stringBuilder.AppendLine($"");
 			stringBuilder.AppendLine($"Collections:");
-			foreach (var coll in repository.GetCollections())
+			foreach (var coll in repository.GetPersonCollections())
 			{
 				stringBuilder.AppendLine($"- {coll.Name} ({coll.Students.Count})");
 			}
 			txtSystemInfo.Text = stringBuilder.ToString();
 		}
 
-		readonly StudentsRepository repository;
+		private StudentsRepository repository => StudentsRepository.Repo;
 
-		public string SetEmail(string email)
+		private string SetEmail(string email)
 		{
 			SetPicture(false);
 			var students = repository.Students.Where(x => x.Email == email).ToList();
@@ -79,27 +76,119 @@ namespace UnnOutlookAddin.UI
 			}
 		}
 
-		private void label2_Click(object sender, EventArgs e)
-		{
-			repository.Reload();
-			SystemReport();
-		}
-
 		private void tabControl1_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
 			SetPicture(txtInformation.Visible);
 		}
 
-		internal void SetMessage(MailItem mailItem)
+		
+
+		internal async void SetMessageAsync(MailItem mailItem)
 		{
-			var snd = MessageExtensions.GetSenderEmailAddress(mailItem);
+			var snd = MessageClassificationExtensions.GetSenderEmailAddress(mailItem);
 			var txt = SetEmail(snd);
 			var folder = mailItem.Parent as MAPIFolder;
 			if (folder != null)
-			{
 				txt += $"\r\nFolder: {folder.Name}";
-			}
 			txtInformation.Text = txt;
+			// await EvaluateConversationAsync(mailItem);
 		}
+
+		private async Task<bool> EvaluateConversationAsync(MailItem mailItem)
+		{
+			var ret = await Task.Run(() =>
+			{
+				//var conversation = mailItem.GetConversation();
+				//if (conversation == null)
+				//	return false;
+				//var children = conversation.GetChildren(conversation);
+				DemoConversation(mailItem);
+				return true;
+			});
+			return ret;
+		}
+
+		void DemoConversation(MailItem mailItem)
+		{
+
+			// Determine the store of the mail item. 
+			var folder = mailItem.Parent as Folder;
+			var store = folder.Store;
+			if (store.IsConversationEnabled == true)
+			{
+				// Obtain a Conversation object. 
+				Conversation conv = mailItem.GetConversation();
+				// Check for null Conversation. 
+				if (conv != null)
+				{
+					// Obtain Table that contains rows for each item in the conversation. 
+					//var table = conv.GetTable();
+					//Debug.WriteLine($"Conversation Items Count: {table.GetRowCount()}");
+					//Debug.WriteLine("Conversation Items from Table:");
+					//while (!table.EndOfTable)
+					//{
+					//	Row nextRow = table.GetNextRow();
+					//	Debug.WriteLine($"{nextRow["Subject"]} Modified: {nextRow["LastModificationTime"]}");
+					//}
+					Debug.Write("=== Conversation Items from Root: ");
+					// Obtain root items and enumerate the conversation. 
+					try
+					{
+						var simpleItems = conv.GetRootItems();
+						foreach (object item in simpleItems)
+						{
+							// In this example, only enumerate MailItem type.
+							// Other types such as PostItem or MeetingItem 
+							// can appear in the conversation. 
+							if (item is MailItem mail)
+							{
+								Folder inFolder = mail.Parent as Folder;
+								Debug.WriteLine($"{mail.Subject} in folder `{inFolder.Name}` by {mail.Sender.Name}");
+								// Call EnumerateConversation 
+								// to access child nodes of root items. 
+								EnumerateConversation(item, conv);
+							}
+							else
+							{
+								Debug.WriteLine($"Not implemented type: {item.GetType()}");
+							}
+
+						}
+					}
+					catch (System.Exception ex)
+					{
+						Debug.WriteLine($"{ex.Message}");
+					}
+					
+				}
+			}
+		}
+
+
+		void EnumerateConversation(object item, Conversation conversation, int indentation = 0)
+		{
+			var indent = new string(' ', indentation * 2);
+			SimpleItems items = conversation.GetChildren(item);
+			if (items.Count > 0)
+			{
+				foreach (object myItem in items)
+				{
+					if (myItem is MailItem mailItem)
+					{
+						Folder inFolder = mailItem.Parent as Folder;
+						string msg = $"{indent}{mailItem.Subject} in folder {inFolder.Name} - {mailItem.Sender.Name}";
+						Debug.WriteLine(msg);
+					}
+					// Continue recursion. 
+					EnumerateConversation(myItem, conversation, indentation + 1);
+				}
+			}
+			else if (indentation == 0) 
+			{
+				Debug.WriteLine("No children");
+			}
+		}
+
+
 	}
 }

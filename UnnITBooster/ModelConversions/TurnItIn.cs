@@ -129,12 +129,11 @@ internal partial class TurnItIn
 
 	internal static IEnumerable<TurnitInSubmission> GetSubmissionsFromLearningAnalytics(FileInfo learningAnalytics)
 	{
-		var repo = StudentsRepository.GetRespository();
 		using var package = new ExcelPackage(learningAnalytics);
 		// prepare question dictionary
 		var lst = new List<TurnitInSubmission>();
-		UpdateStudentInfo(ref lst, package, repo);
-		UpdateStudentSubmissionId(ref lst, package, repo);
+		UpdateStudentInfo(ref lst, package, StudentsRepository.Repo);
+		UpdateStudentSubmissionId(ref lst, package, StudentsRepository.Repo);
 		return lst;
 	}
 

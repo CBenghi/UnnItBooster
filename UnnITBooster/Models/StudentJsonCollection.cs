@@ -1,12 +1,11 @@
-﻿using System;
+﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Text.Json.Serialization;
+using UnnItBooster.Helpers;
 
 namespace UnnItBooster.Models
 {
@@ -58,7 +57,6 @@ namespace UnnItBooster.Models
 			var d = new DirectoryInfo(containerFullName);
 			d.Create();
 			Save(students, d);
-
 			return new StudentJsonCollection(d);
 		}
 
@@ -68,6 +66,20 @@ namespace UnnItBooster.Models
 			var opts = new JsonSerializerOptions() { WriteIndented = true, DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
 			var t = JsonSerializer.Serialize(students, opts);
 			File.WriteAllText(fullName, t);
+		}
+
+		private static JsonSerializerOptions SerOptions()
+		{
+			var options = new JsonSerializerOptions()
+			{
+				DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+				WriteIndented = true,
+			};
+			//var facetConverter = new HeterogenousListConverter<IFacet, List<IFacet>>(
+			//	(nameof(IfcClassificationFacet), typeof(IfcClassificationFacet)),
+			//);
+			//options.Converters.Add(facetConverter);
+			return options; 
 		}
 
 		public void Save()

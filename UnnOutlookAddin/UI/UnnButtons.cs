@@ -56,7 +56,7 @@ namespace UnnOutlookAddin.UI
 				yield break;
 			foreach (var selectedMailMessage in explorer.Selection.OfType<Outlook.MailItem>())
 			{
-				var id = selectedMailMessage.GetUserProperty(MessageExtensions.userIdPropertyName);
+				var id = selectedMailMessage.GetUserProperty(MessageClassificationExtensions.userIdPropertyName);
 				if (numberOnly)
 				{
 					id = Unn.Students.StudentId.NumericFromString(id);
