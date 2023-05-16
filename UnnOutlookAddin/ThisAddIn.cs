@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 using Outlook = Microsoft.Office.Interop.Outlook;
-using Exception = System.Exception;
 using UnnOutlookAddin.MailManagement;
 using System.Linq;
-using System.Threading.Tasks;
+using UnnItBooster.Models;
 
 namespace UnnOutlookAddin
 {
@@ -14,7 +13,6 @@ namespace UnnOutlookAddin
 		Outlook.NameSpace outlookNameSpace;
 		Outlook.MAPIFolder inbox;
 		Outlook.Items items;
-
 
 		private void ThisAddIn_Startup(object sender, EventArgs e)
 		{
@@ -41,10 +39,13 @@ namespace UnnOutlookAddin
 
 			// display the Students pane
 			//
-			myStudentComponent = new UI.UnnStudent();
+			repository = new StudentsRepository(Properties.Settings.Default.StudentsFolder);
+			myStudentComponent = new UI.UnnStudent(repository);
 			var myCustomTaskPane = CustomTaskPanes.Add(myStudentComponent, "UnnStudentPane");
 			myCustomTaskPane.Visible = true;
 		}
+
+		private StudentsRepository repository;
 
 		UI.UnnStudent myStudentComponent = null;
 

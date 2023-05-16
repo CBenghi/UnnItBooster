@@ -5,11 +5,10 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using UnnItBooster.Helpers;
 
 namespace UnnItBooster.Models
 {
-	internal class StudentJsonCollection : IStudentCollection
+	public class StudentJsonCollection : IStudentCollection
 	{
 		private const string StandardCollectionName = "students.json";
 
@@ -52,7 +51,7 @@ namespace UnnItBooster.Models
 			return File.Exists(GetJsonPersistenceFile(directory));
 		}
 
-		internal static StudentJsonCollection Create(string containerFullName, IEnumerable<Student> students)
+		public static StudentJsonCollection Create(string containerFullName, IEnumerable<Student> students)
 		{
 			var d = new DirectoryInfo(containerFullName);
 			d.Create();

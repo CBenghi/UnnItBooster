@@ -1000,7 +1000,9 @@ public partial class FrmMarkingMachine : Form
 		var f = new FileInfo(txtSourceTurnitin.Text);
 		if (!f.Exists)
 			return;
-		var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f).ToList();
+
+		var repository = new StudentsRepository(Settings.Default.StudentsFolder);
+		var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f, repository).ToList();
 		TurnItIn.PopulateDatabase(txtExcelFileName.Text, submissions);
 		Reload();
 	}
@@ -1012,7 +1014,8 @@ public partial class FrmMarkingMachine : Form
 		var f = new FileInfo(txtSourceTurnitin.Text);
 		if (!f.Exists)
 			return;
-		var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f).ToList();
+		var repository = new StudentsRepository(Settings.Default.StudentsFolder);
+		var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f, repository).ToList();
 		txtReport.Text = TurnItIn.UpdateDatabase(txtExcelFileName.Text, submissions);
 		Reload();
 	}

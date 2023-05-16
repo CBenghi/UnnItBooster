@@ -6,16 +6,15 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Media;
 using UnnItBooster.Models;
 
 namespace UnnItBooster.ModelConversions;
 
-internal partial class TurnItIn
+public partial class TurnItIn
 {
 	public const string GradebookStandardName = "Coursework submission-Learning Analytics.xlsx";
 
-	internal static IEnumerable<Student> GetStudentsFromGradebook(string csvSource)
+	public static IEnumerable<Student> GetStudentsFromGradebook(string csvSource)
 	{
 		// open the file "data.csv" which is a CSV file with headers
 		var students = new List<Student>();
@@ -127,13 +126,13 @@ internal partial class TurnItIn
 		c.Close();
 	}
 
-	internal static IEnumerable<TurnitInSubmission> GetSubmissionsFromLearningAnalytics(FileInfo learningAnalytics)
+	public static IEnumerable<TurnitInSubmission> GetSubmissionsFromLearningAnalytics(FileInfo learningAnalytics, StudentsRepository repo)
 	{
 		using var package = new ExcelPackage(learningAnalytics);
 		// prepare question dictionary
 		var lst = new List<TurnitInSubmission>();
-		UpdateStudentInfo(ref lst, package, StudentsRepository.Repo);
-		UpdateStudentSubmissionId(ref lst, package, StudentsRepository.Repo);
+		UpdateStudentInfo(ref lst, package, repo);
+		UpdateStudentSubmissionId(ref lst, package, repo);
 		return lst;
 	}
 
@@ -234,7 +233,7 @@ internal partial class TurnItIn
 		}
 	}
 
-	internal static void PopulateDatabase(string fullname, IEnumerable<TurnitInSubmission> submissions)
+	public static void PopulateDatabase(string fullname, IEnumerable<TurnitInSubmission> submissions)
 	{
 		var filename = Path.ChangeExtension(fullname, "sqlite");
 
@@ -255,7 +254,7 @@ internal partial class TurnItIn
 		c.Close();
 	}
 
-	internal static string UpdateDatabase(string fullname, List<TurnitInSubmission> submissions)
+	public static string UpdateDatabase(string fullname, List<TurnitInSubmission> submissions)
 	{
 		var filename = Path.ChangeExtension(fullname, "sqlite");
 		if (!File.Exists(filename))
@@ -306,7 +305,7 @@ internal partial class TurnItIn
 		return sb.ToString();
 	}
 
-	internal static IEnumerable<SubmittedFile> GetFilesFromManifest(FileInfo manifest)
+	public static IEnumerable<SubmittedFile> GetFilesFromManifest(FileInfo manifest)
 	{
 		if (!manifest.Exists)
 			yield break;

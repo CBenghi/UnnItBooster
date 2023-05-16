@@ -2,12 +2,12 @@
 using System.Linq;
 
 namespace UnnItBooster.Models;
-internal static class StudentListExtensions
+public static class StudentListExtensions
 {
 	/// <summary>
 	/// Merge information by student id
 	/// </summary>
-	internal static IEnumerable<Student> MergeInformation(this IEnumerable<Student> baseCollection, IEnumerable<Student> otherCollection)
+	public static IEnumerable<Student> MergeInformation(this IEnumerable<Student> baseCollection, IEnumerable<Student> otherCollection)
 	{
 		var noChange = baseCollection.Where(x => x.NumericStudentId == string.Empty);
 		var Enrich = baseCollection.Where(x => x.NumericStudentId != string.Empty).ToDictionary(x => x.NumericStudentId, x => x);

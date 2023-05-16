@@ -19,18 +19,18 @@ namespace StudentsFetcher.StudentMarking
 
 		public string DbName { get; set; }
 
-		internal string GetFolderName()
+		public string GetFolderName()
 		{
 			var f = new FileInfo(DbName);
 			return f.DirectoryName;
 		}
 
-		internal SQLiteConnection GetConn()
+		public SQLiteConnection GetConn()
 		{
 			return new SQLiteConnection("Data source=" + DbName + ";");
 		}
 
-		internal DataTable GetDataTable(string sql)
+		public DataTable GetDataTable(string sql)
 		{
 			var c = GetConn();
 			c.Open();
@@ -63,7 +63,7 @@ namespace StudentsFetcher.StudentMarking
 			return ret;
 		}
 
-		internal DataRow? GetStudentRow(int id)
+		public DataRow? GetStudentRow(int id)
 		{
 			var dt = new DataTable();
 			var c = GetConn();
@@ -76,7 +76,7 @@ namespace StudentsFetcher.StudentMarking
 				: null;
 		}
 
-		internal string GetStudentReport(int id, bool sendModerationNotice)
+		public string GetStudentReport(int id, bool sendModerationNotice)
 		{
 			var sb = new StringBuilder();
 			sb.AppendLine("================");
@@ -218,7 +218,7 @@ namespace StudentsFetcher.StudentMarking
 			return s;
 		}
 
-		internal void Execute(string sql, SQLiteConnection? c = null)
+		public void Execute(string sql, SQLiteConnection? c = null)
 		{
 			var bClose = false;
 			if (c == null)
@@ -234,7 +234,7 @@ namespace StudentsFetcher.StudentMarking
 				c.Close();
 		}
 
-		internal int ExecuteScalar(string sql, SQLiteConnection? c = null)
+		public int ExecuteScalar(string sql, SQLiteConnection? c = null)
 		{
 			var bClose = false;
 			if (c == null)
@@ -256,7 +256,7 @@ namespace StudentsFetcher.StudentMarking
 			return reference;
 		}
 
-		internal MarksCalculator GetMarkCalculator()
+		public MarksCalculator GetMarkCalculator()
 		{
 			var ret = new MarksCalculator();
 			var dt = GetDataTable("Select * from TB_Components");
@@ -273,7 +273,7 @@ namespace StudentsFetcher.StudentMarking
 			return ret;
 		}
 
-		internal string UpdateDatabase(List<SubmittedFile> files)
+		public string UpdateDatabase(List<SubmittedFile> files)
 		{
 			var c = GetConn();
 			c.Open();
@@ -313,7 +313,7 @@ namespace StudentsFetcher.StudentMarking
 			return sb.ToString();
 		}
 
-		internal void SetComponentComment(int order, string comment)
+		public void SetComponentComment(int order, string comment)
 		{
 			comment = comment.Replace("'", "''");
 			var sql = $"update TB_Components set CPNT_Comment = '{comment}' where CPNT_Order = {order}";

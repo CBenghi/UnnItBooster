@@ -13,15 +13,6 @@ public class StudentsRepository
 
 	private static StudentsRepository? repo = null;
 
-	public static StudentsRepository Repo
-	{
-		get
-		{
-			repo ??= new StudentsRepository(StudentsFetcher.Properties.Settings.Default.StudentsFolder);
-			return repo;
-		}
-	}
-
 	public StudentsRepository(string dataFolder)
 	{
 		this.dataFolder = dataFolder ?? string.Empty;
@@ -89,7 +80,7 @@ public class StudentsRepository
 		return true;
 	}
 
-	internal Student? GetStudentById(string numericStudentId)
+	public Student? GetStudentById(string numericStudentId)
 	{
 		foreach (var item in Students)
 		{
@@ -99,7 +90,7 @@ public class StudentsRepository
 		return null;
 	}
 
-	internal bool IsValidNewCollectionName(string shortName, out string containerFullName)
+	public bool IsValidNewCollectionName(string shortName, out string containerFullName)
 	{
 		containerFullName = string.Empty;
 		if (string.IsNullOrWhiteSpace(shortName))
@@ -114,7 +105,7 @@ public class StudentsRepository
 	}
 
 	/// <returns>the count of affected students</returns>
-	internal int AddAlternativeEmail(Student stude, string newEmail)
+	public int AddAlternativeEmail(Student stude, string newEmail)
 	{
 		int tally = 0;
 		foreach (var collection in collections)

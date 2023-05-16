@@ -34,8 +34,5 @@
     <PackageReference Include="ZedGraph" Version="5.1.7" />
     <PackageReference Include="EPPlus" Version="4.5.3.3" />
     <PackageReference Include="LumenWorksCsvReader" Version="4.0.0" />
-    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.421302">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
   </ItemGroup>
 </Project>

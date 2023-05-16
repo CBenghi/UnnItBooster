@@ -571,7 +571,6 @@
 			this.cmdTest.TabIndex = 25;
 			this.cmdTest.Text = "test";
 			this.cmdTest.UseVisualStyleBackColor = true;
-			this.cmdTest.Click += new System.EventHandler(this.cmdTest_Click);
 			// 
 			// StudentListForm
 			// 

@@ -7,7 +7,7 @@ using UnnItBooster.ModelConversions;
 
 namespace UnnItBooster.Models;
 
-class TurnitInSubmission
+public class TurnitInSubmission
 {
 	public string FirstName = "";
 	public string LastName = "";
@@ -48,7 +48,7 @@ class TurnitInSubmission
 		return row[field].ToString();
 	}
 
-	internal static IEnumerable<string> Fields => GetSqlCouples().Select(x => x.Field);
+	public static IEnumerable<string> Fields => GetSqlCouples().Select(x => x.Field);
 
 	internal static SqlCouple[] GetSqlCouples(TurnitInSubmission? item = null)
 	{

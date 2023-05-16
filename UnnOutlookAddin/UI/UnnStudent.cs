@@ -17,6 +17,11 @@ namespace UnnOutlookAddin.UI
 		public UnnStudent()
 		{
 			InitializeComponent();
+		}
+
+		public UnnStudent(StudentsRepository repository)
+		{
+			InitializeComponent();
 			SystemReport();
 		}
 
@@ -33,7 +38,7 @@ namespace UnnOutlookAddin.UI
 			txtSystemInfo.Text = stringBuilder.ToString();
 		}
 
-		private StudentsRepository repository => StudentsRepository.Repo;
+		private StudentsRepository repository;
 
 		private string SetEmail(string email)
 		{

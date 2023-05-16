@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UnnItBooster.Models
 {
-	internal record SubmittedFile
+	public record SubmittedFile
 	{
 		public SubmittedFile(string fullPath, string submissionId)
 		{
