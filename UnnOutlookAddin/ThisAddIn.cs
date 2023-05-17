@@ -25,13 +25,6 @@ namespace UnnOutlookAddin
 				items.ItemAdd += new Outlook.ItemsEvents_ItemAddEventHandler(AutomaticClassificationHandler);
 			}
 
-			//// tracking of new email creation?
-			//if (false)
-			//{
-			//    _inspectors = Application.Inspectors;
-			//    _inspectors.NewInspector += Inspectors_NewInspector;
-			//}
-
 			// registering events of selection change
 			_currentExplorer = Application.ActiveExplorer();
 			_currentExplorer.SelectionChange += CurrentExplorer_Event;
@@ -39,13 +32,13 @@ namespace UnnOutlookAddin
 
 			// display the Students pane
 			//
-			repository = new StudentsRepository(Properties.Settings.Default.StudentsFolder);
-			myStudentComponent = new UI.UnnStudent(repository);
+			Repository = new StudentsRepository(Properties.Settings.Default.StudentsFolder);
+			myStudentComponent = new UI.UnnStudent(Repository);
 			var myCustomTaskPane = CustomTaskPanes.Add(myStudentComponent, "UnnStudentPane");
 			myCustomTaskPane.Visible = true;
 		}
 
-		private StudentsRepository repository;
+		internal static StudentsRepository Repository;
 
 		UI.UnnStudent myStudentComponent = null;
 
@@ -56,7 +49,7 @@ namespace UnnOutlookAddin
 				if (emailItem.UnRead)
 				{
 					var messageEditor = new MessageEditor(_currentExplorer);
-					emailItem.Categorize(messageEditor);
+					emailItem.Categorize(messageEditor, Repository);
 				}
 			}
 		}

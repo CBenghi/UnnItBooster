@@ -86,8 +86,6 @@ namespace UnnOutlookAddin.UI
 			SetPicture(txtInformation.Visible);
 		}
 
-		
-
 		internal async void SetMessageAsync(MailItem mailItem)
 		{
 			var snd = MessageClassificationExtensions.GetSenderEmailAddress(mailItem);

@@ -1,17 +1,16 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.Xml;
+using System.Text;
 
 namespace UnnItBooster.Models;
 
 public class StudentsRepository
 {
 	private List<IStudentCollection> collections = new();
-
-	private static StudentsRepository? repo = null;
 
 	public StudentsRepository(string dataFolder)
 	{
@@ -36,6 +35,46 @@ public class StudentsRepository
 				}
 			}
 		}
+	}
+
+	/// <summary>
+	/// Initializes or updates a student collection by name
+	/// </summary>
+	public string ConsiderNewStudents(IEnumerable<Student> students, string collectionName)
+	{
+		var sb = new StringBuilder();
+		if (string.IsNullOrEmpty(collectionName))
+		{
+			sb.AppendLine($"No destination code.\r\n");
+			return sb.ToString();
+		}
+		if (!students.Any())
+		{
+			sb.AppendLine($"No students to process.\r\n");
+			return sb.ToString();
+		}
+
+		sb.AppendLine($"Processing {students.Count()} records.\r\n");
+		var coll = GetPersonCollections().FirstOrDefault(x => x.Name == collectionName);
+		if (coll is null)
+		{
+			if (IsValidNewCollectionName(collectionName, out var containerFullName))
+			{
+				// if new and valid
+				sb.AppendLine($"New container {containerFullName}\r\n");
+				_ = StudentJsonCollection.Create(containerFullName, students);
+			}
+		}
+		else
+		{
+			// if update and exists
+			var studs = coll.Students.MergeInformation(students);
+			coll.Students = studs.ToList();
+			sb.AppendLine($"Merged in existing container, total of {studs.Count()} records.\r\n");
+			coll.Save();
+		}
+		Reload();
+		return sb.ToString();
 	}
 
 	private readonly string dataFolder;
@@ -67,6 +106,25 @@ public class StudentsRepository
 			}
 			return di;
 		}
+	}
+
+	private const string PhotoFolder = "Photos";
+
+	public string GetDefaultImageName(string number, string moduleCode)
+	{
+		var d = new DirectoryInfo(dataFolder);
+		var pho = Path.Combine(d.FullName, PhotoFolder);
+		d = new DirectoryInfo(pho);
+		if (!d.Exists)
+			d.Create();
+		if (!string.IsNullOrEmpty(moduleCode)) 
+		{
+			pho = Path.Combine(d.FullName, moduleCode);
+			d = new DirectoryInfo(pho);
+			if (!d.Exists)
+				d.Create();
+		}
+		return Path.Combine(pho, $"{number}.jpg");
 	}
 
 	public bool HasImage(Student student, out string imagePath)
@@ -129,5 +187,29 @@ public class StudentsRepository
 	{
 		returnStudent = Students.FirstOrDefault(x => x.HasEmail(seekingEmail));
 		return returnStudent != null;
+	}
+
+	public bool SetStudentInfo(Student student, string collection)
+	{
+		var coll = collections.FirstOrDefault(x=>x.Name == collection);
+		if (coll is null)
+			return false;
+		if (
+			string.IsNullOrEmpty(student.Email)
+			&& string.IsNullOrEmpty(student.NumericStudentId)
+			)
+			return false;
+		var toUpdate = coll.Students.FirstOrDefault(x => x.HasEmail(student.Email!));
+		if (toUpdate is null && !string.IsNullOrEmpty( student.NumericStudentId))
+		{
+			toUpdate = coll.Students.FirstOrDefault(x => x.NumericStudentId == student.NumericStudentId);
+		}
+		if (toUpdate is null)
+		{
+			return false;
+		}
+		toUpdate.MergeInformation(student);
+		coll.Save();
+		return true;
 	}
 }

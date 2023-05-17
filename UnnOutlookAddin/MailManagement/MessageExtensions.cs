@@ -72,15 +72,13 @@ namespace UnnOutlookAddin.MailManagement
 		internal const string userIdPropertyName = "UnnStudentId";
 		internal const string userIdNotFound = "-";
 
-		internal static void Categorize(this Outlook.MailItem mail, MessageEditor messageEditor)
+		internal static void Categorize(this Outlook.MailItem mail, MessageEditor messageEditor, StudentsRepository repo)
 		{
 			if (messageEditor == null)
 				return;
-			bool isStudent = false;
-			if (StudentsRepository.Repo != null)
-			{
-				isStudent = StudentsRepository.Repo.TryGetStudentByEmail(mail.GetSenderEmailAddress(), out _);
-			}
+			if (repo == null)
+				return;
+			bool isStudent = repo.TryGetStudentByEmail(mail.GetSenderEmailAddress(), out _);
 			if (!isStudent && mail.SenderHasStudentId())
 			{
 				isStudent = true;
@@ -136,7 +134,6 @@ namespace UnnOutlookAddin.MailManagement
 				yield return mail.SenderEmailAddress;
 			}
 		}
-
 
 		public static string GetSenderEmailAddress(this Outlook.MailItem mail)
 		{

@@ -175,45 +175,12 @@ namespace StudentsFetcher.StudentMarking
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			var students = UnnItBooster.ModelConversions.eVision.GetStudentsFromEvisionClipboard(Clipboard.GetText());
-			ConsiderNewStudents(students);
-		}
-
-		private void ConsiderNewStudents(IEnumerable<Student> students)
-		{
-			if (string.IsNullOrEmpty(txtModuleCode.Text))
-			{
-				txtReport.Text += $"No destination code.\r\n";
-				return;
-			}
-			if (!students.Any())
-			{
-				txtReport.Text += $"No students to process.\r\n";
-				return;
-			}
-
-			txtReport.Text += $"Processing {students.Count()} records.\r\n";
-			var coll = studentsRepo.GetPersonCollections().FirstOrDefault(x => x.Name == txtModuleCode.Text);
-			if (coll is null)
-			{
-				if (studentsRepo.IsValidNewCollectionName(txtModuleCode.Text, out var containerFullName))
-				{
-					// if new and valid
-					txtReport.Text += $"New container {containerFullName}\r\n";
-					_ = StudentJsonCollection.Create(containerFullName, students);
-				}
-			}
-			else
-			{
-				// if update and exists
-				var studs = coll.Students.OfType<Student>().MergeInformation(students);
-				coll.Students = studs.ToList();
-				txtReport.Text += $"Merged in existing container, total of {studs.Count()} records.\r\n";
-				coll.Save();
-			}
-			studentsRepo.Reload();
+			var students = UnnItBooster.ModelConversions.eVision.GetStudentsFromEvisionHtml(Clipboard.GetText());
+			txtReport.Text = studentsRepo.ConsiderNewStudents(students, txtModuleCode.Text);
 			RefreshModulesList();
 		}
+
+		
 
 		private void cmdSelectSource_Click(object sender, EventArgs e)
 		{
@@ -233,8 +200,8 @@ namespace StudentsFetcher.StudentMarking
 			if (!f.Exists)
 				return;
 			var students = UnnItBooster.ModelConversions.TurnItIn.GetStudentsFromGradebook(f.FullName);
-
-			ConsiderNewStudents(students);
+			txtReport.Text = studentsRepo.ConsiderNewStudents(students, txtModuleCode.Text);
+			RefreshModulesList();
 		}
 
 		private void Button6_Click(object sender, EventArgs e)

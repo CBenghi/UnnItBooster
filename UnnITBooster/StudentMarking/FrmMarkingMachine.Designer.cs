@@ -1238,14 +1238,14 @@ namespace StudentsFetcher.StudentMarking
 			this.tableLayoutPanel4.Size = new System.Drawing.Size(817, 32);
 			this.tableLayoutPanel4.TabIndex = 13;
 			// 
-			// FrmAutomaticMarkingMachine
+			// FrmMarkingMachine
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(817, 603);
 			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.tableLayoutPanel4);
-			this.Name = "FrmAutomaticMarkingMachine";
+			this.Name = "FrmMarkingMachine";
 			this.Text = "Marking Machine";
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel1.PerformLayout();

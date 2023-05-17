@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using UnnFunctions.Models;
 
 namespace UnnItBooster.Models
 {
@@ -92,6 +93,8 @@ namespace UnnItBooster.Models
 		}
 
 		public bool DSSR { get; set; } = false;
+		public string? Phone { get; internal set; }
+
 		public bool Matches(string filter)
 		{
 			if (FullName == filter)
@@ -101,6 +104,8 @@ namespace UnnItBooster.Models
 			if (Forename != null && Forename.Contains(filter))
 				return true;
 			if (NumericStudentId != null && NumericStudentId.Contains(filter))
+				return true;
+			if (Phone != null && Phone.Contains(filter))
 				return true;
 			if (Email != null && Email.Contains(filter))
 				return true;
@@ -114,6 +119,8 @@ namespace UnnItBooster.Models
 			return Path.Combine(pictureFolder, string.Format("{0}.jpg", NumericStudentId));
 		}
 
+		public List<ModuleResult>? TranscriptResults { get; set; }
+
 		internal bool HasEmail(string seekEmail)
 		{
 			if (Email == seekEmail)
@@ -121,6 +128,14 @@ namespace UnnItBooster.Models
 			if (AlternativeEmails == null)
 				return false;
 			return AlternativeEmails.Any(x => x == seekEmail);
+		}
+
+		internal void SetModuleMark(ModuleResult res)
+		{
+			if (TranscriptResults == null)
+				TranscriptResults = new List<ModuleResult>();
+			TranscriptResults.RemoveAll(x => x.Code == res.Code);
+			TranscriptResults.Add(res);
 		}
 	}
 }

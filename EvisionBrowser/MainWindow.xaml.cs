@@ -1,9 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
+using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
+using UnnItBooster.Models;
 
 namespace EvisionBrowser
 {
@@ -15,8 +21,18 @@ namespace EvisionBrowser
 		public MainWindow()
 		{
 			InitializeComponent();
-			wbSample.EnsureCoreWebView2Async();
+			InitializeAsync();
 			DataContext = this;
+			dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+			dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+			dispatcherTimer.Interval = new TimeSpan(0,0,3);
+			dispatcherTimer.Start();
+		}
+
+		async void InitializeAsync()
+		{
+			await wbSample.EnsureCoreWebView2Async(null);
+			wbSample.CoreWebView2.WebResourceResponseReceived += wbSample_WebResourceResponseReceived;
 		}
 
 		private void PerformBack(object sender, RoutedEventArgs e)
@@ -31,45 +47,22 @@ namespace EvisionBrowser
 
 		private void PerformGo(object sender, RoutedEventArgs e)
 		{
-			string url = Url.Text;		
-			if (!Url.Text.StartsWith("http://"))
-				url = $"http://{url}";
-			wbSample.Source = new Uri(url);
-			
+			string url = Url.Text;
+			//if (!Url.Text.StartsWith("http://"))
+			//	url = $"http://{url}";
+			var uri = new Uri(url);
+			if (uri.ToString() != wbSample.Source.ToString())
+				wbSample.Source = uri;
+			else
+				wbSample.Reload();
 		}
 		private void PerformHome(object sender, RoutedEventArgs e)
 		{
-			wbSample.Source = new Uri("https://sits.northumbria.ac.uk/live/sits.urd/run/siw_sso.saml");
-		}
-
-		string html = string.Empty;
-
-		private void NavigationDone(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
-		{
-			var viewer = sender as Microsoft.Web.WebView2.Wpf.WebView2;
-			if (viewer == null)
-				return;
-			Url.Text = viewer.Source.ToString();
-		}
-
-		Queue<string> PagesToView = new Queue<string>();
-
-		[RelayCommand]
-		private async Task<bool> ProcessStudents()
-		{
-			var students = await GetSource();
-			return true;
-		}
-		
-		private async Task<string> GetSource()
-		{
-			string v = await wbSample.ExecuteScriptAsync("document.documentElement.outerHTML;");
-			var t = JsonDocument.Parse(v);
-			var elem = t.RootElement;
-			var str = elem.GetString();
-			if (str is null)
-				return string.Empty;
-			return str;
+			if (Url.Text == "https://sits.northumbria.ac.uk/live/sits.urd/run/siw_sso.saml")
+				Url.Text = "http://one.northumbria.ac.uk/";
+			else
+				Url.Text = "https://sits.northumbria.ac.uk/live/sits.urd/run/siw_sso.saml";
+			wbSample.Source = new Uri(Url.Text);
 		}
 	}
 }

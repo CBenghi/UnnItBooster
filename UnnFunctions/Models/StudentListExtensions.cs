@@ -10,23 +10,56 @@ public static class StudentListExtensions
 	public static IEnumerable<Student> MergeInformation(this IEnumerable<Student> baseCollection, IEnumerable<Student> otherCollection)
 	{
 		var noChange = baseCollection.Where(x => x.NumericStudentId == string.Empty);
-		var Enrich = baseCollection.Where(x => x.NumericStudentId != string.Empty).ToDictionary(x => x.NumericStudentId, x => x);
-		var extra = new List<Student>();
-		foreach (var source in otherCollection)
+		try
 		{
-			if (source.NumericStudentId == string.Empty || !Enrich.TryGetValue(source.NumericStudentId, out var dest))
+			var Enrich = baseCollection.Where(x => x.NumericStudentId != string.Empty).ToDictionary(x => x.NumericStudentId, x => x);
+			var extra = new List<Student>();
+			foreach (var sourceStudent in otherCollection)
 			{
-				// if cant search or cant find
-				extra.Add(source);
-				continue;
+				if (sourceStudent.NumericStudentId == string.Empty || !Enrich.TryGetValue(sourceStudent.NumericStudentId, out var destinationStudent))
+				{
+					// if cant search or cant find
+					extra.Add(sourceStudent);
+					continue;
+				}
+				MergeInformation(destinationStudent, sourceStudent);
 			}
-			if (!string.IsNullOrEmpty(source.Email) && dest.Email != source.Email)
-				dest.Email = source.Email;
-			if (!string.IsNullOrEmpty(source.Surname) && dest.Surname != source.Surname)
-				dest.Surname = source.Surname;
-			if (!string.IsNullOrEmpty(source.Forename) && dest.Forename != source.Forename)
-				dest.Forename = source.Forename;
+			return Enrich.Values.Union(noChange).Union(extra);
 		}
-		return Enrich.Values.Union(noChange).Union(extra);
+		catch (System.Exception ex)
+		{
+			return baseCollection;
+		}		
+	}
+
+	public static void MergeInformation(this Student destinationStudent, Student sourceStudent)
+	{
+		if (!string.IsNullOrEmpty(sourceStudent.FullName) && destinationStudent.FullName != sourceStudent.FullName)
+			destinationStudent.FullName = sourceStudent.FullName;
+		if (!string.IsNullOrEmpty(sourceStudent.NumericStudentId) && destinationStudent.NumericStudentId != sourceStudent.NumericStudentId)
+			destinationStudent.NumericStudentId = sourceStudent.NumericStudentId;
+		if (!string.IsNullOrEmpty(sourceStudent.Email) && destinationStudent.Email != sourceStudent.Email)
+			destinationStudent.Email = sourceStudent.Email;
+		if (!string.IsNullOrEmpty(sourceStudent.Surname) && destinationStudent.Surname != sourceStudent.Surname)
+			destinationStudent.Surname = sourceStudent.Surname;
+		if (!string.IsNullOrEmpty(sourceStudent.Forename) && destinationStudent.Forename != sourceStudent.Forename)
+			destinationStudent.Forename = sourceStudent.Forename;
+		if (!string.IsNullOrEmpty(sourceStudent.Phone) && destinationStudent.Phone != sourceStudent.Phone)
+			destinationStudent.Phone = sourceStudent.Phone;
+		if (sourceStudent.AlternativeEmails is not null)
+		{
+			foreach (var altEmail in sourceStudent.AlternativeEmails)
+			{
+				if (destinationStudent.AlternativeEmails is null || !destinationStudent.AlternativeEmails.Contains(altEmail))
+					destinationStudent.AddAlternativeEmail(altEmail);
+			}
+		}
+		if (sourceStudent.TranscriptResults is not null)
+		{
+			foreach (var result in sourceStudent.TranscriptResults)
+			{
+				destinationStudent.SetModuleMark(result);
+			}
+		}
 	}
 }

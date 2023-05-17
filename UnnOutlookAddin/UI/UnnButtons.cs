@@ -14,7 +14,7 @@ namespace UnnOutlookAddin.UI
 {
 	public partial class UnnButtons
 	{
-		private void BtnClassify_Click(object sender, RibbonControlEventArgs e)
+        private void BtnClassify_Click(object sender, RibbonControlEventArgs e)
 		{
 			var messageEditor = new MessageEditor(e.Control.Context);
 
@@ -24,7 +24,7 @@ namespace UnnOutlookAddin.UI
 
 			foreach (var selectedMailMessage in explorer.Selection.OfType<Outlook.MailItem>())
 			{
-				selectedMailMessage.Categorize(messageEditor);
+				selectedMailMessage.Categorize(messageEditor, ThisAddIn.Repository);
 			}
 		}
 
