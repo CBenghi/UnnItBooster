@@ -72,15 +72,14 @@ namespace StudentsFetcher.StudentMarking
 		{
 			var li = new ListViewItem
 			{
-				Text = string.Format("{0} {1}", student.Forename, student.Surname),
+				Text = student.GetFullName(),
 				Tag = student
 			};
-			li.SubItems.Add(student.FullName);
+			li.SubItems.Add(student.Route);
 			li.SubItems.Add(student.NumericStudentId);
 			li.SubItems.Add(student.Email);
-			li.SubItems.Add(student.Route);
-			li.SubItems.Add(student.DSSR ? "DSSR" : "");
 			li.SubItems.Add($"{student.Module} {student.Occurrence}");
+			li.SubItems.Add(student.DSSR ? "DSSR" : "");
 			lstStudents.Items.Add(li);
 		}
 
@@ -136,6 +135,8 @@ namespace StudentsFetcher.StudentMarking
 				}
 				sb.AppendLine($"");
 				sb.AppendLine($"OneLine:\t{st.Forename}\t{st.Surname}\t{st.NumericStudentId}\t{st.Email}");
+				sb.Append(st.ReportTranscript());
+
 				txtStudentInfo.Text = sb.ToString();
 			}
 			else

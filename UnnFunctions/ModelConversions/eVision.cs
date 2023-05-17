@@ -275,7 +275,7 @@ namespace UnnItBooster.ModelConversions
 							var txt = Clean(field);
 							EvaluateField(ref res, txt);
 						}
-						if (res.TryGetMark(out _))
+						if (res.TryGetMark(out _, out _))
 							st.SetModuleMark(res);
 					}
 				}

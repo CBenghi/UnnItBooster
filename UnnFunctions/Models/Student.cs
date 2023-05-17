@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using UnnFunctions.Models;
 
 namespace UnnItBooster.Models
@@ -137,5 +138,35 @@ namespace UnnItBooster.Models
 			TranscriptResults.RemoveAll(x => x.Code == res.Code);
 			TranscriptResults.Add(res);
 		}
+
+		public string GetFullName()
+		{
+			if (!string.IsNullOrEmpty(Forename) || !string.IsNullOrEmpty(Surname))
+				return $"{Forename} {Surname}";
+			else if (FullName is null)
+				return "";
+			return FullName;
+		}
+
+		public string ReportTranscript()
+		{
+			StringBuilder sb = new StringBuilder();
+			if (TranscriptResults is not null)
+			{
+				string yr = "";
+				foreach (var transcript in TranscriptResults.OrderBy(x => x.Year))
+				{
+					if (transcript.Year != yr)
+					{
+						sb.AppendLine($"");
+						yr = transcript.Year;
+						sb.AppendLine($"{yr}");
+					}
+					sb.AppendLine($"{transcript.Year} Lvl:{transcript.Level} {transcript.Code} Mark: {transcript.GetMarkString()} ({transcript.Title} {transcript.Credits} credits).");
+				}
+			}
+			return sb.ToString();
+		}
+		
 	}
 }

@@ -27,7 +27,7 @@ namespace UnnOutlookAddin.UI
 
 		private void SystemReport()
 		{
-			StringBuilder stringBuilder = new StringBuilder();
+			var stringBuilder = new StringBuilder();
 			stringBuilder.AppendLine($"Students folder: {repository.ConfigurationFolder.FullName}");
 			stringBuilder.AppendLine($"");
 			stringBuilder.AppendLine($"Collections:");
@@ -59,6 +59,7 @@ namespace UnnOutlookAddin.UI
 				stringBuilder.AppendLine($"Last: {stud.Surname}");
 				stringBuilder.AppendLine($"Full: {stud.FullName}");
 				stringBuilder.AppendLine();
+				stringBuilder.Append(stud.ReportTranscript());
 			}
 			return stringBuilder.ToString();
 		}

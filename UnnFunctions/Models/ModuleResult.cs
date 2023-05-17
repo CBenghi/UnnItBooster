@@ -32,9 +32,13 @@ namespace UnnFunctions.Models
 			return ActualMark;
 		}
 
-
-		public bool TryGetMark(out int mark)
+		public bool TryGetMark(out int mark, out int credits)
 		{
+			credits = 0;
+			if (!string.IsNullOrEmpty(Credits))
+			{
+				int.TryParse(Credits, out credits);
+			}
 			var t = GetMarkString();
 			if (string.IsNullOrEmpty(t))
 			{

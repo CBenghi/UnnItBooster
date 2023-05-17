@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿#define stopW
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
@@ -63,7 +64,7 @@ namespace EvisionBrowser
 				sb.AppendLine($"Page fetch performance:");
 				sb.AppendLine($"min: {elapsedTimes.Min()}ms.");
 				sb.AppendLine($"max: {elapsedTimes.Max()}ms.");
-				sb.AppendLine($"avg: {elapsedTimes.Average()}ms.");
+				sb.AppendLine($"avg: {elapsedTimes.Average():0}ms.");
 				Report = sb.ToString();
 			}
 		}
@@ -79,19 +80,27 @@ namespace EvisionBrowser
 			stopwatch?.Stop();
 			if (stopwatch != null) 
 				elapsedTimes.Add(stopwatch.ElapsedMilliseconds);
+			PerformStatUpdate();
 #endif
 			if (currentAction != null)
 			{
 				ProcessAvailableDataAsync(currentAction);
 			}
-			// PerformStatUpdate();
 		}
 
 		[RelayCommand]
 		private async void Test()
 		{
-			var script = "document.getElementById('tab-tabs-7a').click();";
-			Report = await GetScriptString(script);
+			//var script = "document.getElementById('tab-tabs-7a').click();";
+			//Report = await GetScriptString(script);
+
+			studentsRepo.Reload();
+			StringBuilder stringBuilder = new StringBuilder();
+			foreach (var coll in studentsRepo.GetPersonCollections())
+			{
+				stringBuilder.AppendLine($"{coll.Name} - {coll.Students.Count}");
+			}
+			Report = stringBuilder.ToString();
 			
 		}
 
