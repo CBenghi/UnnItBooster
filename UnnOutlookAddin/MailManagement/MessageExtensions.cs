@@ -14,9 +14,10 @@ namespace UnnOutlookAddin.MailManagement
 	{
 		static readonly Regex regexStudentEmailPattern = new Regex(@"smtp:([a-zA-Z]\d{4,})@", RegexOptions.Compiled);
 
-		internal static bool SenderHasStudentId(this Outlook.MailItem mail)
+		internal static bool SenderHasStudentId(this Outlook.MailItem mail, out string id)
 		{
-			return !string.IsNullOrEmpty(mail.GetSenderStudentId());
+			id = mail.GetSenderStudentId();
+			return !string.IsNullOrEmpty(id);
 		}
 
 		internal static string GetUserProperty(this Outlook.MailItem mail, string propName)
@@ -78,17 +79,17 @@ namespace UnnOutlookAddin.MailManagement
 				return;
 			if (repo == null)
 				return;
-			bool isStudent = repo.TryGetStudentByEmail(mail.GetSenderEmailAddress(), out _);
-			if (!isStudent && mail.SenderHasStudentId())
-			{
-				isStudent = true;
-			}
+			string studentId;
+			if (repo.TryGetStudentByEmail(mail.GetSenderEmailAddress(), out var st))
+				studentId = st.NumericStudentId;
+			else
+				mail.SenderHasStudentId(out studentId);
+			
 			// tag if it is a student
-			if (isStudent)
+			if (!string.IsNullOrEmpty(studentId))
 			{
 				messageEditor.SetCategory(mail, "Students");
-				var id = mail.GetSenderStudentId();
-				mail.AddUserProperty(userIdPropertyName, id);
+				mail.AddUserProperty(userIdPropertyName, studentId);
 			}
 			else
 			{

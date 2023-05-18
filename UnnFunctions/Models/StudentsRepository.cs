@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography.Xml;
 using System.Text;
 
@@ -129,9 +131,15 @@ public class StudentsRepository
 
 	public bool HasImage(Student student, out string imagePath)
 	{
+		var num = student.NumericStudentId;
+		return HasImage(num, out imagePath);
+	}
+
+	public bool HasImage(string numericStudentId, out string imagePath)
+	{
 		imagePath = "";
 		var d = new DirectoryInfo(dataFolder);
-		var fl = d.GetFiles($"{student.NumericStudentId}.jpg", SearchOption.AllDirectories).FirstOrDefault();
+		var fl = d.GetFiles($"{numericStudentId}.jpg", SearchOption.AllDirectories).FirstOrDefault();
 		if (fl is null)
 			return false;
 		imagePath = fl.FullName;
@@ -211,5 +219,36 @@ public class StudentsRepository
 		toUpdate.MergeInformation(student);
 		coll.Save();
 		return true;
+	}
+
+	public bool TryGetExtraImage(string numericUserId, out string image)
+	{
+		var imageUrl = $"https://nuweb2.northumbria.ac.uk/photoids/{numericUserId}.jpg";
+		var nm = GetDefaultImageName(numericUserId, "extra");
+		if (File.Exists(nm))
+		{
+			image = nm;
+			return true;
+		}
+		try
+		{
+			ServicePointManager.Expect100Continue = true;
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+			var request = WebRequest.Create(imageUrl);
+			using var response = request.GetResponse();
+			using var stream = response.GetResponseStream();
+			using var fileStream = File.Create(nm);
+			stream.CopyTo(fileStream);
+			image = nm;
+			return true;
+		}
+		catch (Exception)
+		{
+			if (File.Exists(nm))
+				File.Delete(nm);
+			image = string.Empty;
+			return false;
+		}
+		
 	}
 }

@@ -186,6 +186,7 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="Actions\ComboAction.cs" />
     <Compile Include="frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>

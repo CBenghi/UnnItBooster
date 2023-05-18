@@ -6,51 +6,56 @@ using System.Windows.Forms;
 using UnnItBooster.Models;
 using Microsoft.Office.Interop.Outlook;
 using UnnOutlookAddin.MailManagement;
-using System.Web;
-using System.Threading.Tasks;
-using System.Diagnostics;
+using System.Collections.Generic;
+using UnnOutlookAddin.Actions;
+using StudentsFetcher.StudentMarking;
+using System.Security.Cryptography;
+// using System.Diagnostics;
 
 namespace UnnOutlookAddin.UI
 {
 	public partial class UnnStudent : UserControl
 	{
-		public UnnStudent()
-		{
-			InitializeComponent();
-		}
-
 		public UnnStudent(StudentsRepository repository)
 		{
 			InitializeComponent();
+			_repository = repository;
 			SystemReport();
 		}
 
 		private void SystemReport()
 		{
 			var stringBuilder = new StringBuilder();
-			stringBuilder.AppendLine($"Students folder: {repository.ConfigurationFolder.FullName}");
+			stringBuilder.AppendLine($"Students folder: {Repository.ConfigurationFolder.FullName}");
 			stringBuilder.AppendLine($"");
 			stringBuilder.AppendLine($"Collections:");
-			foreach (var coll in repository.GetPersonCollections())
+			foreach (var coll in Repository.GetPersonCollections())
 			{
 				stringBuilder.AppendLine($"- {coll.Name} ({coll.Students.Count})");
 			}
 			txtSystemInfo.Text = stringBuilder.ToString();
 		}
 
-		private StudentsRepository repository;
+		private StudentsRepository _repository = null;
+		internal StudentsRepository Repository 
+		{ 
+			get
+			{
+				return _repository;				
+			}
+		}
 
 		private string SetEmail(string email)
 		{
 			SetPicture(false);
-			var students = repository.Students.Where(x => x.Email == email).ToList();
+			var students = Repository.Students.Where(x => x.Email == email).ToList();
 			StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.AppendLine($"Found: {students.Count} students.");
 			stringBuilder.AppendLine($"");
 			foreach (var stud in students)
 			{
 				if (string.IsNullOrEmpty(imagePath))
-					repository.HasImage(stud, out imagePath);
+					Repository.HasImage(stud, out imagePath);
 				stringBuilder.AppendLine($"{stud.NumericStudentId}");
 				stringBuilder.AppendLine($"{stud.Route} {stud.CourseYear}");
 				stringBuilder.AppendLine($"{stud.Occurrence}");
@@ -70,14 +75,14 @@ namespace UnnOutlookAddin.UI
 		{
 			if (viewPicture && !string.IsNullOrWhiteSpace(imagePath))
 			{
-				txtInformation.Visible = false;
+				groupBox1.Visible = false;
 				StudImage.Visible = true;
 				StudImage.Load(imagePath);
 			}
 			else
 			{
 				imagePath = null;
-				txtInformation.Visible = true;
+				groupBox1.Visible = true;
 				StudImage.Visible = false;
 			}
 		}
@@ -87,34 +92,23 @@ namespace UnnOutlookAddin.UI
 			SetPicture(txtInformation.Visible);
 		}
 
+		MailItem currentMailItem = null;
+
 		internal async void SetMessageAsync(MailItem mailItem)
 		{
+			currentMailItem = mailItem;
 			var snd = MessageClassificationExtensions.GetSenderEmailAddress(mailItem);
 			var txt = SetEmail(snd);
 			var folder = mailItem.Parent as MAPIFolder;
 			if (folder != null)
 				txt += $"\r\nFolder: {folder.Name}";
 			txtInformation.Text = txt;
-			// await EvaluateConversationAsync(mailItem);
 		}
 
-		private async Task<bool> EvaluateConversationAsync(MailItem mailItem)
+		string DemoConversation(MailItem mailItem, out IEnumerable<ComboAction> actions)
 		{
-			var ret = await Task.Run(() =>
-			{
-				//var conversation = mailItem.GetConversation();
-				//if (conversation == null)
-				//	return false;
-				//var children = conversation.GetChildren(conversation);
-				DemoConversation(mailItem);
-				return true;
-			});
-			return ret;
-		}
-
-		void DemoConversation(MailItem mailItem)
-		{
-
+			var ret = new List<ComboAction>();
+			StringBuilder sb = new StringBuilder();
 			// Determine the store of the mail item. 
 			var folder = mailItem.Parent as Folder;
 			var store = folder.Store;
@@ -122,55 +116,39 @@ namespace UnnOutlookAddin.UI
 			{
 				// Obtain a Conversation object. 
 				Conversation conv = mailItem.GetConversation();
-				// Check for null Conversation. 
 				if (conv != null)
 				{
-					// Obtain Table that contains rows for each item in the conversation. 
-					//var table = conv.GetTable();
-					//Debug.WriteLine($"Conversation Items Count: {table.GetRowCount()}");
-					//Debug.WriteLine("Conversation Items from Table:");
-					//while (!table.EndOfTable)
-					//{
-					//	Row nextRow = table.GetNextRow();
-					//	Debug.WriteLine($"{nextRow["Subject"]} Modified: {nextRow["LastModificationTime"]}");
-					//}
-					Debug.Write("=== Conversation Items from Root: ");
-					// Obtain root items and enumerate the conversation. 
-					try
+					sb.AppendLine("=== Root Conversation Items: ");
+					try // Obtain root items and enumerate the conversation. 
 					{
-						var simpleItems = conv.GetRootItems();
-						foreach (object item in simpleItems)
+						var simpleRootItems = conv.GetRootItems();
+						foreach (object item in simpleRootItems)
 						{
-							// In this example, only enumerate MailItem type.
-							// Other types such as PostItem or MeetingItem 
-							// can appear in the conversation. 
 							if (item is MailItem mail)
 							{
+								ret.AddRange(ComboAction.From(mail));
 								Folder inFolder = mail.Parent as Folder;
-								Debug.WriteLine($"{mail.Subject} in folder `{inFolder.Name}` by {mail.Sender.Name}");
-								// Call EnumerateConversation 
-								// to access child nodes of root items. 
-								EnumerateConversation(item, conv);
+								sb.AppendLine($"{mail.Subject} in folder `{inFolder.Name}` by {mail.Sender.Name}");
+								ret.AddRange(EnumerateConversation(item, conv, sb));
 							}
 							else
-							{
-								Debug.WriteLine($"Not implemented type: {item.GetType()}");
-							}
-
+								sb.AppendLine($"Not implemented type: {item.GetType()}");							
 						}
 					}
 					catch (System.Exception ex)
 					{
-						Debug.WriteLine($"{ex.Message}");
+						sb.AppendLine($"{ex.Message}");
 					}
-					
 				}
 			}
+			actions = ret;
+			return sb.ToString();
 		}
 
 
-		void EnumerateConversation(object item, Conversation conversation, int indentation = 0)
+		List<ComboAction> EnumerateConversation(object item, Conversation conversation, StringBuilder sb, int indentation = 0)
 		{
+			List<ComboAction> list = new List<ComboAction>();
 			var indent = new string(' ', indentation * 2);
 			SimpleItems items = conversation.GetChildren(item);
 			if (items.Count > 0)
@@ -179,20 +157,57 @@ namespace UnnOutlookAddin.UI
 				{
 					if (myItem is MailItem mailItem)
 					{
+						list.AddRange(ComboAction.From(mailItem));
 						Folder inFolder = mailItem.Parent as Folder;
 						string msg = $"{indent}{mailItem.Subject} in folder {inFolder.Name} - {mailItem.Sender.Name}";
-						Debug.WriteLine(msg);
+						sb.AppendLine(msg);
 					}
 					// Continue recursion. 
-					EnumerateConversation(myItem, conversation, indentation + 1);
+					list.AddRange(EnumerateConversation(myItem, conversation, sb, indentation + 1));
 				}
 			}
 			else if (indentation == 0) 
 			{
-				Debug.WriteLine("No children");
+				sb.AppendLine("No children");
 			}
+			return list;
 		}
 
+		private void ButtonThread_Click(object sender, EventArgs e)
+		{
+			if (currentMailItem == null)
+				return;
+			txtInformation.Text += "\r\n\r\n" + DemoConversation(currentMailItem, out var actions);
+			cmbAction.Items.Clear();
+			cmbAction.Items.AddRange(actions.ToArray());
+		}
 
+		private void ButtonToggleWrap_Click(object sender, EventArgs e)
+		{
+			txtInformation.WordWrap = !txtInformation.WordWrap;
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			if (!(cmbAction.SelectedItem is ComboAction item))
+				return;
+			switch (item.ActionType)
+			{
+				case ComboAction.Tp.Search:
+					var t = new StudentListForm();
+					t.SetSearch((string)item.Tag);
+					t.Show();
+					break;
+				case ComboAction.Tp.Image:
+					if (!Repository.HasImage((string)item.Tag, out var image))
+						Repository.TryGetExtraImage((string)item.Tag, out image);
+					if (!string.IsNullOrEmpty(image))
+					{
+						imagePath = image;
+						SetPicture(true);
+					}
+					break;
+			}
+		}
 	}
 }
