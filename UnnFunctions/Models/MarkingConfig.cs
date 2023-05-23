@@ -320,6 +320,17 @@ namespace StudentsFetcher.StudentMarking
 			Execute(sql);
 		}
 
+		public DataRow? GetRow(string sql)
+		{
+			var dt = new DataTable();
+			var c = GetConn();
+			var da = new SQLiteDataAdapter(sql, c);
+			da.Fill(dt);
+			return dt.Rows.Count == 1
+				? dt.Rows[0]
+				: null;
+		}
+
 		public string BareName
 		{
 			get

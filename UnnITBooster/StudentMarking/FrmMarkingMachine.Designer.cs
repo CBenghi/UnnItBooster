@@ -785,6 +785,7 @@ namespace StudentsFetcher.StudentMarking
 			this.StudImage.Margin = new System.Windows.Forms.Padding(2);
 			this.StudImage.Name = "StudImage";
 			this.StudImage.Size = new System.Drawing.Size(322, 270);
+			this.StudImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.StudImage.TabIndex = 13;
 			this.StudImage.TabStop = false;
 			// 

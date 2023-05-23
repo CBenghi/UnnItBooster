@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33626.354
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UNNITBooster", "UnnITBooster\UNNITBooster.csproj", "{4F6802FC-4CE4-48F4-AC77-DBB8A833E617}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnnItBooster", "UnnITBooster\UnnItBooster.csproj", "{4F6802FC-4CE4-48F4-AC77-DBB8A833E617}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnnOutlookAddin", "UnnOutlookAddin\UnnOutlookAddin.csproj", "{82F44136-9C6D-4F33-B388-692145DF48A7}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtendedTextBox", "Extended
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EvisionBrowser", "EvisionBrowser\EvisionBrowser.csproj", "{7877F4B6-9190-4D0A-B208-908D5E9C4C23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentTests", "DevelopmentTests\DevelopmentTests.csproj", "{7179AC9D-4DA5-4FB5-B6CE-DF07AC6A5E45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentTests", "DevelopmentTests\DevelopmentTests.csproj", "{7179AC9D-4DA5-4FB5-B6CE-DF07AC6A5E45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
