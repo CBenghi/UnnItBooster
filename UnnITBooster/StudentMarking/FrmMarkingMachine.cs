@@ -1074,4 +1074,13 @@ public partial class FrmMarkingMachine : Form
 			txtReport.Text += _config.UpdateDatabase(files);
 		}
 	}
+
+	private void BtnOpenFolder_Click(object sender, EventArgs e)
+	{
+		if (string.IsNullOrEmpty(txtExcelFileName.Text))
+			return;
+		FileInfo f = new FileInfo(txtExcelFileName.Text);
+		if (f.Exists)
+			Process.Start(f.Directory.FullName);
+	}
 }

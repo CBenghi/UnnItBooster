@@ -119,6 +119,7 @@ namespace StudentsFetcher.StudentMarking
 			this.button10 = new System.Windows.Forms.Button();
 			this.button9 = new System.Windows.Forms.Button();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+			this.BtnOpenFolder = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -568,7 +569,7 @@ namespace StudentsFetcher.StudentMarking
 			// cmdSelectFile
 			// 
 			this.cmdSelectFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdSelectFile.Location = new System.Drawing.Point(760, 5);
+			this.cmdSelectFile.Location = new System.Drawing.Point(730, 5);
 			this.cmdSelectFile.Name = "cmdSelectFile";
 			this.cmdSelectFile.Size = new System.Drawing.Size(24, 22);
 			this.cmdSelectFile.TabIndex = 10;
@@ -583,7 +584,7 @@ namespace StudentsFetcher.StudentMarking
 			this.txtExcelFileName.Location = new System.Drawing.Point(63, 5);
 			this.txtExcelFileName.Multiline = true;
 			this.txtExcelFileName.Name = "txtExcelFileName";
-			this.txtExcelFileName.Size = new System.Drawing.Size(691, 22);
+			this.txtExcelFileName.Size = new System.Drawing.Size(661, 22);
 			this.txtExcelFileName.TabIndex = 9;
 			this.txtExcelFileName.TabStop = false;
 			this.txtExcelFileName.TextChanged += new System.EventHandler(this.txtExcelFileName_TextChanged);
@@ -591,7 +592,7 @@ namespace StudentsFetcher.StudentMarking
 			// cmdReload
 			// 
 			this.cmdReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdReload.Location = new System.Drawing.Point(790, 5);
+			this.cmdReload.Location = new System.Drawing.Point(760, 5);
 			this.cmdReload.Name = "cmdReload";
 			this.cmdReload.Size = new System.Drawing.Size(24, 22);
 			this.cmdReload.TabIndex = 12;
@@ -1220,15 +1221,17 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// tableLayoutPanel4
 			// 
-			this.tableLayoutPanel4.ColumnCount = 4;
+			this.tableLayoutPanel4.ColumnCount = 5;
 			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
 			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.tableLayoutPanel4.Controls.Add(this.cmdReload, 3, 0);
 			this.tableLayoutPanel4.Controls.Add(this.label5, 0, 0);
 			this.tableLayoutPanel4.Controls.Add(this.cmdSelectFile, 2, 0);
 			this.tableLayoutPanel4.Controls.Add(this.txtExcelFileName, 1, 0);
+			this.tableLayoutPanel4.Controls.Add(this.BtnOpenFolder, 4, 0);
 			this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2);
@@ -1237,6 +1240,16 @@ namespace StudentsFetcher.StudentMarking
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel4.Size = new System.Drawing.Size(817, 32);
 			this.tableLayoutPanel4.TabIndex = 13;
+			// 
+			// BtnOpenFolder
+			// 
+			this.BtnOpenFolder.Image = global::UnnItBooster.Properties.Resources.folder;
+			this.BtnOpenFolder.Location = new System.Drawing.Point(790, 3);
+			this.BtnOpenFolder.Name = "BtnOpenFolder";
+			this.BtnOpenFolder.Size = new System.Drawing.Size(24, 23);
+			this.BtnOpenFolder.TabIndex = 13;
+			this.BtnOpenFolder.UseVisualStyleBackColor = true;
+			this.BtnOpenFolder.Click += new System.EventHandler(this.BtnOpenFolder_Click);
 			// 
 			// FrmMarkingMachine
 			// 
@@ -1390,6 +1403,7 @@ namespace StudentsFetcher.StudentMarking
 		private System.Windows.Forms.TabPage tabPage8;
 		private System.Windows.Forms.Button button9;
 		private System.Windows.Forms.Button button10;
+		private Button BtnOpenFolder;
 	}
 }
 
