@@ -57,7 +57,7 @@ namespace StudentsFetcher.StudentMarking
 			this.txtTextOrPointer = new ExtendedTextBox.ExtTextBox();
 			this.txtAdditionalNote = new ExtendedTextBox.ExtTextBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.txtSection = new System.Windows.Forms.TextBox();
+			this.txtSection = new System.Windows.Forms.ComboBox();
 			this.txtArea = new System.Windows.Forms.TextBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.cmbComponentComment = new System.Windows.Forms.ComboBox();
@@ -1329,7 +1329,7 @@ namespace StudentsFetcher.StudentMarking
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtSection;
+        private System.Windows.Forms.ComboBox txtSection;
         private System.Windows.Forms.TextBox txtArea;
         private System.Windows.Forms.Button cmdSelectFile;
         private System.Windows.Forms.TextBox txtExcelFileName;

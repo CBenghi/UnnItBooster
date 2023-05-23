@@ -160,14 +160,21 @@ namespace StudentsFetcher.StudentMarking
 				sb.AppendFormat(componentComments);
 			}
 			// sb.AppendFormat("Feedback:\r\n\r\n");
-			dt = GetDataTable("select * from QComments where SCOM_Ptr_Submission = " + id + "  order by cpnt_order, SCOM_ID");
+			var sqlTable = $"select * from QComments where SCOM_Ptr_Submission = {id} order by cpnt_order, COMM_Section";
+			dt = GetDataTable(sqlTable);
 			var prevSection = "";
 			foreach (DataRow item in dt.Rows)
 			{
 				var thisSection = item["CPNT_Name"].ToString().Trim();
+				var sec = item["COMM_Section"].ToString();
+				thisSection += string.IsNullOrEmpty(thisSection)
+					? sec
+					: $" / {sec}";
+				
+
 				if (prevSection != thisSection)
 				{
-					sb.AppendFormat("{0}\r\n\r\n", thisSection);
+					sb.AppendLine($"\r\n{thisSection}\r\n");
 					prevSection = thisSection;
 				}
 				string lastchar = "";

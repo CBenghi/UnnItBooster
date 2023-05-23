@@ -61,9 +61,6 @@ public partial class FrmMarkingMachine : Form
                 var cmp = Convert.ToInt32(item["MARK_ptr_Component"]);
                 var val = Convert.ToInt32(item["MARK_Value"]);
 
-                // MARK_ptr_Component
-                // MARK_Value
-
                 if (cmp == -1)
                     cmp = 0;
 
@@ -178,7 +175,6 @@ public partial class FrmMarkingMachine : Form
         cmbDocuments.Items.Add(submission.Title);
     }
 
-
     private int GetStudentNumber()
     {
         if (_config == null || !File.Exists(_config.DbName))
@@ -204,7 +200,7 @@ public partial class FrmMarkingMachine : Form
             var setComponentCommentMatch = Regex.Match(txtSearch.Text, "componentComment (\\d+) (.*)");
             var marksMatch = Regex.Match(txtSearch.Text, "marks (\\d+)");
             var idsMatch = Regex.Match(txtSearch.Text, "ids");
-            var editMatch = Regex.Match(txtSearch.Text, "^edit (?<par>last|\\d+)$");
+            var editMatch = Regex.Match(txtSearch.Text, "^edit (?<par>last|\\?|\\d+)$");
             var whoGotMatch = Regex.Match(txtSearch.Text, @"WhoGotComment (\d+)");
             var removeMatch = Regex.Match(txtSearch.Text, @"Remove (\d+)");
             if (addComponentMatch.Success)
@@ -300,6 +296,20 @@ public partial class FrmMarkingMachine : Form
 	private void EditLoad(string value)
 	{
         var sql = "select TB_SubComments.*, TB_Comments.* from TB_SubComments inner join TB_Comments on SCOM_ptr_Comment = COMM_ID ";
+        if (value == "?")
+        {
+			sql += $"where SCOM_ptr_Submission = {GetStudentNumber()}";
+            var existing = _config.GetDataTable(sql);
+            StringBuilder sb = new StringBuilder();
+            foreach (DataRow iterRow in existing.Rows)
+            {
+                sb.AppendLine($"{iterRow["COMM_ID"]}, {iterRow["COMM_Section"]} / {iterRow["COMM_Area"]}\r\n");
+                sb.AppendLine($"{iterRow["COMM_Text"]}\r\n");
+                sb.AppendLine($"{iterRow["SCOM_AddNote"]}\r\n");
+            }
+			txtLibReport.Text = sb.ToString();
+			return;
+		}
         if (value == "last")
         {
             sql += "order by SCOM_ID desc limit 1";
@@ -314,7 +324,6 @@ public partial class FrmMarkingMachine : Form
             txtArea.Text = $"{row["COMM_Area"]}";
             txtSection.Text = $"{row["COMM_Section"]}";
 		}
-
 	}
 
 	private void WriteFeedbackFile()
@@ -350,9 +359,10 @@ public partial class FrmMarkingMachine : Form
             MessageBox.Show("Need student");
             return;
         }
-        var sql = "delete from TB_SubComments where "
-                  + "SCOM_ptr_Submission = " + GetStudentNumber()
-                  + " AND SCOM_ptr_Comment = " + m5.Groups[1].Value;
+        var sql = $"""
+            delete from TB_SubComments where SCOM_ptr_Submission = {GetStudentNumber()} 
+            AND SCOM_ptr_Comment = {m5.Groups[1].Value}
+            """;
         _config.Execute(sql);
         UpdateStudentReport();
     }
@@ -392,7 +402,6 @@ public partial class FrmMarkingMachine : Form
         var sql = "SELECT SCOM_ptr_Submission, TB_Submissions.SUB_UserID FROM TB_SubComments inner join TB_Submissions on SCOM_ptr_Submission = SUB_ID where SCOM_ptr_comment = " + m4.Groups[1].Value;
         var dt = _config.GetDataTable(sql);
         var reqIds = new List<string>();
-
         foreach (DataRow item in dt.Rows)
         {
             txtLibReport.Text += $"{item[0]}\t{item[1]}\r\n";
@@ -420,10 +429,8 @@ public partial class FrmMarkingMachine : Form
 
     private void GetMarks(Match m)
     {
-        // string component = m.Groups[1].ToString();
         var ids = txtLibReport.Text.Split(new[] { "\r\n" }, StringSplitOptions.None);
         var markgen = _config.GetMarkCalculator();
-
         foreach (var idWithSlash in ids)
         {
             var result = "";
@@ -433,7 +440,7 @@ public partial class FrmMarkingMachine : Form
                 var id = idParts[0];
                 result = markgen.GetFinalMark(id, _config).ToString();
             }
-            txtStudentreport.Text += string.Format("{0}\t{1}\r\n", idWithSlash, result);
+            txtStudentreport.Text += $"{idWithSlash}\t{result}\r\n";
         }
     }
 
@@ -444,14 +451,14 @@ public partial class FrmMarkingMachine : Form
         var compPercent = m.Groups[2].ToString();
         var compTitle = m.Groups[3].ToString();
 
-        sql = "delete from TB_Components where CPNT_Order = " + compOrder;
+        sql = $"delete from TB_Components where CPNT_Order = {compOrder}";
         _config.Execute(sql);
 
-        sql = "insert into TB_Components (CPNT_Order, CPNT_Percent, CPNT_Name) values (" +
-            compOrder + ", " +
-            compPercent + ", " +
-            "'" + compTitle.Trim().Replace("'", "''") + "' " +
-            ")";
+        sql = $"""
+            insert into 
+            TB_Components (CPNT_Order, CPNT_Percent, CPNT_Name) 
+            values ({compOrder}, {compPercent}, '{compTitle.Trim().Replace("'", "''")}')
+            """;
         _config.Execute(sql);
     }
 
@@ -466,26 +473,26 @@ public partial class FrmMarkingMachine : Form
         var sql = "select * from TB_Comments where ";
         if (sarr.Count() == 1)
         {
-            sql += "COMM_Text like '%" + sarr[0] + "%'";
+            sql += $"COMM_Text like '%{sarr[0]}%'";
             if (sarr[0].EndsWith("+"))
             {
                 var val = sarr[0].Substring(0, sarr[0].Length - 1);
-                sql = "select * from QComments where SCOM_AddNote like '%" + val + "%'";
+                sql = $"select * from QComments where SCOM_AddNote like '%{val}%'";
                 bExtended = true;
             }
         }
         else if (sarr.Count() > 1)
         {
-            sql += "[COMM_section] like '%" + sarr[0] + "%' ";
+            sql += $"[COMM_section] like '%{sarr[0]}%' ";
             txtSection.Text = sarr[0].ToUpper();
             if (sarr[1].Length > 0)
             {
                 txtArea.Text = sarr[1].ToUpper();
-                sql += "and [COMM_Area] like '%" + sarr[1] + "%' ";
+                sql += $"and [COMM_Area] like '%{sarr[1]}%' ";
             }
             if (sarr.Length > 2 && sarr[2].Length > 0)
             {
-                sql += "and [COMM_Text] like '%" + sarr[2] + "%' ";
+                sql += $"and [COMM_Text] like '%{sarr[2]}%' ";
             }
         }
 
@@ -525,10 +532,9 @@ public partial class FrmMarkingMachine : Form
         var con = _config.GetConn();
 
         string sql;
-        var reference = -1;
-        var isNumber = Int32.TryParse(txtTextOrPointer.Text, out reference);
-        string line1 = txtTextOrPointer.Text.Split(new[] { '\r', '\n' }).FirstOrDefault();
-        var isFirstLineNumber = Int32.TryParse(line1, out var firstLineNumber);
+		var isNumber = int.TryParse(txtTextOrPointer.Text, out int reference);
+		string line1 = txtTextOrPointer.Text.Split(new[] { '\r', '\n' }).FirstOrDefault();
+        var isFirstLineNumber = int.TryParse(line1, out var firstLineNumber);
 
 		if (isFirstLineNumber && !isNumber)
 		{
@@ -581,21 +587,30 @@ public partial class FrmMarkingMachine : Form
         _config.Execute(sql);
 
         UpdateStudentReport();
+        UpdateSectionCombo();
         txtTextOrPointer.Text = "";
         txtAdditionalNote.Text = "";
         txtSearch.SelectAll();
         txtSearch.Focus();
     }
 
-    private void label1_Click(object sender, EventArgs e)
+	private void UpdateSectionCombo()
+	{
+        txtSection.Items.Clear();
+        var vals = _config.GetDataTable("select distinct COMM_Section from TB_Comments order by COMM_Section");
+        foreach (DataRow row in vals.Rows)
+        {
+            txtSection.Items.Add(row[0].ToString());
+        }
+	}
+
+	private void label1_Click(object sender, EventArgs e)
     {
-        // txtTextOrPointer.SelectAll();
         txtTextOrPointer.Focus();
     }
 
     private void label2_Click(object sender, EventArgs e)
     {
-
         // txtAdditionalNote.SelectAll();
         txtAdditionalNote.Focus();
     }
@@ -638,6 +653,7 @@ public partial class FrmMarkingMachine : Form
             return;
         _config = new MarkingConfig(txtExcelFileName.Text);
         UpdateComponents();
+        UpdateSectionCombo();
     }
 
     private void UpdateComponents()
