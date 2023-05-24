@@ -47,6 +47,7 @@ namespace UnnOutlookAddin.UI
 
 		private string SetEmail(string email)
 		{
+			CmbFolder.Items.Clear();
 			SetPicture(false);
 			var students = Repository.Students.Where(x => x.Email == email).ToList();
 			StringBuilder stringBuilder = new StringBuilder();
@@ -104,6 +105,120 @@ namespace UnnOutlookAddin.UI
 				txt += $"\r\nFolder: {folder.Name}";
 			txtInformation.Text = txt;
 		}
+
+		//IEnumerable<MailItem> GetRootMailItems(MailItem mailItem)
+		//{
+		//	var ret = new List<MailItem>();
+
+		//	// Determine the store of the mail item. 
+		//	var folder = mailItem.Parent as Folder;
+		//	var store = folder.Store;
+		//	if (store.IsConversationEnabled == true)
+		//	{
+		//		// Obtain a Conversation object. 
+		//		Conversation conv = mailItem.GetConversation();
+		//		if (conv != null)
+		//		{
+		//			try // Obtain root items and enumerate the conversation. 
+		//			{
+		//				var simpleRootItems = conv.GetRootItems();
+		//				foreach (object item in simpleRootItems)
+		//				{
+		//					if (item is MailItem mail)
+		//					{
+		//						ret.Add(mail);
+		//						ret.AddRange(GetConversationEmails(mail, conv));
+		//					}
+		//				}
+		//			}
+		//			catch (System.Exception)
+		//			{
+		//			}
+		//		}
+		//	}
+		//	return ret;
+		//}
+
+
+		//IEnumerable<MailItem> GetConversationEmails(object item, Conversation conversation)
+		//{
+		//	SimpleItems items = conversation.GetChildren(item);
+		//	if (items.Count > 0)
+		//	{
+		//		foreach (object myItem in items)
+		//		{
+		//			if (myItem is MailItem mailItem)
+		//			{
+		//				yield return mailItem;
+
+		//				Folder inFolder = mailItem.Parent as Folder;
+		//			}
+		//			// Continue recursion. 
+		//			foreach (var conv in GetConversationEmails(item, conversation))
+		//			{
+		//				yield return conv;
+		//			}
+		//		}
+		//	}
+		//}
+
+		IEnumerable<MailItem> GetTopConversation(MailItem mailItem)
+		{
+			var ret = new List<MailItem>();
+			
+			// Determine the store of the mail item. 
+			var folder = mailItem.Parent as Folder;
+			var store = folder.Store;
+			if (store.IsConversationEnabled == true)
+			{
+				// Obtain a Conversation object. 
+				Conversation conv = mailItem.GetConversation();
+				if (conv != null)
+				{
+			
+					try // Obtain root items and enumerate the conversation. 
+					{
+						var simpleRootItems = conv.GetRootItems();
+						foreach (object item in simpleRootItems)
+						{
+							if (item is MailItem mail)
+							{
+								ret.Add(mail);
+								Folder inFolder = mail.Parent as Folder;
+								
+								ret.AddRange(EnumerateConversation(item, conv));
+							}
+						}
+					}
+					catch (System.Exception ex)
+					{
+						
+					}
+				}
+			}
+			return ret;
+		}
+
+		List<MailItem> EnumerateConversation(object item, Conversation conversation)
+		{
+			List<MailItem> list = new List<MailItem>();
+			SimpleItems items = conversation.GetChildren(item);
+			if (items.Count > 0)
+			{
+				foreach (object myItem in items)
+				{
+					if (myItem is MailItem mailItem)
+					{
+						list.Add(mailItem);
+						Folder inFolder = mailItem.Parent as Folder;
+					}
+					// Continue recursion. 
+					list.AddRange(EnumerateConversation(myItem, conversation));
+				}
+			}
+			return list;
+		}
+
 
 		string DemoConversation(MailItem mailItem, out IEnumerable<ComboAction> actions)
 		{
@@ -208,6 +323,41 @@ namespace UnnOutlookAddin.UI
 					}
 					break;
 			}
+		}
+
+		private void CmdFolder_Click(object sender, EventArgs e)
+		{
+			if (CmbFolder.SelectedItem != null)
+			{
+				if (CmbFolder.SelectedItem is ComboAction item && item.Tag is Folder fld && currentMailItem != null)
+					currentMailItem.Move(fld);				
+				return;
+			}
+			CmbFolder.Items.Clear();
+			if (currentMailItem is null)
+				return;
+			var threadMessages = GetTopConversation(currentMailItem).ToList();
+			var folders = threadMessages.Where(x => x.Parent is Folder).Select(x => x.Parent).ToList(); 
+			var dist = folders.GroupBy(p => p.Name)
+					  .Select(g => g.First())
+					  .ToList();
+
+			ComboAction selected = null;
+			foreach ( var folder in dist) 
+			{
+				ComboAction a = new ComboAction()
+				{
+					Text = folder.Name,
+					ActionType = ComboAction.Tp.Search,
+					Tag = folder
+				};
+				if (folder.Name != "Inbox" && folder.Name != "Sent Items")
+					selected = a;
+				CmbFolder.Items.Add(a);
+			}			
+			if (selected != null)
+				CmbFolder.SelectedItem = selected;
+			
 		}
 	}
 }
