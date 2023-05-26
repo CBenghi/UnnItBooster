@@ -31,6 +31,8 @@
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.CmbFolder = new System.Windows.Forms.ComboBox();
+			this.CmdFolder = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.cmbAction = new System.Windows.Forms.ComboBox();
 			this.ButtonToggleWrap = new System.Windows.Forms.Button();
@@ -39,8 +41,6 @@
 			this.StudImage = new System.Windows.Forms.PictureBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.txtSystemInfo = new System.Windows.Forms.TextBox();
-			this.CmdFolder = new System.Windows.Forms.Button();
-			this.CmbFolder = new System.Windows.Forms.ComboBox();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -90,6 +90,27 @@
 			this.groupBox1.TabIndex = 21;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "General";
+			// 
+			// CmbFolder
+			// 
+			this.CmbFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.CmbFolder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.CmbFolder.FormattingEnabled = true;
+			this.CmbFolder.Location = new System.Drawing.Point(37, 17);
+			this.CmbFolder.Name = "CmbFolder";
+			this.CmbFolder.Size = new System.Drawing.Size(157, 21);
+			this.CmbFolder.TabIndex = 7;
+			// 
+			// CmdFolder
+			// 
+			this.CmdFolder.Image = global::UnnOutlookAddin.Properties.Resources.folder;
+			this.CmdFolder.Location = new System.Drawing.Point(6, 17);
+			this.CmdFolder.Name = "CmdFolder";
+			this.CmdFolder.Size = new System.Drawing.Size(25, 23);
+			this.CmdFolder.TabIndex = 6;
+			this.CmdFolder.UseVisualStyleBackColor = true;
+			this.CmdFolder.Click += new System.EventHandler(this.CmdFolder_Click);
 			// 
 			// button1
 			// 
@@ -182,27 +203,6 @@
 			this.txtSystemInfo.Name = "txtSystemInfo";
 			this.txtSystemInfo.Size = new System.Drawing.Size(396, 352);
 			this.txtSystemInfo.TabIndex = 0;
-			// 
-			// CmdFolder
-			// 
-			this.CmdFolder.Image = global::UnnOutlookAddin.Properties.Resources.folder;
-			this.CmdFolder.Location = new System.Drawing.Point(6, 17);
-			this.CmdFolder.Name = "CmdFolder";
-			this.CmdFolder.Size = new System.Drawing.Size(25, 23);
-			this.CmdFolder.TabIndex = 6;
-			this.CmdFolder.UseVisualStyleBackColor = true;
-			this.CmdFolder.Click += new System.EventHandler(this.CmdFolder_Click);
-			// 
-			// CmbFolder
-			// 
-			this.CmbFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.CmbFolder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.CmbFolder.FormattingEnabled = true;
-			this.CmbFolder.Location = new System.Drawing.Point(37, 17);
-			this.CmbFolder.Name = "CmbFolder";
-			this.CmbFolder.Size = new System.Drawing.Size(157, 21);
-			this.CmbFolder.TabIndex = 7;
 			// 
 			// UnnStudent
 			// 

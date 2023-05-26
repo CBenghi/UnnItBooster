@@ -16,7 +16,19 @@ namespace UnnOutlookAddin.MailManagement
 
 		internal static bool SenderHasStudentId(this Outlook.MailItem mail, out string id)
 		{
-			id = mail.GetSenderStudentId();
+			var emails = mail.GetSenderEmailAddresses();
+			return HasStudentId(emails, out id);
+		}
+
+		internal static bool HasStudentId(this Outlook.AddressEntry entry, out string id)
+		{
+			var emails = entry.GetAllEmailAddresses();
+			return HasStudentId(emails, out id);
+		}
+
+		private static bool HasStudentId(IEnumerable<string> emails, out string id)
+		{
+			id = GetStudentIdFromEmails(emails);
 			return !string.IsNullOrEmpty(id);
 		}
 
@@ -96,10 +108,12 @@ namespace UnnOutlookAddin.MailManagement
 				mail.AddUserProperty(userIdPropertyName, userIdNotFound);
 			}
 		}
+		
+		
 
-		static string GetSenderStudentId(this Outlook.MailItem mail)
+		private static string GetStudentIdFromEmails(IEnumerable<string> emails)
 		{
-			foreach (var emailaddress in mail.GetSenderEmailAddresses())
+			foreach (var emailaddress in emails)
 			{
 				var m = regexStudentEmailPattern.Match(emailaddress);
 				if (m.Success)
@@ -113,6 +127,55 @@ namespace UnnOutlookAddin.MailManagement
 		public static IEnumerable<string> GetSenderEmailAddresses(this Outlook.MailItem mail)
 		{
 			Outlook.AddressEntry sender = mail.Sender;
+			var t = GetAllEmailAddresses(sender).ToList();
+			if (!t.Any())
+				yield return mail.SenderEmailAddress;
+			else
+			{
+				foreach (var item in t)
+				{
+					yield return item;
+				}
+			}
+		}
+
+		internal static IEnumerable<Student> GetAllStudents(this Outlook.MailItem mail)
+		{
+			var ts = GetStudent(mail.Sender);
+			if (ts != null)
+				yield return ts;
+			foreach (Outlook.Recipient recip in mail.Recipients)
+			{
+				var t = GetStudent(recip.AddressEntry);
+				if (t!= null)
+					yield return t;
+			}
+		}
+
+
+		private static Student GetStudent(Outlook.AddressEntry entry)
+		{
+			if (entry == null)
+				return null;
+			var user = entry.GetExchangeUser();
+			if (entry.HasStudentId(out var id))
+			{
+				Student s = new Student()
+				{
+					Forename = user.FirstName,
+					Surname = user.LastName,
+					Email = user.PrimarySmtpAddress,
+					Route = user.JobTitle,
+					NumericStudentId = id
+				};
+				// txtInformation.Text += $"{user.FirstName}\t{user.LastName}\t{user.Name}\t{user.PrimarySmtpAddress}\t{id}\t{user.JobTitle}\r\n";
+				return s;
+			}
+			return null;
+		}
+
+		private static IEnumerable<string> GetAllEmailAddresses(this Outlook.AddressEntry sender)
+		{
 			if (sender.AddressEntryUserType == Outlook.OlAddressEntryUserType.olExchangeUserAddressEntry
 				|| sender.AddressEntryUserType == Outlook.OlAddressEntryUserType.olExchangeRemoteUserAddressEntry)
 			{
@@ -129,10 +192,6 @@ namespace UnnOutlookAddin.MailManagement
 						yield return address;
 					}
 				}
-			}
-			else
-			{
-				yield return mail.SenderEmailAddress;
 			}
 		}
 

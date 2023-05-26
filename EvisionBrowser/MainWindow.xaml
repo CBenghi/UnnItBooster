@@ -7,7 +7,7 @@
         xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" 
         xmlns:converters="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
         x:Class="EvisionBrowser.MainWindow"
-        mc:Ignorable="d"
+        mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance Type=local:MainWindow}"       
         Title="MainWindow" Height="314" Width="474"
     >
@@ -44,7 +44,7 @@
             <Wpf:WebView2 x:Name="wbSample" 
                       NavigationCompleted="NavigationDone"
                       />
-            <GridSplitter ResizeDirection="Columns" Grid.Column="1" Height="Auto" Width="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
+            <GridSplitter Visibility="{Binding SideBarVisibility, Converter={StaticResource boolVisConverter}}" ResizeDirection="Columns" Grid.Column="1" Height="Auto" Width="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
             <Grid Grid.Column="2" Visibility="{Binding SideBarVisibility, Converter={StaticResource boolVisConverter}}" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

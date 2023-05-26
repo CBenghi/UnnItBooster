@@ -32,8 +32,6 @@ namespace Unn.Students
 				stringId = "09" + stringId.Substring(1);
 			else if (stringId == "-")
 				stringId = string.Empty;
-			else
-				throw new Exception("unknown student code");
 			return stringId;
 		}
 	}

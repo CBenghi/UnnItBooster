@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using UnnItBooster.Models;
-using Microsoft.Office.Interop.Outlook;
 using UnnOutlookAddin.MailManagement;
 using System.Collections.Generic;
 using UnnOutlookAddin.Actions;
 using StudentsFetcher.StudentMarking;
-using System.Security.Cryptography;
-// using System.Diagnostics;
+using Outlook = Microsoft.Office.Interop.Outlook;
+using UnnFunctions.ModelConversions;
 
 namespace UnnOutlookAddin.UI
 {
@@ -49,6 +48,7 @@ namespace UnnOutlookAddin.UI
 		{
 			CmbFolder.Items.Clear();
 			SetPicture(false);
+
 			var students = Repository.Students.Where(x => x.Email == email).ToList();
 			StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.AppendLine($"Found: {students.Count} students.");
@@ -93,86 +93,30 @@ namespace UnnOutlookAddin.UI
 			SetPicture(txtInformation.Visible);
 		}
 
-		MailItem currentMailItem = null;
+		Outlook.MailItem currentMailItem = null;
 
-		internal async void SetMessageAsync(MailItem mailItem)
+		internal async void SetMessageAsync(Outlook.MailItem mailItem)
 		{
 			currentMailItem = mailItem;
 			var snd = MessageClassificationExtensions.GetSenderEmailAddress(mailItem);
 			var txt = SetEmail(snd);
-			var folder = mailItem.Parent as MAPIFolder;
+			var folder = mailItem.Parent as Outlook.MAPIFolder;
 			if (folder != null)
 				txt += $"\r\nFolder: {folder.Name}";
 			txtInformation.Text = txt;
 		}
 
-		//IEnumerable<MailItem> GetRootMailItems(MailItem mailItem)
-		//{
-		//	var ret = new List<MailItem>();
-
-		//	// Determine the store of the mail item. 
-		//	var folder = mailItem.Parent as Folder;
-		//	var store = folder.Store;
-		//	if (store.IsConversationEnabled == true)
-		//	{
-		//		// Obtain a Conversation object. 
-		//		Conversation conv = mailItem.GetConversation();
-		//		if (conv != null)
-		//		{
-		//			try // Obtain root items and enumerate the conversation. 
-		//			{
-		//				var simpleRootItems = conv.GetRootItems();
-		//				foreach (object item in simpleRootItems)
-		//				{
-		//					if (item is MailItem mail)
-		//					{
-		//						ret.Add(mail);
-		//						ret.AddRange(GetConversationEmails(mail, conv));
-		//					}
-		//				}
-		//			}
-		//			catch (System.Exception)
-		//			{
-		//			}
-		//		}
-		//	}
-		//	return ret;
-		//}
-
-
-		//IEnumerable<MailItem> GetConversationEmails(object item, Conversation conversation)
-		//{
-		//	SimpleItems items = conversation.GetChildren(item);
-		//	if (items.Count > 0)
-		//	{
-		//		foreach (object myItem in items)
-		//		{
-		//			if (myItem is MailItem mailItem)
-		//			{
-		//				yield return mailItem;
-
-		//				Folder inFolder = mailItem.Parent as Folder;
-		//			}
-		//			// Continue recursion. 
-		//			foreach (var conv in GetConversationEmails(item, conversation))
-		//			{
-		//				yield return conv;
-		//			}
-		//		}
-		//	}
-		//}
-
-		IEnumerable<MailItem> GetTopConversation(MailItem mailItem)
+		IEnumerable<Outlook.MailItem> GetConversationItems(Outlook.MailItem mailItem)
 		{
-			var ret = new List<MailItem>();
+			var ret = new List<Outlook.MailItem>();
 			
 			// Determine the store of the mail item. 
-			var folder = mailItem.Parent as Folder;
+			var folder = mailItem.Parent as Outlook.Folder;
 			var store = folder.Store;
 			if (store.IsConversationEnabled == true)
 			{
 				// Obtain a Conversation object. 
-				Conversation conv = mailItem.GetConversation();
+				Outlook.Conversation conv = mailItem.GetConversation();
 				if (conv != null)
 				{
 			
@@ -181,10 +125,10 @@ namespace UnnOutlookAddin.UI
 						var simpleRootItems = conv.GetRootItems();
 						foreach (object item in simpleRootItems)
 						{
-							if (item is MailItem mail)
+							if (item is Outlook.MailItem mail)
 							{
 								ret.Add(mail);
-								Folder inFolder = mail.Parent as Folder;
+								Outlook.Folder inFolder = mail.Parent as Outlook.Folder;
 								
 								ret.AddRange(EnumerateConversation(item, conv));
 							}
@@ -199,18 +143,18 @@ namespace UnnOutlookAddin.UI
 			return ret;
 		}
 
-		List<MailItem> EnumerateConversation(object item, Conversation conversation)
+		List<Outlook.MailItem> EnumerateConversation(object item, Outlook.Conversation conversation)
 		{
-			List<MailItem> list = new List<MailItem>();
-			SimpleItems items = conversation.GetChildren(item);
+			List<Outlook.MailItem> list = new List<Outlook.MailItem>();
+			Outlook.SimpleItems items = conversation.GetChildren(item);
 			if (items.Count > 0)
 			{
 				foreach (object myItem in items)
 				{
-					if (myItem is MailItem mailItem)
+					if (myItem is Outlook.MailItem mailItem)
 					{
 						list.Add(mailItem);
-						Folder inFolder = mailItem.Parent as Folder;
+						Outlook.Folder inFolder = mailItem.Parent as Outlook.Folder;
 					}
 					// Continue recursion. 
 					list.AddRange(EnumerateConversation(myItem, conversation));
@@ -218,83 +162,35 @@ namespace UnnOutlookAddin.UI
 			}
 			return list;
 		}
-
-
-		string DemoConversation(MailItem mailItem, out IEnumerable<ComboAction> actions)
-		{
-			var ret = new List<ComboAction>();
-			StringBuilder sb = new StringBuilder();
-			// Determine the store of the mail item. 
-			var folder = mailItem.Parent as Folder;
-			var store = folder.Store;
-			if (store.IsConversationEnabled == true)
-			{
-				// Obtain a Conversation object. 
-				Conversation conv = mailItem.GetConversation();
-				if (conv != null)
-				{
-					sb.AppendLine("=== Root Conversation Items: ");
-					try // Obtain root items and enumerate the conversation. 
-					{
-						var simpleRootItems = conv.GetRootItems();
-						foreach (object item in simpleRootItems)
-						{
-							if (item is MailItem mail)
-							{
-								ret.AddRange(ComboAction.From(mail));
-								Folder inFolder = mail.Parent as Folder;
-								sb.AppendLine($"{mail.Subject} in folder `{inFolder.Name}` by {mail.Sender.Name}");
-								ret.AddRange(EnumerateConversation(item, conv, sb));
-							}
-							else
-								sb.AppendLine($"Not implemented type: {item.GetType()}");							
-						}
-					}
-					catch (System.Exception ex)
-					{
-						sb.AppendLine($"{ex.Message}");
-					}
-				}
-			}
-			actions = ret;
-			return sb.ToString();
-		}
-
-
-		List<ComboAction> EnumerateConversation(object item, Conversation conversation, StringBuilder sb, int indentation = 0)
-		{
-			List<ComboAction> list = new List<ComboAction>();
-			var indent = new string(' ', indentation * 2);
-			SimpleItems items = conversation.GetChildren(item);
-			if (items.Count > 0)
-			{
-				foreach (object myItem in items)
-				{
-					if (myItem is MailItem mailItem)
-					{
-						list.AddRange(ComboAction.From(mailItem));
-						Folder inFolder = mailItem.Parent as Folder;
-						string msg = $"{indent}{mailItem.Subject} in folder {inFolder.Name} - {mailItem.Sender.Name}";
-						sb.AppendLine(msg);
-					}
-					// Continue recursion. 
-					list.AddRange(EnumerateConversation(myItem, conversation, sb, indentation + 1));
-				}
-			}
-			else if (indentation == 0) 
-			{
-				sb.AppendLine("No children");
-			}
-			return list;
-		}
-
+		
 		private void ButtonThread_Click(object sender, EventArgs e)
 		{
 			if (currentMailItem == null)
 				return;
-			txtInformation.Text += "\r\n\r\n" + DemoConversation(currentMailItem, out var actions);
+			var mailItems = GetConversationItems(currentMailItem).ToList();
+			
+
+			txtInformation.Text += "\r\n\r\n";
+			List<Student> students = new List<Student>();
+			foreach (var mailItem in mailItems)
+			{
+				students.AddRange(mailItem.GetAllStudents());
+				Outlook.Folder inFolder = mailItem.Parent as Outlook.Folder;
+				txtInformation.Text += $"{mailItem.Subject} in folder {inFolder.Name} - {mailItem.Sender.Name}\r\n";				
+			}
+
+			var distinctStudents = students.GroupBy(x => x.NumericStudentId).Select(x => x.First()).ToList();
 			cmbAction.Items.Clear();
-			cmbAction.Items.AddRange(actions.ToArray());
+			if (!distinctStudents.Any())
+				return;
+
+			txtInformation.Text += "\r\n" + StudentCollection.PersistString(distinctStudents);
+			var lst = new List<ComboAction>();
+			foreach (var st in distinctStudents)
+			{
+				lst.AddRange(ComboAction.From(st));
+			}
+			cmbAction.Items.AddRange(lst.ToArray());
 		}
 
 		private void ButtonToggleWrap_Click(object sender, EventArgs e)
@@ -313,7 +209,7 @@ namespace UnnOutlookAddin.UI
 					t.SetSearch((string)item.Tag);
 					t.Show();
 					break;
-				case ComboAction.Tp.Image:
+				case ComboAction.Tp.ShowImage:
 					if (!Repository.HasImage((string)item.Tag, out var image))
 						Repository.TryGetExtraImage((string)item.Tag, out image);
 					if (!string.IsNullOrEmpty(image))
@@ -329,15 +225,15 @@ namespace UnnOutlookAddin.UI
 		{
 			if (CmbFolder.SelectedItem != null)
 			{
-				if (CmbFolder.SelectedItem is ComboAction item && item.Tag is Folder fld && currentMailItem != null)
+				if (CmbFolder.SelectedItem is ComboAction item && item.ActionType == ComboAction.Tp.MoveToFolder && item.Tag is Outlook.Folder fld && currentMailItem != null)
 					currentMailItem.Move(fld);				
 				return;
 			}
 			CmbFolder.Items.Clear();
 			if (currentMailItem is null)
 				return;
-			var threadMessages = GetTopConversation(currentMailItem).ToList();
-			var folders = threadMessages.Where(x => x.Parent is Folder).Select(x => x.Parent).ToList(); 
+			var threadMessages = GetConversationItems(currentMailItem).ToList();
+			var folders = threadMessages.Where(x => x.Parent is Outlook.Folder).Select(x => x.Parent).ToList(); 
 			var dist = folders.GroupBy(p => p.Name)
 					  .Select(g => g.First())
 					  .ToList();
@@ -348,7 +244,7 @@ namespace UnnOutlookAddin.UI
 				ComboAction a = new ComboAction()
 				{
 					Text = folder.Name,
-					ActionType = ComboAction.Tp.Search,
+					ActionType = ComboAction.Tp.MoveToFolder,
 					Tag = folder
 				};
 				if (folder.Name != "Inbox" && folder.Name != "Sent Items")
@@ -356,8 +252,8 @@ namespace UnnOutlookAddin.UI
 				CmbFolder.Items.Add(a);
 			}			
 			if (selected != null)
-				CmbFolder.SelectedItem = selected;
-			
+				CmbFolder.SelectedItem = selected;		
 		}
+
 	}
 }

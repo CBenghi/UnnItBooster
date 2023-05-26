@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Input;
+using UnnFunctions.ModelConversions;
 using UnnItBooster.Models;
 
 namespace StudentsFetcher.StudentMarking
@@ -221,6 +222,23 @@ namespace StudentsFetcher.StudentMarking
 				displayedStudent,
 				txtAlternativeEmail.Text
 				);
+		}
+
+		private void button7_Click(object sender, EventArgs e)
+		{
+			var students = StudentCollection.UnpersistString(Clipboard.GetText());
+			txtReport.Text = studentsRepo.ConsiderNewStudents(students, txtModuleCode.Text);
+			RefreshModulesList();
+		}
+
+		private void button8_Click(object sender, EventArgs e)
+		{
+			if (displayedStudent == null)
+				return;
+			if (studentsRepo.TryGetExtraImage(displayedStudent.NumericStudentId, out var image, txtContainerName.Text))
+			{
+				StudImage.Load(image);
+			}
 		}
 	}
 }

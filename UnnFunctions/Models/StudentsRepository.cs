@@ -221,10 +221,10 @@ public class StudentsRepository
 		return true;
 	}
 
-	public bool TryGetExtraImage(string numericUserId, out string image)
+	public bool TryGetExtraImage(string numericUserId, out string image, string CollectionCode = "extra")
 	{
 		var imageUrl = $"https://nuweb2.northumbria.ac.uk/photoids/{numericUserId}.jpg";
-		var nm = GetDefaultImageName(numericUserId, "extra");
+		var nm = GetDefaultImageName(numericUserId, CollectionCode);
 		if (File.Exists(nm))
 		{
 			image = nm;

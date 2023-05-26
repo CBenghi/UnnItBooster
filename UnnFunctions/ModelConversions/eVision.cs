@@ -16,7 +16,8 @@ namespace UnnItBooster.ModelConversions
 		{
 			notFound,
 			full, // starts with Ac Year
-			withPhotos // starts with ID
+			withPhotos, // starts with ID
+			Tutor
 		}
 
 		public static Student? GetStudentFromIndividualSource(string htmlSource, QueueAction context)
@@ -148,7 +149,7 @@ namespace UnnItBooster.ModelConversions
 		}
 
 		/// <summary>
-		/// /// Gets the student list from the HTML taken from the evision list.
+		/// Gets the student list from the HTML taken from the evision list.
 		/// </summary>
 		/// <param name="htmlSource">any container that includes the TRs of the table</param>
 		/// <returns>Information of the students</returns>
@@ -168,14 +169,19 @@ namespace UnnItBooster.ModelConversions
 			foreach (var row in rows)
 			{
 				var headers = row.SelectNodes("th");
-				if (!(headers is null))
+				if (headers != null)
 				{
-					if (headers[0].InnerText == "ID")
+					if (headers[0].InnerText == "Student Course Join Code")
+					{
+						detectedStyle = HeaderStyle.Tutor;
+						continue;
+					}
+					else if (headers[0].InnerText == "ID")
 					{
 						detectedStyle = HeaderStyle.withPhotos;
 						continue;
 					}
-					if (headers[0].InnerText == "Ac Year")
+					else if (headers[0].InnerText == "Ac Year")
 					{
 						detectedStyle = HeaderStyle.full;
 						continue;
@@ -191,15 +197,17 @@ namespace UnnItBooster.ModelConversions
 				if (cols is null)
 					continue;
 
-				var s = new Student();
+				Student? s = null;
 				if (detectedStyle == HeaderStyle.withPhotos)
 				{
-					s.NumericStudentId =  HtmlEntity.DeEntitize(cols[0].InnerText).Trim();
+					s = new();
+					s.NumericStudentId = HtmlEntity.DeEntitize(cols[0].InnerText).Trim();
 					GetNameAndDssr(s, cols[1]);
 					s.Email = HtmlEntity.DeEntitize(cols[3].InnerText).Trim();
 				}
 				else if (detectedStyle == HeaderStyle.full)
 				{
+					s = new();
 					s.NumericStudentId = HtmlEntity.DeEntitize(cols[7].InnerText).Trim();
 					GetNameAndDssr(s, cols[8]);
 					s.Route = HtmlEntity.DeEntitize(cols[6].InnerText).Trim();
@@ -207,7 +215,19 @@ namespace UnnItBooster.ModelConversions
 					s.Occurrence = HtmlEntity.DeEntitize(cols[3].InnerText).Trim();
 					s.Module = HtmlEntity.DeEntitize(cols[1].InnerText).Trim();
 				}
-				students.Add(s);
+				else if (detectedStyle == HeaderStyle.Tutor)
+				{
+					s = new();
+					s.NumericStudentId = HtmlEntity.DeEntitize(cols[0].InnerText).Trim();
+					s.Forename = HtmlEntity.DeEntitize(cols[1].InnerText).Trim();
+					s.Surname = HtmlEntity.DeEntitize(cols[2].InnerText).Trim();
+					s.Route = HtmlEntity.DeEntitize(cols[7].InnerText).Trim();
+					s.Module = "Tutor";
+				}
+				if (s!=null)
+				{
+					students.Add(s);
+				}
 			}
 			return students;
 		}
