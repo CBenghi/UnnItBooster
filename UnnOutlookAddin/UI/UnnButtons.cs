@@ -9,10 +9,11 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using StudentsFetcher.StudentMarking;
 using System.Diagnostics;
+using UnnFunctions.Models;
 
 namespace UnnOutlookAddin.UI
 {
-	public partial class UnnButtons
+    public partial class UnnButtons
 	{
         private void BtnClassify_Click(object sender, RibbonControlEventArgs e)
 		{
@@ -59,7 +60,7 @@ namespace UnnOutlookAddin.UI
 				var id = selectedMailMessage.GetUserProperty(MessageClassificationExtensions.userIdPropertyName);
 				if (numberOnly)
 				{
-					id = Unn.Students.StudentId.NumericFromString(id);
+					id = StudentCode.NumericFromString(id);
 				}
 				yield return id;
 			}

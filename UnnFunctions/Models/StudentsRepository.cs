@@ -27,13 +27,13 @@ public class StudentsRepository
 			filters = nameFilters.ToList();
 
 		collections = new List<IStudentCollection>();
-		foreach (var item in ConfigurationFolder.GetDirectories())
+		foreach (var possibleContainer in ConfigurationFolder.GetDirectories())
 		{
-			if (filters is null || filters.Any(x => filters.Contains(item.Name)))
+			if (filters is null || filters.Any(x => filters.Contains(possibleContainer.Name)))
 			{
-				if (StudentJsonCollection.IsValid(item))
+				if (StudentJsonCollection.IsValid(possibleContainer))
 				{
-					collections.Add(new StudentJsonCollection(item));
+					collections.Add(new StudentJsonCollection(possibleContainer));
 				}
 			}
 		}
@@ -250,5 +250,16 @@ public class StudentsRepository
 			return false;
 		}
 		
+	}
+
+	public IEnumerable<IStudentCollection> GetContainersFor(string senderEmailAddress)
+	{
+		foreach (var collection in collections)
+		{
+			if (collection is null)
+				continue;
+			if (collection.Students.Any(x => x.HasEmail(senderEmailAddress)))
+				yield return collection;
+		}
 	}
 }

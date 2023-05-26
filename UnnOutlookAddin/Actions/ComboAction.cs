@@ -69,6 +69,15 @@ namespace UnnOutlookAddin.Actions
 			return Text;
 		}
 
-		
+		internal static ComboAction From(Folder folder)
+		{
+			ComboAction ret = new ComboAction
+			{
+				Text = folder.Name,
+				ActionType = ComboAction.Tp.MoveToFolder,
+				Tag = folder
+			};
+			return ret;
+		}
 	}
 }

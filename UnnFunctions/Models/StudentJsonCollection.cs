@@ -5,18 +5,26 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using UnnFunctions.Models;
 
 namespace UnnItBooster.Models
 {
 	public class StudentJsonCollection : IStudentCollection
 	{
-		private const string StandardCollectionName = "students.json";
+		// private const string StandardCollectionName = "students.json";
+		private const string CollectionFileName = "StudentCollection.json";
 
 		private readonly DirectoryInfo directory;
 
 		public List<Student> Students { get; set; } = new List<Student>();
 
-		public StudentJsonCollection(DirectoryInfo directory)
+		// only for persistence
+        public StudentJsonCollection()
+        {
+			directory = new DirectoryInfo(".");
+        }
+
+        public StudentJsonCollection(DirectoryInfo directory)
 		{
 			if (directory == null)
 				throw new ArgumentNullException(nameof(directory));
@@ -27,21 +35,32 @@ namespace UnnItBooster.Models
 				Reload();
 		}
 
+		public StudentJsonCollection(DirectoryInfo directory, IEnumerable<Student> students) : this(directory)
+		{
+			Students.AddRange(students);
+			Save();
+		}
+
 		private void Reload()
 		{
 			var cont = File.ReadAllText(persistenceFileName);
-			var t = JsonSerializer.Deserialize<List<Student>>(cont);
+			var t = JsonSerializer.Deserialize<StudentJsonCollection>(cont);
 			if (t != null)
-				Students = t;
+			{
+				Students = t.Students;
+				OutlookFolder = t.OutlookFolder;
+			}
 		}
 
 		private string persistenceFileName => GetJsonPersistenceFile(directory);
 
 		public string Name => directory.Name;
 
+		public string? OutlookFolder { get; set; }
+
 		static string GetJsonPersistenceFile(DirectoryInfo d)
 		{
-			return Path.Combine(d.FullName, StandardCollectionName);
+			return Path.Combine(d.FullName, CollectionFileName);
 		}
 
 		public static bool IsValid(DirectoryInfo directory)
@@ -55,35 +74,32 @@ namespace UnnItBooster.Models
 		{
 			var d = new DirectoryInfo(containerFullName);
 			d.Create();
-			Save(students, d);
-			return new StudentJsonCollection(d);
+			return new StudentJsonCollection(d, students);
 		}
 
-		private static void Save(IEnumerable<Student> students, DirectoryInfo d)
+		private static void Save(StudentJsonCollection students, DirectoryInfo d)
 		{
 			var fullName = GetJsonPersistenceFile(d);
-			var opts = new JsonSerializerOptions() { WriteIndented = true, DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
+			var opts = new JsonSerializerOptions() { WriteIndented = true, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 			var t = JsonSerializer.Serialize(students, opts);
 			File.WriteAllText(fullName, t);
 		}
 
-		private static JsonSerializerOptions SerOptions()
+		public void FullSave()
 		{
-			var options = new JsonSerializerOptions()
-			{
-				DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-				WriteIndented = true,
-			};
-			//var facetConverter = new HeterogenousListConverter<IFacet, List<IFacet>>(
-			//	(nameof(IfcClassificationFacet), typeof(IfcClassificationFacet)),
-			//);
-			//options.Converters.Add(facetConverter);
-			return options; 
+			var fullName = Path.Combine(
+				directory.FullName,
+				"StudentCollection.json"
+				);
+			var opts = new JsonSerializerOptions() { WriteIndented = true, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
+			var t = JsonSerializer.Serialize(this, opts);
+			File.WriteAllText(fullName, t);
 		}
+
 
 		public void Save()
 		{
-			Save(Students, directory);
+			Save(this, directory);
 		}
 	}
 }

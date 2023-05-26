@@ -300,9 +300,6 @@ namespace UnnItBooster.ModelConversions
 					}
 				}
 			}
-
-
-			
 			return st;
 		}
 

@@ -7,7 +7,7 @@ using UnnItBooster.Models;
 
 namespace UnnFunctions.ModelConversions
 {
-	public static class StudentCollection
+	public static class StringStudentCollection
 	{
 		private const string Header = "NumericStudentId\tForename\tSurname\tRoute\tEmail";
 

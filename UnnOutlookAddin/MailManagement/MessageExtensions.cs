@@ -176,7 +176,11 @@ namespace UnnOutlookAddin.MailManagement
 
 		private static IEnumerable<string> GetAllEmailAddresses(this Outlook.AddressEntry sender)
 		{
-			if (sender.AddressEntryUserType == Outlook.OlAddressEntryUserType.olExchangeUserAddressEntry
+            if ( sender is null)
+            {
+                yield break;
+            }
+            if (sender.AddressEntryUserType == Outlook.OlAddressEntryUserType.olExchangeUserAddressEntry
 				|| sender.AddressEntryUserType == Outlook.OlAddressEntryUserType.olExchangeRemoteUserAddressEntry)
 			{
 				Outlook.ExchangeUser exchUser = sender.GetExchangeUser();

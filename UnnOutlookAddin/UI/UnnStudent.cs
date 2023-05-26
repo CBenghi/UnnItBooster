@@ -10,6 +10,7 @@ using UnnOutlookAddin.Actions;
 using StudentsFetcher.StudentMarking;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using UnnFunctions.ModelConversions;
+using Microsoft.Office.Interop.Outlook;
 
 namespace UnnOutlookAddin.UI
 {
@@ -176,7 +177,8 @@ namespace UnnOutlookAddin.UI
 			{
 				students.AddRange(mailItem.GetAllStudents());
 				Outlook.Folder inFolder = mailItem.Parent as Outlook.Folder;
-				txtInformation.Text += $"{mailItem.Subject} in folder {inFolder.Name} - {mailItem.Sender.Name}\r\n";				
+				var senderName = mailItem.Sender is null ? "Undefined sender" : mailItem.Sender.Name;
+				txtInformation.Text += $"{mailItem.Subject} in folder {inFolder.Name} - {senderName}\r\n";				
 			}
 
 			var distinctStudents = students.GroupBy(x => x.NumericStudentId).Select(x => x.First()).ToList();
@@ -184,7 +186,7 @@ namespace UnnOutlookAddin.UI
 			if (!distinctStudents.Any())
 				return;
 
-			txtInformation.Text += "\r\n" + StudentCollection.PersistString(distinctStudents);
+			txtInformation.Text += "\r\n" + StringStudentCollection.PersistString(distinctStudents);
 			var lst = new List<ComboAction>();
 			foreach (var st in distinctStudents)
 			{
@@ -233,26 +235,37 @@ namespace UnnOutlookAddin.UI
 			if (currentMailItem is null)
 				return;
 			var threadMessages = GetConversationItems(currentMailItem).ToList();
-			var folders = threadMessages.Where(x => x.Parent is Outlook.Folder).Select(x => x.Parent).ToList(); 
-			var dist = folders.GroupBy(p => p.Name)
+			var folders = threadMessages.Where(x => x.Parent is Outlook.Folder).Select(x => x.Parent).OfType<Outlook.Folder>().ToList(); 
+			var distFolders = folders.GroupBy(p => p.Name)
 					  .Select(g => g.First())
 					  .ToList();
 
-			ComboAction selected = null;
-			foreach ( var folder in dist) 
+			foreach ( var folder in distFolders) 
 			{
-				ComboAction a = new ComboAction()
-				{
-					Text = folder.Name,
-					ActionType = ComboAction.Tp.MoveToFolder,
-					Tag = folder
-				};
+				ComboAction act = ComboAction.From(folder);
 				if (folder.Name != "Inbox" && folder.Name != "Sent Items")
-					selected = a;
-				CmbFolder.Items.Add(a);
-			}			
-			if (selected != null)
-				CmbFolder.SelectedItem = selected;		
+				{
+					CmbFolder.Items.Add(act);
+				}
+			}
+			var senderEmail = MessageClassificationExtensions.GetSenderEmailAddress(currentMailItem);
+			var conts = _repository.GetContainersFor(senderEmail);
+			foreach (var container in conts)
+			{
+				if (string.IsNullOrEmpty(container.OutlookFolder))
+					continue;
+				var f = Globals.ThisAddIn.GetFolder(container.OutlookFolder);
+				if (f != null) 
+                {
+					CmbFolder.Items.Add(
+						ComboAction.From(f)
+						);
+				}
+            }
+			if (CmbFolder.Items.Count > 0)
+			{
+				CmbFolder.SelectedItem = CmbFolder.Items[0];
+			}
 		}
 
 	}

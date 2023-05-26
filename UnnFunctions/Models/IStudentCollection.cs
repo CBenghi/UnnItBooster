@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnnFunctions.Students;
 
 namespace UnnItBooster.Models
 {
@@ -8,6 +7,8 @@ namespace UnnItBooster.Models
 		List<Student> Students { get; set; }
 
 		string Name { get; }
+
+		string? OutlookFolder { get; set; }
 
 		void Save();
 	}

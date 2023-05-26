@@ -4,25 +4,28 @@ using Outlook = Microsoft.Office.Interop.Outlook;
 using UnnOutlookAddin.MailManagement;
 using System.Linq;
 using UnnItBooster.Models;
+using Microsoft.Office.Interop.Outlook;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace UnnOutlookAddin
 {
 	public partial class ThisAddIn
 	{
 		Outlook.Explorer _currentExplorer;
-		Outlook.NameSpace outlookNameSpace;
-		Outlook.MAPIFolder inbox;
-		Outlook.Items items;
+		Outlook.NameSpace _outlookNameSpace;
+		Outlook.MAPIFolder _inbox;
+		Outlook.Items _items;
 
 		private void ThisAddIn_Startup(object sender, EventArgs e)
 		{
 			if (Properties.Settings.Default.ClassifyOnNewItem)
 			{
-				outlookNameSpace = Application.GetNamespace("MAPI");
-				inbox = outlookNameSpace.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderInbox);
+				_outlookNameSpace = Application.GetNamespace("MAPI");
+				_inbox = _outlookNameSpace.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderInbox);
 
-				items = inbox.Items;
-				items.ItemAdd += new Outlook.ItemsEvents_ItemAddEventHandler(AutomaticClassificationHandler);
+				_items = _inbox.Items;
+				_items.ItemAdd += new Outlook.ItemsEvents_ItemAddEventHandler(AutomaticClassificationHandler);
 			}
 
 			// registering events of selection change
@@ -138,6 +141,40 @@ namespace UnnOutlookAddin
 		{
 			Startup += ThisAddIn_Startup;
 			Shutdown += ThisAddIn_Shutdown;
+		}
+
+		internal Folder GetFolder(string folderName)
+		{
+			var fldsrs = folderName.Split('/');
+			var sub = fldsrs.Skip(1);
+			foreach (var candidateFolder in _inbox.Folders.OfType<Folder>())
+			{
+				if (candidateFolder.Name == fldsrs[0])
+				{
+					if (sub.Any())
+						return GetSubFolder(candidateFolder, sub);
+					else 
+						return candidateFolder;
+				}
+			}
+			return null;
+		}
+
+		private Folder GetSubFolder(Folder startFolder, IEnumerable<string> path)
+		{
+			var search = path.First();
+			var sub = path.Skip(1);
+			foreach (var subF in startFolder.Folders.OfType<Folder>())
+			{
+				if (subF.Name == search)
+				{
+					if (sub.Any())
+						return GetSubFolder(subF, sub);
+					else
+						return subF;
+				}
+			}
+			return null;
 		}
 
 		#endregion

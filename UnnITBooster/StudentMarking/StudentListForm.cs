@@ -226,7 +226,7 @@ namespace StudentsFetcher.StudentMarking
 
 		private void button7_Click(object sender, EventArgs e)
 		{
-			var students = StudentCollection.UnpersistString(Clipboard.GetText());
+			var students = StringStudentCollection.UnpersistString(Clipboard.GetText());
 			txtReport.Text = studentsRepo.ConsiderNewStudents(students, txtModuleCode.Text);
 			RefreshModulesList();
 		}
