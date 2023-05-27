@@ -33,6 +33,15 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.txtFolder = new System.Windows.Forms.TextBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.tabControl3 = new System.Windows.Forms.TabControl();
+			this.tabPage7 = new System.Windows.Forms.TabPage();
+			this.button7 = new System.Windows.Forms.Button();
+			this.tabPage6 = new System.Windows.Forms.TabPage();
+			this.button2 = new System.Windows.Forms.Button();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.txtReport = new System.Windows.Forms.TextBox();
@@ -59,6 +68,9 @@
 			this.tabControl2 = new System.Windows.Forms.TabControl();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.button8 = new System.Windows.Forms.Button();
+			this.label11 = new System.Windows.Forms.Label();
+			this.txtContainerName = new System.Windows.Forms.TextBox();
 			this.txtAlternativeEmail = new System.Windows.Forms.TextBox();
 			this.btnAddEmail = new System.Windows.Forms.Button();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
@@ -68,19 +80,12 @@
 			this.button5 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.lstModules = new System.Windows.Forms.CheckedListBox();
-			this.tabControl3 = new System.Windows.Forms.TabControl();
-			this.tabPage6 = new System.Windows.Forms.TabPage();
-			this.tabPage7 = new System.Windows.Forms.TabPage();
-			this.button2 = new System.Windows.Forms.Button();
-			this.label5 = new System.Windows.Forms.Label();
-			this.label6 = new System.Windows.Forms.Label();
-			this.label7 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.button7 = new System.Windows.Forms.Button();
-			this.txtContainerName = new System.Windows.Forms.TextBox();
-			this.label11 = new System.Windows.Forms.Label();
-			this.button8 = new System.Windows.Forms.Button();
+			this.BtnGetSelectedStudents = new System.Windows.Forms.Button();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox1.SuspendLayout();
+			this.tabControl3.SuspendLayout();
+			this.tabPage7.SuspendLayout();
+			this.tabPage6.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.StudImage)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
@@ -94,9 +99,7 @@
 			this.tabPage4.SuspendLayout();
 			this.tabPage5.SuspendLayout();
 			this.tabPage2.SuspendLayout();
-			this.tabControl3.SuspendLayout();
-			this.tabPage6.SuspendLayout();
-			this.tabPage7.SuspendLayout();
+			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// txtModuleCode
@@ -156,6 +159,102 @@
 			this.groupBox1.TabIndex = 14;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Collection";
+			// 
+			// tabControl3
+			// 
+			this.tabControl3.Controls.Add(this.tabPage7);
+			this.tabControl3.Controls.Add(this.tabPage6);
+			this.tabControl3.Location = new System.Drawing.Point(100, 45);
+			this.tabControl3.Name = "tabControl3";
+			this.tabControl3.SelectedIndex = 0;
+			this.tabControl3.Size = new System.Drawing.Size(557, 144);
+			this.tabControl3.TabIndex = 25;
+			// 
+			// tabPage7
+			// 
+			this.tabPage7.Controls.Add(this.button7);
+			this.tabPage7.Location = new System.Drawing.Point(4, 22);
+			this.tabPage7.Name = "tabPage7";
+			this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage7.Size = new System.Drawing.Size(549, 118);
+			this.tabPage7.TabIndex = 1;
+			this.tabPage7.Text = "Outlook plugin";
+			this.tabPage7.UseVisualStyleBackColor = true;
+			// 
+			// button7
+			// 
+			this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.button7.Location = new System.Drawing.Point(25, 16);
+			this.button7.Name = "button7";
+			this.button7.Size = new System.Drawing.Size(500, 23);
+			this.button7.TabIndex = 14;
+			this.button7.Text = "Outlook Plugin Clipboard Parse";
+			this.button7.UseVisualStyleBackColor = true;
+			this.button7.Click += new System.EventHandler(this.button7_Click);
+			// 
+			// tabPage6
+			// 
+			this.tabPage6.Controls.Add(this.button2);
+			this.tabPage6.Controls.Add(this.label5);
+			this.tabPage6.Controls.Add(this.label6);
+			this.tabPage6.Controls.Add(this.label7);
+			this.tabPage6.Controls.Add(this.label8);
+			this.tabPage6.Location = new System.Drawing.Point(4, 22);
+			this.tabPage6.Name = "tabPage6";
+			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage6.Size = new System.Drawing.Size(549, 118);
+			this.tabPage6.TabIndex = 0;
+			this.tabPage6.Text = "e-vision";
+			this.tabPage6.UseVisualStyleBackColor = true;
+			// 
+			// button2
+			// 
+			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.button2.Location = new System.Drawing.Point(20, 15);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(500, 23);
+			this.button2.TabIndex = 13;
+			this.button2.Text = "evision Clipboard Parse";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click);
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(20, 50);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(135, 13);
+			this.label5.TabIndex = 18;
+			this.label5.Text = "Process: Start from e-vision";
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(62, 63);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(120, 13);
+			this.label6.TabIndex = 19;
+			this.label6.Text = "copy module student list";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(62, 76);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(189, 13);
+			this.label7.TabIndex = 20;
+			this.label7.Text = "copy module with pictures to add email";
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(62, 89);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(150, 13);
+			this.label8.TabIndex = 21;
+			this.label8.Text = "save pictures with chrome tool";
 			// 
 			// label10
 			// 
@@ -410,9 +509,7 @@
 			// 
 			// tabPage4
 			// 
-			this.tabPage4.Controls.Add(this.button8);
-			this.tabPage4.Controls.Add(this.label11);
-			this.tabPage4.Controls.Add(this.txtContainerName);
+			this.tabPage4.Controls.Add(this.groupBox2);
 			this.tabPage4.Controls.Add(this.txtAlternativeEmail);
 			this.tabPage4.Controls.Add(this.btnAddEmail);
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
@@ -422,6 +519,32 @@
 			this.tabPage4.TabIndex = 1;
 			this.tabPage4.Text = "Tools";
 			this.tabPage4.UseVisualStyleBackColor = true;
+			// 
+			// button8
+			// 
+			this.button8.Location = new System.Drawing.Point(152, 56);
+			this.button8.Name = "button8";
+			this.button8.Size = new System.Drawing.Size(131, 34);
+			this.button8.TabIndex = 4;
+			this.button8.Text = "Current student";
+			this.button8.UseVisualStyleBackColor = true;
+			this.button8.Click += new System.EventHandler(this.button8_Click);
+			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.Location = new System.Drawing.Point(9, 33);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(52, 13);
+			this.label11.TabIndex = 3;
+			this.label11.Text = "Container";
+			// 
+			// txtContainerName
+			// 
+			this.txtContainerName.Location = new System.Drawing.Point(75, 30);
+			this.txtContainerName.Name = "txtContainerName";
+			this.txtContainerName.Size = new System.Drawing.Size(208, 20);
+			this.txtContainerName.TabIndex = 2;
 			// 
 			// txtAlternativeEmail
 			// 
@@ -522,127 +645,28 @@
 			this.lstModules.Size = new System.Drawing.Size(120, 439);
 			this.lstModules.TabIndex = 17;
 			// 
-			// tabControl3
+			// BtnGetSelectedStudents
 			// 
-			this.tabControl3.Controls.Add(this.tabPage7);
-			this.tabControl3.Controls.Add(this.tabPage6);
-			this.tabControl3.Location = new System.Drawing.Point(100, 45);
-			this.tabControl3.Name = "tabControl3";
-			this.tabControl3.SelectedIndex = 0;
-			this.tabControl3.Size = new System.Drawing.Size(557, 144);
-			this.tabControl3.TabIndex = 25;
+			this.BtnGetSelectedStudents.Location = new System.Drawing.Point(152, 96);
+			this.BtnGetSelectedStudents.Name = "BtnGetSelectedStudents";
+			this.BtnGetSelectedStudents.Size = new System.Drawing.Size(131, 34);
+			this.BtnGetSelectedStudents.TabIndex = 5;
+			this.BtnGetSelectedStudents.Text = "Selected students";
+			this.BtnGetSelectedStudents.UseVisualStyleBackColor = true;
+			this.BtnGetSelectedStudents.Click += new System.EventHandler(this.BtnGetSelectedStudents_Click);
 			// 
-			// tabPage6
+			// groupBox2
 			// 
-			this.tabPage6.Controls.Add(this.button2);
-			this.tabPage6.Controls.Add(this.label5);
-			this.tabPage6.Controls.Add(this.label6);
-			this.tabPage6.Controls.Add(this.label7);
-			this.tabPage6.Controls.Add(this.label8);
-			this.tabPage6.Location = new System.Drawing.Point(4, 22);
-			this.tabPage6.Name = "tabPage6";
-			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage6.Size = new System.Drawing.Size(549, 118);
-			this.tabPage6.TabIndex = 0;
-			this.tabPage6.Text = "e-vision";
-			this.tabPage6.UseVisualStyleBackColor = true;
-			// 
-			// tabPage7
-			// 
-			this.tabPage7.Controls.Add(this.button7);
-			this.tabPage7.Location = new System.Drawing.Point(4, 22);
-			this.tabPage7.Name = "tabPage7";
-			this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage7.Size = new System.Drawing.Size(549, 118);
-			this.tabPage7.TabIndex = 1;
-			this.tabPage7.Text = "Outlook plugin";
-			this.tabPage7.UseVisualStyleBackColor = true;
-			// 
-			// button2
-			// 
-			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(20, 15);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(500, 23);
-			this.button2.TabIndex = 13;
-			this.button2.Text = "evision Clipboard Parse";
-			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click);
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(20, 50);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(135, 13);
-			this.label5.TabIndex = 18;
-			this.label5.Text = "Process: Start from e-vision";
-			// 
-			// label6
-			// 
-			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(62, 63);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(120, 13);
-			this.label6.TabIndex = 19;
-			this.label6.Text = "copy module student list";
-			// 
-			// label7
-			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(62, 76);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(189, 13);
-			this.label7.TabIndex = 20;
-			this.label7.Text = "copy module with pictures to add email";
-			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(62, 89);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(150, 13);
-			this.label8.TabIndex = 21;
-			this.label8.Text = "save pictures with chrome tool";
-			// 
-			// button7
-			// 
-			this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.button7.Location = new System.Drawing.Point(25, 16);
-			this.button7.Name = "button7";
-			this.button7.Size = new System.Drawing.Size(500, 23);
-			this.button7.TabIndex = 14;
-			this.button7.Text = "Outlook Plugin Clipboard Parse";
-			this.button7.UseVisualStyleBackColor = true;
-			this.button7.Click += new System.EventHandler(this.button7_Click);
-			// 
-			// txtContainerName
-			// 
-			this.txtContainerName.Location = new System.Drawing.Point(72, 74);
-			this.txtContainerName.Name = "txtContainerName";
-			this.txtContainerName.Size = new System.Drawing.Size(228, 20);
-			this.txtContainerName.TabIndex = 2;
-			// 
-			// label11
-			// 
-			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(6, 77);
-			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(52, 13);
-			this.label11.TabIndex = 3;
-			this.label11.Text = "Container";
-			// 
-			// button8
-			// 
-			this.button8.Location = new System.Drawing.Point(169, 100);
-			this.button8.Name = "button8";
-			this.button8.Size = new System.Drawing.Size(131, 34);
-			this.button8.TabIndex = 4;
-			this.button8.Text = "Try get image";
-			this.button8.UseVisualStyleBackColor = true;
-			this.button8.Click += new System.EventHandler(this.button8_Click);
+			this.groupBox2.Controls.Add(this.txtContainerName);
+			this.groupBox2.Controls.Add(this.BtnGetSelectedStudents);
+			this.groupBox2.Controls.Add(this.label11);
+			this.groupBox2.Controls.Add(this.button8);
+			this.groupBox2.Location = new System.Drawing.Point(9, 199);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(289, 151);
+			this.groupBox2.TabIndex = 6;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Get images";
 			// 
 			// StudentListForm
 			// 
@@ -653,6 +677,10 @@
 			this.Name = "StudentListForm";
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
+			this.tabControl3.ResumeLayout(false);
+			this.tabPage7.ResumeLayout(false);
+			this.tabPage6.ResumeLayout(false);
+			this.tabPage6.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.StudImage)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
@@ -670,10 +698,8 @@
 			this.tabPage5.PerformLayout();
 			this.tabPage2.ResumeLayout(false);
 			this.tabPage2.PerformLayout();
-			this.tabControl3.ResumeLayout(false);
-			this.tabPage6.ResumeLayout(false);
-			this.tabPage6.PerformLayout();
-			this.tabPage7.ResumeLayout(false);
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
 			this.ResumeLayout(false);
 
         }
@@ -732,5 +758,7 @@
 		private System.Windows.Forms.Button button8;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.TextBox txtContainerName;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.Button BtnGetSelectedStudents;
 	}
 }
