@@ -122,15 +122,17 @@ namespace UnnItBooster.ModelConversions
 		public static IEnumerable<QueueAction> GetStudentIndividualSource(string htmlSource, QueueAction context)
 		{
 			// document.location.href='../run/SIW_YGSL.start_url?
+			var t1 = new Regex("<td>(?<studentId>\\d{8})/\\d</td>.+?document\\.location\\.href='(?<link>\\.\\./run/SIW_YGSL\\.start_url\\?([^']+))';");
 			var t = new Regex("document\\.location\\.href='(?<link>\\.\\./run/SIW_YGSL\\.start_url\\?([^']+))';");
-			var ms = t.Matches(htmlSource);
+			var ms = t1.Matches(htmlSource);
 			foreach (Match m in ms)
 			{
 				if (m.Success)
 				{
 					string rel = m.Groups["link"].Value;
+					string stud = m.Groups["studentId"].Value;
 					var uri = context.GetReltiveUri(rel);
-					yield return new QueueAction(uri, context.DataRequired, QueueAction.ActionSource.studentDetails, context.Collection);
+					yield return new QueueAction(uri, context.DataRequired, QueueAction.ActionSource.studentDetails, context.Collection, stud);
 				}
 			}
 		}

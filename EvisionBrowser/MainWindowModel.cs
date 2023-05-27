@@ -84,7 +84,7 @@ namespace EvisionBrowser
 #endif
 			if (currentAction != null)
 			{
-				ProcessAvailableDataAsync(currentAction);
+				ProcessAvailableDataAsync(currentAction); // from navigation done
 			}
 		}
 
@@ -155,20 +155,44 @@ namespace EvisionBrowser
 		private bool sideBarVisibility = true;
 
 		[ObservableProperty]
+		private bool updateOnly = false;
+
+		[ObservableProperty]
 		private string moduleCode = string.Empty;
 
 		[RelayCommand()]
 		private async Task<bool> ProcessStudents()
 		{
 			var studentsSource = await GetSource();
-			var students = eVision.GetStudentsFromEvisionHtml(studentsSource);
+			var students = eVision.GetStudentsFromEvisionHtml(studentsSource).ToList();
+
+			if (UpdateOnly) // remove students that are not yet in the collection
+			{
+				if (string.IsNullOrEmpty(ModuleCode))
+				{
+					Report = "Specify module code to update.";
+					return false;
+				}
+				var coll = studentsRepo.GetPersonCollections().FirstOrDefault(x => x.Name == ModuleCode);
+				if (coll is null)
+				{
+					Report = "module code not found.";
+					return false;
+				}
+				var existingIds = new HashSet<string>(coll.Students.Select(x => x.NumericStudentId));
+				students.RemoveAll(x => !existingIds.Contains(x.NumericStudentId));
+			}
+
 			if (!string.IsNullOrEmpty(ModuleCode))
 			{
 				Report = studentsRepo.ConsiderNewStudents(students, ModuleCode);
-				// start the queue
+				// initialize the queue
 				var r = GetRequiredDataSettings();
 				if (r != ActionRequiredData.none)
-					ProcessAvailableDataAsync(new QueueAction(wbSample.Source, r, ActionSource.studentsList, ModuleCode));
+				{
+					var InterestingIds = new HashSet<string>(students.Select(x => x.NumericStudentId));
+					ProcessAvailableDataAsync(new QueueAction(wbSample.Source, r, ActionSource.studentsList, ModuleCode), InterestingIds); // from init
+				}
 			}
 			else
 			{
@@ -179,18 +203,19 @@ namespace EvisionBrowser
 					ModuleCode = st.Module;
 					Report += "\r\nModule set to :" + ModuleCode;
 				}
+				return false;
 			}
 			return true;
 		}
 
-		private async void ProcessAvailableDataAsync(QueueAction context)
+		private async void ProcessAvailableDataAsync(QueueAction context, HashSet<string>? interestingIds = null)
 		{
 			var src = await GetSource();
 			switch (context.DataSource)
 			{
 				// these funcions may enrich the queue and archive any data found
 				case ActionSource.studentsList:
-					ProcessStudentList(src, context);
+					ProcessStudentList(src, context, interestingIds);
 					break;
 				case ActionSource.studentsListWithPictures:
 					break;
@@ -224,7 +249,7 @@ namespace EvisionBrowser
 				QueueActions(actions);
 			}
 		}
-		private void ProcessStudentList(string src, QueueAction context)
+		private void ProcessStudentList(string src, QueueAction context, HashSet<string>? interestingIds)
 		{
 			if (
 				context.DataRequired.HasFlag(ActionRequiredData.studentEmail) ||
@@ -234,6 +259,8 @@ namespace EvisionBrowser
 				)
 			{
 				var actions = eVision.GetStudentIndividualSource(src, context).ToList();
+				if (interestingIds != null)
+					actions.RemoveAll(x=> x.StudentId == null || !interestingIds.Contains(x.StudentId));
 				QueueActions(actions);
 			}
 			// photos can also be downloaded from individual page, so if we go above we don't go below

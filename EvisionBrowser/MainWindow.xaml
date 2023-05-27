@@ -61,6 +61,7 @@
                     <TextBox Margin="3" ToolTip="Collection name" Text="{Binding ModuleCode}"  />
                     <Button  Margin="3" Content="Copy HTML" Command="{Binding CopyHtmlCommand}" />
                     <Button  Margin="3" Content="Test" Command="{Binding TestCommand}" />
+                    <CheckBox IsChecked="{Binding UpdateOnly}" Margin="3">Update only (no new students)</CheckBox>
                     <CheckBox IsChecked="{Binding ScrapeEmail}" Margin="3">get email</CheckBox>
                     <CheckBox IsChecked="{Binding ScrapePersonalEmail}" Margin="3">get personal email</CheckBox>
                     <CheckBox IsChecked="{Binding ScrapePictures}" Margin="3">get pictures</CheckBox>

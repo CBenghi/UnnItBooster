@@ -29,14 +29,16 @@ namespace UnnFunctions.Models
 			studentTranscript,
 		}
 
-		public QueueAction(Uri page, ActionRequiredData required, ActionSource source, string collection)
+		public QueueAction(Uri page, ActionRequiredData required, ActionSource source, string collection, string? studentId = null)
 		{
 			Page = page;
 			DataRequired = required;
 			DataSource = source;
 			Collection = collection;
+			StudentId = studentId;
 		}
 
+		public string? StudentId { get; set; } = null;
 		public string Collection { get; set; }
 		public ActionRequiredData DataRequired { get; set; }
 		public Uri Page { get; set; }

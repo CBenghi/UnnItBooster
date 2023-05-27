@@ -40,7 +40,7 @@ public class StudentsRepository
 	}
 
 	/// <summary>
-	/// Initializes or updates a student collection by name
+	/// Initializes or updates a student collection by name (by merging students based on id)
 	/// </summary>
 	public string ConsiderNewStudents(IEnumerable<Student> students, string collectionName)
 	{
