@@ -41,6 +41,7 @@
 			this.StudImage = new System.Windows.Forms.PictureBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.txtSystemInfo = new System.Windows.Forms.TextBox();
+			this.BtnSolveStudentName = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -184,6 +185,7 @@
 			// 
 			// tabPage2
 			// 
+			this.tabPage2.Controls.Add(this.BtnSolveStudentName);
 			this.tabPage2.Controls.Add(this.txtSystemInfo);
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
@@ -198,11 +200,23 @@
 			this.txtSystemInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtSystemInfo.Location = new System.Drawing.Point(6, 6);
+			this.txtSystemInfo.Location = new System.Drawing.Point(6, 40);
 			this.txtSystemInfo.Multiline = true;
 			this.txtSystemInfo.Name = "txtSystemInfo";
-			this.txtSystemInfo.Size = new System.Drawing.Size(396, 352);
+			this.txtSystemInfo.Size = new System.Drawing.Size(247, 318);
 			this.txtSystemInfo.TabIndex = 0;
+			// 
+			// BtnSolveStudentName
+			// 
+			this.BtnSolveStudentName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.BtnSolveStudentName.Location = new System.Drawing.Point(6, 11);
+			this.BtnSolveStudentName.Name = "BtnSolveStudentName";
+			this.BtnSolveStudentName.Size = new System.Drawing.Size(247, 23);
+			this.BtnSolveStudentName.TabIndex = 1;
+			this.BtnSolveStudentName.Text = "Resolve first names";
+			this.BtnSolveStudentName.UseVisualStyleBackColor = true;
+			this.BtnSolveStudentName.Click += new System.EventHandler(this.BtnSolveStudentName_Click);
 			// 
 			// UnnStudent
 			// 
@@ -236,5 +250,6 @@
 		private System.Windows.Forms.ComboBox cmbAction;
 		private System.Windows.Forms.ComboBox CmbFolder;
 		private System.Windows.Forms.Button CmdFolder;
+		private System.Windows.Forms.Button BtnSolveStudentName;
 	}
 }

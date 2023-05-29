@@ -17,6 +17,7 @@ using UnnItBooster.ModelConversions;
 using ZedGraph;
 using System.IO.Compression;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+using UnnItBooster.StudentMarking;
 
 namespace StudentsFetcher.StudentMarking;
 
@@ -1068,10 +1069,11 @@ public partial class FrmMarkingMachine : Form
         var f = new FileInfo(txtSourceTurnitin.Text);
         if (!f.Exists)
             return;
-
+        var destFile = Path.ChangeExtension(f.FullName, "sqlite");
         var repository = new StudentsRepository(Settings.Default.StudentsFolder);
         var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f, repository).ToList();
-        TurnItIn.PopulateDatabase(txtExcelFileName.Text, submissions);
+        TurnItIn.PopulateDatabase(destFile, submissions);
+        txtExcelFileName.Text = destFile;
         Reload();
     }
 
@@ -1155,4 +1157,9 @@ public partial class FrmMarkingMachine : Form
         if (f.Exists)
             Process.Start(f.Directory.FullName);
     }
+
+	private void BtnExportExcel_Click(object sender, EventArgs e)
+	{
+        ExcelPersistence.Write(_config);
+	}
 }

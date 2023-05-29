@@ -25,7 +25,7 @@ namespace UnnOutlookAddin.UI
 
 			foreach (var selectedMailMessage in explorer.Selection.OfType<Outlook.MailItem>())
 			{
-				selectedMailMessage.Categorize(messageEditor, ThisAddIn.Repository);
+				selectedMailMessage.Categorize(messageEditor, ThisAddIn.StudentsRepository);
 			}
 		}
 

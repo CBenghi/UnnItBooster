@@ -197,18 +197,34 @@ public class StudentsRepository
 		return returnStudent != null;
 	}
 
-	public bool SetStudentInfo(Student student, string collection)
+	public int UpdateStudentInfo(Student student)
 	{
-		var coll = collections.FirstOrDefault(x=>x.Name == collection);
+		var tally = 0;
+		foreach (var coll in collections)
+		{
+			if (UpdateStudentInfo(student, coll))
+				tally++;
+		}
+		return tally;
+	}
+
+	public bool UpdateStudentInfo(Student student, string collection)
+	{
+		var coll = collections.FirstOrDefault(x => x.Name == collection);
 		if (coll is null)
 			return false;
+		return UpdateStudentInfo(student, coll);
+	}
+
+	private static bool UpdateStudentInfo(Student student, IStudentCollection coll)
+	{
 		if (
 			string.IsNullOrEmpty(student.Email)
 			&& string.IsNullOrEmpty(student.NumericStudentId)
 			)
 			return false;
 		var toUpdate = coll.Students.FirstOrDefault(x => x.HasEmail(student.Email!));
-		if (toUpdate is null && !string.IsNullOrEmpty( student.NumericStudentId))
+		if (toUpdate is null && !string.IsNullOrEmpty(student.NumericStudentId))
 		{
 			toUpdate = coll.Students.FirstOrDefault(x => x.NumericStudentId == student.NumericStudentId);
 		}

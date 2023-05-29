@@ -164,6 +164,11 @@ namespace UnnItBooster.Models
 					}
 					sb.AppendLine($"{transcript.Year} Lvl:{transcript.Level} {transcript.Code} Mark: {transcript.GetMarkString()} ({transcript.Title} {transcript.Credits} credits).");
 				}
+				var res = ModuleResult.WeightedAverage(TranscriptResults, out var credits);
+				if (res > 0)
+				{
+					sb.AppendLine($"\r\nWeighed average {res:0.0}% over {credits} credits");
+				}
 			}
 			return sb.ToString();
 		}

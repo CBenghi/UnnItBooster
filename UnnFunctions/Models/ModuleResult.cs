@@ -47,5 +47,25 @@ namespace UnnFunctions.Models
 			}
 			return int.TryParse(t, out mark);
 		}
+
+		public static double WeightedAverage(IEnumerable<ModuleResult> results, out int MaturedCredits)
+		{
+			var Tally = 0.0;
+			MaturedCredits = 0;
+			foreach (var result in results)
+			{
+				if (result.TryGetMark(out var mk, out var cred) && cred > 0)
+				{
+					Tally += mk * cred;
+					MaturedCredits += cred;
+				}
+			}
+			if (MaturedCredits > 0)
+			{
+				return Tally/MaturedCredits;
+			}
+			return 0;
+		}
+
 	}
 }

@@ -266,13 +266,15 @@ namespace StudentsFetcher.StudentMarking
 		public MarksCalculator GetMarkCalculator()
 		{
 			var ret = new MarksCalculator();
-			var dt = GetDataTable("Select * from TB_Components");
+			var dt = GetDataTable("Select * from TB_Components order by CPNT_Order");
 			foreach (DataRow row in dt.Rows)
 			{
 				var m = new MarkComponent
 				{
 					id = Convert.ToInt32(row["CPNT_Id"]),
-					percent = Convert.ToDouble(row["CPNT_Percent"])
+					percent = Convert.ToDouble(row["CPNT_Percent"]),
+					Description = row["CPNT_Comment"].ToString(),
+					Name = row["CPNT_Name"].ToString(),
 				};
 				ret.Marks.Add(m);
 			}

@@ -57,5 +57,7 @@ namespace StudentsFetcher.StudentMarking
 	{
 		public int id;
 		public double percent;
+		public string Name;
+		public string Description;
 	}
 }

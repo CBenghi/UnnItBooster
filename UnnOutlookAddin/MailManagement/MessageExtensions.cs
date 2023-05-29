@@ -160,14 +160,14 @@ namespace UnnOutlookAddin.MailManagement
 			var user = entry.GetExchangeUser();
 			if (entry.HasStudentId(out var id))
 			{
-				Student s = new Student()
+				var s = new Student()
 				{
 					Forename = user.FirstName,
 					Surname = user.LastName,
 					Email = user.PrimarySmtpAddress,
-					Route = user.JobTitle,
-					NumericStudentId = id
 				};
+				s.Route = user.JobTitle;
+				s.NumericStudentId = id;
 				// txtInformation.Text += $"{user.FirstName}\t{user.LastName}\t{user.Name}\t{user.PrimarySmtpAddress}\t{id}\t{user.JobTitle}\r\n";
 				return s;
 			}

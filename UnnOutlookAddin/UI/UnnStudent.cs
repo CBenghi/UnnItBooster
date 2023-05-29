@@ -11,6 +11,7 @@ using StudentsFetcher.StudentMarking;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using UnnFunctions.ModelConversions;
 using Microsoft.Office.Interop.Outlook;
+using System.Diagnostics;
 
 namespace UnnOutlookAddin.UI
 {
@@ -268,5 +269,44 @@ namespace UnnOutlookAddin.UI
 			}
 		}
 
+		private void BtnSolveStudentName_Click(object sender, EventArgs e)
+		{
+			StringBuilder sb = new StringBuilder();
+			var attemptedEmail = new List<string>();
+			var attemptedStudents = new List<Student>();
+			foreach (var unnamedStudent in ThisAddIn.StudentsRepository.Students)
+			{
+				if (!string.IsNullOrEmpty(unnamedStudent.Forename))
+					continue;
+				if (string.IsNullOrEmpty(unnamedStudent.Email))
+					continue;
+				if (attemptedEmail.Contains(unnamedStudent.Email))
+					continue;
+				sb.Append($"Item to attempt: {unnamedStudent.Email}");
+				attemptedEmail.Add(unnamedStudent.Email);
+
+				var user = Globals.ThisAddIn.GetUser(unnamedStudent.Email);
+				if (user == null)
+					continue;
+				var studentWithName = new Student()
+				{
+					Forename = user.FirstName,
+					Surname = user.LastName,
+					Email = unnamedStudent.Email,
+					NumericStudentId = unnamedStudent.NumericStudentId,
+				};
+				if (string.IsNullOrEmpty(unnamedStudent.Route))
+				{
+					studentWithName.Route = user.JobTitle;
+				}
+				attemptedStudents.Add(studentWithName);
+			}
+			foreach (var stud in attemptedStudents)
+			{
+				var cnt = ThisAddIn.StudentsRepository.UpdateStudentInfo(stud);
+				sb.Append($"Updating: {stud.Email} updated: {cnt}");
+			}
+			txtSystemInfo.Text = sb.ToString();
+		}
 	}
 }

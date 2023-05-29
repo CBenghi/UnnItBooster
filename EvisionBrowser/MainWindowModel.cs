@@ -235,14 +235,14 @@ namespace EvisionBrowser
 		{
 			var student = eVision.GetStudentTranscript(src, context);
 			if (student is not null)
-				studentsRepo.SetStudentInfo(student, context.Collection);
+				studentsRepo.UpdateStudentInfo(student, context.Collection);
 		}
 
 		private void ProcessStudentDetails(string src, QueueAction context)
 		{
 			var student = eVision.GetStudentFromIndividualSource(src, context);
 			if (student is not null)
-				studentsRepo.SetStudentInfo(student, context.Collection);
+				studentsRepo.UpdateStudentInfo(student, context.Collection);
 			if (context.DataRequired.HasFlag(ActionRequiredData.studentTranscript))
 			{
 				var actions = eVision.GetTranscriptPageFromIndividualSource(src, context);

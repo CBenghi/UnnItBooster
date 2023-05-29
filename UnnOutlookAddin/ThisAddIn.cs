@@ -35,13 +35,13 @@ namespace UnnOutlookAddin
 
 			// display the Students pane
 			//
-			Repository = new StudentsRepository(Properties.Settings.Default.StudentsFolder);
-			myStudentComponent = new UI.UnnStudent(Repository);
+			StudentsRepository = new StudentsRepository(Properties.Settings.Default.StudentsFolder);
+			myStudentComponent = new UI.UnnStudent(StudentsRepository);
 			var myCustomTaskPane = CustomTaskPanes.Add(myStudentComponent, "UnnStudentPane");
 			myCustomTaskPane.Visible = true;
 		}
 
-		internal static StudentsRepository Repository;
+		internal static StudentsRepository StudentsRepository;
 
 		UI.UnnStudent myStudentComponent = null;
 
@@ -52,9 +52,21 @@ namespace UnnOutlookAddin
 				if (emailItem.UnRead)
 				{
 					var messageEditor = new MessageEditor(_currentExplorer);
-					emailItem.Categorize(messageEditor, Repository);
+					emailItem.Categorize(messageEditor, StudentsRepository);
 				}
 			}
+		}
+
+		internal ExchangeUser GetUser(string email)
+		{
+			var rec = _outlookNameSpace.CreateRecipient(email);
+			if (rec == null)
+				return null;
+			rec.Resolve();
+			var ae = rec.AddressEntry;
+			if (ae != null)
+				return ae.GetExchangeUser();
+			return null;
 		}
 
 		string lastMailId = string.Empty;
