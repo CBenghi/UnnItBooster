@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPOI.HSSF.Record;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Input;
 using UnnFunctions.ModelConversions;
+using UnnFunctions.Models;
 using UnnItBooster.Models;
 
 namespace StudentsFetcher.StudentMarking
@@ -255,6 +257,27 @@ namespace StudentsFetcher.StudentMarking
 				}
 			}
 			MessageBox.Show($"Attempted image for {tallyTry}; {tallySuccess} found.");			
+		}
+
+		private void button9_Click(object sender, EventArgs e)
+		{
+			StringBuilder sb = new StringBuilder();
+			foreach (var code in GetAllCodes().Distinct().OrderBy(x=>x))
+			{
+				ModuleResult.Report(sb, code);
+			}
+			txtReport.Text = sb.ToString();	
+		}
+
+		private IEnumerable<string> GetAllCodes()
+		{
+			foreach (var s in studentsRepo.Students)
+			{
+				foreach(var item in s.UsedCodes())
+				{
+					yield return item;
+				}
+			}
 		}
 	}
 }

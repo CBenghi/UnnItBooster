@@ -162,16 +162,33 @@ namespace UnnItBooster.Models
 						yr = transcript.Year;
 						sb.AppendLine($"{yr}");
 					}
-					sb.AppendLine($"{transcript.Year} Lvl:{transcript.Level} {transcript.Code} Mark: {transcript.GetMarkString()} ({transcript.Title} {transcript.Credits} credits).");
+					sb.AppendLine($"{transcript.Year} Lvl:{transcript.Level} {transcript.Code} Mark: {transcript.GetMarkString()} ({transcript.Title} {transcript.Credits} credits with code {transcript.GetCodesString()}).");
 				}
 				var res = ModuleResult.WeightedAverage(TranscriptResults, out var credits);
 				if (res > 0)
 				{
-					sb.AppendLine($"\r\nWeighed average {res:0.0}% over {credits} credits");
+					sb.AppendLine($"\r\nWeighed average {res:0.0}% over {credits} credits\r\n");
+				}
+				sb.AppendLine("Legenda:");
+				foreach (var code in UsedCodes().Distinct())
+				{
+					ModuleResult.Report(sb, code);
 				}
 			}
 			return sb.ToString();
 		}
-		
+
+		public IEnumerable<string> UsedCodes()
+		{
+			if (TranscriptResults != null)
+			{
+				foreach (var tr in TranscriptResults)
+				{
+					yield return tr.ActualResult;
+					yield return tr.AgreedResult;
+					yield return tr.Result;
+				}
+			}
+		}
 	}
 }

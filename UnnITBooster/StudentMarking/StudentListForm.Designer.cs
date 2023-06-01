@@ -32,7 +32,6 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.txtFolder = new System.Windows.Forms.TextBox();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.tabControl3 = new System.Windows.Forms.TabControl();
 			this.tabPage7 = new System.Windows.Forms.TabPage();
 			this.button7 = new System.Windows.Forms.Button();
@@ -68,9 +67,11 @@
 			this.tabControl2 = new System.Windows.Forms.TabControl();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
-			this.button8 = new System.Windows.Forms.Button();
-			this.label11 = new System.Windows.Forms.Label();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.txtContainerName = new System.Windows.Forms.TextBox();
+			this.BtnGetSelectedStudents = new System.Windows.Forms.Button();
+			this.label11 = new System.Windows.Forms.Label();
+			this.button8 = new System.Windows.Forms.Button();
 			this.txtAlternativeEmail = new System.Windows.Forms.TextBox();
 			this.btnAddEmail = new System.Windows.Forms.Button();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
@@ -80,9 +81,12 @@
 			this.button5 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.lstModules = new System.Windows.Forms.CheckedListBox();
-			this.BtnGetSelectedStudents = new System.Windows.Forms.Button();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.groupBox1.SuspendLayout();
+			this.tabPage8 = new System.Windows.Forms.TabPage();
+			this.tabControl4 = new System.Windows.Forms.TabControl();
+			this.tabPage9 = new System.Windows.Forms.TabPage();
+			this.tabPage10 = new System.Windows.Forms.TabPage();
+			this.button9 = new System.Windows.Forms.Button();
+			this.label12 = new System.Windows.Forms.Label();
 			this.tabControl3.SuspendLayout();
 			this.tabPage7.SuspendLayout();
 			this.tabPage6.SuspendLayout();
@@ -97,24 +101,28 @@
 			this.tabControl2.SuspendLayout();
 			this.tabPage3.SuspendLayout();
 			this.tabPage4.SuspendLayout();
+			this.groupBox2.SuspendLayout();
 			this.tabPage5.SuspendLayout();
 			this.tabPage2.SuspendLayout();
-			this.groupBox2.SuspendLayout();
+			this.tabPage8.SuspendLayout();
+			this.tabControl4.SuspendLayout();
+			this.tabPage9.SuspendLayout();
+			this.tabPage10.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// txtModuleCode
 			// 
 			this.txtModuleCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtModuleCode.Location = new System.Drawing.Point(100, 19);
+			this.txtModuleCode.Location = new System.Drawing.Point(136, 19);
 			this.txtModuleCode.Name = "txtModuleCode";
-			this.txtModuleCode.Size = new System.Drawing.Size(557, 20);
+			this.txtModuleCode.Size = new System.Drawing.Size(405, 20);
 			this.txtModuleCode.TabIndex = 0;
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(11, 22);
+			this.label1.Location = new System.Drawing.Point(29, 22);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(83, 13);
 			this.label1.TabIndex = 1;
@@ -135,39 +143,20 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtFolder.Location = new System.Drawing.Point(56, 15);
 			this.txtFolder.Name = "txtFolder";
-			this.txtFolder.Size = new System.Drawing.Size(758, 20);
+			this.txtFolder.Size = new System.Drawing.Size(679, 20);
 			this.txtFolder.TabIndex = 2;
-			// 
-			// groupBox1
-			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox1.Controls.Add(this.tabControl3);
-			this.groupBox1.Controls.Add(this.label10);
-			this.groupBox1.Controls.Add(this.label9);
-			this.groupBox1.Controls.Add(this.txtReport);
-			this.groupBox1.Controls.Add(this.cmdSelectSource);
-			this.groupBox1.Controls.Add(this.txtInputSource);
-			this.groupBox1.Controls.Add(this.label4);
-			this.groupBox1.Controls.Add(this.button1);
-			this.groupBox1.Controls.Add(this.txtModuleCode);
-			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Location = new System.Drawing.Point(140, 81);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(674, 502);
-			this.groupBox1.TabIndex = 14;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Collection";
 			// 
 			// tabControl3
 			// 
+			this.tabControl3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl3.Controls.Add(this.tabPage7);
 			this.tabControl3.Controls.Add(this.tabPage6);
-			this.tabControl3.Location = new System.Drawing.Point(100, 45);
+			this.tabControl3.Controls.Add(this.tabPage8);
+			this.tabControl3.Location = new System.Drawing.Point(28, 45);
 			this.tabControl3.Name = "tabControl3";
 			this.tabControl3.SelectedIndex = 0;
-			this.tabControl3.Size = new System.Drawing.Size(557, 144);
+			this.tabControl3.Size = new System.Drawing.Size(513, 182);
 			this.tabControl3.TabIndex = 25;
 			// 
 			// tabPage7
@@ -176,7 +165,7 @@
 			this.tabPage7.Location = new System.Drawing.Point(4, 22);
 			this.tabPage7.Name = "tabPage7";
 			this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage7.Size = new System.Drawing.Size(549, 118);
+			this.tabPage7.Size = new System.Drawing.Size(505, 156);
 			this.tabPage7.TabIndex = 1;
 			this.tabPage7.Text = "Outlook plugin";
 			this.tabPage7.UseVisualStyleBackColor = true;
@@ -187,7 +176,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.button7.Location = new System.Drawing.Point(25, 16);
 			this.button7.Name = "button7";
-			this.button7.Size = new System.Drawing.Size(500, 23);
+			this.button7.Size = new System.Drawing.Size(466, 23);
 			this.button7.TabIndex = 14;
 			this.button7.Text = "Outlook Plugin Clipboard Parse";
 			this.button7.UseVisualStyleBackColor = true;
@@ -203,7 +192,7 @@
 			this.tabPage6.Location = new System.Drawing.Point(4, 22);
 			this.tabPage6.Name = "tabPage6";
 			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage6.Size = new System.Drawing.Size(549, 118);
+			this.tabPage6.Size = new System.Drawing.Size(712, 156);
 			this.tabPage6.TabIndex = 0;
 			this.tabPage6.Text = "e-vision";
 			this.tabPage6.UseVisualStyleBackColor = true;
@@ -259,16 +248,17 @@
 			// label10
 			// 
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(139, 250);
+			this.label10.Location = new System.Drawing.Point(15, 97);
 			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(193, 13);
+			this.label10.Size = new System.Drawing.Size(407, 13);
 			this.label10.TabIndex = 24;
-			this.label10.Text = "This separates first name and last name";
+			this.label10.Text = "This separates first name and last name, but the outook plugin is more reliable f" +
+    "or that";
 			// 
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(11, 305);
+			this.label9.Location = new System.Drawing.Point(159, 360);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(39, 13);
 			this.label9.TabIndex = 23;
@@ -279,17 +269,17 @@
 			this.txtReport.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtReport.Location = new System.Drawing.Point(100, 305);
+			this.txtReport.Location = new System.Drawing.Point(244, 360);
 			this.txtReport.Multiline = true;
 			this.txtReport.Name = "txtReport";
 			this.txtReport.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtReport.Size = new System.Drawing.Size(557, 182);
+			this.txtReport.Size = new System.Drawing.Size(491, 315);
 			this.txtReport.TabIndex = 22;
 			// 
 			// cmdSelectSource
 			// 
 			this.cmdSelectSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdSelectSource.Location = new System.Drawing.Point(582, 195);
+			this.cmdSelectSource.Location = new System.Drawing.Point(424, 42);
 			this.cmdSelectSource.Name = "cmdSelectSource";
 			this.cmdSelectSource.Size = new System.Drawing.Size(75, 23);
 			this.cmdSelectSource.TabIndex = 17;
@@ -301,15 +291,15 @@
 			// 
 			this.txtInputSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtInputSource.Location = new System.Drawing.Point(100, 197);
+			this.txtInputSource.Location = new System.Drawing.Point(104, 16);
 			this.txtInputSource.Name = "txtInputSource";
-			this.txtInputSource.Size = new System.Drawing.Size(476, 20);
+			this.txtInputSource.Size = new System.Drawing.Size(395, 20);
 			this.txtInputSource.TabIndex = 15;
 			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(11, 200);
+			this.label4.Location = new System.Drawing.Point(15, 19);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(41, 13);
 			this.label4.TabIndex = 16;
@@ -319,9 +309,9 @@
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(100, 224);
+			this.button1.Location = new System.Drawing.Point(18, 71);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(557, 23);
+			this.button1.Size = new System.Drawing.Size(481, 23);
 			this.button1.TabIndex = 14;
 			this.button1.Text = "turnitin Gradebook";
 			this.button1.UseVisualStyleBackColor = true;
@@ -330,7 +320,7 @@
 			// button3
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(666, 41);
+			this.button3.Location = new System.Drawing.Point(587, 41);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(75, 23);
 			this.button3.TabIndex = 15;
@@ -432,7 +422,7 @@
 			this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(840, 622);
+			this.tabControl1.Size = new System.Drawing.Size(761, 714);
 			this.tabControl1.TabIndex = 20;
 			// 
 			// tabPage1
@@ -520,15 +510,35 @@
 			this.tabPage4.Text = "Tools";
 			this.tabPage4.UseVisualStyleBackColor = true;
 			// 
-			// button8
+			// groupBox2
 			// 
-			this.button8.Location = new System.Drawing.Point(152, 56);
-			this.button8.Name = "button8";
-			this.button8.Size = new System.Drawing.Size(131, 34);
-			this.button8.TabIndex = 4;
-			this.button8.Text = "Current student";
-			this.button8.UseVisualStyleBackColor = true;
-			this.button8.Click += new System.EventHandler(this.button8_Click);
+			this.groupBox2.Controls.Add(this.txtContainerName);
+			this.groupBox2.Controls.Add(this.BtnGetSelectedStudents);
+			this.groupBox2.Controls.Add(this.label11);
+			this.groupBox2.Controls.Add(this.button8);
+			this.groupBox2.Location = new System.Drawing.Point(9, 199);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(289, 151);
+			this.groupBox2.TabIndex = 6;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Get images";
+			// 
+			// txtContainerName
+			// 
+			this.txtContainerName.Location = new System.Drawing.Point(75, 30);
+			this.txtContainerName.Name = "txtContainerName";
+			this.txtContainerName.Size = new System.Drawing.Size(208, 20);
+			this.txtContainerName.TabIndex = 2;
+			// 
+			// BtnGetSelectedStudents
+			// 
+			this.BtnGetSelectedStudents.Location = new System.Drawing.Point(152, 96);
+			this.BtnGetSelectedStudents.Name = "BtnGetSelectedStudents";
+			this.BtnGetSelectedStudents.Size = new System.Drawing.Size(131, 34);
+			this.BtnGetSelectedStudents.TabIndex = 5;
+			this.BtnGetSelectedStudents.Text = "Selected students";
+			this.BtnGetSelectedStudents.UseVisualStyleBackColor = true;
+			this.BtnGetSelectedStudents.Click += new System.EventHandler(this.BtnGetSelectedStudents_Click);
 			// 
 			// label11
 			// 
@@ -539,12 +549,15 @@
 			this.label11.TabIndex = 3;
 			this.label11.Text = "Container";
 			// 
-			// txtContainerName
+			// button8
 			// 
-			this.txtContainerName.Location = new System.Drawing.Point(75, 30);
-			this.txtContainerName.Name = "txtContainerName";
-			this.txtContainerName.Size = new System.Drawing.Size(208, 20);
-			this.txtContainerName.TabIndex = 2;
+			this.button8.Location = new System.Drawing.Point(152, 56);
+			this.button8.Name = "button8";
+			this.button8.Size = new System.Drawing.Size(131, 34);
+			this.button8.TabIndex = 4;
+			this.button8.Text = "Current student";
+			this.button8.UseVisualStyleBackColor = true;
+			this.button8.Click += new System.EventHandler(this.button8_Click);
 			// 
 			// txtAlternativeEmail
 			// 
@@ -585,19 +598,21 @@
 			// 
 			// tabPage2
 			// 
+			this.tabPage2.Controls.Add(this.tabControl4);
 			this.tabPage2.Controls.Add(this.button6);
+			this.tabPage2.Controls.Add(this.label9);
 			this.tabPage2.Controls.Add(this.button5);
+			this.tabPage2.Controls.Add(this.txtReport);
 			this.tabPage2.Controls.Add(this.button4);
 			this.tabPage2.Controls.Add(this.lstModules);
 			this.tabPage2.Controls.Add(this.txtFolder);
 			this.tabPage2.Controls.Add(this.label2);
 			this.tabPage2.Controls.Add(this.button3);
-			this.tabPage2.Controls.Add(this.groupBox1);
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
-			this.tabPage2.Size = new System.Drawing.Size(832, 596);
+			this.tabPage2.Size = new System.Drawing.Size(753, 688);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Repository";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -605,7 +620,7 @@
 			// button6
 			// 
 			this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button6.Location = new System.Drawing.Point(14, 531);
+			this.button6.Location = new System.Drawing.Point(14, 623);
 			this.button6.Name = "button6";
 			this.button6.Size = new System.Drawing.Size(121, 23);
 			this.button6.TabIndex = 20;
@@ -616,7 +631,7 @@
 			// button5
 			// 
 			this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button5.Location = new System.Drawing.Point(13, 560);
+			this.button5.Location = new System.Drawing.Point(13, 652);
 			this.button5.Name = "button5";
 			this.button5.Size = new System.Drawing.Size(121, 23);
 			this.button5.TabIndex = 19;
@@ -627,7 +642,7 @@
 			// button4
 			// 
 			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button4.Location = new System.Drawing.Point(747, 41);
+			this.button4.Location = new System.Drawing.Point(668, 41);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(67, 23);
 			this.button4.TabIndex = 18;
@@ -642,41 +657,87 @@
 			this.lstModules.FormattingEnabled = true;
 			this.lstModules.Location = new System.Drawing.Point(14, 81);
 			this.lstModules.Name = "lstModules";
-			this.lstModules.Size = new System.Drawing.Size(120, 439);
+			this.lstModules.Size = new System.Drawing.Size(120, 514);
 			this.lstModules.TabIndex = 17;
 			// 
-			// BtnGetSelectedStudents
+			// tabPage8
 			// 
-			this.BtnGetSelectedStudents.Location = new System.Drawing.Point(152, 96);
-			this.BtnGetSelectedStudents.Name = "BtnGetSelectedStudents";
-			this.BtnGetSelectedStudents.Size = new System.Drawing.Size(131, 34);
-			this.BtnGetSelectedStudents.TabIndex = 5;
-			this.BtnGetSelectedStudents.Text = "Selected students";
-			this.BtnGetSelectedStudents.UseVisualStyleBackColor = true;
-			this.BtnGetSelectedStudents.Click += new System.EventHandler(this.BtnGetSelectedStudents_Click);
+			this.tabPage8.Controls.Add(this.txtInputSource);
+			this.tabPage8.Controls.Add(this.label10);
+			this.tabPage8.Controls.Add(this.label4);
+			this.tabPage8.Controls.Add(this.cmdSelectSource);
+			this.tabPage8.Controls.Add(this.button1);
+			this.tabPage8.Location = new System.Drawing.Point(4, 22);
+			this.tabPage8.Name = "tabPage8";
+			this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage8.Size = new System.Drawing.Size(505, 156);
+			this.tabPage8.TabIndex = 2;
+			this.tabPage8.Text = "Gradebook";
+			this.tabPage8.UseVisualStyleBackColor = true;
 			// 
-			// groupBox2
+			// tabControl4
 			// 
-			this.groupBox2.Controls.Add(this.txtContainerName);
-			this.groupBox2.Controls.Add(this.BtnGetSelectedStudents);
-			this.groupBox2.Controls.Add(this.label11);
-			this.groupBox2.Controls.Add(this.button8);
-			this.groupBox2.Location = new System.Drawing.Point(9, 199);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(289, 151);
-			this.groupBox2.TabIndex = 6;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Get images";
+			this.tabControl4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabControl4.Controls.Add(this.tabPage9);
+			this.tabControl4.Controls.Add(this.tabPage10);
+			this.tabControl4.Location = new System.Drawing.Point(158, 81);
+			this.tabControl4.Name = "tabControl4";
+			this.tabControl4.SelectedIndex = 0;
+			this.tabControl4.Size = new System.Drawing.Size(577, 259);
+			this.tabControl4.TabIndex = 24;
+			// 
+			// tabPage9
+			// 
+			this.tabPage9.Controls.Add(this.tabControl3);
+			this.tabPage9.Controls.Add(this.txtModuleCode);
+			this.tabPage9.Controls.Add(this.label1);
+			this.tabPage9.Location = new System.Drawing.Point(4, 22);
+			this.tabPage9.Name = "tabPage9";
+			this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage9.Size = new System.Drawing.Size(569, 233);
+			this.tabPage9.TabIndex = 0;
+			this.tabPage9.Text = "Student collection I/O";
+			this.tabPage9.UseVisualStyleBackColor = true;
+			// 
+			// tabPage10
+			// 
+			this.tabPage10.Controls.Add(this.label12);
+			this.tabPage10.Controls.Add(this.button9);
+			this.tabPage10.Location = new System.Drawing.Point(4, 22);
+			this.tabPage10.Name = "tabPage10";
+			this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage10.Size = new System.Drawing.Size(569, 233);
+			this.tabPage10.TabIndex = 1;
+			this.tabPage10.Text = "Maintenance";
+			this.tabPage10.UseVisualStyleBackColor = true;
+			// 
+			// button9
+			// 
+			this.button9.Location = new System.Drawing.Point(23, 19);
+			this.button9.Name = "button9";
+			this.button9.Size = new System.Drawing.Size(186, 23);
+			this.button9.TabIndex = 0;
+			this.button9.Text = "Module mark result";
+			this.button9.UseVisualStyleBackColor = true;
+			this.button9.Click += new System.EventHandler(this.button9_Click);
+			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.Location = new System.Drawing.Point(226, 23);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(296, 13);
+			this.label12.TabIndex = 1;
+			this.label12.Text = "Checks that module codes (P-R, etc) are defined in the library";
 			// 
 			// StudentListForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(840, 622);
+			this.ClientSize = new System.Drawing.Size(761, 714);
 			this.Controls.Add(this.tabControl1);
 			this.Name = "StudentListForm";
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
 			this.tabControl3.ResumeLayout(false);
 			this.tabPage7.ResumeLayout(false);
 			this.tabPage6.ResumeLayout(false);
@@ -694,12 +755,19 @@
 			this.tabPage3.ResumeLayout(false);
 			this.tabPage4.ResumeLayout(false);
 			this.tabPage4.PerformLayout();
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
 			this.tabPage5.ResumeLayout(false);
 			this.tabPage5.PerformLayout();
 			this.tabPage2.ResumeLayout(false);
 			this.tabPage2.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
-			this.groupBox2.PerformLayout();
+			this.tabPage8.ResumeLayout(false);
+			this.tabPage8.PerformLayout();
+			this.tabControl4.ResumeLayout(false);
+			this.tabPage9.ResumeLayout(false);
+			this.tabPage9.PerformLayout();
+			this.tabPage10.ResumeLayout(false);
+			this.tabPage10.PerformLayout();
 			this.ResumeLayout(false);
 
         }
@@ -710,7 +778,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtFolder;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ListView lstStudents;
         private System.Windows.Forms.ColumnHeader columnHeader1;
@@ -760,5 +827,11 @@
 		private System.Windows.Forms.TextBox txtContainerName;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.Button BtnGetSelectedStudents;
+		private System.Windows.Forms.TabPage tabPage8;
+		private System.Windows.Forms.TabControl tabControl4;
+		private System.Windows.Forms.TabPage tabPage9;
+		private System.Windows.Forms.TabPage tabPage10;
+		private System.Windows.Forms.Button button9;
+		private System.Windows.Forms.Label label12;
 	}
 }
