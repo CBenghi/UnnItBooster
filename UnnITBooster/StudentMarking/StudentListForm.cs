@@ -57,6 +57,7 @@ namespace StudentsFetcher.StudentMarking
 			var flt = txtSearch.Text.Trim();
 			if (string.IsNullOrEmpty(flt))
 			{
+				// list all students
 				foreach (var student in studentsRepo.Students)
 				{
 					AddStudent(student);
@@ -64,11 +65,13 @@ namespace StudentsFetcher.StudentMarking
 			}
 			else
 			{
+				// list matches only
 				foreach (var student in studentsRepo.Students.Where(student => student.Matches(flt)))
 				{
 					AddStudent(student);
 				}
 			}
+			BtnDisplayWebPhoto.Visible = lstStudents.Items.Count == 0 && StudentsRepository.IsNumericUserId(txtSearch.Text);
 		}
 
 		private void AddStudent(Student student)
@@ -292,6 +295,11 @@ namespace StudentsFetcher.StudentMarking
 				sb.Append($"{student.Email}; ");
 			}
 			txtStudentInfo.Text = sb.ToString();
+		}
+
+		private void BtnDisplayWebPhoto_Click(object sender, EventArgs e)
+		{
+			StudImage.LoadAsync(StudentsRepository.GetImageUrl(txtSearch.Text));
 		}
 	}
 }

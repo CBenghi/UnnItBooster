@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography.Xml;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace UnnItBooster.Models;
 
@@ -239,7 +240,7 @@ public class StudentsRepository
 
 	public bool TryGetExtraImage(string numericUserId, out string image, string CollectionCode = "extra")
 	{
-		var imageUrl = $"https://nuweb2.northumbria.ac.uk/photoids/{numericUserId}.jpg";
+		string imageUrl = GetImageUrl(numericUserId);
 		var nm = GetDefaultImageName(numericUserId, CollectionCode);
 		if (File.Exists(nm))
 		{
@@ -265,7 +266,18 @@ public class StudentsRepository
 			image = string.Empty;
 			return false;
 		}
-		
+	}
+
+	private static Regex reNumericUserId = new Regex("^\\d{8}$");
+
+	public static bool IsNumericUserId(string candidate)
+	{
+		return reNumericUserId.IsMatch(candidate);
+	}
+
+	public static string GetImageUrl(string numericUserId)
+	{
+		return $"https://nuweb2.northumbria.ac.uk/photoids/{numericUserId}.jpg";
 	}
 
 	public IEnumerable<IStudentCollection> GetContainersFor(string senderEmailAddress)

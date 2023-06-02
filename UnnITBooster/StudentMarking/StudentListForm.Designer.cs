@@ -76,6 +76,7 @@
 			this.txtAlternativeEmail = new System.Windows.Forms.TextBox();
 			this.btnAddEmail = new System.Windows.Forms.Button();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
+			this.BtnSelectEmails = new System.Windows.Forms.Button();
 			this.txtStudentInfo = new System.Windows.Forms.TextBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.tabControl4 = new System.Windows.Forms.TabControl();
@@ -87,7 +88,7 @@
 			this.button5 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.lstModules = new System.Windows.Forms.CheckedListBox();
-			this.BtnSelectEmails = new System.Windows.Forms.Button();
+			this.BtnDisplayWebPhoto = new System.Windows.Forms.Button();
 			this.tabControl3.SuspendLayout();
 			this.tabPage7.SuspendLayout();
 			this.tabPage6.SuspendLayout();
@@ -421,10 +422,10 @@
 			// 
 			this.StudImage.BackColor = System.Drawing.Color.Gray;
 			this.StudImage.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.StudImage.Location = new System.Drawing.Point(3, 3);
+			this.StudImage.Location = new System.Drawing.Point(3, 26);
 			this.StudImage.Margin = new System.Windows.Forms.Padding(2);
 			this.StudImage.Name = "StudImage";
-			this.StudImage.Size = new System.Drawing.Size(270, 652);
+			this.StudImage.Size = new System.Drawing.Size(270, 629);
 			this.StudImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.StudImage.TabIndex = 19;
 			this.StudImage.TabStop = false;
@@ -505,6 +506,7 @@
 			// tabPage3
 			// 
 			this.tabPage3.Controls.Add(this.StudImage);
+			this.tabPage3.Controls.Add(this.BtnDisplayWebPhoto);
 			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -521,7 +523,7 @@
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(306, 566);
+			this.tabPage4.Size = new System.Drawing.Size(276, 658);
 			this.tabPage4.TabIndex = 1;
 			this.tabPage4.Text = "Tools";
 			this.tabPage4.UseVisualStyleBackColor = true;
@@ -603,6 +605,16 @@
 			this.tabPage5.TabIndex = 2;
 			this.tabPage5.Text = "Info";
 			this.tabPage5.UseVisualStyleBackColor = true;
+			// 
+			// BtnSelectEmails
+			// 
+			this.BtnSelectEmails.Location = new System.Drawing.Point(6, 6);
+			this.BtnSelectEmails.Name = "BtnSelectEmails";
+			this.BtnSelectEmails.Size = new System.Drawing.Size(142, 23);
+			this.BtnSelectEmails.TabIndex = 1;
+			this.BtnSelectEmails.Text = "Selected enail addresses";
+			this.BtnSelectEmails.UseVisualStyleBackColor = true;
+			this.BtnSelectEmails.Click += new System.EventHandler(this.BtnSelectEmails_Click);
 			// 
 			// txtStudentInfo
 			// 
@@ -735,15 +747,16 @@
 			this.lstModules.Size = new System.Drawing.Size(120, 514);
 			this.lstModules.TabIndex = 17;
 			// 
-			// BtnSelectEmails
+			// BtnDisplayWebPhoto
 			// 
-			this.BtnSelectEmails.Location = new System.Drawing.Point(6, 6);
-			this.BtnSelectEmails.Name = "BtnSelectEmails";
-			this.BtnSelectEmails.Size = new System.Drawing.Size(142, 23);
-			this.BtnSelectEmails.TabIndex = 1;
-			this.BtnSelectEmails.Text = "Selected enail addresses";
-			this.BtnSelectEmails.UseVisualStyleBackColor = true;
-			this.BtnSelectEmails.Click += new System.EventHandler(this.BtnSelectEmails_Click);
+			this.BtnDisplayWebPhoto.Dock = System.Windows.Forms.DockStyle.Top;
+			this.BtnDisplayWebPhoto.Location = new System.Drawing.Point(3, 3);
+			this.BtnDisplayWebPhoto.Name = "BtnDisplayWebPhoto";
+			this.BtnDisplayWebPhoto.Size = new System.Drawing.Size(270, 23);
+			this.BtnDisplayWebPhoto.TabIndex = 20;
+			this.BtnDisplayWebPhoto.Text = "Display web photo";
+			this.BtnDisplayWebPhoto.UseVisualStyleBackColor = true;
+			this.BtnDisplayWebPhoto.Click += new System.EventHandler(this.BtnDisplayWebPhoto_Click);
 			// 
 			// StudentListForm
 			// 
@@ -848,5 +861,6 @@
 		private System.Windows.Forms.Button button9;
 		private System.Windows.Forms.Label label12;
 		private System.Windows.Forms.Button BtnSelectEmails;
+		private System.Windows.Forms.Button BtnDisplayWebPhoto;
 	}
 }
