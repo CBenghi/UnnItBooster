@@ -243,18 +243,22 @@ namespace StudentsFetcher.StudentMarking
 			}
 		}
 
+		private IEnumerable<Student> GetSelectedStudents()
+		{
+			foreach (var item in lstStudents.SelectedItems.OfType<ListViewItem>())
+				if (item.Tag is Student stud)
+					yield return stud;
+		}
+
 		private void BtnGetSelectedStudents_Click(object sender, EventArgs e)
 		{
 			var tallyTry = 0;
 			var tallySuccess = 0;
-			foreach (var item in lstStudents.SelectedItems.OfType<ListViewItem>())
+			foreach (var stud in GetSelectedStudents())
 			{
-				if (item.Tag is Student stud)
-				{
-					tallyTry++;
-					if (studentsRepo.TryGetExtraImage(stud.NumericStudentId, out var image, txtContainerName.Text))
-						tallySuccess++;
-				}
+				tallyTry++;
+				if (studentsRepo.TryGetExtraImage(stud.NumericStudentId, out var image, txtContainerName.Text))
+					tallySuccess++;
 			}
 			MessageBox.Show($"Attempted image for {tallyTry}; {tallySuccess} found.");			
 		}
@@ -278,6 +282,16 @@ namespace StudentsFetcher.StudentMarking
 					yield return item;
 				}
 			}
+		}
+
+		private void BtnSelectEmails_Click(object sender, EventArgs e)
+		{
+			var sb = new StringBuilder();
+			foreach (var student in GetSelectedStudents())
+			{
+				sb.Append($"{student.Email}; ");
+			}
+			txtStudentInfo.Text = sb.ToString();
 		}
 	}
 }

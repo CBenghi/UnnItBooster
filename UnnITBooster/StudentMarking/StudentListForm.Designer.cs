@@ -41,13 +41,14 @@
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
+			this.tabPage8 = new System.Windows.Forms.TabPage();
+			this.txtInputSource = new System.Windows.Forms.TextBox();
 			this.label10 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.cmdSelectSource = new System.Windows.Forms.Button();
+			this.button1 = new System.Windows.Forms.Button();
 			this.label9 = new System.Windows.Forms.Label();
 			this.txtReport = new System.Windows.Forms.TextBox();
-			this.cmdSelectSource = new System.Windows.Forms.Button();
-			this.txtInputSource = new System.Windows.Forms.TextBox();
-			this.label4 = new System.Windows.Forms.Label();
-			this.button1 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
 			this.lstStudents = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -77,19 +78,20 @@
 			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.txtStudentInfo = new System.Windows.Forms.TextBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tabControl4 = new System.Windows.Forms.TabControl();
+			this.tabPage9 = new System.Windows.Forms.TabPage();
+			this.tabPage10 = new System.Windows.Forms.TabPage();
+			this.label12 = new System.Windows.Forms.Label();
+			this.button9 = new System.Windows.Forms.Button();
 			this.button6 = new System.Windows.Forms.Button();
 			this.button5 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.lstModules = new System.Windows.Forms.CheckedListBox();
-			this.tabPage8 = new System.Windows.Forms.TabPage();
-			this.tabControl4 = new System.Windows.Forms.TabControl();
-			this.tabPage9 = new System.Windows.Forms.TabPage();
-			this.tabPage10 = new System.Windows.Forms.TabPage();
-			this.button9 = new System.Windows.Forms.Button();
-			this.label12 = new System.Windows.Forms.Label();
+			this.BtnSelectEmails = new System.Windows.Forms.Button();
 			this.tabControl3.SuspendLayout();
 			this.tabPage7.SuspendLayout();
 			this.tabPage6.SuspendLayout();
+			this.tabPage8.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.StudImage)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
@@ -104,7 +106,6 @@
 			this.groupBox2.SuspendLayout();
 			this.tabPage5.SuspendLayout();
 			this.tabPage2.SuspendLayout();
-			this.tabPage8.SuspendLayout();
 			this.tabControl4.SuspendLayout();
 			this.tabPage9.SuspendLayout();
 			this.tabPage10.SuspendLayout();
@@ -192,7 +193,7 @@
 			this.tabPage6.Location = new System.Drawing.Point(4, 22);
 			this.tabPage6.Name = "tabPage6";
 			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage6.Size = new System.Drawing.Size(712, 156);
+			this.tabPage6.Size = new System.Drawing.Size(505, 156);
 			this.tabPage6.TabIndex = 0;
 			this.tabPage6.Text = "e-vision";
 			this.tabPage6.UseVisualStyleBackColor = true;
@@ -203,7 +204,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.button2.Location = new System.Drawing.Point(20, 15);
 			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(500, 23);
+			this.button2.Size = new System.Drawing.Size(293, 23);
 			this.button2.TabIndex = 13;
 			this.button2.Text = "evision Clipboard Parse";
 			this.button2.UseVisualStyleBackColor = true;
@@ -245,6 +246,30 @@
 			this.label8.TabIndex = 21;
 			this.label8.Text = "save pictures with chrome tool";
 			// 
+			// tabPage8
+			// 
+			this.tabPage8.Controls.Add(this.txtInputSource);
+			this.tabPage8.Controls.Add(this.label10);
+			this.tabPage8.Controls.Add(this.label4);
+			this.tabPage8.Controls.Add(this.cmdSelectSource);
+			this.tabPage8.Controls.Add(this.button1);
+			this.tabPage8.Location = new System.Drawing.Point(4, 22);
+			this.tabPage8.Name = "tabPage8";
+			this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage8.Size = new System.Drawing.Size(505, 156);
+			this.tabPage8.TabIndex = 2;
+			this.tabPage8.Text = "Gradebook";
+			this.tabPage8.UseVisualStyleBackColor = true;
+			// 
+			// txtInputSource
+			// 
+			this.txtInputSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtInputSource.Location = new System.Drawing.Point(104, 16);
+			this.txtInputSource.Name = "txtInputSource";
+			this.txtInputSource.Size = new System.Drawing.Size(395, 20);
+			this.txtInputSource.TabIndex = 15;
+			// 
 			// label10
 			// 
 			this.label10.AutoSize = true;
@@ -254,6 +279,38 @@
 			this.label10.TabIndex = 24;
 			this.label10.Text = "This separates first name and last name, but the outook plugin is more reliable f" +
     "or that";
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(15, 19);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(41, 13);
+			this.label4.TabIndex = 16;
+			this.label4.Text = "Source";
+			// 
+			// cmdSelectSource
+			// 
+			this.cmdSelectSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdSelectSource.Location = new System.Drawing.Point(424, 42);
+			this.cmdSelectSource.Name = "cmdSelectSource";
+			this.cmdSelectSource.Size = new System.Drawing.Size(75, 23);
+			this.cmdSelectSource.TabIndex = 17;
+			this.cmdSelectSource.Text = "Select";
+			this.cmdSelectSource.UseVisualStyleBackColor = true;
+			this.cmdSelectSource.Click += new System.EventHandler(this.cmdSelectSource_Click);
+			// 
+			// button1
+			// 
+			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.button1.Location = new System.Drawing.Point(18, 71);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(481, 23);
+			this.button1.TabIndex = 14;
+			this.button1.Text = "turnitin Gradebook";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// label9
 			// 
@@ -275,47 +332,6 @@
 			this.txtReport.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.txtReport.Size = new System.Drawing.Size(491, 315);
 			this.txtReport.TabIndex = 22;
-			// 
-			// cmdSelectSource
-			// 
-			this.cmdSelectSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdSelectSource.Location = new System.Drawing.Point(424, 42);
-			this.cmdSelectSource.Name = "cmdSelectSource";
-			this.cmdSelectSource.Size = new System.Drawing.Size(75, 23);
-			this.cmdSelectSource.TabIndex = 17;
-			this.cmdSelectSource.Text = "Select";
-			this.cmdSelectSource.UseVisualStyleBackColor = true;
-			this.cmdSelectSource.Click += new System.EventHandler(this.cmdSelectSource_Click);
-			// 
-			// txtInputSource
-			// 
-			this.txtInputSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtInputSource.Location = new System.Drawing.Point(104, 16);
-			this.txtInputSource.Name = "txtInputSource";
-			this.txtInputSource.Size = new System.Drawing.Size(395, 20);
-			this.txtInputSource.TabIndex = 15;
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(15, 19);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(41, 13);
-			this.label4.TabIndex = 16;
-			this.label4.Text = "Source";
-			// 
-			// button1
-			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(18, 71);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(481, 23);
-			this.button1.TabIndex = 14;
-			this.button1.Text = "turnitin Gradebook";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// button3
 			// 
@@ -343,7 +359,7 @@
 			this.lstStudents.HideSelection = false;
 			this.lstStudents.Location = new System.Drawing.Point(0, 30);
 			this.lstStudents.Name = "lstStudents";
-			this.lstStudents.Size = new System.Drawing.Size(511, 562);
+			this.lstStudents.Size = new System.Drawing.Size(462, 654);
 			this.lstStudents.TabIndex = 16;
 			this.lstStudents.UseCompatibleStateImageBehavior = false;
 			this.lstStudents.View = System.Windows.Forms.View.Details;
@@ -387,7 +403,7 @@
 			this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSearch.Location = new System.Drawing.Point(67, 5);
 			this.txtSearch.Name = "txtSearch";
-			this.txtSearch.Size = new System.Drawing.Size(441, 20);
+			this.txtSearch.Size = new System.Drawing.Size(392, 20);
 			this.txtSearch.TabIndex = 17;
 			this.txtSearch.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
 			// 
@@ -408,7 +424,7 @@
 			this.StudImage.Location = new System.Drawing.Point(3, 3);
 			this.StudImage.Margin = new System.Windows.Forms.Padding(2);
 			this.StudImage.Name = "StudImage";
-			this.StudImage.Size = new System.Drawing.Size(300, 560);
+			this.StudImage.Size = new System.Drawing.Size(270, 652);
 			this.StudImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.StudImage.TabIndex = 19;
 			this.StudImage.TabStop = false;
@@ -432,7 +448,7 @@
 			this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-			this.tabPage1.Size = new System.Drawing.Size(832, 596);
+			this.tabPage1.Size = new System.Drawing.Size(753, 688);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "Navigation";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -453,8 +469,8 @@
 			// 
 			this.splitContainer1.Panel2.BackColor = System.Drawing.Color.Gray;
 			this.splitContainer1.Panel2.Controls.Add(this.tabControl2);
-			this.splitContainer1.Size = new System.Drawing.Size(828, 592);
-			this.splitContainer1.SplitterDistance = 511;
+			this.splitContainer1.Size = new System.Drawing.Size(749, 684);
+			this.splitContainer1.SplitterDistance = 462;
 			this.splitContainer1.SplitterWidth = 3;
 			this.splitContainer1.TabIndex = 0;
 			// 
@@ -471,7 +487,7 @@
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 1;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(511, 30);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(462, 30);
 			this.tableLayoutPanel1.TabIndex = 19;
 			// 
 			// tabControl2
@@ -483,7 +499,7 @@
 			this.tabControl2.Location = new System.Drawing.Point(0, 0);
 			this.tabControl2.Name = "tabControl2";
 			this.tabControl2.SelectedIndex = 0;
-			this.tabControl2.Size = new System.Drawing.Size(314, 592);
+			this.tabControl2.Size = new System.Drawing.Size(284, 684);
 			this.tabControl2.TabIndex = 20;
 			// 
 			// tabPage3
@@ -492,7 +508,7 @@
 			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(306, 566);
+			this.tabPage3.Size = new System.Drawing.Size(276, 658);
 			this.tabPage3.TabIndex = 0;
 			this.tabPage3.Text = "Image";
 			this.tabPage3.UseVisualStyleBackColor = true;
@@ -578,22 +594,25 @@
 			// 
 			// tabPage5
 			// 
+			this.tabPage5.Controls.Add(this.BtnSelectEmails);
 			this.tabPage5.Controls.Add(this.txtStudentInfo);
 			this.tabPage5.Location = new System.Drawing.Point(4, 22);
 			this.tabPage5.Name = "tabPage5";
 			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage5.Size = new System.Drawing.Size(306, 566);
+			this.tabPage5.Size = new System.Drawing.Size(276, 658);
 			this.tabPage5.TabIndex = 2;
 			this.tabPage5.Text = "Info";
 			this.tabPage5.UseVisualStyleBackColor = true;
 			// 
 			// txtStudentInfo
 			// 
-			this.txtStudentInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtStudentInfo.Location = new System.Drawing.Point(3, 3);
+			this.txtStudentInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtStudentInfo.Location = new System.Drawing.Point(3, 35);
 			this.txtStudentInfo.Multiline = true;
 			this.txtStudentInfo.Name = "txtStudentInfo";
-			this.txtStudentInfo.Size = new System.Drawing.Size(300, 560);
+			this.txtStudentInfo.Size = new System.Drawing.Size(267, 617);
 			this.txtStudentInfo.TabIndex = 0;
 			// 
 			// tabPage2
@@ -616,6 +635,62 @@
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Repository";
 			this.tabPage2.UseVisualStyleBackColor = true;
+			// 
+			// tabControl4
+			// 
+			this.tabControl4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabControl4.Controls.Add(this.tabPage9);
+			this.tabControl4.Controls.Add(this.tabPage10);
+			this.tabControl4.Location = new System.Drawing.Point(158, 81);
+			this.tabControl4.Name = "tabControl4";
+			this.tabControl4.SelectedIndex = 0;
+			this.tabControl4.Size = new System.Drawing.Size(577, 259);
+			this.tabControl4.TabIndex = 24;
+			// 
+			// tabPage9
+			// 
+			this.tabPage9.Controls.Add(this.tabControl3);
+			this.tabPage9.Controls.Add(this.txtModuleCode);
+			this.tabPage9.Controls.Add(this.label1);
+			this.tabPage9.Location = new System.Drawing.Point(4, 22);
+			this.tabPage9.Name = "tabPage9";
+			this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage9.Size = new System.Drawing.Size(569, 233);
+			this.tabPage9.TabIndex = 0;
+			this.tabPage9.Text = "Student collection I/O";
+			this.tabPage9.UseVisualStyleBackColor = true;
+			// 
+			// tabPage10
+			// 
+			this.tabPage10.Controls.Add(this.label12);
+			this.tabPage10.Controls.Add(this.button9);
+			this.tabPage10.Location = new System.Drawing.Point(4, 22);
+			this.tabPage10.Name = "tabPage10";
+			this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage10.Size = new System.Drawing.Size(569, 233);
+			this.tabPage10.TabIndex = 1;
+			this.tabPage10.Text = "Maintenance";
+			this.tabPage10.UseVisualStyleBackColor = true;
+			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.Location = new System.Drawing.Point(226, 23);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(296, 13);
+			this.label12.TabIndex = 1;
+			this.label12.Text = "Checks that module codes (P-R, etc) are defined in the library";
+			// 
+			// button9
+			// 
+			this.button9.Location = new System.Drawing.Point(23, 19);
+			this.button9.Name = "button9";
+			this.button9.Size = new System.Drawing.Size(186, 23);
+			this.button9.TabIndex = 0;
+			this.button9.Text = "Module mark result";
+			this.button9.UseVisualStyleBackColor = true;
+			this.button9.Click += new System.EventHandler(this.button9_Click);
 			// 
 			// button6
 			// 
@@ -660,76 +735,15 @@
 			this.lstModules.Size = new System.Drawing.Size(120, 514);
 			this.lstModules.TabIndex = 17;
 			// 
-			// tabPage8
+			// BtnSelectEmails
 			// 
-			this.tabPage8.Controls.Add(this.txtInputSource);
-			this.tabPage8.Controls.Add(this.label10);
-			this.tabPage8.Controls.Add(this.label4);
-			this.tabPage8.Controls.Add(this.cmdSelectSource);
-			this.tabPage8.Controls.Add(this.button1);
-			this.tabPage8.Location = new System.Drawing.Point(4, 22);
-			this.tabPage8.Name = "tabPage8";
-			this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage8.Size = new System.Drawing.Size(505, 156);
-			this.tabPage8.TabIndex = 2;
-			this.tabPage8.Text = "Gradebook";
-			this.tabPage8.UseVisualStyleBackColor = true;
-			// 
-			// tabControl4
-			// 
-			this.tabControl4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.tabControl4.Controls.Add(this.tabPage9);
-			this.tabControl4.Controls.Add(this.tabPage10);
-			this.tabControl4.Location = new System.Drawing.Point(158, 81);
-			this.tabControl4.Name = "tabControl4";
-			this.tabControl4.SelectedIndex = 0;
-			this.tabControl4.Size = new System.Drawing.Size(577, 259);
-			this.tabControl4.TabIndex = 24;
-			// 
-			// tabPage9
-			// 
-			this.tabPage9.Controls.Add(this.tabControl3);
-			this.tabPage9.Controls.Add(this.txtModuleCode);
-			this.tabPage9.Controls.Add(this.label1);
-			this.tabPage9.Location = new System.Drawing.Point(4, 22);
-			this.tabPage9.Name = "tabPage9";
-			this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage9.Size = new System.Drawing.Size(569, 233);
-			this.tabPage9.TabIndex = 0;
-			this.tabPage9.Text = "Student collection I/O";
-			this.tabPage9.UseVisualStyleBackColor = true;
-			// 
-			// tabPage10
-			// 
-			this.tabPage10.Controls.Add(this.label12);
-			this.tabPage10.Controls.Add(this.button9);
-			this.tabPage10.Location = new System.Drawing.Point(4, 22);
-			this.tabPage10.Name = "tabPage10";
-			this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage10.Size = new System.Drawing.Size(569, 233);
-			this.tabPage10.TabIndex = 1;
-			this.tabPage10.Text = "Maintenance";
-			this.tabPage10.UseVisualStyleBackColor = true;
-			// 
-			// button9
-			// 
-			this.button9.Location = new System.Drawing.Point(23, 19);
-			this.button9.Name = "button9";
-			this.button9.Size = new System.Drawing.Size(186, 23);
-			this.button9.TabIndex = 0;
-			this.button9.Text = "Module mark result";
-			this.button9.UseVisualStyleBackColor = true;
-			this.button9.Click += new System.EventHandler(this.button9_Click);
-			// 
-			// label12
-			// 
-			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(226, 23);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(296, 13);
-			this.label12.TabIndex = 1;
-			this.label12.Text = "Checks that module codes (P-R, etc) are defined in the library";
+			this.BtnSelectEmails.Location = new System.Drawing.Point(6, 6);
+			this.BtnSelectEmails.Name = "BtnSelectEmails";
+			this.BtnSelectEmails.Size = new System.Drawing.Size(142, 23);
+			this.BtnSelectEmails.TabIndex = 1;
+			this.BtnSelectEmails.Text = "Selected enail addresses";
+			this.BtnSelectEmails.UseVisualStyleBackColor = true;
+			this.BtnSelectEmails.Click += new System.EventHandler(this.BtnSelectEmails_Click);
 			// 
 			// StudentListForm
 			// 
@@ -742,6 +756,8 @@
 			this.tabPage7.ResumeLayout(false);
 			this.tabPage6.ResumeLayout(false);
 			this.tabPage6.PerformLayout();
+			this.tabPage8.ResumeLayout(false);
+			this.tabPage8.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.StudImage)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
@@ -761,8 +777,6 @@
 			this.tabPage5.PerformLayout();
 			this.tabPage2.ResumeLayout(false);
 			this.tabPage2.PerformLayout();
-			this.tabPage8.ResumeLayout(false);
-			this.tabPage8.PerformLayout();
 			this.tabControl4.ResumeLayout(false);
 			this.tabPage9.ResumeLayout(false);
 			this.tabPage9.PerformLayout();
@@ -833,5 +847,6 @@
 		private System.Windows.Forms.TabPage tabPage10;
 		private System.Windows.Forms.Button button9;
 		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.Button BtnSelectEmails;
 	}
 }
