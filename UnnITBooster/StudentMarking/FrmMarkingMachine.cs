@@ -174,6 +174,8 @@ public partial class FrmMarkingMachine : Form
         cmbDocuments.Items.Clear();
         // todo: populate document
         cmbDocuments.Items.Add(submission.Title);
+        if (!string.IsNullOrEmpty(submission.Title))
+            cmbDocuments.SelectedIndex = 0;
     }
 
     private int GetStudentNumber()
@@ -197,13 +199,14 @@ public partial class FrmMarkingMachine : Form
     {
         if (e.KeyCode == Keys.Enter)
         {
-            var addComponentMatch = Regex.Match(txtSearch.Text, "component (\\d+) (\\d+) (.*)");
-            var setComponentCommentMatch = Regex.Match(txtSearch.Text, "componentComment (\\d+) (.*)");
-            var marksMatch = Regex.Match(txtSearch.Text, "marks (\\d+)");
-            var idsMatch = Regex.Match(txtSearch.Text, "ids");
-            var editMatch = Regex.Match(txtSearch.Text, "^edit (?<par>last|\\?|\\d+)$");
-            var whoGotMatch = Regex.Match(txtSearch.Text, @"WhoGotComment (\d+)");
-            var removeMatch = Regex.Match(txtSearch.Text, @"Remove (\d+)");
+            var addComponentMatch = Regex.Match(txtSearch.Text, "component (\\d+) (\\d+) (.*)", RegexOptions.IgnoreCase);
+			var setComponentCommentMatch = Regex.Match(txtSearch.Text, "componentComment (\\d+) (.*)", RegexOptions.IgnoreCase);
+			var marksMatch = Regex.Match(txtSearch.Text, "marks (\\d+)", RegexOptions.IgnoreCase);
+			var idsMatch = Regex.Match(txtSearch.Text, "ids", RegexOptions.IgnoreCase);
+            var editMatch = Regex.Match(txtSearch.Text, "^edit (?<par>last|\\?|\\d+)$", RegexOptions.IgnoreCase);
+			var whoGotMatch = Regex.Match(txtSearch.Text, @"WhoGotComment (\d+)", RegexOptions.IgnoreCase);
+			var removeMatch = Regex.Match(txtSearch.Text, @"Remove (\d+)", RegexOptions.IgnoreCase);
+			var levelMatch = Regex.Match(txtSearch.Text, @"setlevel (?<level>ug|pg)", RegexOptions.IgnoreCase);
             if (addComponentMatch.Success)
             {
                 AddComponent(addComponentMatch);
@@ -224,7 +227,11 @@ public partial class FrmMarkingMachine : Form
             {
                 GetMarks(marksMatch);
             }
-            else if (idsMatch.Success)
+			else if (levelMatch.Success)
+			{
+                SetLevel(levelMatch);
+			}
+			else if (idsMatch.Success)
             {
                 GetIds();
             }
@@ -246,9 +253,13 @@ public partial class FrmMarkingMachine : Form
             }
             else if (txtSearch.Text == "mcrfcheck")
             {
-                CleanMcrf();
-            }
-            else if (txtSearch.Text == "help")
+				CleanMcrf();
+			}
+			else if (txtSearch.Text == "stat" || txtSearch.Text == "stats" || txtSearch.Text == "transcript")
+			{
+				ReportTranscript();
+			}
+			else if (txtSearch.Text == "help")
             {
                 txtLibReport.Text = """
                     component <order#> <percent> <Name>
@@ -273,6 +284,12 @@ public partial class FrmMarkingMachine : Form
                     WhoGotComment <#>
                        lists students that got a specific comment in their feedback
 
+                    stat|stats|transcript
+                       Provides student transcript information, if available
+
+                    setlevel [ug|pg]
+                       determines the verbal conversion of marks at 40 to sufficient or inadequate
+
                     ids
                        produces 2 list of ids (numeric and alfanumeric versions)
 
@@ -293,6 +310,62 @@ public partial class FrmMarkingMachine : Form
             }
         }
     }
+
+	private void SetLevel(Match levelMatch)
+	{
+        var m = levelMatch.Groups["level"].Value;
+        switch (m)
+        {
+            case "ug":
+				_config.MarkAbility = new Dictionary<string, string>
+				{
+					{"1", "little or no"},
+					{"2", "little or no"},
+					{"3", "little or no"},
+					{"4", "sufficient"},
+					{"5", "adequate"},
+					{"6", "good"},
+					{"7", "excellent"},
+					{"8", "outstanding"},
+					{"9", "exceptional"}
+				};
+                txtLibReport.Text = "Level set to under-graduate.";
+				break;
+            case "pg":
+            default:
+                _config.MarkAbility = new Dictionary<string, string>
+                {
+                    {"1", "little or no"},
+                    {"2", "little or no"},
+                    {"3", "little or no"},
+                    {"4", "inadequate"},
+                    {"5", "adequate"},
+                    {"6", "good"},
+                    {"7", "excellent"},
+                    {"8", "outstanding"},
+                    {"9", "exceptional"}
+                };
+				txtLibReport.Text = "Level set to post-graduate.";
+				break;
+        }
+    }
+
+	private void ReportTranscript()
+	{
+        var t = GetCurrentSubmission();
+		if (t is null)
+		{
+			txtLibReport.Text = "need selected student record";
+			return;
+		}
+        var student = studentRepository.GetStudentById(t.NumericUserId);
+        if (student is null)
+        {
+			txtLibReport.Text = "No student found in repository";
+            return;
+		}
+		txtLibReport.Text = student.ReportTranscript(); 
+	}
 
 	private void EditLoad(string value)
 	{

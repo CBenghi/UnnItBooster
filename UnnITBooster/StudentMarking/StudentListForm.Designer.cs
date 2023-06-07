@@ -67,8 +67,9 @@
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.tabControl2 = new System.Windows.Forms.TabControl();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.BtnDisplayWebPhoto = new System.Windows.Forms.Button();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.GroupDownloadImage = new System.Windows.Forms.GroupBox();
 			this.txtContainerName = new System.Windows.Forms.TextBox();
 			this.BtnGetSelectedStudents = new System.Windows.Forms.Button();
 			this.label11 = new System.Windows.Forms.Label();
@@ -82,13 +83,14 @@
 			this.tabControl4 = new System.Windows.Forms.TabControl();
 			this.tabPage9 = new System.Windows.Forms.TabPage();
 			this.tabPage10 = new System.Windows.Forms.TabPage();
+			this.label13 = new System.Windows.Forms.Label();
+			this.BtnGetPhotos = new System.Windows.Forms.Button();
 			this.label12 = new System.Windows.Forms.Label();
 			this.button9 = new System.Windows.Forms.Button();
 			this.button6 = new System.Windows.Forms.Button();
 			this.button5 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.lstModules = new System.Windows.Forms.CheckedListBox();
-			this.BtnDisplayWebPhoto = new System.Windows.Forms.Button();
 			this.tabControl3.SuspendLayout();
 			this.tabPage7.SuspendLayout();
 			this.tabPage6.SuspendLayout();
@@ -104,7 +106,7 @@
 			this.tabControl2.SuspendLayout();
 			this.tabPage3.SuspendLayout();
 			this.tabPage4.SuspendLayout();
-			this.groupBox2.SuspendLayout();
+			this.GroupDownloadImage.SuspendLayout();
 			this.tabPage5.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			this.tabControl4.SuspendLayout();
@@ -118,7 +120,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtModuleCode.Location = new System.Drawing.Point(136, 19);
 			this.txtModuleCode.Name = "txtModuleCode";
-			this.txtModuleCode.Size = new System.Drawing.Size(405, 20);
+			this.txtModuleCode.Size = new System.Drawing.Size(707, 20);
 			this.txtModuleCode.TabIndex = 0;
 			// 
 			// label1
@@ -145,7 +147,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtFolder.Location = new System.Drawing.Point(56, 15);
 			this.txtFolder.Name = "txtFolder";
-			this.txtFolder.Size = new System.Drawing.Size(679, 20);
+			this.txtFolder.Size = new System.Drawing.Size(981, 20);
 			this.txtFolder.TabIndex = 2;
 			// 
 			// tabControl3
@@ -158,7 +160,7 @@
 			this.tabControl3.Location = new System.Drawing.Point(28, 45);
 			this.tabControl3.Name = "tabControl3";
 			this.tabControl3.SelectedIndex = 0;
-			this.tabControl3.Size = new System.Drawing.Size(513, 182);
+			this.tabControl3.Size = new System.Drawing.Size(815, 182);
 			this.tabControl3.TabIndex = 25;
 			// 
 			// tabPage7
@@ -167,7 +169,7 @@
 			this.tabPage7.Location = new System.Drawing.Point(4, 22);
 			this.tabPage7.Name = "tabPage7";
 			this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage7.Size = new System.Drawing.Size(505, 156);
+			this.tabPage7.Size = new System.Drawing.Size(807, 156);
 			this.tabPage7.TabIndex = 1;
 			this.tabPage7.Text = "Outlook plugin";
 			this.tabPage7.UseVisualStyleBackColor = true;
@@ -178,7 +180,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.button7.Location = new System.Drawing.Point(25, 16);
 			this.button7.Name = "button7";
-			this.button7.Size = new System.Drawing.Size(466, 23);
+			this.button7.Size = new System.Drawing.Size(768, 23);
 			this.button7.TabIndex = 14;
 			this.button7.Text = "Outlook Plugin Clipboard Parse";
 			this.button7.UseVisualStyleBackColor = true;
@@ -316,7 +318,7 @@
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(159, 360);
+			this.label9.Location = new System.Drawing.Point(214, 360);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(39, 13);
 			this.label9.TabIndex = 23;
@@ -327,17 +329,17 @@
 			this.txtReport.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtReport.Location = new System.Drawing.Point(244, 360);
+			this.txtReport.Location = new System.Drawing.Point(272, 360);
 			this.txtReport.Multiline = true;
 			this.txtReport.Name = "txtReport";
 			this.txtReport.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtReport.Size = new System.Drawing.Size(491, 315);
+			this.txtReport.Size = new System.Drawing.Size(765, 315);
 			this.txtReport.TabIndex = 22;
 			// 
 			// button3
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(587, 41);
+			this.button3.Location = new System.Drawing.Point(889, 41);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(75, 23);
 			this.button3.TabIndex = 15;
@@ -360,7 +362,7 @@
 			this.lstStudents.HideSelection = false;
 			this.lstStudents.Location = new System.Drawing.Point(0, 30);
 			this.lstStudents.Name = "lstStudents";
-			this.lstStudents.Size = new System.Drawing.Size(462, 654);
+			this.lstStudents.Size = new System.Drawing.Size(648, 654);
 			this.lstStudents.TabIndex = 16;
 			this.lstStudents.UseCompatibleStateImageBehavior = false;
 			this.lstStudents.View = System.Windows.Forms.View.Details;
@@ -404,7 +406,7 @@
 			this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSearch.Location = new System.Drawing.Point(67, 5);
 			this.txtSearch.Name = "txtSearch";
-			this.txtSearch.Size = new System.Drawing.Size(392, 20);
+			this.txtSearch.Size = new System.Drawing.Size(578, 20);
 			this.txtSearch.TabIndex = 17;
 			this.txtSearch.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
 			// 
@@ -425,7 +427,7 @@
 			this.StudImage.Location = new System.Drawing.Point(3, 26);
 			this.StudImage.Margin = new System.Windows.Forms.Padding(2);
 			this.StudImage.Name = "StudImage";
-			this.StudImage.Size = new System.Drawing.Size(270, 629);
+			this.StudImage.Size = new System.Drawing.Size(386, 483);
 			this.StudImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.StudImage.TabIndex = 19;
 			this.StudImage.TabStop = false;
@@ -439,7 +441,7 @@
 			this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(761, 714);
+			this.tabControl1.Size = new System.Drawing.Size(1063, 714);
 			this.tabControl1.TabIndex = 20;
 			// 
 			// tabPage1
@@ -449,7 +451,7 @@
 			this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-			this.tabPage1.Size = new System.Drawing.Size(753, 688);
+			this.tabPage1.Size = new System.Drawing.Size(1055, 688);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "Navigation";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -470,8 +472,8 @@
 			// 
 			this.splitContainer1.Panel2.BackColor = System.Drawing.Color.Gray;
 			this.splitContainer1.Panel2.Controls.Add(this.tabControl2);
-			this.splitContainer1.Size = new System.Drawing.Size(749, 684);
-			this.splitContainer1.SplitterDistance = 462;
+			this.splitContainer1.Size = new System.Drawing.Size(1051, 684);
+			this.splitContainer1.SplitterDistance = 648;
 			this.splitContainer1.SplitterWidth = 3;
 			this.splitContainer1.TabIndex = 0;
 			// 
@@ -488,7 +490,7 @@
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 1;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(462, 30);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(648, 30);
 			this.tableLayoutPanel1.TabIndex = 19;
 			// 
 			// tabControl2
@@ -500,59 +502,71 @@
 			this.tabControl2.Location = new System.Drawing.Point(0, 0);
 			this.tabControl2.Name = "tabControl2";
 			this.tabControl2.SelectedIndex = 0;
-			this.tabControl2.Size = new System.Drawing.Size(284, 684);
+			this.tabControl2.Size = new System.Drawing.Size(400, 684);
 			this.tabControl2.TabIndex = 20;
 			// 
 			// tabPage3
 			// 
 			this.tabPage3.Controls.Add(this.StudImage);
 			this.tabPage3.Controls.Add(this.BtnDisplayWebPhoto);
+			this.tabPage3.Controls.Add(this.GroupDownloadImage);
 			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(276, 658);
+			this.tabPage3.Size = new System.Drawing.Size(392, 658);
 			this.tabPage3.TabIndex = 0;
 			this.tabPage3.Text = "Image";
 			this.tabPage3.UseVisualStyleBackColor = true;
 			// 
+			// BtnDisplayWebPhoto
+			// 
+			this.BtnDisplayWebPhoto.Dock = System.Windows.Forms.DockStyle.Top;
+			this.BtnDisplayWebPhoto.Location = new System.Drawing.Point(3, 3);
+			this.BtnDisplayWebPhoto.Name = "BtnDisplayWebPhoto";
+			this.BtnDisplayWebPhoto.Size = new System.Drawing.Size(386, 23);
+			this.BtnDisplayWebPhoto.TabIndex = 20;
+			this.BtnDisplayWebPhoto.Text = "Display web photo";
+			this.BtnDisplayWebPhoto.UseVisualStyleBackColor = true;
+			this.BtnDisplayWebPhoto.Click += new System.EventHandler(this.BtnDisplayWebPhoto_Click);
+			// 
 			// tabPage4
 			// 
-			this.tabPage4.Controls.Add(this.groupBox2);
 			this.tabPage4.Controls.Add(this.txtAlternativeEmail);
 			this.tabPage4.Controls.Add(this.btnAddEmail);
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(276, 658);
+			this.tabPage4.Size = new System.Drawing.Size(392, 658);
 			this.tabPage4.TabIndex = 1;
 			this.tabPage4.Text = "Tools";
 			this.tabPage4.UseVisualStyleBackColor = true;
 			// 
-			// groupBox2
+			// GroupDownloadImage
 			// 
-			this.groupBox2.Controls.Add(this.txtContainerName);
-			this.groupBox2.Controls.Add(this.BtnGetSelectedStudents);
-			this.groupBox2.Controls.Add(this.label11);
-			this.groupBox2.Controls.Add(this.button8);
-			this.groupBox2.Location = new System.Drawing.Point(9, 199);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(289, 151);
-			this.groupBox2.TabIndex = 6;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Get images";
+			this.GroupDownloadImage.Controls.Add(this.txtContainerName);
+			this.GroupDownloadImage.Controls.Add(this.BtnGetSelectedStudents);
+			this.GroupDownloadImage.Controls.Add(this.label11);
+			this.GroupDownloadImage.Controls.Add(this.button8);
+			this.GroupDownloadImage.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.GroupDownloadImage.Location = new System.Drawing.Point(3, 509);
+			this.GroupDownloadImage.Name = "GroupDownloadImage";
+			this.GroupDownloadImage.Size = new System.Drawing.Size(386, 146);
+			this.GroupDownloadImage.TabIndex = 6;
+			this.GroupDownloadImage.TabStop = false;
+			this.GroupDownloadImage.Text = "Get images";
 			// 
 			// txtContainerName
 			// 
 			this.txtContainerName.Location = new System.Drawing.Point(75, 30);
 			this.txtContainerName.Name = "txtContainerName";
-			this.txtContainerName.Size = new System.Drawing.Size(208, 20);
+			this.txtContainerName.Size = new System.Drawing.Size(305, 20);
 			this.txtContainerName.TabIndex = 2;
 			// 
 			// BtnGetSelectedStudents
 			// 
 			this.BtnGetSelectedStudents.Location = new System.Drawing.Point(152, 96);
 			this.BtnGetSelectedStudents.Name = "BtnGetSelectedStudents";
-			this.BtnGetSelectedStudents.Size = new System.Drawing.Size(131, 34);
+			this.BtnGetSelectedStudents.Size = new System.Drawing.Size(228, 34);
 			this.BtnGetSelectedStudents.TabIndex = 5;
 			this.BtnGetSelectedStudents.Text = "Selected students";
 			this.BtnGetSelectedStudents.UseVisualStyleBackColor = true;
@@ -571,7 +585,7 @@
 			// 
 			this.button8.Location = new System.Drawing.Point(152, 56);
 			this.button8.Name = "button8";
-			this.button8.Size = new System.Drawing.Size(131, 34);
+			this.button8.Size = new System.Drawing.Size(228, 34);
 			this.button8.TabIndex = 4;
 			this.button8.Text = "Current student";
 			this.button8.UseVisualStyleBackColor = true;
@@ -643,7 +657,7 @@
 			this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
-			this.tabPage2.Size = new System.Drawing.Size(753, 688);
+			this.tabPage2.Size = new System.Drawing.Size(1055, 688);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Repository";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -654,10 +668,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl4.Controls.Add(this.tabPage9);
 			this.tabControl4.Controls.Add(this.tabPage10);
-			this.tabControl4.Location = new System.Drawing.Point(158, 81);
+			this.tabControl4.Location = new System.Drawing.Point(213, 81);
 			this.tabControl4.Name = "tabControl4";
 			this.tabControl4.SelectedIndex = 0;
-			this.tabControl4.Size = new System.Drawing.Size(577, 259);
+			this.tabControl4.Size = new System.Drawing.Size(824, 259);
 			this.tabControl4.TabIndex = 24;
 			// 
 			// tabPage9
@@ -668,22 +682,43 @@
 			this.tabPage9.Location = new System.Drawing.Point(4, 22);
 			this.tabPage9.Name = "tabPage9";
 			this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage9.Size = new System.Drawing.Size(569, 233);
+			this.tabPage9.Size = new System.Drawing.Size(871, 233);
 			this.tabPage9.TabIndex = 0;
 			this.tabPage9.Text = "Student collection I/O";
 			this.tabPage9.UseVisualStyleBackColor = true;
 			// 
 			// tabPage10
 			// 
+			this.tabPage10.Controls.Add(this.label13);
+			this.tabPage10.Controls.Add(this.BtnGetPhotos);
 			this.tabPage10.Controls.Add(this.label12);
 			this.tabPage10.Controls.Add(this.button9);
 			this.tabPage10.Location = new System.Drawing.Point(4, 22);
 			this.tabPage10.Name = "tabPage10";
 			this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage10.Size = new System.Drawing.Size(569, 233);
+			this.tabPage10.Size = new System.Drawing.Size(816, 233);
 			this.tabPage10.TabIndex = 1;
 			this.tabPage10.Text = "Maintenance";
 			this.tabPage10.UseVisualStyleBackColor = true;
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.Location = new System.Drawing.Point(226, 62);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(167, 13);
+			this.label13.TabIndex = 3;
+			this.label13.Text = "Get photos of selected collections";
+			// 
+			// BtnGetPhotos
+			// 
+			this.BtnGetPhotos.Location = new System.Drawing.Point(23, 57);
+			this.BtnGetPhotos.Name = "BtnGetPhotos";
+			this.BtnGetPhotos.Size = new System.Drawing.Size(186, 23);
+			this.BtnGetPhotos.TabIndex = 2;
+			this.BtnGetPhotos.Text = "Get pictures";
+			this.BtnGetPhotos.UseVisualStyleBackColor = true;
+			this.BtnGetPhotos.Click += new System.EventHandler(this.BtnGetPhotos_Click);
 			// 
 			// label12
 			// 
@@ -709,7 +744,7 @@
 			this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.button6.Location = new System.Drawing.Point(14, 623);
 			this.button6.Name = "button6";
-			this.button6.Size = new System.Drawing.Size(121, 23);
+			this.button6.Size = new System.Drawing.Size(176, 23);
 			this.button6.TabIndex = 20;
 			this.button6.Text = "Load selected";
 			this.button6.UseVisualStyleBackColor = true;
@@ -720,7 +755,7 @@
 			this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.button5.Location = new System.Drawing.Point(13, 652);
 			this.button5.Name = "button5";
-			this.button5.Size = new System.Drawing.Size(121, 23);
+			this.button5.Size = new System.Drawing.Size(177, 23);
 			this.button5.TabIndex = 19;
 			this.button5.Text = "None";
 			this.button5.UseVisualStyleBackColor = true;
@@ -729,7 +764,7 @@
 			// button4
 			// 
 			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button4.Location = new System.Drawing.Point(668, 41);
+			this.button4.Location = new System.Drawing.Point(970, 41);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(67, 23);
 			this.button4.TabIndex = 18;
@@ -744,25 +779,14 @@
 			this.lstModules.FormattingEnabled = true;
 			this.lstModules.Location = new System.Drawing.Point(14, 81);
 			this.lstModules.Name = "lstModules";
-			this.lstModules.Size = new System.Drawing.Size(120, 514);
+			this.lstModules.Size = new System.Drawing.Size(176, 514);
 			this.lstModules.TabIndex = 17;
-			// 
-			// BtnDisplayWebPhoto
-			// 
-			this.BtnDisplayWebPhoto.Dock = System.Windows.Forms.DockStyle.Top;
-			this.BtnDisplayWebPhoto.Location = new System.Drawing.Point(3, 3);
-			this.BtnDisplayWebPhoto.Name = "BtnDisplayWebPhoto";
-			this.BtnDisplayWebPhoto.Size = new System.Drawing.Size(270, 23);
-			this.BtnDisplayWebPhoto.TabIndex = 20;
-			this.BtnDisplayWebPhoto.Text = "Display web photo";
-			this.BtnDisplayWebPhoto.UseVisualStyleBackColor = true;
-			this.BtnDisplayWebPhoto.Click += new System.EventHandler(this.BtnDisplayWebPhoto_Click);
 			// 
 			// StudentListForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(761, 714);
+			this.ClientSize = new System.Drawing.Size(1063, 714);
 			this.Controls.Add(this.tabControl1);
 			this.Name = "StudentListForm";
 			this.tabControl3.ResumeLayout(false);
@@ -784,8 +808,8 @@
 			this.tabPage3.ResumeLayout(false);
 			this.tabPage4.ResumeLayout(false);
 			this.tabPage4.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
-			this.groupBox2.PerformLayout();
+			this.GroupDownloadImage.ResumeLayout(false);
+			this.GroupDownloadImage.PerformLayout();
 			this.tabPage5.ResumeLayout(false);
 			this.tabPage5.PerformLayout();
 			this.tabPage2.ResumeLayout(false);
@@ -852,7 +876,7 @@
 		private System.Windows.Forms.Button button8;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.TextBox txtContainerName;
-		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.GroupBox GroupDownloadImage;
 		private System.Windows.Forms.Button BtnGetSelectedStudents;
 		private System.Windows.Forms.TabPage tabPage8;
 		private System.Windows.Forms.TabControl tabControl4;
@@ -862,5 +886,7 @@
 		private System.Windows.Forms.Label label12;
 		private System.Windows.Forms.Button BtnSelectEmails;
 		private System.Windows.Forms.Button BtnDisplayWebPhoto;
+		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.Button BtnGetPhotos;
 	}
 }

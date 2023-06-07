@@ -10,8 +10,6 @@ using UnnOutlookAddin.Actions;
 using StudentsFetcher.StudentMarking;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using UnnFunctions.ModelConversions;
-using Microsoft.Office.Interop.Outlook;
-using System.Diagnostics;
 
 namespace UnnOutlookAddin.UI
 {
@@ -111,6 +109,7 @@ namespace UnnOutlookAddin.UI
 		IEnumerable<Outlook.MailItem> GetConversationItems(Outlook.MailItem mailItem)
 		{
 			var ret = new List<Outlook.MailItem>();
+			ret.Add(mailItem);
 			
 			// Determine the store of the mail item. 
 			var folder = mailItem.Parent as Outlook.Folder;

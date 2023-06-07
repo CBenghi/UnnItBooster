@@ -71,6 +71,7 @@ namespace StudentsFetcher.StudentMarking
 					AddStudent(student);
 				}
 			}
+			// if there is no student but a valid id, we offer to download a photo
 			BtnDisplayWebPhoto.Visible = lstStudents.Items.Count == 0 && StudentsRepository.IsNumericUserId(txtSearch.Text);
 		}
 
@@ -111,7 +112,7 @@ namespace StudentsFetcher.StudentMarking
 		private void TryShowStudent(Student st)
 		{
 			// load the picture
-			
+
 			if (studentsRepo.HasImage(st, out var image))
 			{
 				try
@@ -120,9 +121,13 @@ namespace StudentsFetcher.StudentMarking
 				}
 				catch
 				{ }
+				GroupDownloadImage.Visible = false;
 			}
 			else
+			{
+				GroupDownloadImage.Visible = true;
 				StudImage.Image = null;
+			}
 
 			if (lstStudents.SelectedItems.Count == 1)
 			{
@@ -213,10 +218,16 @@ namespace StudentsFetcher.StudentMarking
 
 		private void Button6_Click(object sender, EventArgs e)
 		{
-			var r = new Regex(@"(.*) - \d+");
-			var items = lstModules.CheckedItems.Cast<string>().Select(x => r.Match(x).Groups[1].Value);
+			IEnumerable<string> items = GetSelectedCollectionNames();
 			studentsRepo.Reload(items);
 			UpdateStudentList();
+		}
+
+		private IEnumerable<string> GetSelectedCollectionNames()
+		{
+			var r = new Regex(@"(.*) - \d+");
+			var items = lstModules.CheckedItems.Cast<string>().Select(x => r.Match(x).Groups[1].Value);
+			return items;
 		}
 
 		private void BtnAddEmail_Click(object sender, EventArgs e)
@@ -300,6 +311,22 @@ namespace StudentsFetcher.StudentMarking
 		private void BtnDisplayWebPhoto_Click(object sender, EventArgs e)
 		{
 			StudImage.LoadAsync(StudentsRepository.GetImageUrl(txtSearch.Text));
+		}
+
+		private void BtnGetPhotos_Click(object sender, EventArgs e)
+		{
+			int tallySuccess = 0;
+			foreach (var collection in GetSelectedCollectionNames())
+			{
+				var coll = studentsRepo.GetPersonCollections().FirstOrDefault(x => x.Name == collection);
+				if (coll is null)
+					continue;
+				foreach (Student stud in coll.Students)
+				{
+					if (studentsRepo.TryGetExtraImage(stud.NumericStudentId, out var image, collection))
+						tallySuccess++;
+				}
+			}
 		}
 	}
 }

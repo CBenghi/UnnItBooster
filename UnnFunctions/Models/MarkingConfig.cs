@@ -76,6 +76,19 @@ namespace StudentsFetcher.StudentMarking
 				: null;
 		}
 
+		public Dictionary<string, string> MarkAbility = new Dictionary<string, string>
+			{
+				{"1", "little or no"},
+				{"2", "little or no"},
+				{"3", "little or no"},
+				{"4", "inadequate"},
+				{"5", "adequate"},
+				{"6", "good"},
+				{"7", "excellent"},
+				{"8", "outstanding"},
+				{"9", "exceptional"}
+			};
+
 		public string GetStudentReport(int id, bool sendModerationNotice)
 		{
 			var sb = new StringBuilder();
@@ -92,20 +105,7 @@ namespace StudentsFetcher.StudentMarking
 			sb.AppendLine();
 
 			var componentComments = "";
-			var markAbility = new Dictionary<string, string>
-			{
-				{"1", "little or no"},
-				{"2", "little or no"},
-				{"3", "little or no"},
-				{"4", "inadequate"},
-				{"5", "adequate"},
-				{"6", "good"},
-				{"7", "excellent"},
-				{"8", "outstanding"},
-				{"9", "exceptional"}
-			};
-
-
+			
 			var dt = GetDataTable("select * from (tb_submissions inner join tb_marks on mark_ptr_submission = sub_id) left join tb_components on mark_ptr_component = cpnt_id where MARK_Ptr_Submission = " + id + " order by cpnt_order");
 			foreach (DataRow item in dt.Rows)
 			{
@@ -127,7 +127,7 @@ namespace StudentsFetcher.StudentMarking
 						if (commentTemplate.Contains(@"{0}"))
 						{
 							var bandMark = mark.ToString().Substring(0, 1);
-							componentComments += string.Format(commentTemplate, markAbility[bandMark]) + "\r\n";
+							componentComments += string.Format(commentTemplate, MarkAbility[bandMark]) + "\r\n";
 						}
 					}
 				}
