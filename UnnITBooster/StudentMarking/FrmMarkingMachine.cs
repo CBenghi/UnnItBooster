@@ -1244,7 +1244,10 @@ public partial class FrmMarkingMachine : Form
             // get the first
             var f = vals.FirstOrDefault();
             if (f != null)
+            {
                 txtSection.Text = f;
+				txtTextOrPointer.Focus();
+			}
             return;
         }
         else
@@ -1255,6 +1258,7 @@ public partial class FrmMarkingMachine : Form
             if (idx >= vals.Count)
                 idx = 0;
             txtSection.Text = vals[idx];
+            txtTextOrPointer.Focus();
         }
 	}
 
