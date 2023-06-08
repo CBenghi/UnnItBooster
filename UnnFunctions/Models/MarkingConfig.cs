@@ -342,6 +342,23 @@ namespace StudentsFetcher.StudentMarking
 				: null;
 		}
 
+		public void SetStudentComponentMark(int iStudentNumber, int iComponent, int markvalue, bool deleteFirst)
+		{
+			if (deleteFirst)
+			{
+				var sqlDel = $"delete from TB_Marks where MARK_ptr_Submission = {iStudentNumber} and MARK_ptr_Component = {iComponent}";
+				Execute(sqlDel);
+			}
+			var sql = "insert into TB_Marks (MARK_ptr_Submission, MARK_ptr_Component, MARK_Value, MARK_Date) " +
+					  "values (" +
+					  iStudentNumber + ", " +
+					  iComponent + ", " +
+					  markvalue + "," +
+					  "datetime('now')" +
+					  ")";
+			Execute(sql);
+		}
+
 		public string BareName
 		{
 			get

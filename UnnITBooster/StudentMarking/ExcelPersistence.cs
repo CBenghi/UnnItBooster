@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -129,5 +130,85 @@ internal class ExcelPersistence
 			return Path.Combine(f.Directory.FullName, MarksFileName);	
 		}
 		return string.Empty;
+	}
+
+	public class Component
+	{
+		public int ProgNumber { get; set; }
+		public int ColNumber { get; set; }
+	}
+
+
+	internal static void ReadComponents(MarkingConfig config, string excelName)
+	{
+		FileInfo fi = new FileInfo(excelName);	
+		if (!fi.Exists)
+		{
+			return;
+		}
+
+		XSSFWorkbook hssfwb;
+		using FileStream file = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read);
+		hssfwb = new XSSFWorkbook(file);
+		ISheet sheet = hssfwb.GetSheet("Marks");
+		if (sheet is null)
+			return;
+		bool processing = false;
+		List<Component> components = new List<Component>();
+		for (int rowId = 0; rowId <= sheet.LastRowNum; rowId++)
+		{
+			var row = sheet.GetRow(rowId);
+			if (row == null) //null is when the row only contains empty cells 
+				continue;
+			if (!processing)
+			{
+				var first = row.GetCell(0);
+				if (first == null)
+					continue;
+				if (first.StringCellValue == "Prog")
+				{
+					processing = true;
+					for (int colId = 1; colId < row.LastCellNum; colId++)
+					{
+						var cVal = row.GetCell(colId).StringCellValue;
+						if (cVal.StartsWith("#"))
+						{
+							var cpVal = cVal.Substring(1);
+							if (int.TryParse(cpVal, out var component))
+							{
+								components.Add(new Component() { ProgNumber = component, ColNumber = colId });
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				var studProg = row.GetCell(0).StringCellValue;
+				if (string.IsNullOrEmpty(studProg) || !int.TryParse(studProg, out var progId))
+					continue;
+				// var studId = row.GetCell(1).StringCellValue;
+				foreach (var component in components)
+				{
+					var cell = row.GetCell(component.ColNumber);
+					if (cell == null)
+						continue;
+					int mark = 0;
+					if (cell.CellType == CellType.String)
+					{
+						var val = cell.StringCellValue;
+						if (string.IsNullOrEmpty(val) || !int.TryParse(val, out mark))
+							continue;
+					}
+					else if (cell.CellType == CellType.Numeric)
+					{
+						mark = Convert.ToInt32(cell.NumericCellValue);
+					}
+					else
+						continue;
+					config.SetStudentComponentMark(progId, component.ProgNumber, mark, true);					
+				}
+			}
+		}
 	}
 }

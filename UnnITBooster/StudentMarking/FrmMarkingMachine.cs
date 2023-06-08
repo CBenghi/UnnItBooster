@@ -18,6 +18,7 @@ using ZedGraph;
 using System.IO.Compression;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using UnnItBooster.StudentMarking;
+using NPOI.OpenXmlFormats.Encryption;
 
 namespace StudentsFetcher.StudentMarking;
 
@@ -223,7 +224,7 @@ public partial class FrmMarkingMachine : Form
                 _config.SetComponentComment(order, comment);
                 UpdateComponents();
             }
-            else if (marksMatch.Success)
+			else if (marksMatch.Success)
             {
                 GetMarks(marksMatch);
             }
@@ -255,6 +256,10 @@ public partial class FrmMarkingMachine : Form
             {
 				CleanMcrf();
 			}
+			else if (txtSearch.Text.Equals("turnitinsort", StringComparison.OrdinalIgnoreCase))
+			{
+				GetTurnitinOrder();
+			}
 			else if (txtSearch.Text == "stat" || txtSearch.Text == "stats" || txtSearch.Text == "transcript")
 			{
 				ReportTranscript();
@@ -277,6 +282,10 @@ public partial class FrmMarkingMachine : Form
                     marks <component#>
                        use 'marks 0' for MCRF
                        required ids in textbox (one per row)
+
+                    turnitinsort
+                        produces the order of entries like turnitin would
+                        Entries are then browsed with #n in the studentNumber
 
                     Remove <commentId>
                        removes the comment from the current student by the ID of the comment
@@ -310,6 +319,17 @@ public partial class FrmMarkingMachine : Form
             }
         }
     }
+
+	private void GetTurnitinOrder()
+	{
+        StringBuilder stringBuilder = new StringBuilder();
+        var res = _config.GetDataTable("SELECT SUB_ID, SUB_LastName, SUB_Overlap from TB_Submissions order by cast (SUB_Overlap as INT) , SUB_LastName");
+        foreach (DataRow row in res.Rows)
+        {
+            stringBuilder.AppendLine(row[0].ToString());
+        }
+        txtLibReport.Text = stringBuilder.ToString();
+	}
 
 	private void SetLevel(Match levelMatch)
 	{
@@ -799,24 +819,13 @@ public partial class FrmMarkingMachine : Form
             MessageBox.Show("Need student");
             return;
         }
-
         var sql = $"delete from TB_Marks where MARK_ptr_Submission = {GetStudentNumber()}";
         _config.Execute(sql);
-
         foreach (var comp in flComponents.Controls.OfType<ucComponentMark>())
         {
             if (comp.IsSet)
             {
-                var markvalue = comp.MarkValue;
-                var iComponent = comp.Id;
-                sql = "insert into TB_Marks (MARK_ptr_Submission, MARK_ptr_Component, MARK_Value, MARK_Date) " +
-                      "values (" +
-                      GetStudentNumber() + ", " +
-                      iComponent + ", " +
-                      markvalue + "," +
-                      "datetime('now')" +
-                      ")";
-                _config.Execute(sql);
+                _config.SetStudentComponentMark(GetStudentNumber(), comp.Id, comp.MarkValue, false);
             }
         }
         cmdSaveMarks.BackColor = Color.Transparent;
@@ -1050,7 +1059,20 @@ public partial class FrmMarkingMachine : Form
 
     private void MoveStudent(int Delta)
     {
-        var iSN = GetStudentNumber();
+		var iSN = GetStudentNumber();
+		if (txtSearch.Text.Equals("turnitinsort", StringComparison.OrdinalIgnoreCase))
+        {
+            var arr = txtLibReport.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.None).ToList();
+            var idx = arr.IndexOf(iSN.ToString());
+            if (idx == -1)
+                return;
+            idx += Delta;
+            if (idx < 0 || idx >= arr.Count)
+                return;
+            txtStudentId.Text = arr[idx].ToString();
+			UpdateStudentUi();
+			return; 
+        }
         if (iSN == -1)
         {
             iSN = 0;
@@ -1314,5 +1336,22 @@ public partial class FrmMarkingMachine : Form
         }
         var tot = htmlContent.Replace("[CONT]", reportLines.ToString());
 		Clipboard.SetText(tot, TextDataFormat.Html);
+	}
+
+	private void BtnImportExcel_Click(object sender, EventArgs e)
+	{
+        if (string.IsNullOrWhiteSpace(TxtExcelComponentSource.Text) || !File.Exists(TxtExcelComponentSource.Text))
+        {
+			openFileDialog1.DefaultExt = "xlsx";
+			openFileDialog1.Multiselect = false;
+			openFileDialog1.ShowDialog();
+			if (openFileDialog1.FileName != "")
+			{
+				TxtExcelComponentSource.Text = openFileDialog1.FileName;
+			}
+            return;
+		}
+        string excelName = TxtExcelComponentSource.Text;
+		ExcelPersistence.ReadComponents(_config, excelName);
 	}
 }
