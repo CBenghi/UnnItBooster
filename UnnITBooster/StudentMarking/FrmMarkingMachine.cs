@@ -202,7 +202,6 @@ public partial class FrmMarkingMachine : Form
         {
             var addComponentMatch = Regex.Match(txtSearch.Text, "component (\\d+) (\\d+) (.*)", RegexOptions.IgnoreCase);
 			var setComponentCommentMatch = Regex.Match(txtSearch.Text, "componentComment (\\d+) (.*)", RegexOptions.IgnoreCase);
-			var marksMatch = Regex.Match(txtSearch.Text, "marks (\\d+)", RegexOptions.IgnoreCase);
 			var idsMatch = Regex.Match(txtSearch.Text, "ids", RegexOptions.IgnoreCase);
             var editMatch = Regex.Match(txtSearch.Text, "^edit (?<par>last|\\?|\\d+)$", RegexOptions.IgnoreCase);
 			var whoGotMatch = Regex.Match(txtSearch.Text, @"WhoGotComment (\d+)", RegexOptions.IgnoreCase);
@@ -223,10 +222,6 @@ public partial class FrmMarkingMachine : Form
                 string comment = setComponentCommentMatch.Groups[2].Value;
                 _config.SetComponentComment(order, comment);
                 UpdateComponents();
-            }
-			else if (marksMatch.Success)
-            {
-                GetMarks(marksMatch);
             }
 			else if (levelMatch.Success)
 			{
@@ -256,6 +251,10 @@ public partial class FrmMarkingMachine : Form
             {
 				CleanMcrf();
 			}
+			else if (txtSearch.Text.Equals("marks", StringComparison.OrdinalIgnoreCase))
+            {
+				GetMarks();
+			}
 			else if (txtSearch.Text.Equals("turnitinsort", StringComparison.OrdinalIgnoreCase))
 			{
 				GetTurnitinOrder();
@@ -279,13 +278,13 @@ public partial class FrmMarkingMachine : Form
                     edit <Id#>
                         preloads the comment of type #Id for the current student to be modified
 
-                    marks <component#>
-                       use 'marks 0' for MCRF
-                       required ids in textbox (one per row)
+                    marks
+                       if ids in textbox (one per row), used to fill MCRF with selected IDs
+                       otherwise produces all available marks
 
                     turnitinsort
                         produces the order of entries like turnitin would
-                        Entries are then browsed with #n in the studentNumber
+                        Entries are then browsed +/- buttons as long as the text `turnitinsort` remains in the command line
 
                     Remove <commentId>
                        removes the comment from the current student by the ID of the comment
@@ -521,9 +520,15 @@ public partial class FrmMarkingMachine : Form
         }
     }
 
-    private void GetMarks(Match m)
+    private void GetMarks()
     {
-        var ids = txtLibReport.Text.Split(new[] { "\r\n" }, StringSplitOptions.None);
+        string[] ids;
+		if (string.IsNullOrWhiteSpace(txtLibReport.Text))
+			ids = _config.GetStudentIds();
+        else
+            ids = txtLibReport.Text.Split(new[] { "\r\n" }, StringSplitOptions.None);
+        
+            
         var markgen = _config.GetMarkCalculator();
         foreach (var idWithSlash in ids)
         {
@@ -534,6 +539,11 @@ public partial class FrmMarkingMachine : Form
                 var id = idParts[0];
                 result = markgen.GetFinalMark(id, _config).ToString();
             }
+            else if (idWithSlash.Length == 8)
+            {
+				// idWithSlash does not have the slash
+				result = markgen.GetFinalMark(idWithSlash, _config).ToString();
+			}
             txtStudentreport.Text += $"{idWithSlash}\t{result}\r\n";
         }
     }
@@ -558,13 +568,16 @@ public partial class FrmMarkingMachine : Form
 
     private void SearchCommentInLibrary()
     {
+        
         var bExtended = false;
         txtLibReport.Text = "Problem";
         var sarr = txtSearch.Text.Split(';');
         if (sarr.Count() == 0)
             return;
+		if (_config == null)
+			return;
 
-        var sql = "select * from TB_Comments where ";
+		var sql = "select * from TB_Comments where ";
         if (sarr.Count() == 1)
         {
             sql += $"COMM_Text like '%{sarr[0]}%'";

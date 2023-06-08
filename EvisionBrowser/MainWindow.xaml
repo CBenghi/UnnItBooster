@@ -53,30 +53,35 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <GridSplitter Width="5"
                       ResizeBehavior="CurrentAndNext" Grid.RowSpan="3" />
-                <StackPanel Grid.Column="1" Grid.Row="0" Margin="3">
-                    <TextBox Margin="3" ToolTip="Collection name" Text="{Binding ModuleCode}"  />
-                    <Button  Margin="3" Content="Copy HTML" Command="{Binding CopyHtmlCommand}" />
-                    <Button  Margin="3" Content="Test" Command="{Binding TestCommand}" />
-                    <CheckBox IsChecked="{Binding UpdateOnly}" Margin="3">Update only (no new students)</CheckBox>
-                    <CheckBox IsChecked="{Binding ScrapeEmail}" Margin="3">get email</CheckBox>
-                    <CheckBox IsChecked="{Binding ScrapePersonalEmail}" Margin="3">get personal email</CheckBox>
-                    <CheckBox IsChecked="{Binding ScrapePictures}" Margin="3">get pictures</CheckBox>
-                    <CheckBox IsChecked="{Binding ScrapeTelephone}" Margin="3">get telephone</CheckBox>
-                    <CheckBox IsChecked="{Binding ScrapeTranscript}" Margin="3">get transcript</CheckBox>
-                    <Button  Margin="3" Content="Queue students" Command="{Binding ProcessStudentsCommand}" />
-                </StackPanel>
+                <TabControl Grid.Column="1" Grid.Row="0" Margin="3">
+                    <TabItem Header="Scraping">
+                        <StackPanel >
+                            <TextBox Margin="3" ToolTip="Collection name" Text="{Binding ModuleCode}"  />
+                            <Button  Margin="3" Content="Copy HTML" Command="{Binding CopyHtmlCommand}" />
+                            <Button  Margin="3" Content="Test" Command="{Binding TestCommand}" />
+                            <CheckBox IsChecked="{Binding UpdateOnly}" Margin="3">Update only (no new students)</CheckBox>
+                            <CheckBox IsChecked="{Binding ScrapeEmail}" Margin="3">get email</CheckBox>
+                            <CheckBox IsChecked="{Binding ScrapePersonalEmail}" Margin="3">get personal email</CheckBox>
+                            <CheckBox IsChecked="{Binding ScrapePictures}" Margin="3">get pictures</CheckBox>
+                            <CheckBox IsChecked="{Binding ScrapeTelephone}" Margin="3">get telephone</CheckBox>
+                            <CheckBox IsChecked="{Binding ScrapeTranscript}" Margin="3">get transcript</CheckBox>
+                            <Button  Margin="3" Content="Queue students" Command="{Binding ProcessStudentsCommand}" />
+                            <TextBlock Text="{Binding QueueDisplayText}" TextAlignment="Center" HorizontalAlignment="Stretch"/>
+                            <Button Margin="3" Content="Toggle Queue" Command="{Binding ToggleQueueProcessingCommand}" />
+                            <Button Margin="3" Content="Clear Queue" Command="{Binding ClearQueueCommand}" />
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="MCRF">
+                        <StackPanel>
+                            <TextBox Height="200" Text="{Binding McrfMarks}" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
+                            <Button Height="23" Content="Fill" Command="{Binding SetMcrfCommand}" />
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
                 <TextBox Grid.Column="1" Text="{Binding Report}" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
-                <Grid Grid.Column="1" Grid.Row="2">
-                    <StackPanel>
-                        <TextBlock Text="{Binding QueueDisplayText}" TextAlignment="Center" HorizontalAlignment="Stretch"/>
-                        <Button Margin="3" Content="Toggle Queue" Command="{Binding ToggleQueueProcessingCommand}" />
-                        <Button Margin="3" Content="Clear Queue" Command="{Binding ClearQueueCommand}" />
-                    </StackPanel>
-                </Grid>
             </Grid>
         </Grid>
     </Grid>

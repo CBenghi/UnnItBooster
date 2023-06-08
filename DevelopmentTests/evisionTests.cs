@@ -1,11 +1,26 @@
 using FluentAssertions;
 using System.Text.RegularExpressions;
+using UnnFunctions.ModelConversions;
 using UnnItBooster.ModelConversions;
 
 namespace DevelopmentTests
 {
 	public class evisionTests
 	{
+		[Fact]
+		public void TestGetTextEntries()
+		{
+			var src = File.ReadAllText("Files/SitsMarkEntry.html");
+			var entries = eVisionMarkEntry.GetEntries(src).ToList();
+			entries.Should().HaveCount(66);
+			var t = entries.FirstOrDefault();
+			t.Should().NotBeNull();
+			t!.StudentId.Should().Be("21013004");
+			t.MarkTextId.Should().Be("msa_mrk_widget_MRK.1-1-1");
+			t.GradeTextId.Should().Be("msa_mrk_widget_GRD.1-1-1");
+		}
+
+
 		[Theory]
 		[InlineData("Files/transcript.html")]
 		[InlineData("Files/transcriptMultiple.html")]

@@ -359,6 +359,18 @@ namespace StudentsFetcher.StudentMarking
 			Execute(sql);
 		}
 
+		public string[] GetStudentIds()
+		{
+			List<string> ids = new List<string>();
+			var sql = "select SUB_NumericUserID from TB_Submissions";
+			var datat = GetDataTable(sql);
+			foreach (DataRow row in datat.Rows)
+			{
+				ids.Add(row[0].ToString());
+			}
+			return ids.ToArray();
+		}
+
 		public string BareName
 		{
 			get

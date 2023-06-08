@@ -10,7 +10,9 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Threading;
+using UnnFunctions.ModelConversions;
 using UnnFunctions.Models;
 using UnnItBooster.ModelConversions;
 using UnnItBooster.Models;
@@ -94,14 +96,17 @@ namespace EvisionBrowser
 			//var script = "document.getElementById('tab-tabs-7a').click();";
 			//Report = await GetScriptString(script);
 
-			studentsRepo.Reload();
-			StringBuilder stringBuilder = new StringBuilder();
-			foreach (var coll in studentsRepo.GetPersonCollections())
-			{
-				stringBuilder.AppendLine($"{coll.Name} - {coll.Students.Count}");
-			}
-			Report = stringBuilder.ToString();
-			
+			//studentsRepo.Reload();
+			//StringBuilder stringBuilder = new StringBuilder();
+			//foreach (var coll in studentsRepo.GetPersonCollections())
+			//{
+			//	stringBuilder.AppendLine($"{coll.Name} - {coll.Students.Count}");
+			//}
+			//Report = stringBuilder.ToString();
+
+			var src = await GetSource();
+
+
 		}
 
 		[RelayCommand]
@@ -335,6 +340,51 @@ namespace EvisionBrowser
 			if (ScrapeTranscript) ret = ActionRequiredData.studentTranscript | ret;
 			return ret;
 		}
+
+		[ObservableProperty]
+		private string mcrfMarks = string.Empty;
+
+		[RelayCommand]
+		private async Task<bool> SetMcrf()
+		{
+			Dictionary<string, string> studentMarks = eVisionMarkEntry.FromTabSeparated(McrfMarks);
+
+			var source = await GetSource();
+			var entries = eVisionMarkEntry.GetEntries(source).ToList();
+			if (entries is null)
+			{
+				Report = "No entries found";
+				return false;
+			}
+
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine($"{entries.Count()} fields student fields");		
+			foreach (var f in entries)
+			{
+				if (!studentMarks.TryGetValue(f.StudentId, out var mark))
+				{
+					sb.AppendLine($"Student {f.StudentId} not found.");
+					continue;
+				}
+				var current = await wbSample.ExecuteScriptAsync($"document.getElementById(\"{f.MarkTextId}\").value;");
+				if (current == mark)
+				{
+					sb.AppendLine($"Student {f.StudentId} was already {mark}.");
+					continue;
+				}
+
+				var script = $"document.getElementById(\"{f.MarkTextId}\").value='{mark}';";
+				string v = await wbSample.ExecuteScriptAsync(script);
+				sb.AppendLine($"Student {f.StudentId} set to {mark}.");
+
+				script = $"document.getElementById(\"{f.GradeTextId}\").value='P';";
+				v = await wbSample.ExecuteScriptAsync(script);
+			}
+
+			Report = sb.ToString();
+			return true;
+		}
+
 
 	}
 }
