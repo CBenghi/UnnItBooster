@@ -42,6 +42,7 @@ namespace StudentsFetcher.StudentMarking
 			this.cmdSaveMarks = new System.Windows.Forms.Button();
 			this.flComponents = new System.Windows.Forms.FlowLayoutPanel();
 			this.panel2 = new System.Windows.Forms.Panel();
+			this.button12 = new System.Windows.Forms.Button();
 			this.button6 = new System.Windows.Forms.Button();
 			this.button5 = new System.Windows.Forms.Button();
 			this.label6 = new System.Windows.Forms.Label();
@@ -52,15 +53,16 @@ namespace StudentsFetcher.StudentMarking
 			this.cmbDocuments = new System.Windows.Forms.ComboBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.label4 = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.txtTextOrPointer = new ExtendedTextBox.ExtTextBox();
 			this.txtAdditionalNote = new ExtendedTextBox.ExtTextBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.txtSection = new System.Windows.Forms.ComboBox();
 			this.txtArea = new System.Windows.Forms.TextBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.cmbComponentComment = new System.Windows.Forms.ComboBox();
+			this.txtSection = new System.Windows.Forms.ComboBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.button11 = new System.Windows.Forms.Button();
 			this.label7 = new System.Windows.Forms.Label();
 			this.cmdSelectFile = new System.Windows.Forms.Button();
 			this.txtExcelFileName = new System.Windows.Forms.TextBox();
@@ -186,7 +188,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// cmdAdd
 			// 
-			this.cmdAdd.Location = new System.Drawing.Point(78, 499);
+			this.cmdAdd.Location = new System.Drawing.Point(78, 500);
 			this.cmdAdd.Name = "cmdAdd";
 			this.cmdAdd.Size = new System.Drawing.Size(75, 23);
 			this.cmdAdd.TabIndex = 13;
@@ -292,6 +294,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// panel2
 			// 
+			this.panel2.Controls.Add(this.button12);
 			this.panel2.Controls.Add(this.button6);
 			this.panel2.Controls.Add(this.button5);
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
@@ -300,6 +303,17 @@ namespace StudentsFetcher.StudentMarking
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(236, 25);
 			this.panel2.TabIndex = 17;
+			// 
+			// button12
+			// 
+			this.button12.Location = new System.Drawing.Point(4, 2);
+			this.button12.Margin = new System.Windows.Forms.Padding(2);
+			this.button12.Name = "button12";
+			this.button12.Size = new System.Drawing.Size(56, 19);
+			this.button12.TabIndex = 2;
+			this.button12.Text = "html";
+			this.button12.UseVisualStyleBackColor = true;
+			this.button12.Click += new System.EventHandler(this.button12_Click);
 			// 
 			// button6
 			// 
@@ -407,24 +421,26 @@ namespace StudentsFetcher.StudentMarking
 			this.tableLayoutPanel1.ColumnCount = 2;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.45509F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 77.54491F));
-			this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
-			this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
-			this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.txtTextOrPointer, 1, 0);
-			this.tableLayoutPanel1.Controls.Add(this.txtAdditionalNote, 1, 1);
-			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.txtSection, 1, 2);
-			this.tableLayoutPanel1.Controls.Add(this.txtArea, 1, 3);
-			this.tableLayoutPanel1.Controls.Add(this.label11, 0, 4);
-			this.tableLayoutPanel1.Controls.Add(this.cmdAdd, 1, 5);
-			this.tableLayoutPanel1.Controls.Add(this.cmbComponentComment, 1, 4);
+			this.tableLayoutPanel1.Controls.Add(this.label4, 0, 4);
+			this.tableLayoutPanel1.Controls.Add(this.label2, 0, 3);
+			this.tableLayoutPanel1.Controls.Add(this.txtTextOrPointer, 1, 2);
+			this.tableLayoutPanel1.Controls.Add(this.txtAdditionalNote, 1, 3);
+			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.txtArea, 1, 4);
+			this.tableLayoutPanel1.Controls.Add(this.label11, 0, 5);
+			this.tableLayoutPanel1.Controls.Add(this.cmdAdd, 1, 6);
+			this.tableLayoutPanel1.Controls.Add(this.cmbComponentComment, 1, 5);
+			this.tableLayoutPanel1.Controls.Add(this.txtSection, 1, 0);
+			this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.button11, 1, 1);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 13);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 6;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel1.RowCount = 7;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -435,27 +451,17 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(3, 449);
+			this.label4.Location = new System.Drawing.Point(3, 450);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(29, 13);
 			this.label4.TabIndex = 19;
 			this.label4.Text = "Area";
 			// 
-			// label3
-			// 
-			this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(3, 423);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(43, 13);
-			this.label3.TabIndex = 18;
-			this.label3.Text = "Section";
-			// 
 			// label2
 			// 
 			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(3, 305);
+			this.label2.Location = new System.Drawing.Point(3, 339);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(67, 13);
 			this.label2.TabIndex = 17;
@@ -471,12 +477,12 @@ namespace StudentsFetcher.StudentMarking
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtTextOrPointer.ChangedColour = System.Drawing.Color.Empty;
 			this.txtTextOrPointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtTextOrPointer.Location = new System.Drawing.Point(80, 5);
+			this.txtTextOrPointer.Location = new System.Drawing.Point(80, 57);
 			this.txtTextOrPointer.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
 			this.txtTextOrPointer.MaxLength = 0;
 			this.txtTextOrPointer.Name = "txtTextOrPointer";
 			this.txtTextOrPointer.OriginalText = "";
-			this.txtTextOrPointer.Size = new System.Drawing.Size(249, 198);
+			this.txtTextOrPointer.Size = new System.Drawing.Size(249, 186);
 			this.txtTextOrPointer.SpellCheck = true;
 			this.txtTextOrPointer.TabIndex = 4;
 			this.txtTextOrPointer.TextCase = System.Windows.Forms.CharacterCasing.Normal;
@@ -494,12 +500,12 @@ namespace StudentsFetcher.StudentMarking
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtAdditionalNote.ChangedColour = System.Drawing.Color.Empty;
 			this.txtAdditionalNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtAdditionalNote.Location = new System.Drawing.Point(80, 213);
+			this.txtAdditionalNote.Location = new System.Drawing.Point(80, 253);
 			this.txtAdditionalNote.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
 			this.txtAdditionalNote.MaxLength = 0;
 			this.txtAdditionalNote.Name = "txtAdditionalNote";
 			this.txtAdditionalNote.OriginalText = "";
-			this.txtAdditionalNote.Size = new System.Drawing.Size(249, 198);
+			this.txtAdditionalNote.Size = new System.Drawing.Size(249, 186);
 			this.txtAdditionalNote.SpellCheck = true;
 			this.txtAdditionalNote.TabIndex = 5;
 			this.txtAdditionalNote.TextCase = System.Windows.Forms.CharacterCasing.Normal;
@@ -512,26 +518,17 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 97);
+			this.label1.Location = new System.Drawing.Point(3, 143);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(41, 13);
 			this.label1.TabIndex = 10;
 			this.label1.Text = "ptr/text";
 			this.label1.Click += new System.EventHandler(this.label1_Click);
 			// 
-			// txtSection
-			// 
-			this.txtSection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtSection.Location = new System.Drawing.Point(78, 419);
-			this.txtSection.Name = "txtSection";
-			this.txtSection.Size = new System.Drawing.Size(253, 21);
-			this.txtSection.TabIndex = 11;
-			this.txtSection.TabStop = false;
-			// 
 			// txtArea
 			// 
 			this.txtArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtArea.Location = new System.Drawing.Point(78, 446);
+			this.txtArea.Location = new System.Drawing.Point(78, 447);
 			this.txtArea.Name = "txtArea";
 			this.txtArea.Size = new System.Drawing.Size(253, 20);
 			this.txtArea.TabIndex = 12;
@@ -541,11 +538,11 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			this.label11.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(3, 476);
+			this.label11.Location = new System.Drawing.Point(3, 477);
 			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(43, 13);
+			this.label11.Size = new System.Drawing.Size(61, 13);
 			this.label11.TabIndex = 20;
-			this.label11.Text = "Section";
+			this.label11.Text = "Component";
 			// 
 			// cmbComponentComment
 			// 
@@ -553,11 +550,41 @@ namespace StudentsFetcher.StudentMarking
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmbComponentComment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbComponentComment.FormattingEnabled = true;
-			this.cmbComponentComment.Location = new System.Drawing.Point(78, 472);
+			this.cmbComponentComment.Location = new System.Drawing.Point(78, 473);
 			this.cmbComponentComment.Name = "cmbComponentComment";
 			this.cmbComponentComment.Size = new System.Drawing.Size(253, 21);
 			this.cmbComponentComment.TabIndex = 21;
 			this.cmbComponentComment.TabStop = false;
+			// 
+			// txtSection
+			// 
+			this.txtSection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtSection.Location = new System.Drawing.Point(78, 3);
+			this.txtSection.Name = "txtSection";
+			this.txtSection.Size = new System.Drawing.Size(253, 21);
+			this.txtSection.TabIndex = 11;
+			this.txtSection.TabStop = false;
+			// 
+			// label3
+			// 
+			this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(3, 7);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(43, 13);
+			this.label3.TabIndex = 18;
+			this.label3.Text = "Section";
+			// 
+			// button11
+			// 
+			this.button11.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.button11.Location = new System.Drawing.Point(78, 30);
+			this.button11.Name = "button11";
+			this.button11.Size = new System.Drawing.Size(253, 19);
+			this.button11.TabIndex = 22;
+			this.button11.Text = "Section rotation";
+			this.button11.UseVisualStyleBackColor = true;
+			this.button11.Click += new System.EventHandler(this.button11_Click);
 			// 
 			// label7
 			// 
@@ -1433,6 +1460,8 @@ namespace StudentsFetcher.StudentMarking
 		private Button BtnOpenFolder;
 		private TabPage tabPage9;
 		private Button BtnExportExcel;
+		private Button button11;
+		private Button button12;
 	}
 }
 

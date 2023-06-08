@@ -98,14 +98,23 @@ namespace StudentsFetcher.StudentMarking
 			{
 				return "";
 			}
-			sb.AppendLine($"{stud["SUB_FirstName"]} {stud["SUB_LastName"]} {stud["SUB_UserId"]}");
-			sb.AppendLine($"email: {stud["SUB_email"]} (#{stud["SUB_Id"]})");
-			sb.AppendLine($"Submission ID: {stud["SUB_PaperID"]}");
-			sb.AppendLine($"Submission Title: {stud["SUB_Title"]}");
+			var tin = TurnitInSubmission.FromRow(stud);
+			sb.AppendLine($"{tin.FirstName} {tin.LastName} {tin.NumericUserId}");
+			sb.AppendLine($"email: {tin.Email} (#{id})");
+			sb.AppendLine($"Submission ID: {tin.PaperId}");
+			sb.AppendLine($"Submission Title: {tin.Title}");
 			sb.AppendLine();
+			GetStudentFeedback(id, sendModerationNotice, sb, tin);
+			var s = sb.ToString();
+			return s;
+		}
 
+		public void GetStudentFeedback(int id, bool sendModerationNotice, StringBuilder sb, TurnitInSubmission? stud)
+		{
 			var componentComments = "";
-			
+			sb.AppendLine("# Marking components:");
+			sb.AppendLine("");
+
 			var dt = GetDataTable("select * from (tb_submissions inner join tb_marks on mark_ptr_submission = sub_id) left join tb_components on mark_ptr_component = cpnt_id where MARK_Ptr_Submission = " + id + " order by cpnt_order");
 			foreach (DataRow item in dt.Rows)
 			{
@@ -138,7 +147,7 @@ namespace StudentsFetcher.StudentMarking
 					sb.AppendFormat("Component {0}: {1}\r\n", item["MARK_ptr_Component"], item["MARK_Value"]);
 				}
 			}
-			var studId = stud["SUB_NumericUserId"].ToString();
+			var studId = stud.NumericUserId;
 			if (studId == @"")
 			{
 				throw new Exception(@"Missing student Id");
@@ -146,17 +155,12 @@ namespace StudentsFetcher.StudentMarking
 			var totmark = GetMarkCalculator().GetFinalMark(studId, this);
 			if (totmark != -1)
 				sb.AppendFormat("Overall mark: {0}%\r\n\r\n", totmark);
-			sb.AppendLine("---------------");
-			if (sendModerationNotice)
-			{
-				sb.AppendFormat("Similarity index: {0}\r\n", stud["SUB_overlap"].ToString());
-			}
-
+			
 			var tmp = componentComments.Replace("\r\n", "").Trim();
 
 			if (tmp != string.Empty)
 			{
-				sb.AppendFormat("Comments:\r\n\r\n");
+				sb.AppendFormat("# Comments:\r\n\r\n");
 				sb.AppendFormat(componentComments);
 			}
 			// sb.AppendFormat("Feedback:\r\n\r\n");
@@ -170,11 +174,11 @@ namespace StudentsFetcher.StudentMarking
 				thisSection += string.IsNullOrEmpty(thisSection)
 					? sec
 					: $" / {sec}";
-				
+
 
 				if (prevSection != thisSection)
 				{
-					sb.AppendLine($"\r\n{thisSection}\r\n");
+					sb.AppendLine($"\r\n# {thisSection}\r\n");
 					prevSection = thisSection;
 				}
 				string lastchar = "";
@@ -221,8 +225,6 @@ namespace StudentsFetcher.StudentMarking
 				sb.AppendLine();
 				sb.AppendLine("Mark is subject to moderation, external examiner approval and confirmation by examination board");
 			}
-			var s = sb.ToString();
-			return s;
 		}
 
 		public void Execute(string sql, SQLiteConnection? c = null)

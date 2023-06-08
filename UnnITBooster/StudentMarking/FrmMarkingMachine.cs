@@ -1235,4 +1235,80 @@ public partial class FrmMarkingMachine : Form
 	{
         ExcelPersistence.Write(_config);
 	}
+
+	private void button11_Click(object sender, EventArgs e)
+	{
+        var vals = txtSection.Items.OfType<string>().Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+        if (string.IsNullOrWhiteSpace(txtSection.Text))
+        {
+            // get the first
+            var f = vals.FirstOrDefault();
+            if (f != null)
+                txtSection.Text = f;
+            return;
+        }
+        else
+        {
+            if (!vals.Any())
+                return;
+            var idx = vals.IndexOf(txtSection.Text) + 1;
+            if (idx >= vals.Count)
+                idx = 0;
+            txtSection.Text = vals[idx];
+        }
+	}
+
+	private void button12_Click(object sender, EventArgs e)
+	{
+        var htmlContent =
+            """
+			Version:0.9
+			StartHTML:0000000192
+			EndHTML:0000005886
+			StartFragment:0000000228
+			EndFragment:0000005850
+			SourceURL:https://ev.turnitinuk.com/app/carta/en_us/?u=1519823&o=207253836&lang=en_us
+			<html>
+				<body>
+					<!--StartFragment-->
+					[CONT]
+					<!--EndFragment-->
+				</body>
+			</html>
+			""";
+
+        var bold =
+			"""
+            <p style="box-sizing: border-box; margin: 0px; padding: 0px; color: rgb(40, 48, 65); font-family: roboto, &quot;Helvetica Neue&quot;, helvetica, arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+            	<span style="box-sizing: border-box; font-weight: bold;">[CONT]</span>
+            </p>
+            """;
+		var plain =
+			"""
+            <p style="box-sizing: border-box; margin: 0px; padding: 0px; font-weight: 300; font-style: normal;">[CONT]</p>
+            """;
+
+		var sb = new StringBuilder();
+        var sub = GetCurrentSubmission();
+        if (sub == null)
+            return;
+		_config.GetStudentFeedback(GetStudentNumber(), chkSendModerationNotice.Checked, sb, sub);
+        var report = sb.ToString();
+        var lines = report.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+        StringBuilder reportLines = new StringBuilder();
+        foreach (var line in lines)
+        {
+            if (line.StartsWith("#"))
+            {
+                reportLines.AppendLine(bold.Replace("[CONT]", line));
+            }
+            else
+            {
+                reportLines.AppendLine(plain.Replace("[CONT]", line));
+            }
+        }
+        var tot = htmlContent.Replace("[CONT]", reportLines.ToString());
+		Clipboard.SetText(tot, TextDataFormat.Html);
+	}
 }
