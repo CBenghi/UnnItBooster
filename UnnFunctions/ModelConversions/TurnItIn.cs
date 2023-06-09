@@ -6,6 +6,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnnItBooster.Models;
 
 namespace UnnItBooster.ModelConversions;
@@ -324,7 +325,25 @@ public partial class TurnItIn
 					continue;
 				var fullPath = Path.Combine(manifest.Directory.FullName, t);
 				if (!File.Exists(fullPath))
-					continue;
+				{
+					// maybe the name has been cut
+					var nm = Regex.Match(t, "^(?<documentId>\\d+)");
+					if (nm.Success)
+					{
+						var ext = Path.GetExtension(fullPath);
+						var found = manifest.Directory.GetFiles($"{nm.Groups["documentId"].Value}*{ext}");
+						if (found.Count() == 1)
+						{
+							fullPath = found.FirstOrDefault().FullName;
+						}
+						else
+							continue;
+					}
+					else
+					{
+						continue;
+					}
+				}
 				var subId = t.Substring(0, t.IndexOf(" "));
 				yield return new SubmittedFile(fullPath, subId);
 			}

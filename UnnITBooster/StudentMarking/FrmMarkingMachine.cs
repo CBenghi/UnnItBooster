@@ -1259,10 +1259,11 @@ public partial class FrmMarkingMachine : Form
                         var max = 256
 							- f.Extension.Length
                             - f.Directory.FullName.Length
+                            - 4 // -CUT mark
                             - 4; // dots and slashes?
                         // var name = 
                         var name = f.Name.Substring(0, max);
-						destinationPath = Path.Combine(f.Directory.FullName, $"{name}{f.Extension}"); // extension has dot
+						destinationPath = Path.Combine(f.Directory.FullName, $"{name}-CUT{f.Extension}"); // extension has dot
 						sb.AppendLine($"SHORTENED: {entry.FullName} to {destinationPath}");
                         shortened++;
 					}

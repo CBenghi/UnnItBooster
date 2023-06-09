@@ -188,13 +188,23 @@ namespace UnnOutlookAddin.MailManagement
 				{
 					yield return exchUser.PrimarySmtpAddress;
 
+					List<string> addresses = new List<string>() { "fail@OutlookError.com" };
 					const string PR_EMS_AB_PROXY_ADDRESSES = "http://schemas.microsoft.com/mapi/proptag/0x800F101E";
-					var addresses = exchUser.PropertyAccessor.GetProperty(PR_EMS_AB_PROXY_ADDRESSES) as string[];
+					try
+					{
+						var addressesA = exchUser.PropertyAccessor.GetProperty(PR_EMS_AB_PROXY_ADDRESSES) as string[];
+						addresses.Clear();
+						addresses.AddRange(addressesA);
+					}
+					catch (Exception) // just swallow
+					{
 
+					}
 					foreach (var address in addresses)
 					{
 						yield return address;
 					}
+
 				}
 			}
 		}
