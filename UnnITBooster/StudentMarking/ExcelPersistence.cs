@@ -138,22 +138,52 @@ internal class ExcelPersistence
 		public int ColNumber { get; set; }
 	}
 
+	static bool IsFileLocked(FileInfo file)
+	{
+		try
+		{
+			using (FileStream stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None))
+			{
+				stream.Close();
+			}
+		}
+		catch (IOException)
+		{
+			//the file is unavailable because it is:
+			//still being written to
+			//or being processed by another thread
+			//or does not exist (has already been processed)
+			return true;
+		}
 
-	internal static void ReadComponents(MarkingConfig config, string excelName)
+		//file is not locked
+		return false;
+	}
+
+	internal static string ReadComponents(MarkingConfig config, string excelName)
 	{
 		FileInfo fi = new FileInfo(excelName);	
 		if (!fi.Exists)
 		{
-			return;
+			return $"File not found '{excelName}'";
 		}
+
+		if (IsFileLocked(fi))
+			return $"File is locked '{excelName}'";
+
+		
 
 		XSSFWorkbook hssfwb;
 		using FileStream file = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read);
 		hssfwb = new XSSFWorkbook(file);
 		ISheet sheet = hssfwb.GetSheet("Marks");
 		if (sheet is null)
-			return;
+			return $"Marks sheet not found in '{excelName}'";
+		
+		StringBuilder sb = new StringBuilder();
 		bool processing = false;
+		int StudentCount = 0;
+		int ComponentMarkCount = 0;
 		List<Component> components = new List<Component>();
 		for (int rowId = 0; rowId <= sheet.LastRowNum; rowId++)
 		{
@@ -176,6 +206,7 @@ internal class ExcelPersistence
 							var cpVal = cVal.Substring(1);
 							if (int.TryParse(cpVal, out var component))
 							{
+								sb.AppendLine($"Header #{component} on column {colId}"); ;
 								components.Add(new Component() { ProgNumber = component, ColNumber = colId });
 							}
 						}
@@ -188,6 +219,7 @@ internal class ExcelPersistence
 				if (string.IsNullOrEmpty(studProg) || !int.TryParse(studProg, out var progId))
 					continue;
 				// var studId = row.GetCell(1).StringCellValue;
+				bool thisStudent = false;
 				foreach (var component in components)
 				{
 					var cell = row.GetCell(component.ColNumber);
@@ -204,11 +236,28 @@ internal class ExcelPersistence
 					{
 						mark = Convert.ToInt32(cell.NumericCellValue);
 					}
+					else if (cell.CellType == CellType.Formula)
+					{
+						mark = Convert.ToInt32(cell.NumericCellValue);
+					}
 					else
 						continue;
 					config.SetStudentComponentMark(progId, component.ProgNumber, mark, true);					
+					thisStudent = true;
+					ComponentMarkCount++;
 				}
+				if (thisStudent)
+					StudentCount++;
 			}
 		}
+		if (!processing)
+		{
+			sb.AppendLine("No suitable headers");
+		}
+		else
+		{
+			sb.AppendLine($"Found {ComponentMarkCount} components in {StudentCount} different students");
+		}
+		return sb.ToString();
 	}
 }

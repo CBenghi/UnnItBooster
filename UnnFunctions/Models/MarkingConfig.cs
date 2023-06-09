@@ -371,6 +371,14 @@ namespace StudentsFetcher.StudentMarking
 			return ids.ToArray();
 		}
 
+		/// <returns>-1 if no mark</returns>
+		public int GetMark(int progressiveId)
+		{
+			var mc = GetMarkCalculator();
+			var totmark = mc.GetFinalMark(progressiveId, this);
+			return totmark;
+		}
+
 		public string BareName
 		{
 			get

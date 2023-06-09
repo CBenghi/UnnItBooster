@@ -47,39 +47,52 @@ public partial class FrmMarkingMachine : Form
     {
         UpdateStudentReport();
         UpdateStudentMarksUi();
-    }
+        if (ChkAutoStat.Checked)
+        {
+			ReportTranscript();
+		}
+	}
 
     private void UpdateStudentMarksUi()
+	{
+		foreach (var creset in flComponents.Controls.OfType<ucComponentMark>())
+			creset.Unset();
+		var studNumber = GetStudentNumber();
+		if (studNumber != -1)
+		{
+			var sql = $"select * from TB_Marks where MARK_ptr_Submission = {studNumber}";
+			var dt = _config.GetDataTable(sql);
+			foreach (DataRow item in dt.Rows)
+			{
+				var cmp = Convert.ToInt32(item["MARK_ptr_Component"]);
+				var val = Convert.ToInt32(item["MARK_Value"]);
+
+				if (cmp == -1)
+					cmp = 0;
+
+				var m = flComponents.Controls[cmp] as ucComponentMark;
+				if (m is not null)
+				{
+					m.TabStop = false;
+					m.MarkValue = val;
+				}
+			}
+			cmdSaveMarks.BackColor = Color.Transparent;
+
+		}
+	}
+
+	private void UpdateMark(int studNumber)
+	{
+        var calc = _config.GetMark(studNumber);
+		LblMark.Text = calc == -1 ? "-" :  $"{calc}%";
+	}
+
+	private void UpdateStudentReport()
     {
-        foreach (var creset in flComponents.Controls.OfType<ucComponentMark>())
-            creset.Unset();
-
-        if (GetStudentNumber() != -1)
-        {
-            var sql = "select * from TB_Marks where MARK_ptr_Submission = " + GetStudentNumber();
-            var dt = _config.GetDataTable(sql);
-            foreach (DataRow item in dt.Rows)
-            {
-                var cmp = Convert.ToInt32(item["MARK_ptr_Component"]);
-                var val = Convert.ToInt32(item["MARK_Value"]);
-
-                if (cmp == -1)
-                    cmp = 0;
-
-                var m = flComponents.Controls[cmp] as ucComponentMark;
-                if (m is not null)
-                {
-                    m.TabStop = false;
-                    m.MarkValue = val;
-                }
-            }
-            cmdSaveMarks.BackColor = Color.Transparent;
-        }
-    }
-
-    private void UpdateStudentReport()
-    {
-        if (GetStudentNumber() != -1)
+        var studNumber = GetStudentNumber();
+		UpdateMark(studNumber);
+		if (studNumber != -1)
         {
             var submission = GetCurrentSubmission();
             if (submission is null)
@@ -827,12 +840,13 @@ public partial class FrmMarkingMachine : Form
 
     private void CmdSaveMarks_Click(object sender, EventArgs e)
     {
-        if (GetStudentNumber() == -1)
+        var stud = GetStudentNumber();
+		if (stud == -1)
         {
             MessageBox.Show("Need student");
             return;
         }
-        var sql = $"delete from TB_Marks where MARK_ptr_Submission = {GetStudentNumber()}";
+        var sql = $"delete from TB_Marks where MARK_ptr_Submission = {stud}";
         _config.Execute(sql);
         foreach (var comp in flComponents.Controls.OfType<ucComponentMark>())
         {
@@ -1214,6 +1228,7 @@ public partial class FrmMarkingMachine : Form
         var sb = new StringBuilder();
         var folderName = _config.GetFolderName();
         var folder = new DirectoryInfo(folderName);
+        int shortened = 0;
 
         foreach (var zipPath in folder.GetFiles("*.zip"))
         {
@@ -1234,12 +1249,30 @@ public partial class FrmMarkingMachine : Form
                     && !File.Exists(destinationPath)
                     )
                 {
+                    FileInfo f = new FileInfo(destinationPath);
+                    if (!f.Directory.Exists)
+                    {
+                        f.Directory.Create();
+                    }
+                    if (destinationPath.Length > 255)
+                    {
+                        var max = 256
+							- f.Extension.Length
+                            - f.Directory.FullName.Length
+                            - 4; // dots and slashes?
+                        // var name = 
+                        var name = f.Name.Substring(0, max);
+						destinationPath = Path.Combine(f.Directory.FullName, $"{name}{f.Extension}"); // extension has dot
+						sb.AppendLine($"SHORTENED: {entry.FullName} to {destinationPath}");
+                        shortened++;
+					}
                     entry.ExtractToFile(destinationPath);
-                    sb.AppendLine($"Extracted: {entry.FullName}");
+                    sb.AppendLine($"Extracted: {destinationPath}");
                 }
             }
         }
 
+        sb.AppendLine($"shortened {shortened} file names;");
         txtReport.Text = sb.ToString();
     }
 
@@ -1365,6 +1398,6 @@ public partial class FrmMarkingMachine : Form
             return;
 		}
         string excelName = TxtExcelComponentSource.Text;
-		ExcelPersistence.ReadComponents(_config, excelName);
+        txtReport.Text = ExcelPersistence.ReadComponents(_config, excelName);
 	}
 }
