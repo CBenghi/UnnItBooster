@@ -102,7 +102,15 @@ public class StudentsRepository
 	{
 		get
 		{
-			var di = new DirectoryInfo(dataFolder);
+			DirectoryInfo? di;
+			try
+			{
+				di = new DirectoryInfo(dataFolder);
+			}
+			catch (Exception)
+			{
+				di = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+			}
 			if (!di.Exists)
 			{
 				di = new DirectoryInfo(".");

@@ -19,9 +19,10 @@ namespace ExtendedTextBox
 	public partial class ExtTextBox : System.Windows.Forms.UserControl
 	{
 
-		public delegate void CtrlEnterPressed();
+		public delegate void CtrlKeyPressed();
 
-		public event CtrlEnterPressed OnCtrlEnter;
+		public event CtrlKeyPressed OnCtrlEnter;
+		public event CtrlKeyPressed OnCtrlTab;
 
 		private string _originalText = "";
 		private TextTypes _textType = TextTypes.String;
@@ -328,13 +329,15 @@ namespace ExtendedTextBox
 			}
 
 			var d = keyData.ToString();
-			if (d == "Return, Control")
+			if (d == "Return, Control" && OnCtrlEnter != null)
 			{
-				if (OnCtrlEnter != null)
-				{
-					OnCtrlEnter();
-					Handled = true;
-				}
+				OnCtrlEnter();
+				Handled = true;
+			}
+			else if (d == "Tab, Control" && OnCtrlTab != null)
+			{
+				OnCtrlTab();
+				Handled = true;
 			}
 
 			Debug.WriteLine(keyData);

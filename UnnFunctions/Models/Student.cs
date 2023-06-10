@@ -175,6 +175,10 @@ namespace UnnItBooster.Models
 					ModuleResult.Report(sb, code);
 				}
 			}
+			else
+			{
+				sb.AppendLine("Empty transcript");
+			}
 			return sb.ToString();
 		}
 

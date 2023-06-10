@@ -89,7 +89,7 @@ namespace StudentsFetcher.StudentMarking
 				{"9", "exceptional"}
 			};
 
-		public string GetStudentReport(int id, bool sendModerationNotice)
+		public string GetStudentReport(int id, bool sendModerationNotice, bool includeCommentNumber = false)
 		{
 			var sb = new StringBuilder();
 			sb.AppendLine("================");
@@ -104,12 +104,12 @@ namespace StudentsFetcher.StudentMarking
 			sb.AppendLine($"Submission ID: {tin.PaperId}");
 			sb.AppendLine($"Submission Title: {tin.Title}");
 			sb.AppendLine();
-			GetStudentFeedback(id, sendModerationNotice, sb, tin);
+			GetStudentFeedback(id, sendModerationNotice, sb, tin, includeCommentNumber);
 			var s = sb.ToString();
 			return s;
 		}
 
-		public void GetStudentFeedback(int id, bool sendModerationNotice, StringBuilder sb, TurnitInSubmission? stud)
+		public void GetStudentFeedback(int id, bool sendModerationNotice, StringBuilder sb, TurnitInSubmission? stud, bool includeCommentNumber = false)
 		{
 			var componentComments = "";
 			sb.AppendLine("# Marking components:");
@@ -215,6 +215,10 @@ namespace StudentsFetcher.StudentMarking
 				else
 				{
 					thisComment = $" - {basecomment}{lastchar}";
+				}
+				if (includeCommentNumber)
+				{
+					thisComment += $" (Comm: {item["SCOM_ptr_Comment"]})";
 				}
 				sb.AppendLine(thisComment);
 			}

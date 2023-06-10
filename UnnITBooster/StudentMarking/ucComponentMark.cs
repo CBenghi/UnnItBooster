@@ -67,6 +67,16 @@ namespace StudentsFetcher.StudentMarking
 			}
 		}
 
+		public string ComponentDescription
+		{
+			set
+			{
+				toolTip1.SetToolTip(lblDesc, value);
+				toolTip1.SetToolTip(lblMark, value);
+			}
+		}
+
+
 		public string ComponentName
 		{
 			get

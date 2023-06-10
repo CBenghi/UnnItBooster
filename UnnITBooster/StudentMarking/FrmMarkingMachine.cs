@@ -78,7 +78,6 @@ public partial class FrmMarkingMachine : Form
 				}
 			}
 			cmdSaveMarks.BackColor = Color.Transparent;
-
 		}
 	}
 
@@ -100,7 +99,7 @@ public partial class FrmMarkingMachine : Form
                 txtStudentreport.Text = "none";
                 return;
             }
-            txtStudentreport.Text = _config.GetStudentReport(GetStudentNumber(), chkSendModerationNotice.Checked);
+            txtStudentreport.Text = _config.GetStudentReport(GetStudentNumber(), chkSendModerationNotice.Checked, ChkCommNumber.Checked);
             UpdateDocumentsList(submission);
             // show student picure.
             var dt = _config.GetDataTable("SELECT SUB_NumericUserId from tb_submissions where SUB_Id = " + GetStudentNumber());
@@ -285,11 +284,10 @@ public partial class FrmMarkingMachine : Form
                     componentComment <order#> <comment> 
                         Add comment in the form: - {0} ability to ..., no quotes
 
-                    edit last
-                        preloads the last comment to be modified
-
-                    edit <Id#>
-                        preloads the comment of type #Id for the current student to be modified
+                    edit last / ? / <Id#>
+                        last: preloads the last comment to be modified
+                        ? : reports the applied comments (and relative ids)                    
+                        <Id#>: preloads the comment of type #Id for the current student to be modified
 
                     marks
                        if ids in textbox (one per row), used to fill MCRF with selected IDs
@@ -813,7 +811,15 @@ public partial class FrmMarkingMachine : Form
                 cmp = new ucComponentMark();
                 cmp.ComponentName = item["CPNT_Name"] + " (" + ipercent + "%)";
                 cmp.Id = order;
-                cmp.onUserChange += cmp_onUserChange;
+                try
+                {
+					var desc = item["CPNT_Comment"].ToString();
+                    cmp.ComponentDescription = desc;
+				}
+                catch (Exception)
+                {
+                }
+				cmp.onUserChange += cmp_onUserChange;
                 flComponents.Controls.Add(cmp);
             }
         }
@@ -1400,5 +1406,20 @@ public partial class FrmMarkingMachine : Form
 		}
         string excelName = TxtExcelComponentSource.Text;
         txtReport.Text = ExcelPersistence.ReadComponents(_config, excelName);
+	}
+
+	private void txtTextOrPointer_OnCtrlTab()
+	{
+        txtAdditionalNote.Focus();
+	}
+
+	private void BtnEditLast_Click(object sender, EventArgs e)
+	{
+        EditLoad("last");
+	}
+
+	private void BtnShowStudentStat_Click(object sender, EventArgs e)
+	{
+		ReportTranscript();
 	}
 }
