@@ -59,12 +59,15 @@ namespace StudentsFetcher.StudentMarking
 			this.label2 = new System.Windows.Forms.Label();
 			this.txtTextOrPointer = new ExtendedTextBox.ExtTextBox();
 			this.txtAdditionalNote = new ExtendedTextBox.ExtTextBox();
+			this.label1 = new System.Windows.Forms.Label();
 			this.txtArea = new System.Windows.Forms.TextBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.cmbComponentComment = new System.Windows.Forms.ComboBox();
 			this.txtSection = new System.Windows.Forms.ComboBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.button11 = new System.Windows.Forms.Button();
+			this.BtnEditLast = new System.Windows.Forms.Button();
+			this.BtnShowStudentStat = new System.Windows.Forms.Button();
 			this.label7 = new System.Windows.Forms.Label();
 			this.cmdSelectFile = new System.Windows.Forms.Button();
 			this.txtExcelFileName = new System.Windows.Forms.TextBox();
@@ -128,9 +131,6 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnExportExcel = new System.Windows.Forms.Button();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.BtnOpenFolder = new System.Windows.Forms.Button();
-			this.label1 = new System.Windows.Forms.Label();
-			this.BtnEditLast = new System.Windows.Forms.Button();
-			this.BtnShowStudentStat = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -536,6 +536,7 @@ namespace StudentsFetcher.StudentMarking
 			this.txtTextOrPointer.Wrapping = true;
 			this.txtTextOrPointer.OnCtrlEnter += new ExtendedTextBox.ExtTextBox.CtrlKeyPressed(this.DoAdd);
 			this.txtTextOrPointer.OnCtrlTab += new ExtendedTextBox.ExtTextBox.CtrlKeyPressed(this.txtTextOrPointer_OnCtrlTab);
+			this.txtTextOrPointer.OnCtrlKey += new ExtendedTextBox.ExtTextBox.CtrlKeyboardPressed(this.txtTextOrPointer_OnCtrlKey);
 			this.txtTextOrPointer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
 			// 
 			// txtAdditionalNote
@@ -560,6 +561,17 @@ namespace StudentsFetcher.StudentMarking
 			this.txtAdditionalNote.Wrapping = true;
 			this.txtAdditionalNote.OnCtrlEnter += new ExtendedTextBox.ExtTextBox.CtrlKeyPressed(this.DoAdd);
 			this.txtAdditionalNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(6, 58);
+			this.label1.Margin = new System.Windows.Forms.Padding(6);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(41, 13);
+			this.label1.TabIndex = 10;
+			this.label1.Text = "ptr/text";
+			this.label1.Click += new System.EventHandler(this.label1_Click);
 			// 
 			// txtArea
 			// 
@@ -621,6 +633,26 @@ namespace StudentsFetcher.StudentMarking
 			this.button11.Text = "Section rotation";
 			this.button11.UseVisualStyleBackColor = true;
 			this.button11.Click += new System.EventHandler(this.button11_Click);
+			// 
+			// BtnEditLast
+			// 
+			this.BtnEditLast.Location = new System.Drawing.Point(3, 30);
+			this.BtnEditLast.Name = "BtnEditLast";
+			this.BtnEditLast.Size = new System.Drawing.Size(69, 19);
+			this.BtnEditLast.TabIndex = 23;
+			this.BtnEditLast.Text = "Edit last";
+			this.BtnEditLast.UseVisualStyleBackColor = true;
+			this.BtnEditLast.Click += new System.EventHandler(this.BtnEditLast_Click);
+			// 
+			// BtnShowStudentStat
+			// 
+			this.BtnShowStudentStat.Location = new System.Drawing.Point(3, 500);
+			this.BtnShowStudentStat.Name = "BtnShowStudentStat";
+			this.BtnShowStudentStat.Size = new System.Drawing.Size(69, 23);
+			this.BtnShowStudentStat.TabIndex = 24;
+			this.BtnShowStudentStat.Text = "Stat";
+			this.BtnShowStudentStat.UseVisualStyleBackColor = true;
+			this.BtnShowStudentStat.Click += new System.EventHandler(this.BtnShowStudentStat_Click);
 			// 
 			// label7
 			// 
@@ -1361,37 +1393,6 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnOpenFolder.TabIndex = 13;
 			this.BtnOpenFolder.UseVisualStyleBackColor = true;
 			this.BtnOpenFolder.Click += new System.EventHandler(this.BtnOpenFolder_Click);
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 58);
-			this.label1.Margin = new System.Windows.Forms.Padding(6);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(41, 13);
-			this.label1.TabIndex = 10;
-			this.label1.Text = "ptr/text";
-			this.label1.Click += new System.EventHandler(this.label1_Click);
-			// 
-			// BtnEditLast
-			// 
-			this.BtnEditLast.Location = new System.Drawing.Point(3, 30);
-			this.BtnEditLast.Name = "BtnEditLast";
-			this.BtnEditLast.Size = new System.Drawing.Size(69, 19);
-			this.BtnEditLast.TabIndex = 23;
-			this.BtnEditLast.Text = "Edit last";
-			this.BtnEditLast.UseVisualStyleBackColor = true;
-			this.BtnEditLast.Click += new System.EventHandler(this.BtnEditLast_Click);
-			// 
-			// BtnShowStudentStat
-			// 
-			this.BtnShowStudentStat.Location = new System.Drawing.Point(3, 500);
-			this.BtnShowStudentStat.Name = "BtnShowStudentStat";
-			this.BtnShowStudentStat.Size = new System.Drawing.Size(69, 23);
-			this.BtnShowStudentStat.TabIndex = 24;
-			this.BtnShowStudentStat.Text = "Stat";
-			this.BtnShowStudentStat.UseVisualStyleBackColor = true;
-			this.BtnShowStudentStat.Click += new System.EventHandler(this.BtnShowStudentStat_Click);
 			// 
 			// FrmMarkingMachine
 			// 

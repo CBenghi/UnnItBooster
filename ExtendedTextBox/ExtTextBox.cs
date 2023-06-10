@@ -20,9 +20,11 @@ namespace ExtendedTextBox
 	{
 
 		public delegate void CtrlKeyPressed();
+		public delegate bool CtrlKeyboardPressed(string key);
 
 		public event CtrlKeyPressed OnCtrlEnter;
 		public event CtrlKeyPressed OnCtrlTab;
+		public event CtrlKeyboardPressed OnCtrlKey;
 
 		private string _originalText = "";
 		private TextTypes _textType = TextTypes.String;
@@ -338,6 +340,10 @@ namespace ExtendedTextBox
 			{
 				OnCtrlTab();
 				Handled = true;
+			}
+			else if (OnCtrlKey != null)
+			{
+				Handled = OnCtrlKey(d);
 			}
 
 			Debug.WriteLine(keyData);

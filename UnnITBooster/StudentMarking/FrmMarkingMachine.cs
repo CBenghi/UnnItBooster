@@ -321,12 +321,26 @@ public partial class FrmMarkingMachine : Form
                     missing
                        finds marks not added to mcrf (use all relevant lists)   
                        requires ids in textbox (one per row, e.g. '11039298/1') 
+
+                    normal search
+                        separate text from section/area with `;`
+                        ending the first term with a + searches in the pesonal text as well
                     """;
             }
             else
             {
                 SearchCommentInLibrary();
+                txtTextOrPointer.Focus();
             }
+        }
+        else if (e.KeyCode == Keys.ControlKey)
+        {
+
+        }
+        else if (e.KeyCode == Keys.Back && e.Control)
+        {
+            txtSearch.Text = "";
+            e.SuppressKeyPress = true;
         }
     }
 
@@ -614,24 +628,26 @@ public partial class FrmMarkingMachine : Form
             }
         }
 
-        var sb = new StringBuilder();
+        sql += " order by COMM_section";
+
+
+		var sb = new StringBuilder();
         var dt = _config.GetDataTable(sql);
+        var section = "";
         foreach (DataRow item in dt.Rows)
         {
-            sb.AppendFormat("{0}: ({2}/{3})\r\n{1}\r\n\r\n",
-                item["COMM_Id"],
-                item["COMM_Text"],
-                item["COMM_section"],
-                item["COMM_Area"]
-                );
-
-            if (bExtended)
+            var thisSection = item["COMM_section"].ToString();
+            if (section != thisSection)
             {
-                sb.AppendFormat("{0}\r\n\r\n",
-                item["SCOM_AddNote"]
-                );
+                sb.AppendLine($"Section: {thisSection}\r\n");
+                section = thisSection;
             }
-        }
+            sb.AppendLine($"{item["COMM_Id"]}: (/{item["COMM_Area"]})");
+			sb.AppendLine($"{item["COMM_Text"]}");
+            if (bExtended)
+                sb.AppendLine($"{item["SCOM_AddNote"]}");
+            sb.AppendLine();
+		}
         txtLibReport.Text = sb.ToString();
     }
 
@@ -975,13 +991,22 @@ public partial class FrmMarkingMachine : Form
 
             foreach (DataRow item in dt.Rows)
             {
-                var lvi = new ListViewItem();
+                string localDateTime = "";
+                var date = item["markDate"];
+                if (date is string s)
+                {
+					DateTime convertedDate = DateTime.SpecifyKind(        DateTime.Parse(s),	        DateTimeKind.Utc);
+                    var local = convertedDate.ToLocalTime();
+                    localDateTime = local.ToShortDateString() + " " + local.ToShortTimeString();
+				}
+
+				var lvi = new ListViewItem();
                 lvi.Text = string.Format("{0} {1}", item["SUB_FirstName"], item["SUB_LastName"]);
                 lvi.Tag = Convert.ToInt32(item["SUB_Id"]);
                 lvi.SubItems.Add(item["marks"].ToString());
                 var numUID = item["SUB_NumericUserId"].ToString();
                 lvi.SubItems.Add(mcalc.GetFinalMark(numUID, _config).ToString());
-                lvi.SubItems.Add(lvi.Tag + " " + item["markDate"]);
+                lvi.SubItems.Add(lvi.Tag + " " + localDateTime);
                 lvi.SubItems.Add(item["NumComments"].ToString());
                 lvi.SubItems.Add(
                     string.Format("Overalp: {0} Internet: {1} Pub: {2} Student: {3}",
@@ -1313,28 +1338,36 @@ public partial class FrmMarkingMachine : Form
 
 	private void button11_Click(object sender, EventArgs e)
 	{
-        var vals = txtSection.Items.OfType<string>().Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
-        if (string.IsNullOrWhiteSpace(txtSection.Text))
-        {
-            // get the first
-            var f = vals.FirstOrDefault();
-            if (f != null)
-            {
-                txtSection.Text = f;
-				txtTextOrPointer.Focus();
-			}
-            return;
-        }
-        else
-        {
-            if (!vals.Any())
-                return;
-            var idx = vals.IndexOf(txtSection.Text) + 1;
-            if (idx >= vals.Count)
-                idx = 0;
-            txtSection.Text = vals[idx];
+        if (ToggleSection())
             txtTextOrPointer.Focus();
-        }
+	}
+
+    
+    /// <returns>True if a successful value is toggled</returns>
+	private bool ToggleSection()
+	{
+		var vals = txtSection.Items.OfType<string>().Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+		if (string.IsNullOrWhiteSpace(txtSection.Text))
+		{
+			// get the first
+			var f = vals.FirstOrDefault();
+			if (f != null)
+			{
+				txtSection.Text = f;
+                return true;
+			}
+            return false;
+		}
+		else
+		{
+			if (!vals.Any())
+				return false;
+			var idx = vals.IndexOf(txtSection.Text) + 1;
+			if (idx >= vals.Count)
+				idx = 0;
+			txtSection.Text = vals[idx];
+            return true;
+		}
 	}
 
 	private void button12_Click(object sender, EventArgs e)
@@ -1422,4 +1455,20 @@ public partial class FrmMarkingMachine : Form
 	{
 		ReportTranscript();
 	}
+
+    private bool txtTextOrPointer_OnCtrlKey(string key)
+    {
+        if (key == "R, Control")
+        {
+            ToggleSection();
+			return true;
+        }
+        else if (key == "S, Control") // move to the search box
+        {
+            txtSearch.Focus();
+            return true;
+        }
+
+        return false;
+    }
 }
