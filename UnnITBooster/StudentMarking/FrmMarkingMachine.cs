@@ -978,6 +978,8 @@ public partial class FrmMarkingMachine : Form
 
     private void cmdEmailRefreshStudents_Click(object sender, EventArgs e)
     {
+        if (_config is null)
+            return;
         var mcalc = _config.GetMarkCalculator();
         lstEmailSendSelection.Items.Clear();
         try
@@ -991,30 +993,24 @@ public partial class FrmMarkingMachine : Form
 
             foreach (DataRow item in dt.Rows)
             {
-                string localDateTime = "";
+                int ProgressiveId = Convert.ToInt32(item["SUB_Id"]);
+				string localDateTime = "";
                 var date = item["markDate"];
                 if (date is string s)
                 {
-					DateTime convertedDate = DateTime.SpecifyKind(        DateTime.Parse(s),	        DateTimeKind.Utc);
+                    DateTime convertedDate = DateTime.SpecifyKind(DateTime.Parse(s), DateTimeKind.Utc);
                     var local = convertedDate.ToLocalTime();
                     localDateTime = local.ToShortDateString() + " " + local.ToShortTimeString();
 				}
-
 				var lvi = new ListViewItem();
-                lvi.Text = string.Format("{0} {1}", item["SUB_FirstName"], item["SUB_LastName"]);
-                lvi.Tag = Convert.ToInt32(item["SUB_Id"]);
-                lvi.SubItems.Add(item["marks"].ToString());
+                lvi.Text = $"{item["SUB_FirstName"]} {item["SUB_LastName"]} ({ProgressiveId})";
+                lvi.Tag = ProgressiveId;
+				lvi.SubItems.Add(item["marks"].ToString());
                 var numUID = item["SUB_NumericUserId"].ToString();
-                lvi.SubItems.Add(mcalc.GetFinalMark(numUID, _config).ToString());
-                lvi.SubItems.Add(lvi.Tag + " " + localDateTime);
+                lvi.SubItems.Add(mcalc.GetFinalMark(ProgressiveId, _config).ToString());
+                lvi.SubItems.Add(localDateTime);
                 lvi.SubItems.Add(item["NumComments"].ToString());
-                lvi.SubItems.Add(
-                    string.Format("Overalp: {0} Internet: {1} Pub: {2} Student: {3}",
-                        item["SUB_Overlap"],
-                        item["SUB_InternetOverlap"],
-                        item["SUB_PublicationsOverlap"],
-                        item["SUB_StudentPapersOverlap"]
-                        ));
+                lvi.SubItems.Add($"Overalp: {item["SUB_Overlap"]} Internet: {item["SUB_InternetOverlap"]} Pub: {item["SUB_PublicationsOverlap"]} Student: {item["SUB_StudentPapersOverlap"]}");
 
                 lstEmailSendSelection.Items.Add(lvi);
                 // lstEmailSendSelection.Items.Add(numUID);
@@ -1458,17 +1454,16 @@ public partial class FrmMarkingMachine : Form
 
     private bool txtTextOrPointer_OnCtrlKey(string key)
     {
-        if (key == "R, Control")
-        {
-            ToggleSection();
-			return true;
-        }
-        else if (key == "S, Control") // move to the search box
-        {
-            txtSearch.Focus();
-            return true;
-        }
+		switch (key)
+		{
+			case "R, Control":
+				ToggleSection();
+				return true;
+			case "S, Control":
+				txtSearch.Focus();
+				return true;
+		}
 
-        return false;
+		return false;
     }
 }

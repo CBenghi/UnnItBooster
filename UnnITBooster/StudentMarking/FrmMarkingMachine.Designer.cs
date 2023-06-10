@@ -83,7 +83,7 @@ namespace StudentsFetcher.StudentMarking
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -792,7 +792,7 @@ namespace StudentsFetcher.StudentMarking
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
-            this.columnHeader4,
+            this.columnHeader7,
             this.columnHeader5,
             this.columnHeader6});
 			this.lstEmailSendSelection.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -822,9 +822,9 @@ namespace StudentsFetcher.StudentMarking
 			this.columnHeader3.Text = "Mark";
 			this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
-			// columnHeader4
+			// columnHeader7
 			// 
-			this.columnHeader4.Text = "InternalID";
+			this.columnHeader7.Text = "Last update";
 			// 
 			// columnHeader5
 			// 
@@ -833,6 +833,7 @@ namespace StudentsFetcher.StudentMarking
 			// columnHeader6
 			// 
 			this.columnHeader6.Text = "Similarity";
+			this.columnHeader6.Width = 300;
 			// 
 			// tableLayoutPanel2
 			// 
@@ -1522,7 +1523,6 @@ namespace StudentsFetcher.StudentMarking
         private System.Windows.Forms.Button cmdSelectAll;
         private System.Windows.Forms.PictureBox StudImage;
         private System.Windows.Forms.CheckBox chkSendModerationNotice;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
         private ExtendedTextBox.ExtTextBox txtEmailBody;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage4;
@@ -1561,6 +1561,7 @@ namespace StudentsFetcher.StudentMarking
 		private Label label1;
 		private Button BtnEditLast;
 		private Button BtnShowStudentStat;
+		private ColumnHeader columnHeader7;
 	}
 }
 
