@@ -85,7 +85,7 @@ public partial class FrmMarkingMachine : Form
 			LblMark.Text  = "-";
             return;
         }
-        var calc = _config.GetMark(studNumber);
+        var calc = _config.GetMark(studNumber, ChkRoundupX9.Checked);
 		LblMark.Text = calc == -1 ? "-" :  $"{calc}%";
 	}
 
@@ -233,7 +233,7 @@ public partial class FrmMarkingMachine : Form
 			var setComponentCommentMatch = Regex.Match(txtSearch.Text, "componentComment (\\d+) (.*)", RegexOptions.IgnoreCase);
 			var idsMatch = Regex.Match(txtSearch.Text, "ids", RegexOptions.IgnoreCase);
             var editMatch = Regex.Match(txtSearch.Text, "^edit (?<par>last|\\?|\\d+)$", RegexOptions.IgnoreCase);
-			var whoGotMatch = Regex.Match(txtSearch.Text, @"WhoGotComment (\d+)", RegexOptions.IgnoreCase);
+			var whoGotMatch = Regex.Match(txtSearch.Text, @"(WhoGotComment|WhoGot\w?) (?<commentId>\d+)", RegexOptions.IgnoreCase);
 			var removeMatch = Regex.Match(txtSearch.Text, @"Remove (\d+)", RegexOptions.IgnoreCase);
 			var levelMatch = Regex.Match(txtSearch.Text, @"setlevel (?<level>ug|pg)", RegexOptions.IgnoreCase);
             if (addComponentMatch.Success)
@@ -292,6 +292,10 @@ public partial class FrmMarkingMachine : Form
 			{
 				ReportTranscript();
 			}
+			else if (txtSearch.Text == "imagematch")
+			{
+                txtLibReport.Text = _config?.ReportImageMatch(cmbDocuments.Text);
+			}
 			else if (txtSearch.Text == "help")
             {
                 txtLibReport.Text = """
@@ -342,6 +346,9 @@ public partial class FrmMarkingMachine : Form
                     normal search
                         separate text from section/area with `;`
                         ending the first term with a + searches in the pesonal text as well
+
+                    imagematch
+                        identifies for images in the current word file and searches the others for same content
                     """;
             }
             else
@@ -534,7 +541,7 @@ public partial class FrmMarkingMachine : Form
     private void GetCommentUse(Match m4)
     {
         txtLibReport.Text = "Submissions:\r\n";
-        var sql = "SELECT SCOM_ptr_Submission, TB_Submissions.SUB_UserID FROM TB_SubComments inner join TB_Submissions on SCOM_ptr_Submission = SUB_ID where SCOM_ptr_comment = " + m4.Groups[1].Value;
+        var sql = "SELECT SCOM_ptr_Submission, TB_Submissions.SUB_UserID FROM TB_SubComments inner join TB_Submissions on SCOM_ptr_Submission = SUB_ID where SCOM_ptr_comment = " + m4.Groups["commentId"].Value;
         var dt = _config.GetDataTable(sql);
         var reqIds = new List<string>();
         foreach (DataRow item in dt.Rows)
@@ -662,7 +669,7 @@ public partial class FrmMarkingMachine : Form
             sb.AppendLine($"{item["COMM_Id"]}: (/{item["COMM_Area"]})");
 			sb.AppendLine($"{item["COMM_Text"]}");
             if (bExtended)
-                sb.AppendLine($"{item["SCOM_AddNote"]}");
+                sb.AppendLine($"\r\nSubComment: {item["SCOM_AddNote"]}");
             sb.AppendLine();
 		}
         txtLibReport.Text = sb.ToString();
@@ -1111,7 +1118,15 @@ public partial class FrmMarkingMachine : Form
 		public int Min { get; set; }
         public int Max { get; set; }
         public int Count { get; set; } = 0;
-        public double Place => (Max + Min) / 2.0;
+        public double Place
+        {
+            get
+            {
+                if (Min < 0 || Max > 100)
+						return 100;
+                return (Max + Min) / 2.0;
+            }
+        }
 
 		public string Description
         {

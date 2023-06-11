@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
+using UnnFunctions.Models;
 using UnnItBooster.ModelConversions;
 using UnnItBooster.Models;
 
@@ -376,11 +377,63 @@ namespace StudentsFetcher.StudentMarking
 		}
 
 		/// <returns>-1 if no mark</returns>
-		public int GetMark(int progressiveId)
+		public int GetMark(int progressiveId, bool roundUpNines)
 		{
 			var mc = GetMarkCalculator();
-			var totmark = mc.GetFinalMark(progressiveId, this);
+			var totmark = mc.GetFinalMark(progressiveId, this, roundUpNines);
 			return totmark;
+		}
+
+		public string ReportImageMatch(string relativeFileName)
+		{
+			FileInfo f = new FileInfo(Path.Combine(GetFolderName(), relativeFileName));
+			WordFile w = new WordFile(f);
+			if (!w.Exists)
+				return "No word file";
+			
+			StringBuilder sb = new StringBuilder();
+			var imageFiles = w.GetImages().ToList();
+			sb.AppendLine($"Found {imageFiles.Count} images;");
+
+			var ratios = imageFiles.Select(x => x.Ratio).ToList();
+			foreach (var ratio in ratios)
+			{
+				sb.AppendLine($"Ratio: {ratio}");
+			}
+
+			foreach (var doc in GetDocumentFiles())
+			{
+				if (doc == relativeFileName)
+					continue;
+				FileInfo of = new FileInfo(Path.Combine(GetFolderName(), doc));
+				WordFile ow = new WordFile(of);
+				if (!ow.Exists)
+					continue;
+				
+				var oImageFiles = ow.GetImages().ToList();
+				var fnd = oImageFiles.Where(o => ratios.Contains(o.Ratio));
+				if (fnd.Any())
+				{
+					sb.AppendLine($"Candidate for ratio in {doc}");
+					foreach (var item in ow.WriteTempImages(fnd))
+					{
+						sb.AppendLine($" {item}");
+					}
+				}
+			}
+			return sb.ToString();
+		}
+
+		private IEnumerable<string> GetDocumentFiles()
+		{
+			var t = GetDataTable("select SUB_Title from TB_Submissions");
+			foreach (DataRow row in t.Rows)
+			{
+				var title  = row[0].ToString();
+				if (string.IsNullOrWhiteSpace(title))
+					continue;
+				yield return title;
+			}
 		}
 
 		public string BareName

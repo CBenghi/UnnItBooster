@@ -215,6 +215,9 @@ internal class ExcelPersistence
 			}
 			else
 			{
+				var studcell = row.GetCell(0);
+				if (studcell == null)
+					continue;
 				var studProg = row.GetCell(0).StringCellValue;
 				if (string.IsNullOrEmpty(studProg) || !int.TryParse(studProg, out var progId))
 					continue;

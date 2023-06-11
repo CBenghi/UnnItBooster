@@ -43,6 +43,7 @@ namespace StudentsFetcher.StudentMarking
 			this.LblMark = new System.Windows.Forms.Label();
 			this.cmdSaveMarks = new System.Windows.Forms.Button();
 			this.panel2 = new System.Windows.Forms.Panel();
+			this.LblOverlap = new System.Windows.Forms.Label();
 			this.button12 = new System.Windows.Forms.Button();
 			this.button6 = new System.Windows.Forms.Button();
 			this.button5 = new System.Windows.Forms.Button();
@@ -89,6 +90,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.cmdEmailRefreshStudents = new System.Windows.Forms.Button();
 			this.cmdSelectAll = new System.Windows.Forms.Button();
+			this.NudOverlap = new System.Windows.Forms.NumericUpDown();
 			this.StudImage = new System.Windows.Forms.PictureBox();
 			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			this.tabControl2 = new System.Windows.Forms.TabControl();
@@ -140,8 +142,6 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnExportExcel = new System.Windows.Forms.Button();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.BtnOpenFolder = new System.Windows.Forms.Button();
-			this.LblOverlap = new System.Windows.Forms.Label();
-			this.NudOverlap = new System.Windows.Forms.NumericUpDown();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -169,6 +169,7 @@ namespace StudentsFetcher.StudentMarking
 			this.splitContainer5.Panel2.SuspendLayout();
 			this.splitContainer5.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.NudOverlap)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.StudImage)).BeginInit();
 			this.tableLayoutPanel3.SuspendLayout();
 			this.tabControl2.SuspendLayout();
@@ -184,7 +185,6 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage8.SuspendLayout();
 			this.tabPage9.SuspendLayout();
 			this.tableLayoutPanel4.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.NudOverlap)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// txtStudentId
@@ -338,6 +338,15 @@ namespace StudentsFetcher.StudentMarking
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(235, 25);
 			this.panel2.TabIndex = 17;
+			// 
+			// LblOverlap
+			// 
+			this.LblOverlap.AutoSize = true;
+			this.LblOverlap.Location = new System.Drawing.Point(65, 5);
+			this.LblOverlap.Name = "LblOverlap";
+			this.LblOverlap.Size = new System.Drawing.Size(10, 13);
+			this.LblOverlap.TabIndex = 3;
+			this.LblOverlap.Text = "-";
 			// 
 			// button12
 			// 
@@ -892,6 +901,19 @@ namespace StudentsFetcher.StudentMarking
 			this.cmdSelectAll.Text = "All";
 			this.cmdSelectAll.UseVisualStyleBackColor = true;
 			this.cmdSelectAll.Click += new System.EventHandler(this.cmdSelectAll_Click);
+			// 
+			// NudOverlap
+			// 
+			this.NudOverlap.Location = new System.Drawing.Point(216, 3);
+			this.NudOverlap.Name = "NudOverlap";
+			this.NudOverlap.Size = new System.Drawing.Size(102, 20);
+			this.NudOverlap.TabIndex = 5;
+			this.NudOverlap.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.NudOverlap.Value = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
 			// 
 			// StudImage
 			// 
@@ -1523,28 +1545,6 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnOpenFolder.UseVisualStyleBackColor = true;
 			this.BtnOpenFolder.Click += new System.EventHandler(this.BtnOpenFolder_Click);
 			// 
-			// LblOverlap
-			// 
-			this.LblOverlap.AutoSize = true;
-			this.LblOverlap.Location = new System.Drawing.Point(65, 5);
-			this.LblOverlap.Name = "LblOverlap";
-			this.LblOverlap.Size = new System.Drawing.Size(10, 13);
-			this.LblOverlap.TabIndex = 3;
-			this.LblOverlap.Text = "-";
-			// 
-			// NudOverlap
-			// 
-			this.NudOverlap.Location = new System.Drawing.Point(216, 3);
-			this.NudOverlap.Name = "NudOverlap";
-			this.NudOverlap.Size = new System.Drawing.Size(102, 20);
-			this.NudOverlap.TabIndex = 5;
-			this.NudOverlap.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.NudOverlap.Value = new decimal(new int[] {
-            25,
-            0,
-            0,
-            0});
-			// 
 			// FrmMarkingMachine
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1587,6 +1587,7 @@ namespace StudentsFetcher.StudentMarking
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
 			this.splitContainer5.ResumeLayout(false);
 			this.tableLayoutPanel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.NudOverlap)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.StudImage)).EndInit();
 			this.tableLayoutPanel3.ResumeLayout(false);
 			this.tableLayoutPanel3.PerformLayout();
@@ -1611,7 +1612,6 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage9.PerformLayout();
 			this.tableLayoutPanel4.ResumeLayout(false);
 			this.tableLayoutPanel4.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.NudOverlap)).EndInit();
 			this.ResumeLayout(false);
 
         }
