@@ -104,6 +104,12 @@ namespace StudentsFetcher.StudentMarking
 			this.label10 = new System.Windows.Forms.Label();
 			this.chkEmailDryRun = new System.Windows.Forms.CheckBox();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.label9 = new System.Windows.Forms.Label();
+			this.NudMarkOffset = new System.Windows.Forms.NumericUpDown();
+			this.ChkIncludeNoMark = new System.Windows.Forms.CheckBox();
+			this.ChkShowDetailedChart = new System.Windows.Forms.CheckBox();
+			this.ChkOddRows = new System.Windows.Forms.CheckBox();
+			this.ChkEvenRows = new System.Windows.Forms.CheckBox();
 			this.button4 = new System.Windows.Forms.Button();
 			this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -164,6 +170,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage4.SuspendLayout();
 			this.tabPage5.SuspendLayout();
 			this.tabPage3.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.NudMarkOffset)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.tabControl3.SuspendLayout();
 			this.tabPage6.SuspendLayout();
@@ -1067,6 +1074,12 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// tabPage3
 			// 
+			this.tabPage3.Controls.Add(this.label9);
+			this.tabPage3.Controls.Add(this.NudMarkOffset);
+			this.tabPage3.Controls.Add(this.ChkIncludeNoMark);
+			this.tabPage3.Controls.Add(this.ChkShowDetailedChart);
+			this.tabPage3.Controls.Add(this.ChkOddRows);
+			this.tabPage3.Controls.Add(this.ChkEvenRows);
 			this.tabPage3.Controls.Add(this.button4);
 			this.tabPage3.Controls.Add(this.zedGraphControl1);
 			this.tabPage3.Controls.Add(this.groupBox3);
@@ -1079,12 +1092,83 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage3.Text = "Tools";
 			this.tabPage3.UseVisualStyleBackColor = true;
 			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Location = new System.Drawing.Point(12, 415);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(35, 13);
+			this.label9.TabIndex = 25;
+			this.label9.Text = "Offset";
+			// 
+			// NudMarkOffset
+			// 
+			this.NudMarkOffset.Location = new System.Drawing.Point(59, 413);
+			this.NudMarkOffset.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.NudMarkOffset.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+			this.NudMarkOffset.Name = "NudMarkOffset";
+			this.NudMarkOffset.Size = new System.Drawing.Size(65, 20);
+			this.NudMarkOffset.TabIndex = 24;
+			this.NudMarkOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// ChkIncludeNoMark
+			// 
+			this.ChkIncludeNoMark.AutoSize = true;
+			this.ChkIncludeNoMark.Location = new System.Drawing.Point(11, 390);
+			this.ChkIncludeNoMark.Name = "ChkIncludeNoMark";
+			this.ChkIncludeNoMark.Size = new System.Drawing.Size(116, 17);
+			this.ChkIncludeNoMark.TabIndex = 23;
+			this.ChkIncludeNoMark.Text = "Show missing mark";
+			this.ChkIncludeNoMark.UseVisualStyleBackColor = true;
+			// 
+			// ChkShowDetailedChart
+			// 
+			this.ChkShowDetailedChart.AutoSize = true;
+			this.ChkShowDetailedChart.Location = new System.Drawing.Point(11, 367);
+			this.ChkShowDetailedChart.Name = "ChkShowDetailedChart";
+			this.ChkShowDetailedChart.Size = new System.Drawing.Size(92, 17);
+			this.ChkShowDetailedChart.TabIndex = 22;
+			this.ChkShowDetailedChart.Text = "Detailed chart";
+			this.ChkShowDetailedChart.UseVisualStyleBackColor = true;
+			// 
+			// ChkOddRows
+			// 
+			this.ChkOddRows.AutoSize = true;
+			this.ChkOddRows.Checked = true;
+			this.ChkOddRows.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ChkOddRows.Location = new System.Drawing.Point(11, 344);
+			this.ChkOddRows.Name = "ChkOddRows";
+			this.ChkOddRows.Size = new System.Drawing.Size(63, 17);
+			this.ChkOddRows.TabIndex = 21;
+			this.ChkOddRows.Text = "Odd Ids";
+			this.ChkOddRows.UseVisualStyleBackColor = true;
+			// 
+			// ChkEvenRows
+			// 
+			this.ChkEvenRows.AutoSize = true;
+			this.ChkEvenRows.Checked = true;
+			this.ChkEvenRows.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ChkEvenRows.Location = new System.Drawing.Point(11, 321);
+			this.ChkEvenRows.Name = "ChkEvenRows";
+			this.ChkEvenRows.Size = new System.Drawing.Size(68, 17);
+			this.ChkEvenRows.TabIndex = 20;
+			this.ChkEvenRows.Text = "Even Ids";
+			this.ChkEvenRows.UseVisualStyleBackColor = true;
+			// 
 			// button4
 			// 
 			this.button4.Location = new System.Drawing.Point(6, 260);
 			this.button4.Margin = new System.Windows.Forms.Padding(2);
 			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(56, 56);
+			this.button4.Size = new System.Drawing.Size(119, 56);
 			this.button4.TabIndex = 19;
 			this.button4.Text = "Marks chart";
 			this.button4.UseVisualStyleBackColor = true;
@@ -1095,7 +1179,7 @@ namespace StudentsFetcher.StudentMarking
 			this.zedGraphControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.zedGraphControl1.Location = new System.Drawing.Point(66, 260);
+			this.zedGraphControl1.Location = new System.Drawing.Point(131, 260);
 			this.zedGraphControl1.Margin = new System.Windows.Forms.Padding(4);
 			this.zedGraphControl1.Name = "zedGraphControl1";
 			this.zedGraphControl1.ScrollGrace = 0D;
@@ -1105,7 +1189,7 @@ namespace StudentsFetcher.StudentMarking
 			this.zedGraphControl1.ScrollMinX = 0D;
 			this.zedGraphControl1.ScrollMinY = 0D;
 			this.zedGraphControl1.ScrollMinY2 = 0D;
-			this.zedGraphControl1.Size = new System.Drawing.Size(737, 260);
+			this.zedGraphControl1.Size = new System.Drawing.Size(672, 260);
 			this.zedGraphControl1.TabIndex = 18;
 			this.zedGraphControl1.UseExtendedPrintDialog = true;
 			// 
@@ -1444,6 +1528,8 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage5.ResumeLayout(false);
 			this.tabPage5.PerformLayout();
 			this.tabPage3.ResumeLayout(false);
+			this.tabPage3.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.NudMarkOffset)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			this.tabControl3.ResumeLayout(false);
@@ -1562,6 +1648,12 @@ namespace StudentsFetcher.StudentMarking
 		private Button BtnEditLast;
 		private Button BtnShowStudentStat;
 		private ColumnHeader columnHeader7;
+		private CheckBox ChkOddRows;
+		private CheckBox ChkEvenRows;
+		private CheckBox ChkShowDetailedChart;
+		private CheckBox ChkIncludeNoMark;
+		private Label label9;
+		private NumericUpDown NudMarkOffset;
 	}
 }
 

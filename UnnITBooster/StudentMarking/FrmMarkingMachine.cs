@@ -19,6 +19,7 @@ using System.IO.Compression;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using UnnItBooster.StudentMarking;
 using NPOI.OpenXmlFormats.Encryption;
+using NPOI.OpenXmlFormats.Spreadsheet;
 
 namespace StudentsFetcher.StudentMarking;
 
@@ -1078,27 +1079,116 @@ public partial class FrmMarkingMachine : Form
         Reload();
     }
 
+    [DebuggerDisplay("Range {Min}-{Max}: {Count}")]
+    public class MarkRange
+    {
+		public MarkRange(int min, int max)
+		{
+            Min = min; 
+            Max = max;
+		}
+
+		public int Min { get; set; }
+        public int Max { get; set; }
+        public int Count { get; set; } = 0;
+        public double Place => (Max + Min) / 2.0;
+
+        public bool Includes(int Mark)
+        {
+            var found = Mark >= Min && Mark <= Max;
+			return found;
+        }
+    }
+
+    public class MarksCollection
+    {
+        public List<MarkRange> Ranges { get; set; } = new();
+
+        public bool Add(int mark)
+        {
+            var range = Ranges.FirstOrDefault(x => x.Includes(mark));
+            if (range == null)
+                return false;
+            range.Count = range.Count + 1;
+            return true;
+        }
+
+        public enum grouping
+        {
+            Classification,
+            Detailed,
+        }
+    
+        public static MarksCollection Initialize(grouping type)
+        {
+            var ret = new MarksCollection();    
+            if (type == grouping.Detailed)
+            {
+				ret.Ranges.Add(new MarkRange(0, 0));
+				ret.Ranges.Add(new MarkRange(1, 29));
+                for (int i = 3; i < 9; i++)
+                {
+                    var dec = i * 10;
+                    ret.Ranges.Add(new MarkRange(dec, dec + 2));
+                    ret.Ranges.Add(new MarkRange(dec + 3, dec + 6));
+                    ret.Ranges.Add(new MarkRange(dec + 7, dec + 9));
+                }
+				ret.Ranges.Add(new MarkRange(90, 100));
+			}
+            else 
+            {
+                ret.Ranges.Add(new MarkRange(0, 9));
+                ret.Ranges.Add(new MarkRange(10, 19));
+                ret.Ranges.Add(new MarkRange(20, 29));
+                ret.Ranges.Add(new MarkRange(30, 39));
+                ret.Ranges.Add(new MarkRange(40, 49));
+                ret.Ranges.Add(new MarkRange(50, 59));
+                ret.Ranges.Add(new MarkRange(60, 69));
+                ret.Ranges.Add(new MarkRange(70, 79));
+                ret.Ranges.Add(new MarkRange(80, 89));
+                ret.Ranges.Add(new MarkRange(90, 100));
+            }
+            return ret;
+        }
+	}
+
     private void button4_Click(object sender, EventArgs e)
     {
-        var Groups = new int[10];
-
+        var coll = ChkShowDetailedChart.Checked
+            ? MarksCollection.Initialize(MarksCollection.grouping.Detailed)
+            : MarksCollection.Initialize(MarksCollection.grouping.Classification);
+        if (ChkIncludeNoMark.Checked)
+            coll.Ranges.Add(new MarkRange(-1, -1));
         var mcalc = _config.GetMarkCalculator();
-        var sql = "SELECT sub_userid, sub_numericUserId FROM TB_Submissions";
+        var sql = "SELECT sub_id, sub_userid, sub_numericUserId FROM TB_Submissions";
         var dt = _config.GetDataTable(sql);
         foreach (DataRow rw in dt.Rows)
         {
-            var mk = mcalc.GetFinalMark(rw[1].ToString(), _config);
-            var m = mk / 10;
-            Groups[m]++;
+            if (!int.TryParse(rw[0].ToString(), out var id))
+                continue;
+            var isEven = id % 2 == 0;
+            if (isEven && !ChkEvenRows.Checked)
+                continue;
+			if (!isEven && !ChkOddRows.Checked)
+				continue;
+			var mk = mcalc.GetFinalMark(id, _config);
+            if (mk != -1)
+            {
+                mk += Convert.ToInt16(NudMarkOffset.Value);
+                if (mk < 0)
+                    mk = 0;
+                if (mk > 100)
+                    mk = 100;
+            }
+            coll.Add(mk);
         }
 
         var list = new PointPairList();
-        for (var i = 0; i < 10; i++)
+        foreach (var grp in coll.Ranges)
         {
-            double x = i * 10 + 5;
-            list.Add(x, Groups[i]);
-        }
-
+            list.Add(grp.Place, grp.Count, $"{grp.Min}-{grp.Max}");
+            // list.Add(grp.Place, grp.Count);
+		}
         var gPane = zedGraphControl1.GraphPane;
         gPane.CurveList.Clear();
         var myCurve = gPane.AddBar("Marks", list, Color.Blue);
