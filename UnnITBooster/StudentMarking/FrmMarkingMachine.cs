@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows.Forms;
 using LateBindingTest;
 using StudentsFetcher.Properties;
@@ -16,10 +15,7 @@ using UnnItBooster.Models;
 using UnnItBooster.ModelConversions;
 using ZedGraph;
 using System.IO.Compression;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using UnnItBooster.StudentMarking;
-using NPOI.OpenXmlFormats.Encryption;
-using NPOI.OpenXmlFormats.Spreadsheet;
 
 namespace StudentsFetcher.StudentMarking;
 
@@ -84,12 +80,22 @@ public partial class FrmMarkingMachine : Form
 
 	private void UpdateMark(int studNumber)
 	{
+        if (studNumber == -1)
+        {
+			LblMark.Text  = "-";
+            return;
+        }
         var calc = _config.GetMark(studNumber);
 		LblMark.Text = calc == -1 ? "-" :  $"{calc}%";
 	}
 
 	private void UpdateStudentReport()
     {
+        if (_config == null)
+        {
+            txtStudentreport.Text = "No config.";
+			return;
+        }
         var studNumber = GetStudentNumber();
 		UpdateMark(studNumber);
 		if (studNumber != -1)
@@ -1093,7 +1099,21 @@ public partial class FrmMarkingMachine : Form
         public int Count { get; set; } = 0;
         public double Place => (Max + Min) / 2.0;
 
-        public bool Includes(int Mark)
+		public string Description
+        {
+            get
+            {
+                if (Count == 0)
+                    return "";
+                if (Min < 0 || Max > 100)
+                    return "unmarked";
+                if (Min == Max)
+                    return $"{Min}";
+                return $"{Min}:{Max}";
+            }
+        }
+
+		public bool Includes(int Mark)
         {
             var found = Mark >= Min && Mark <= Max;
 			return found;
@@ -1103,8 +1123,15 @@ public partial class FrmMarkingMachine : Form
     public class MarksCollection
     {
         public List<MarkRange> Ranges { get; set; } = new();
+		public int MaxCount
+        {
+            get
+            {
+                return Ranges.Max(x => x.Count);
+            }
+        }
 
-        public bool Add(int mark)
+		public bool Add(int mark)
         {
             var range = Ranges.FirstOrDefault(x => x.Includes(mark));
             if (range == null)
@@ -1117,51 +1144,65 @@ public partial class FrmMarkingMachine : Form
         {
             Classification,
             Detailed,
+            Individual
         }
     
         public static MarksCollection Initialize(grouping type)
         {
-            var ret = new MarksCollection();    
-            if (type == grouping.Detailed)
-            {
-				ret.Ranges.Add(new MarkRange(0, 0));
-				ret.Ranges.Add(new MarkRange(1, 29));
-                for (int i = 3; i < 9; i++)
-                {
-                    var dec = i * 10;
-                    ret.Ranges.Add(new MarkRange(dec, dec + 2));
-                    ret.Ranges.Add(new MarkRange(dec + 3, dec + 6));
-                    ret.Ranges.Add(new MarkRange(dec + 7, dec + 9));
-                }
-				ret.Ranges.Add(new MarkRange(90, 100));
+            var ret = new MarksCollection();
+			switch (type)
+			{
+				case grouping.Detailed:
+					{
+						ret.Ranges.Add(new MarkRange(0, 0));
+						ret.Ranges.Add(new MarkRange(1, 29));
+						for (int i = 3; i < 9; i++)
+						{
+							var dec = i * 10;
+							ret.Ranges.Add(new MarkRange(dec, dec + 2));
+							ret.Ranges.Add(new MarkRange(dec + 3, dec + 6));
+							ret.Ranges.Add(new MarkRange(dec + 7, dec + 9));
+						}
+						ret.Ranges.Add(new MarkRange(90, 100));
+						break;
+					}
+				case grouping.Individual:
+                    {
+						for (int i = 0; i < 100; i++)
+						{
+							ret.Ranges.Add(new MarkRange(i, i));
+						}
+					}
+					break;
+				default:
+					ret.Ranges.Add(new MarkRange(0, 9));
+					ret.Ranges.Add(new MarkRange(10, 19));
+					ret.Ranges.Add(new MarkRange(20, 29));
+					ret.Ranges.Add(new MarkRange(30, 39));
+					ret.Ranges.Add(new MarkRange(40, 49));
+					ret.Ranges.Add(new MarkRange(50, 59));
+					ret.Ranges.Add(new MarkRange(60, 69));
+					ret.Ranges.Add(new MarkRange(70, 79));
+					ret.Ranges.Add(new MarkRange(80, 89));
+					ret.Ranges.Add(new MarkRange(90, 100));
+					break;
 			}
-            else 
-            {
-                ret.Ranges.Add(new MarkRange(0, 9));
-                ret.Ranges.Add(new MarkRange(10, 19));
-                ret.Ranges.Add(new MarkRange(20, 29));
-                ret.Ranges.Add(new MarkRange(30, 39));
-                ret.Ranges.Add(new MarkRange(40, 49));
-                ret.Ranges.Add(new MarkRange(50, 59));
-                ret.Ranges.Add(new MarkRange(60, 69));
-                ret.Ranges.Add(new MarkRange(70, 79));
-                ret.Ranges.Add(new MarkRange(80, 89));
-                ret.Ranges.Add(new MarkRange(90, 100));
-            }
-            return ret;
+			return ret;
         }
 	}
 
     private void button4_Click(object sender, EventArgs e)
     {
-        var coll = ChkShowDetailedChart.Checked
-            ? MarksCollection.Initialize(MarksCollection.grouping.Detailed)
-            : MarksCollection.Initialize(MarksCollection.grouping.Classification);
+        var tag = ((ComboTag)CmbGrouping.SelectedItem).Tag;
+        var mode = (MarksCollection.grouping)tag;
+        var coll = MarksCollection.Initialize(mode);
+            
         if (ChkIncludeNoMark.Checked)
             coll.Ranges.Add(new MarkRange(-1, -1));
         var mcalc = _config.GetMarkCalculator();
         var sql = "SELECT sub_id, sub_userid, sub_numericUserId FROM TB_Submissions";
         var dt = _config.GetDataTable(sql);
+        var collectionForStats = new List<double>();
         foreach (DataRow rw in dt.Rows)
         {
             if (!int.TryParse(rw[0].ToString(), out var id))
@@ -1171,7 +1212,7 @@ public partial class FrmMarkingMachine : Form
                 continue;
 			if (!isEven && !ChkOddRows.Checked)
 				continue;
-			var mk = mcalc.GetFinalMark(id, _config);
+			var mk = mcalc.GetFinalMark(id, _config, ChkRoundupX9.Checked);
             if (mk != -1)
             {
                 mk += Convert.ToInt16(NudMarkOffset.Value);
@@ -1180,19 +1221,46 @@ public partial class FrmMarkingMachine : Form
                 if (mk > 100)
                     mk = 100;
             }
-            coll.Add(mk);
+			coll.Add(mk);
+            if (mk != -1)
+                collectionForStats.Add(mk);
         }
 
-        var list = new PointPairList();
+        var quartiles = MathNet.Numerics.Statistics.Statistics.FiveNumberSummary(collectionForStats);
+        var quartileSize = new List<double>();
+        for (int i = 1; i < quartiles.Length; i++)
+        {
+            quartileSize.Add(quartiles[i] - quartiles[i-1]);
+        }
+		txtReport.Text = 
+            $"Mean = {MathNet.Numerics.Statistics.Statistics.Mean(collectionForStats)},\r\n" +
+            $"StandardDeviation = {MathNet.Numerics.Statistics.Statistics.StandardDeviation(collectionForStats)},\r\n" +
+            $"Skewness = {MathNet.Numerics.Statistics.Statistics.Skewness(collectionForStats)},\r\n" +
+            $"Kurtosis = {MathNet.Numerics.Statistics.Statistics.Kurtosis(collectionForStats)} (normal distribution is 3),\r\n" +
+            $"Quartiles = {string.Join(", ", quartiles.Select(x => x.ToString("0.00")))}, \r\n" +
+            $"QuartileSized = {string.Join(", ", quartileSize.Select(x=>x.ToString("0.00")))}, \r\n";
+
+		var list = new PointPairList();
         foreach (var grp in coll.Ranges)
         {
-            list.Add(grp.Place, grp.Count, $"{grp.Min}-{grp.Max}");
+            list.Add(grp.Place, grp.Count, grp.Description);
             // list.Add(grp.Place, grp.Count);
 		}
         var gPane = zedGraphControl1.GraphPane;
         gPane.CurveList.Clear();
-        var myCurve = gPane.AddBar("Marks", list, Color.Blue);
-        zedGraphControl1.AxisChange();
+        gPane.GraphObjList.Clear();
+        var myBar = gPane.AddBar("Marks", list, Color.Blue);
+        var max = coll.MaxCount;
+        // adding labels
+		for (int i = 0; i < myBar.Points.Count; i++)
+		{
+			TextObj barLabel = new TextObj(myBar.Points[i].Tag.ToString(), myBar.Points[i].X, myBar.Points[i].Y + 2);
+			barLabel.FontSpec.Border.IsVisible = false;
+            barLabel.FontSpec.Size = barLabel.FontSpec.Size / 2;
+			gPane.GraphObjList.Add(barLabel);
+		}
+
+		zedGraphControl1.AxisChange();
         zedGraphControl1.Refresh();
     }
 
@@ -1282,6 +1350,9 @@ public partial class FrmMarkingMachine : Form
     {
         txtEmailBody.Text = Settings.Default.emailBodyMarking;
         txtEmailSubject.Text = Settings.Default.emailSubject;
+        var values = Enum.GetValues(typeof(MarksCollection.grouping)).OfType<MarksCollection.grouping>().Select(x => new ComboTag(x.ToString(), x));
+        CmbGrouping.Items.AddRange(values.ToArray());
+        CmbGrouping.SelectedIndex = 0;
     }
 
     private void button1_Click(object sender, EventArgs e)

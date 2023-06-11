@@ -107,7 +107,6 @@ namespace StudentsFetcher.StudentMarking
 			this.label9 = new System.Windows.Forms.Label();
 			this.NudMarkOffset = new System.Windows.Forms.NumericUpDown();
 			this.ChkIncludeNoMark = new System.Windows.Forms.CheckBox();
-			this.ChkShowDetailedChart = new System.Windows.Forms.CheckBox();
 			this.ChkOddRows = new System.Windows.Forms.CheckBox();
 			this.ChkEvenRows = new System.Windows.Forms.CheckBox();
 			this.button4 = new System.Windows.Forms.Button();
@@ -137,6 +136,10 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnExportExcel = new System.Windows.Forms.Button();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.BtnOpenFolder = new System.Windows.Forms.Button();
+			this.CmbGrouping = new System.Windows.Forms.ComboBox();
+			this.ChkRoundupX9 = new System.Windows.Forms.CheckBox();
+			this.ChkShowLabels = new System.Windows.Forms.CheckBox();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -178,6 +181,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage8.SuspendLayout();
 			this.tabPage9.SuspendLayout();
 			this.tableLayoutPanel4.SuspendLayout();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// txtStudentId
@@ -1074,10 +1078,10 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// tabPage3
 			// 
-			this.tabPage3.Controls.Add(this.label9);
-			this.tabPage3.Controls.Add(this.NudMarkOffset);
+			this.tabPage3.Controls.Add(this.groupBox1);
+			this.tabPage3.Controls.Add(this.ChkShowLabels);
+			this.tabPage3.Controls.Add(this.CmbGrouping);
 			this.tabPage3.Controls.Add(this.ChkIncludeNoMark);
-			this.tabPage3.Controls.Add(this.ChkShowDetailedChart);
 			this.tabPage3.Controls.Add(this.ChkOddRows);
 			this.tabPage3.Controls.Add(this.ChkEvenRows);
 			this.tabPage3.Controls.Add(this.button4);
@@ -1095,7 +1099,7 @@ namespace StudentsFetcher.StudentMarking
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(12, 415);
+			this.label9.Location = new System.Drawing.Point(6, 21);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(35, 13);
 			this.label9.TabIndex = 25;
@@ -1103,7 +1107,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// NudMarkOffset
 			// 
-			this.NudMarkOffset.Location = new System.Drawing.Point(59, 413);
+			this.NudMarkOffset.Location = new System.Drawing.Point(64, 19);
 			this.NudMarkOffset.Maximum = new decimal(new int[] {
             10,
             0,
@@ -1115,36 +1119,28 @@ namespace StudentsFetcher.StudentMarking
             0,
             -2147483648});
 			this.NudMarkOffset.Name = "NudMarkOffset";
-			this.NudMarkOffset.Size = new System.Drawing.Size(65, 20);
+			this.NudMarkOffset.Size = new System.Drawing.Size(43, 20);
 			this.NudMarkOffset.TabIndex = 24;
 			this.NudMarkOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// ChkIncludeNoMark
 			// 
 			this.ChkIncludeNoMark.AutoSize = true;
-			this.ChkIncludeNoMark.Location = new System.Drawing.Point(11, 390);
+			this.ChkIncludeNoMark.Checked = true;
+			this.ChkIncludeNoMark.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ChkIncludeNoMark.Location = new System.Drawing.Point(11, 462);
 			this.ChkIncludeNoMark.Name = "ChkIncludeNoMark";
 			this.ChkIncludeNoMark.Size = new System.Drawing.Size(116, 17);
 			this.ChkIncludeNoMark.TabIndex = 23;
 			this.ChkIncludeNoMark.Text = "Show missing mark";
 			this.ChkIncludeNoMark.UseVisualStyleBackColor = true;
 			// 
-			// ChkShowDetailedChart
-			// 
-			this.ChkShowDetailedChart.AutoSize = true;
-			this.ChkShowDetailedChart.Location = new System.Drawing.Point(11, 367);
-			this.ChkShowDetailedChart.Name = "ChkShowDetailedChart";
-			this.ChkShowDetailedChart.Size = new System.Drawing.Size(92, 17);
-			this.ChkShowDetailedChart.TabIndex = 22;
-			this.ChkShowDetailedChart.Text = "Detailed chart";
-			this.ChkShowDetailedChart.UseVisualStyleBackColor = true;
-			// 
 			// ChkOddRows
 			// 
 			this.ChkOddRows.AutoSize = true;
 			this.ChkOddRows.Checked = true;
 			this.ChkOddRows.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ChkOddRows.Location = new System.Drawing.Point(11, 344);
+			this.ChkOddRows.Location = new System.Drawing.Point(11, 321);
 			this.ChkOddRows.Name = "ChkOddRows";
 			this.ChkOddRows.Size = new System.Drawing.Size(63, 17);
 			this.ChkOddRows.TabIndex = 21;
@@ -1156,7 +1152,7 @@ namespace StudentsFetcher.StudentMarking
 			this.ChkEvenRows.AutoSize = true;
 			this.ChkEvenRows.Checked = true;
 			this.ChkEvenRows.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ChkEvenRows.Location = new System.Drawing.Point(11, 321);
+			this.ChkEvenRows.Location = new System.Drawing.Point(11, 344);
 			this.ChkEvenRows.Name = "ChkEvenRows";
 			this.ChkEvenRows.Size = new System.Drawing.Size(68, 17);
 			this.ChkEvenRows.TabIndex = 20;
@@ -1479,6 +1475,49 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnOpenFolder.UseVisualStyleBackColor = true;
 			this.BtnOpenFolder.Click += new System.EventHandler(this.BtnOpenFolder_Click);
 			// 
+			// CmbGrouping
+			// 
+			this.CmbGrouping.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.CmbGrouping.FormattingEnabled = true;
+			this.CmbGrouping.Location = new System.Drawing.Point(11, 363);
+			this.CmbGrouping.Name = "CmbGrouping";
+			this.CmbGrouping.Size = new System.Drawing.Size(113, 21);
+			this.CmbGrouping.TabIndex = 26;
+			// 
+			// ChkRoundupX9
+			// 
+			this.ChkRoundupX9.AutoSize = true;
+			this.ChkRoundupX9.Checked = true;
+			this.ChkRoundupX9.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ChkRoundupX9.Location = new System.Drawing.Point(9, 45);
+			this.ChkRoundupX9.Name = "ChkRoundupX9";
+			this.ChkRoundupX9.Size = new System.Drawing.Size(83, 17);
+			this.ChkRoundupX9.TabIndex = 27;
+			this.ChkRoundupX9.Text = "Roundup *9";
+			this.ChkRoundupX9.UseVisualStyleBackColor = true;
+			// 
+			// ChkShowLabels
+			// 
+			this.ChkShowLabels.AutoSize = true;
+			this.ChkShowLabels.Location = new System.Drawing.Point(11, 485);
+			this.ChkShowLabels.Name = "ChkShowLabels";
+			this.ChkShowLabels.Size = new System.Drawing.Size(83, 17);
+			this.ChkShowLabels.TabIndex = 28;
+			this.ChkShowLabels.Text = "Show labels";
+			this.ChkShowLabels.UseVisualStyleBackColor = true;
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.NudMarkOffset);
+			this.groupBox1.Controls.Add(this.label9);
+			this.groupBox1.Controls.Add(this.ChkRoundupX9);
+			this.groupBox1.Location = new System.Drawing.Point(11, 390);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(113, 66);
+			this.groupBox1.TabIndex = 29;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Mark tweak";
+			// 
 			// FrmMarkingMachine
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1542,6 +1581,8 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage9.PerformLayout();
 			this.tableLayoutPanel4.ResumeLayout(false);
 			this.tableLayoutPanel4.PerformLayout();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);
 
         }
@@ -1650,10 +1691,13 @@ namespace StudentsFetcher.StudentMarking
 		private ColumnHeader columnHeader7;
 		private CheckBox ChkOddRows;
 		private CheckBox ChkEvenRows;
-		private CheckBox ChkShowDetailedChart;
 		private CheckBox ChkIncludeNoMark;
 		private Label label9;
 		private NumericUpDown NudMarkOffset;
+		private ComboBox CmbGrouping;
+		private CheckBox ChkRoundupX9;
+		private CheckBox ChkShowLabels;
+		private GroupBox groupBox1;
 	}
 }
 

@@ -43,20 +43,16 @@ namespace StudentsFetcher.StudentMarking
 				int iFinalMark = (int)Math.Round(finalMark, MidpointRounding.AwayFromZero);
 				finalMark = iFinalMark;
 			}
-			if (finalMark == 49)
+			if (finalMark % 10 == 9)
+			{
 				finalMark += 1;
-			if (finalMark == 59)
-				finalMark += 1;
-			if (finalMark == 69)
-				finalMark += 1;
-			if (finalMark == 79)
-				finalMark += 1;
+			}
 			return (int)finalMark;
 		}
 
-		
+
 		/// <returns>-1 if no mark</returns>
-		public int GetFinalMark(int shortProgressiveId, MarkingConfig cfg)
+		public int GetFinalMark(int shortProgressiveId, MarkingConfig cfg, bool roundUpNines = false)
 		{
 			double totPerc = 0;
 			double totMark = 0;
@@ -87,14 +83,10 @@ namespace StudentsFetcher.StudentMarking
 				int iFinalMark = (int)Math.Round(finalMark, MidpointRounding.AwayFromZero);
 				finalMark = iFinalMark;
 			}
-			if (finalMark == 49)
+			if (roundUpNines && finalMark % 10 == 9)
+			{
 				finalMark += 1;
-			if (finalMark == 59)
-				finalMark += 1;
-			if (finalMark == 69)
-				finalMark += 1;
-			if (finalMark == 79)
-				finalMark += 1;
+			}
 			return (int)finalMark;
 		}
 	}
