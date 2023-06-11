@@ -24,6 +24,7 @@ namespace ExtendedTextBox
 
 		public event CtrlKeyPressed OnCtrlEnter;
 		public event CtrlKeyPressed OnCtrlTab;
+		public event CtrlKeyPressed OnSimpleKey;
 		public event CtrlKeyboardPressed OnCtrlKey;
 
 		private string _originalText = "";
@@ -302,7 +303,11 @@ namespace ExtendedTextBox
 
 		}
 
-
+		protected override void OnKeyPress(KeyPressEventArgs e)
+		{
+			base.OnKeyPress(e);
+		}
+		
 
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
@@ -343,7 +348,7 @@ namespace ExtendedTextBox
 			}
 			else if (OnCtrlKey != null)
 			{
-				Handled = OnCtrlKey(d);
+			Handled = OnCtrlKey(d);
 			}
 
 			Debug.WriteLine(keyData);

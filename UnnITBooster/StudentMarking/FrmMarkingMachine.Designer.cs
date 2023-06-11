@@ -104,8 +104,12 @@ namespace StudentsFetcher.StudentMarking
 			this.label10 = new System.Windows.Forms.Label();
 			this.chkEmailDryRun = new System.Windows.Forms.CheckBox();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
-			this.label9 = new System.Windows.Forms.Label();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.NudMarkOffset = new System.Windows.Forms.NumericUpDown();
+			this.label9 = new System.Windows.Forms.Label();
+			this.ChkRoundupX9 = new System.Windows.Forms.CheckBox();
+			this.ChkShowLabels = new System.Windows.Forms.CheckBox();
+			this.CmbGrouping = new System.Windows.Forms.ComboBox();
 			this.ChkIncludeNoMark = new System.Windows.Forms.CheckBox();
 			this.ChkOddRows = new System.Windows.Forms.CheckBox();
 			this.ChkEvenRows = new System.Windows.Forms.CheckBox();
@@ -136,10 +140,8 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnExportExcel = new System.Windows.Forms.Button();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.BtnOpenFolder = new System.Windows.Forms.Button();
-			this.CmbGrouping = new System.Windows.Forms.ComboBox();
-			this.ChkRoundupX9 = new System.Windows.Forms.CheckBox();
-			this.ChkShowLabels = new System.Windows.Forms.CheckBox();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.LblOverlap = new System.Windows.Forms.Label();
+			this.NudOverlap = new System.Windows.Forms.NumericUpDown();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -173,6 +175,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage4.SuspendLayout();
 			this.tabPage5.SuspendLayout();
 			this.tabPage3.SuspendLayout();
+			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.NudMarkOffset)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.tabControl3.SuspendLayout();
@@ -181,7 +184,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage8.SuspendLayout();
 			this.tabPage9.SuspendLayout();
 			this.tableLayoutPanel4.SuspendLayout();
-			this.groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.NudOverlap)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// txtStudentId
@@ -325,6 +328,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// panel2
 			// 
+			this.panel2.Controls.Add(this.LblOverlap);
 			this.panel2.Controls.Add(this.button12);
 			this.panel2.Controls.Add(this.button6);
 			this.panel2.Controls.Add(this.button5);
@@ -528,7 +532,7 @@ namespace StudentsFetcher.StudentMarking
 			// txtTextOrPointer
 			// 
 			this.txtTextOrPointer.AcceptsReturn = true;
-			this.txtTextOrPointer.AcceptsTab = true;
+			this.txtTextOrPointer.AcceptsTab = false;
 			this.txtTextOrPointer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -854,6 +858,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
 			this.tableLayoutPanel2.Controls.Add(this.cmdEmailRefreshStudents, 0, 0);
 			this.tableLayoutPanel2.Controls.Add(this.cmdSelectAll, 1, 0);
+			this.tableLayoutPanel2.Controls.Add(this.NudOverlap, 2, 0);
 			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
@@ -1096,14 +1101,17 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage3.Text = "Tools";
 			this.tabPage3.UseVisualStyleBackColor = true;
 			// 
-			// label9
+			// groupBox1
 			// 
-			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(6, 21);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(35, 13);
-			this.label9.TabIndex = 25;
-			this.label9.Text = "Offset";
+			this.groupBox1.Controls.Add(this.NudMarkOffset);
+			this.groupBox1.Controls.Add(this.label9);
+			this.groupBox1.Controls.Add(this.ChkRoundupX9);
+			this.groupBox1.Location = new System.Drawing.Point(11, 390);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(113, 66);
+			this.groupBox1.TabIndex = 29;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Mark tweak";
 			// 
 			// NudMarkOffset
 			// 
@@ -1122,6 +1130,46 @@ namespace StudentsFetcher.StudentMarking
 			this.NudMarkOffset.Size = new System.Drawing.Size(43, 20);
 			this.NudMarkOffset.TabIndex = 24;
 			this.NudMarkOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Location = new System.Drawing.Point(6, 21);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(35, 13);
+			this.label9.TabIndex = 25;
+			this.label9.Text = "Offset";
+			// 
+			// ChkRoundupX9
+			// 
+			this.ChkRoundupX9.AutoSize = true;
+			this.ChkRoundupX9.Checked = true;
+			this.ChkRoundupX9.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ChkRoundupX9.Location = new System.Drawing.Point(9, 45);
+			this.ChkRoundupX9.Name = "ChkRoundupX9";
+			this.ChkRoundupX9.Size = new System.Drawing.Size(83, 17);
+			this.ChkRoundupX9.TabIndex = 27;
+			this.ChkRoundupX9.Text = "Roundup *9";
+			this.ChkRoundupX9.UseVisualStyleBackColor = true;
+			// 
+			// ChkShowLabels
+			// 
+			this.ChkShowLabels.AutoSize = true;
+			this.ChkShowLabels.Location = new System.Drawing.Point(11, 485);
+			this.ChkShowLabels.Name = "ChkShowLabels";
+			this.ChkShowLabels.Size = new System.Drawing.Size(83, 17);
+			this.ChkShowLabels.TabIndex = 28;
+			this.ChkShowLabels.Text = "Show labels";
+			this.ChkShowLabels.UseVisualStyleBackColor = true;
+			// 
+			// CmbGrouping
+			// 
+			this.CmbGrouping.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.CmbGrouping.FormattingEnabled = true;
+			this.CmbGrouping.Location = new System.Drawing.Point(11, 363);
+			this.CmbGrouping.Name = "CmbGrouping";
+			this.CmbGrouping.Size = new System.Drawing.Size(113, 21);
+			this.CmbGrouping.TabIndex = 26;
 			// 
 			// ChkIncludeNoMark
 			// 
@@ -1475,48 +1523,27 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnOpenFolder.UseVisualStyleBackColor = true;
 			this.BtnOpenFolder.Click += new System.EventHandler(this.BtnOpenFolder_Click);
 			// 
-			// CmbGrouping
+			// LblOverlap
 			// 
-			this.CmbGrouping.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.CmbGrouping.FormattingEnabled = true;
-			this.CmbGrouping.Location = new System.Drawing.Point(11, 363);
-			this.CmbGrouping.Name = "CmbGrouping";
-			this.CmbGrouping.Size = new System.Drawing.Size(113, 21);
-			this.CmbGrouping.TabIndex = 26;
+			this.LblOverlap.AutoSize = true;
+			this.LblOverlap.Location = new System.Drawing.Point(65, 5);
+			this.LblOverlap.Name = "LblOverlap";
+			this.LblOverlap.Size = new System.Drawing.Size(10, 13);
+			this.LblOverlap.TabIndex = 3;
+			this.LblOverlap.Text = "-";
 			// 
-			// ChkRoundupX9
+			// NudOverlap
 			// 
-			this.ChkRoundupX9.AutoSize = true;
-			this.ChkRoundupX9.Checked = true;
-			this.ChkRoundupX9.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ChkRoundupX9.Location = new System.Drawing.Point(9, 45);
-			this.ChkRoundupX9.Name = "ChkRoundupX9";
-			this.ChkRoundupX9.Size = new System.Drawing.Size(83, 17);
-			this.ChkRoundupX9.TabIndex = 27;
-			this.ChkRoundupX9.Text = "Roundup *9";
-			this.ChkRoundupX9.UseVisualStyleBackColor = true;
-			// 
-			// ChkShowLabels
-			// 
-			this.ChkShowLabels.AutoSize = true;
-			this.ChkShowLabels.Location = new System.Drawing.Point(11, 485);
-			this.ChkShowLabels.Name = "ChkShowLabels";
-			this.ChkShowLabels.Size = new System.Drawing.Size(83, 17);
-			this.ChkShowLabels.TabIndex = 28;
-			this.ChkShowLabels.Text = "Show labels";
-			this.ChkShowLabels.UseVisualStyleBackColor = true;
-			// 
-			// groupBox1
-			// 
-			this.groupBox1.Controls.Add(this.NudMarkOffset);
-			this.groupBox1.Controls.Add(this.label9);
-			this.groupBox1.Controls.Add(this.ChkRoundupX9);
-			this.groupBox1.Location = new System.Drawing.Point(11, 390);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(113, 66);
-			this.groupBox1.TabIndex = 29;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Mark tweak";
+			this.NudOverlap.Location = new System.Drawing.Point(216, 3);
+			this.NudOverlap.Name = "NudOverlap";
+			this.NudOverlap.Size = new System.Drawing.Size(102, 20);
+			this.NudOverlap.TabIndex = 5;
+			this.NudOverlap.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.NudOverlap.Value = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
 			// 
 			// FrmMarkingMachine
 			// 
@@ -1537,6 +1564,7 @@ namespace StudentsFetcher.StudentMarking
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
 			this.splitContainer4.ResumeLayout(false);
 			this.panel2.ResumeLayout(false);
+			this.panel2.PerformLayout();
 			this.splitContainer2.Panel1.ResumeLayout(false);
 			this.splitContainer2.Panel1.PerformLayout();
 			this.splitContainer2.Panel2.ResumeLayout(false);
@@ -1568,6 +1596,8 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage5.PerformLayout();
 			this.tabPage3.ResumeLayout(false);
 			this.tabPage3.PerformLayout();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.NudMarkOffset)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
@@ -1581,8 +1611,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage9.PerformLayout();
 			this.tableLayoutPanel4.ResumeLayout(false);
 			this.tableLayoutPanel4.PerformLayout();
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.NudOverlap)).EndInit();
 			this.ResumeLayout(false);
 
         }
@@ -1698,6 +1727,8 @@ namespace StudentsFetcher.StudentMarking
 		private CheckBox ChkRoundupX9;
 		private CheckBox ChkShowLabels;
 		private GroupBox groupBox1;
+		private Label LblOverlap;
+		private NumericUpDown NudOverlap;
 	}
 }
 

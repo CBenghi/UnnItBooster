@@ -96,7 +96,10 @@ public partial class FrmMarkingMachine : Form
             txtStudentreport.Text = "No config.";
 			return;
         }
-        var studNumber = GetStudentNumber();
+        LblOverlap.Text = "-";
+        LblOverlap.ForeColor = Color.Black;
+        
+		var studNumber = GetStudentNumber();
 		UpdateMark(studNumber);
 		if (studNumber != -1)
         {
@@ -106,6 +109,13 @@ public partial class FrmMarkingMachine : Form
                 txtStudentreport.Text = "none";
                 return;
             }
+            LblOverlap.Text= $"Overlap: {submission.Overlap}%";
+            if (int.TryParse(submission.Overlap, out var ovl))
+            {
+                if (ovl >= OverlapThreshold)
+                    LblOverlap.ForeColor = Color.Red;
+            }
+
             txtStudentreport.Text = _config.GetStudentReport(GetStudentNumber(), chkSendModerationNotice.Checked, ChkCommNumber.Checked);
             UpdateDocumentsList(submission);
             // show student picure.
@@ -763,6 +773,10 @@ public partial class FrmMarkingMachine : Form
             e.Handled = true;
             DoAdd();
             txtTextOrPointer.Text = "";
+        }
+        else
+        {
+
         }
     }
 
@@ -1612,6 +1626,14 @@ public partial class FrmMarkingMachine : Form
 	{
 		ReportTranscript();
 	}
+
+    private double OverlapThreshold
+    {
+        get
+        {
+            return (double)NudOverlap.Value;
+        }
+    }
 
     private bool txtTextOrPointer_OnCtrlKey(string key)
     {
