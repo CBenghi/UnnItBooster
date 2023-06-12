@@ -377,7 +377,7 @@ namespace EvisionBrowser
 				string v = await wbSample.ExecuteScriptAsync(script);
 				sb.AppendLine($"Student {f.StudentId} set to {mark}.");
 
-				script = $"document.getElementById(\"{f.GradeTextId}\").value='P';";
+				script = $"document.getElementById(\"{f.GradeTextId}\").value='a';";
 				v = await wbSample.ExecuteScriptAsync(script);
 			}
 
