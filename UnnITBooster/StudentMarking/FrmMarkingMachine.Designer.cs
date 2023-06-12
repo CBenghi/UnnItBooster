@@ -142,6 +142,7 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnExportExcel = new System.Windows.Forms.Button();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.BtnOpenFolder = new System.Windows.Forms.Button();
+			this.ChkExclude0 = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -1125,12 +1126,13 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.ChkExclude0);
 			this.groupBox1.Controls.Add(this.NudMarkOffset);
 			this.groupBox1.Controls.Add(this.label9);
 			this.groupBox1.Controls.Add(this.ChkRoundupX9);
 			this.groupBox1.Location = new System.Drawing.Point(11, 390);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(113, 66);
+			this.groupBox1.Size = new System.Drawing.Size(113, 94);
 			this.groupBox1.TabIndex = 29;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Mark tweak";
@@ -1177,7 +1179,7 @@ namespace StudentsFetcher.StudentMarking
 			// ChkShowLabels
 			// 
 			this.ChkShowLabels.AutoSize = true;
-			this.ChkShowLabels.Location = new System.Drawing.Point(11, 485);
+			this.ChkShowLabels.Location = new System.Drawing.Point(11, 520);
 			this.ChkShowLabels.Name = "ChkShowLabels";
 			this.ChkShowLabels.Size = new System.Drawing.Size(83, 17);
 			this.ChkShowLabels.TabIndex = 28;
@@ -1198,7 +1200,7 @@ namespace StudentsFetcher.StudentMarking
 			this.ChkIncludeNoMark.AutoSize = true;
 			this.ChkIncludeNoMark.Checked = true;
 			this.ChkIncludeNoMark.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ChkIncludeNoMark.Location = new System.Drawing.Point(11, 462);
+			this.ChkIncludeNoMark.Location = new System.Drawing.Point(11, 497);
 			this.ChkIncludeNoMark.Name = "ChkIncludeNoMark";
 			this.ChkIncludeNoMark.Size = new System.Drawing.Size(116, 17);
 			this.ChkIncludeNoMark.TabIndex = 23;
@@ -1255,7 +1257,7 @@ namespace StudentsFetcher.StudentMarking
 			this.zedGraphControl1.ScrollMinX = 0D;
 			this.zedGraphControl1.ScrollMinY = 0D;
 			this.zedGraphControl1.ScrollMinY2 = 0D;
-			this.zedGraphControl1.Size = new System.Drawing.Size(672, 260);
+			this.zedGraphControl1.Size = new System.Drawing.Size(672, 276);
 			this.zedGraphControl1.TabIndex = 18;
 			this.zedGraphControl1.UseExtendedPrintDialog = true;
 			// 
@@ -1545,6 +1547,18 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnOpenFolder.UseVisualStyleBackColor = true;
 			this.BtnOpenFolder.Click += new System.EventHandler(this.BtnOpenFolder_Click);
 			// 
+			// ChkExclude0
+			// 
+			this.ChkExclude0.AutoSize = true;
+			this.ChkExclude0.Checked = true;
+			this.ChkExclude0.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ChkExclude0.Location = new System.Drawing.Point(9, 68);
+			this.ChkExclude0.Name = "ChkExclude0";
+			this.ChkExclude0.Size = new System.Drawing.Size(78, 17);
+			this.ChkExclude0.TabIndex = 28;
+			this.ChkExclude0.Text = "Exclude 0s";
+			this.ChkExclude0.UseVisualStyleBackColor = true;
+			// 
 			// FrmMarkingMachine
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1729,6 +1743,7 @@ namespace StudentsFetcher.StudentMarking
 		private GroupBox groupBox1;
 		private Label LblOverlap;
 		private NumericUpDown NudOverlap;
+		private CheckBox ChkExclude0;
 	}
 }
 

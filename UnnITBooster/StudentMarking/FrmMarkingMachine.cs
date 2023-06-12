@@ -1218,6 +1218,11 @@ public partial class FrmMarkingMachine : Form
 			}
 			return ret;
         }
+
+		internal void RemoveZeros()
+		{
+			Ranges.RemoveAll(x=>x.Includes(0));
+		}
 	}
 
     private void button4_Click(object sender, EventArgs e)
@@ -1225,6 +1230,9 @@ public partial class FrmMarkingMachine : Form
         var tag = ((ComboTag)CmbGrouping.SelectedItem).Tag;
         var mode = (MarksCollection.grouping)tag;
         var coll = MarksCollection.Initialize(mode);
+        if (ChkExclude0.Checked)
+            coll.RemoveZeros();
+
             
         if (ChkIncludeNoMark.Checked)
             coll.Ranges.Add(new MarkRange(-1, -1));
@@ -1232,6 +1240,7 @@ public partial class FrmMarkingMachine : Form
         var sql = "SELECT sub_id, sub_userid, sub_numericUserId FROM TB_Submissions";
         var dt = _config.GetDataTable(sql);
         var collectionForStats = new List<double>();
+        
         foreach (DataRow rw in dt.Rows)
         {
             if (!int.TryParse(rw[0].ToString(), out var id))
@@ -1254,6 +1263,8 @@ public partial class FrmMarkingMachine : Form
             if (mk != -1)
                 collectionForStats.Add(mk);
         }
+        if (ChkExclude0.Checked)
+            collectionForStats.RemoveAll(x => x == 0);
 
         var quartiles = MathNet.Numerics.Statistics.Statistics.FiveNumberSummary(collectionForStats);
         var quartileSize = new List<double>();
