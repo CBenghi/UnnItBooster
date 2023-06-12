@@ -48,8 +48,8 @@ namespace EvisionBrowser
 		private void PerformGo(object sender, RoutedEventArgs e)
 		{
 			string url = Url.Text;
-			//if (!Url.Text.StartsWith("http://"))
-			//	url = $"http://{url}";
+			if (!Url.Text.StartsWith("http"))
+				url = $"http://{url}";
 			var uri = new Uri(url);
 			if (uri.ToString() != wbSample.Source.ToString())
 				wbSample.Source = uri;

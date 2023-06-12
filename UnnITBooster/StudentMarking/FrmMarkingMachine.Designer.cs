@@ -107,6 +107,7 @@ namespace StudentsFetcher.StudentMarking
 			this.chkEmailDryRun = new System.Windows.Forms.CheckBox();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.ChkExclude0 = new System.Windows.Forms.CheckBox();
 			this.NudMarkOffset = new System.Windows.Forms.NumericUpDown();
 			this.label9 = new System.Windows.Forms.Label();
 			this.ChkRoundupX9 = new System.Windows.Forms.CheckBox();
@@ -142,7 +143,6 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnExportExcel = new System.Windows.Forms.Button();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.BtnOpenFolder = new System.Windows.Forms.Button();
-			this.ChkExclude0 = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -1137,6 +1137,18 @@ namespace StudentsFetcher.StudentMarking
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Mark tweak";
 			// 
+			// ChkExclude0
+			// 
+			this.ChkExclude0.AutoSize = true;
+			this.ChkExclude0.Checked = true;
+			this.ChkExclude0.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ChkExclude0.Location = new System.Drawing.Point(9, 68);
+			this.ChkExclude0.Name = "ChkExclude0";
+			this.ChkExclude0.Size = new System.Drawing.Size(78, 17);
+			this.ChkExclude0.TabIndex = 28;
+			this.ChkExclude0.Text = "Exclude 0s";
+			this.ChkExclude0.UseVisualStyleBackColor = true;
+			// 
 			// NudMarkOffset
 			// 
 			this.NudMarkOffset.Location = new System.Drawing.Point(64, 19);
@@ -1546,18 +1558,6 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnOpenFolder.TabIndex = 13;
 			this.BtnOpenFolder.UseVisualStyleBackColor = true;
 			this.BtnOpenFolder.Click += new System.EventHandler(this.BtnOpenFolder_Click);
-			// 
-			// ChkExclude0
-			// 
-			this.ChkExclude0.AutoSize = true;
-			this.ChkExclude0.Checked = true;
-			this.ChkExclude0.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ChkExclude0.Location = new System.Drawing.Point(9, 68);
-			this.ChkExclude0.Name = "ChkExclude0";
-			this.ChkExclude0.Size = new System.Drawing.Size(78, 17);
-			this.ChkExclude0.TabIndex = 28;
-			this.ChkExclude0.Text = "Exclude 0s";
-			this.ChkExclude0.UseVisualStyleBackColor = true;
 			// 
 			// FrmMarkingMachine
 			// 

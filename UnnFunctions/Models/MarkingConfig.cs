@@ -64,20 +64,38 @@ namespace StudentsFetcher.StudentMarking
 			return ret;
 		}
 
+		public IEnumerable<TurnitInSubmission> GetStudentSubmissions()
+		{
+			var dt = GetDataTable("select * from TB_Submissions");
+			foreach (DataRow item in dt.Rows)
+			{
+				if (item is null)
+					continue;
+				yield return TurnitInSubmission.FromRow(item);
+			}
+		}
+
+		public TurnitInSubmission? GetStudentSubmission(int id)
+		{
+			var r = GetStudentRow(id);
+			if (r is null)
+				return null;
+			return TurnitInSubmission.FromRow(r);
+		}
+
 		public DataRow? GetStudentRow(int id)
 		{
-			var dt = new DataTable();
-			var c = GetConn();
 			var sql = "select * from TB_Submissions where SUB_Id = " + id;
-			var da = new SQLiteDataAdapter(sql, c);
-			da.Fill(dt);
-			// c.Close();
+			var dt = GetDataTable(sql);
 			return dt.Rows.Count == 1
 				? dt.Rows[0]
 				: null;
 		}
 
-		public Dictionary<string, string> MarkAbility = new Dictionary<string, string>
+		/// <summary>
+		/// Changed using setlevel method
+		/// </summary>
+		public Dictionary<string, string> MarkAbility { get; set; } = new Dictionary<string, string>
 			{
 				{"1", "little or no"},
 				{"2", "little or no"},
@@ -93,17 +111,17 @@ namespace StudentsFetcher.StudentMarking
 		public string GetStudentReport(int id, bool sendModerationNotice, bool includeCommentNumber = false)
 		{
 			var sb = new StringBuilder();
-			sb.AppendLine("================");
 			var stud = GetStudentRow(id);
 			if (stud == null)
 			{
 				return "";
 			}
 			var tin = TurnitInSubmission.FromRow(stud);
-			sb.AppendLine($"{tin.FirstName} {tin.LastName} {tin.NumericUserId}");
-			sb.AppendLine($"email: {tin.Email} (#{id})");
-			sb.AppendLine($"Submission ID: {tin.PaperId}");
-			sb.AppendLine($"Submission Title: {tin.Title}");
+			sb.AppendLine($"# {tin.FirstName} {tin.LastName} {tin.NumericUserId}");
+			sb.AppendLine();
+			sb.AppendLine($"- email: {tin.Email} (#{id})");
+			sb.AppendLine($"- Submission ID: {tin.PaperId}");
+			sb.AppendLine($"- Submission Title: {tin.Title}");
 			sb.AppendLine();
 			GetStudentFeedback(id, sendModerationNotice, sb, tin, includeCommentNumber);
 			var s = sb.ToString();
@@ -113,7 +131,7 @@ namespace StudentsFetcher.StudentMarking
 		public void GetStudentFeedback(int id, bool sendModerationNotice, StringBuilder sb, TurnitInSubmission? stud, bool includeCommentNumber = false)
 		{
 			var componentComments = "";
-			sb.AppendLine("# Marking components:");
+			sb.AppendLine("## Marking components:");
 			sb.AppendLine("");
 
 			var dt = GetDataTable("select * from (tb_submissions inner join tb_marks on mark_ptr_submission = sub_id) left join tb_components on mark_ptr_component = cpnt_id where MARK_Ptr_Submission = " + id + " order by cpnt_order");
@@ -129,7 +147,7 @@ namespace StudentsFetcher.StudentMarking
 					if (order == -1)
 						continue;
 
-					sb.AppendFormat("Component {3} ({1}% of total mark for {0}): {2}\r\n", cpntName, percent, mark, order);
+					sb.AppendFormat($"- Component {order}: {mark} (worth {percent}% of total mark for {cpntName})\r\n");
 
 					if (mark > 10)
 					{
@@ -145,7 +163,7 @@ namespace StudentsFetcher.StudentMarking
 				{
 					if (item["MARK_ptr_Component"].ToString() == "-1")
 						continue;
-					sb.AppendFormat("Component {0}: {1}\r\n", item["MARK_ptr_Component"], item["MARK_Value"]);
+					sb.AppendFormat("- Component {0}: {1}\r\n", item["MARK_ptr_Component"], item["MARK_Value"]);
 				}
 			}
 			var studId = stud.NumericUserId;
@@ -155,13 +173,13 @@ namespace StudentsFetcher.StudentMarking
 			}
 			var totmark = GetMarkCalculator().GetFinalMark(studId, this);
 			if (totmark != -1)
-				sb.AppendFormat("Overall mark: {0}%\r\n\r\n", totmark);
+				sb.AppendFormat("\r\nOverall mark: {0}%\r\n\r\n", totmark);
 			
 			var tmp = componentComments.Replace("\r\n", "").Trim();
 
 			if (tmp != string.Empty)
 			{
-				sb.AppendFormat("# Comments:\r\n\r\n");
+				sb.AppendFormat("## Comments:\r\n\r\n");
 				sb.AppendFormat(componentComments);
 			}
 			// sb.AppendFormat("Feedback:\r\n\r\n");
@@ -179,7 +197,7 @@ namespace StudentsFetcher.StudentMarking
 
 				if (prevSection != thisSection)
 				{
-					sb.AppendLine($"\r\n# {thisSection}\r\n");
+					sb.AppendLine($"\r\n## {thisSection}\r\n");
 					prevSection = thisSection;
 				}
 				string lastchar = "";
@@ -435,6 +453,8 @@ namespace StudentsFetcher.StudentMarking
 				yield return title;
 			}
 		}
+
+		
 
 		public string BareName
 		{

@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MainWindowModel.turnitin.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="MainWindowModel.turnitin.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1774.30" />
     <PackageReference Include="TextCopy" Version="6.2.1" />

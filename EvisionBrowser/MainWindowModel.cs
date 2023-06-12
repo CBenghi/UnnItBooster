@@ -106,6 +106,9 @@ namespace EvisionBrowser
 
 			var src = await GetSource();
 
+			var script = "document.getElementById('sc5054').click();";
+			Report = await GetScriptString(script);
+
 
 		}
 

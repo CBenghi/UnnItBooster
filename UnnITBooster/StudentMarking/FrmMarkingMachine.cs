@@ -16,6 +16,8 @@ using UnnItBooster.ModelConversions;
 using ZedGraph;
 using System.IO.Compression;
 using UnnItBooster.StudentMarking;
+using MathNet.Numerics;
+using UnnFunctions.Models;
 
 namespace StudentsFetcher.StudentMarking;
 
@@ -151,28 +153,13 @@ public partial class FrmMarkingMachine : Form
             var mc = _config.GetMarkCalculator();
             var sb = new StringBuilder();
             var sbDataUpload = new StringBuilder();
-            foreach (DataRow item in dt.Rows)
+			sb.AppendLine($"SUB_id\tSUB_LastName\tSUB_FirstName\tSUB_PaperID\tSUB_NumericUserID\tMARKS\ttotmark");
+			foreach (DataRow item in dt.Rows)
             {
                 var totmark = mc.GetFinalMark(item["SUB_NumericUserId"].ToString(), _config);
+                sb.AppendLine($"{item["SUB_id"]}\t{item["SUB_LastName"]}\t{item["SUB_FirstName"]}\t{item["SUB_PaperID"]}\t{item["SUB_NumericUserID"]}\t{item["MARKS"]}\t{totmark}");
 
-                sb.AppendFormat("{0}\t{1}\t{2}\t{3}\t{5}\t{4}\t{6}\r\n",
-                    item["SUB_id"],
-                    item["SUB_LastName"],
-                    item["SUB_FirstName"],
-                    item["SUB_UserID"],
-                    item["MARKS"],
-                    item["SUB_NumericUserID"],
-                    totmark
-                    );
-
-                sbDataUpload.AppendFormat("\"{0}\"\t\"{1}\"\t\"{2}\"\t\"{3}\"\t\"{5}\"\t\t\t\"{4}.00\"\n",
-                    item["SUB_LastName"],
-                    item["SUB_FirstName"],
-                    item["SUB_UserID"],
-                    item["SUB_NumericUserID"],
-                    totmark,
-                    item["SUB_email"]
-                    );
+                sbDataUpload.AppendFormat($"\"{item["SUB_LastName"]}\"\t\"{item["SUB_FirstName"]}\"\t\"{item["SUB_UserID"]}\"\t\"{item["SUB_NumericUserID"]}\"\t\"{item["SUB_email"]}\"\t\t\t\"{totmark}.00\"\n");
             }
 
             sb.AppendFormat("\r\n\r\n");
@@ -193,10 +180,7 @@ public partial class FrmMarkingMachine : Form
         var numb = GetStudentNumber();
         if (numb == -1)
             return null;
-        var r = _config.GetStudentRow(numb);
-        if (r == null)
-            return null;
-        return TurnitInSubmission.FromRow(r);
+        return _config.GetStudentSubmission(numb);
     }
 
     private void UpdateDocumentsList(TurnitInSubmission submission)
@@ -236,6 +220,7 @@ public partial class FrmMarkingMachine : Form
 			var whoGotMatch = Regex.Match(txtSearch.Text, @"(WhoGotComment|WhoGot\w?) (?<commentId>\d+)", RegexOptions.IgnoreCase);
 			var removeMatch = Regex.Match(txtSearch.Text, @"Remove (\d+)", RegexOptions.IgnoreCase);
 			var levelMatch = Regex.Match(txtSearch.Text, @"setlevel (?<level>ug|pg)", RegexOptions.IgnoreCase);
+			var selectModerationMatch = Regex.Match(txtSearch.Text, @"SelectModeration *(?<name>.*)$", RegexOptions.IgnoreCase);
             if (addComponentMatch.Success)
             {
                 AddComponent(addComponentMatch);
@@ -245,6 +230,10 @@ public partial class FrmMarkingMachine : Form
             {
                 EditLoad(editMatch.Groups["par"].Value);
             }
+            else if (selectModerationMatch.Success)
+            {
+				SelectModeration(selectModerationMatch.Groups["name"].Value);
+			}
             else if (setComponentCommentMatch.Success)
             {
                 int order = Convert.ToInt32(setComponentCommentMatch.Groups[1].Value);
@@ -288,13 +277,21 @@ public partial class FrmMarkingMachine : Form
 			{
 				GetTurnitinOrder();
 			}
-			else if (txtSearch.Text == "stat" || txtSearch.Text == "stats" || txtSearch.Text == "transcript")
+			else if (
+                txtSearch.Text.Equals("stat", StringComparison.OrdinalIgnoreCase)
+                || txtSearch.Text.Equals("stats", StringComparison.OrdinalIgnoreCase)
+				|| txtSearch.Text.Equals("transcript", StringComparison.OrdinalIgnoreCase)
+                )
 			{
 				ReportTranscript();
 			}
-			else if (txtSearch.Text == "imagematch")
+			else if (txtSearch.Text.Equals("imagematch", StringComparison.OrdinalIgnoreCase))
 			{
                 txtLibReport.Text = _config?.ReportImageMatch(cmbDocuments.Text);
+			}
+			else if (txtSearch.Text.Equals("PrepareModeration", StringComparison.OrdinalIgnoreCase))
+			{
+                PrepareModeration();
 			}
 			else if (txtSearch.Text == "help")
             {
@@ -342,13 +339,21 @@ public partial class FrmMarkingMachine : Form
                     missing
                        finds marks not added to mcrf (use all relevant lists)   
                        requires ids in textbox (one per row, e.g. '11039298/1') 
+                    
+                    imagematch
+                       identifies for images in the current word file and searches the others for same content
 
-                    normal search
+                    selectModeration
+                        prepares the list of students to perform moderation
+
+                    prepareModeration
+                        prepares the moderation information for the student ShortIDs listed in the central part of the UI
+
+                    <normal search>
                         separate text from section/area with `;`
                         ending the first term with a + searches in the pesonal text as well
 
-                    imagematch
-                        identifies for images in the current word file and searches the others for same content
+                    
                     """;
             }
             else
@@ -367,6 +372,123 @@ public partial class FrmMarkingMachine : Form
             e.SuppressKeyPress = true;
         }
     }
+
+	private void SelectModeration(string name)
+	{
+        if (name == string.Empty)
+        {
+            txtStudentreport.Text = "Specify name of student collection to determine route.";
+            return;
+		}
+        var studcoll = studentRepository.GetPersonCollections().FirstOrDefault(x => x.Name.Contains(name));
+
+		var sb = new StringBuilder();
+		if (studcoll == null)
+		{
+            sb.AppendLine("Student collection not found.");
+		}
+		var collections = new Dictionary<string, ModerationCollection>();
+		var mc = _config.GetMarkCalculator();
+		foreach (var sub in _config.GetStudentSubmissions())
+        {
+            //var stud = studentRepository.GetStudentById(sub.NumericUserId);
+            var grp = "Not found";
+            var stud = studentRepository.GetStudentById(sub.NumericUserId, studcoll);
+            if (stud is not null)
+            {
+				grp = $"{stud.CourseYear} {stud.Occurrence}";
+                if (string.IsNullOrWhiteSpace(grp))
+                {
+                    grp = "No data";
+				}
+            }
+            var totmark = mc.GetFinalMark(sub.InternalShortId, _config, true);
+            var t = new ModerationEntry(sub, totmark);
+
+            if (!collections.TryGetValue(grp, out var collection))
+            {
+                collection = new ModerationCollection();
+                collections.Add(grp, collection);
+            }
+            collection.Add(t);
+		}
+        
+        foreach (var collectionPair in collections)
+        {
+            sb.AppendLine(collectionPair.Key);
+            sb.AppendLine();
+            sb.AppendLine(collectionPair.Value.Report());
+        }
+        txtStudentreport.Text = sb.ToString();
+	}
+
+	private void PrepareModeration()
+	{
+        if (_config == null)
+            return;
+        StringBuilder errBuilder = new StringBuilder(); 
+		StringBuilder sb = new StringBuilder();
+        var ids = GetSimpleIds().ToList();
+        errBuilder.AppendLine($"{ids.Count} to process.");
+        errBuilder.AppendLine();
+
+		sb.AppendLine("# Selected sample");
+
+		var mc = _config.GetMarkCalculator();
+		sb.AppendLine($"| SUB_NumericUserID | SUB_FirstName | SUB_LastName | SUB_PaperID | Mark         |");
+		sb.AppendLine($"| ----------------- | ------------- | ------------ | ----------- | ------------ |");
+		foreach (var item in ids)
+        {
+			var totmark = mc.GetFinalMark(item, _config, true);
+            var sub = _config.GetStudentSubmission(item);
+            if (sub is not null)
+                sb.AppendLine($"| {sub.NumericUserId} | {sub.FirstName}| {sub.LastName}  | {sub.PaperId} | {totmark}% |");
+            else
+                sb.AppendLine($"Error: {item}");
+		}
+        sb.AppendLine();
+
+		foreach (int item in ids)
+        {
+            var success = PrepareModeration(sb, item);
+            if (!success)
+                errBuilder.AppendLine($"Error on: {item}");
+
+		}
+		errBuilder.AppendLine(sb.ToString());
+        txtStudentreport.Text = errBuilder.ToString();
+	}
+
+	private bool PrepareModeration(StringBuilder sb, int shortId)
+	{
+        // prepares the text, 
+        sb.AppendLine(_config.GetStudentReport(shortId, false, false));
+		// and copies the file to a custom folder
+		var stud = _config.GetStudentSubmission(shortId);
+        if (stud is null)
+            return false;
+		FileInfo f = new FileInfo(Path.Combine(_config.GetFolderName(), stud.Title));
+        if (!f.Exists)
+            return false;
+		var destName = Path.Combine(_config.GetFolderName(), "ModF");
+        if (!Directory.Exists(destName))
+            Directory.CreateDirectory(destName);
+        destName = Path.Combine(destName, f.Name);
+        f.CopyTo(destName, true);
+        return true;
+	}
+
+	private IEnumerable<int> GetSimpleIds()
+	{
+        var lines = txtLibReport.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+        foreach (var line in lines)
+        {
+            if (!string.IsNullOrEmpty(line) && int.TryParse(line, out var simpleId))
+            {
+                yield return simpleId;
+            }
+        }
+	}
 
 	private void GetTurnitinOrder()
 	{
@@ -389,7 +511,7 @@ public partial class FrmMarkingMachine : Form
 				{
 					{"1", "little or no"},
 					{"2", "little or no"},
-					{"3", "little or no"},
+					{"3", "insufficient"},
 					{"4", "sufficient"},
 					{"5", "adequate"},
 					{"6", "good"},

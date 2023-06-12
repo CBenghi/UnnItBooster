@@ -58,21 +58,45 @@
                       ResizeBehavior="CurrentAndNext" Grid.RowSpan="3" />
                 <TabControl Grid.Column="1" Grid.Row="0" Margin="3">
                     <TabItem Header="Scraping">
-                        <StackPanel >
-                            <TextBox Margin="3" ToolTip="Collection name" Text="{Binding ModuleCode}"  />
-                            <Button  Margin="3" Content="Copy HTML" Command="{Binding CopyHtmlCommand}" />
-                            <Button  Margin="3" Content="Test" Command="{Binding TestCommand}" />
-                            <CheckBox IsChecked="{Binding UpdateOnly}" Margin="3">Update only (no new students)</CheckBox>
-                            <CheckBox IsChecked="{Binding ScrapeEmail}" Margin="3">get email</CheckBox>
-                            <CheckBox IsChecked="{Binding ScrapePersonalEmail}" Margin="3">get personal email</CheckBox>
-                            <CheckBox IsChecked="{Binding ScrapePictures}" Margin="3">get pictures</CheckBox>
-                            <CheckBox IsChecked="{Binding ScrapeTelephone}" Margin="3">get telephone</CheckBox>
-                            <CheckBox IsChecked="{Binding ScrapeTranscript}" Margin="3">get transcript</CheckBox>
-                            <Button  Margin="3" Content="Queue students" Command="{Binding ProcessStudentsCommand}" />
-                            <TextBlock Text="{Binding QueueDisplayText}" TextAlignment="Center" HorizontalAlignment="Stretch"/>
-                            <Button Margin="3" Content="Toggle Queue" Command="{Binding ToggleQueueProcessingCommand}" />
-                            <Button Margin="3" Content="Clear Queue" Command="{Binding ClearQueueCommand}" />
-                        </StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TabControl Grid.Row="0" Margin="3">
+                                <TabItem Header="Students">
+                                    <StackPanel >
+                                        <TextBox Margin="3" ToolTip="Collection name" Text="{Binding ModuleCode}"  />
+                                        <Button  Margin="3" Content="Copy HTML" Command="{Binding CopyHtmlCommand}" />
+                                        <Button  Margin="3" Content="Test" Command="{Binding TestCommand}" />
+                                        <CheckBox IsChecked="{Binding UpdateOnly}" Margin="3">Update only (no new students)</CheckBox>
+                                        <CheckBox IsChecked="{Binding ScrapeEmail}" Margin="3">get email</CheckBox>
+                                        <CheckBox IsChecked="{Binding ScrapePersonalEmail}" Margin="3">get personal email</CheckBox>
+                                        <CheckBox IsChecked="{Binding ScrapePictures}" Margin="3">get pictures</CheckBox>
+                                        <CheckBox IsChecked="{Binding ScrapeTelephone}" Margin="3">get telephone</CheckBox>
+                                        <CheckBox IsChecked="{Binding ScrapeTranscript}" Margin="3">get transcript</CheckBox>
+                                        <Button  Margin="3" Content="Queue students" Command="{Binding ProcessStudentsCommand}" />
+                                    </StackPanel>
+                                </TabItem>
+                                <TabItem Header="Turnitin">
+                                    <StackPanel >
+                                        <TextBox Margin="3" Height="200" Text="{Binding TurnitinPaperIds}" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" 
+                                                 ToolTip="Navigate to a single submission and open the comment pane, then paste paperIds (one per line) in this text"
+                                                 />
+                                        <Button  Margin="3" Content="Queue submissions" Command="{Binding ProcessSubmissionsCommand}" 
+                                                 ToolTip="Navigate to a single submission and open the comment pane, then paste paperIds (one per line) in the text above"
+                                                 />
+                                    </StackPanel>
+                                </TabItem>
+                            </TabControl>
+                            <Grid Grid.Row="1">
+                                <StackPanel>
+                                    <TextBlock Margin="3" Text="{Binding QueueDisplayText}" TextAlignment="Center" HorizontalAlignment="Stretch"/>
+                                    <Button Margin="3" Content="Toggle Queue" Command="{Binding ToggleQueueProcessingCommand}" />
+                                    <Button Margin="3" Content="Clear Queue" Command="{Binding ClearQueueCommand}" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
                     </TabItem>
                     <TabItem Header="MCRF">
                         <StackPanel>
@@ -81,7 +105,7 @@
                         </StackPanel>
                     </TabItem>
                 </TabControl>
-                <TextBox Grid.Column="1" Text="{Binding Report}" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
+                <TextBox Margin="3" Grid.Column="1" Text="{Binding Report}" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
             </Grid>
         </Grid>
     </Grid>

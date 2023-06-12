@@ -155,12 +155,23 @@ public class StudentsRepository
 		return true;
 	}
 
-	public Student? GetStudentById(string numericStudentId)
+	public Student? GetStudentById(string numericStudentId, IStudentCollection? studcoll = null)
 	{
-		foreach (var item in Students)
+		if (studcoll is not null)
 		{
-			if (item.NumericStudentId == numericStudentId)
-				return item;
+			foreach (var item in studcoll.Students)
+			{
+				if (item.NumericStudentId == numericStudentId)
+					return item;
+			}
+		}
+		else
+		{
+			foreach (var item in Students)
+			{
+				if (item.NumericStudentId == numericStudentId)
+					return item;
+			}
 		}
 		return null;
 	}

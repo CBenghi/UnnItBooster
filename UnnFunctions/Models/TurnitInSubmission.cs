@@ -23,6 +23,7 @@ public class TurnitInSubmission
 	public string StudentPapersOverlap = "";
 	public string NumericUserId = "";
 	public string Email = "";
+	public int InternalShortId = -1;
 
 	public static TurnitInSubmission FromRow(DataRow row)
 	{
@@ -40,6 +41,9 @@ public class TurnitInSubmission
 		item.StudentPapersOverlap = Some("SUB_StudentPapersOverlap", row);
 		item.NumericUserId = Some("SUB_NumericUserID", row);
 		item.Email = Some("SUB_email", row);
+		var sid = row["SUB_Id"].ToString();
+		if (!string.IsNullOrEmpty(sid) && int.TryParse(sid, out var result))
+			item.InternalShortId = result;
 		return item;
 	}
 
