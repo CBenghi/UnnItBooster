@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
@@ -128,13 +129,13 @@ namespace StudentsFetcher.StudentMarking
 			return s;
 		}
 
-		public void GetStudentFeedback(int id, bool sendModerationNotice, StringBuilder sb, TurnitInSubmission? stud, bool includeCommentNumber = false)
+		public void GetStudentFeedback(int shortId, bool sendModerationNotice, StringBuilder sb, TurnitInSubmission? stud, bool includeCommentNumber = false)
 		{
 			var componentComments = "";
 			sb.AppendLine("## Marking components:");
 			sb.AppendLine("");
 
-			var dt = GetDataTable("select * from (tb_submissions inner join tb_marks on mark_ptr_submission = sub_id) left join tb_components on mark_ptr_component = cpnt_id where MARK_Ptr_Submission = " + id + " order by cpnt_order");
+			var dt = GetDataTable("select * from (tb_submissions inner join tb_marks on mark_ptr_submission = sub_id) left join tb_components on mark_ptr_component = cpnt_id where MARK_Ptr_Submission = " + shortId + " order by cpnt_order");
 			foreach (DataRow item in dt.Rows)
 			{
 				if (item["cpnt_order"] != DBNull.Value)
@@ -166,12 +167,7 @@ namespace StudentsFetcher.StudentMarking
 					sb.AppendFormat("- Component {0}: {1}\r\n", item["MARK_ptr_Component"], item["MARK_Value"]);
 				}
 			}
-			var studId = stud.NumericUserId;
-			if (studId == @"")
-			{
-				throw new Exception(@"Missing student Id");
-			}
-			var totmark = GetMarkCalculator().GetFinalMark(studId, this);
+			var totmark = GetMarkCalculator().GetFinalMark(shortId, this, true);
 			if (totmark != -1)
 				sb.AppendFormat("\r\nOverall mark: {0}%\r\n\r\n", totmark);
 			
@@ -183,7 +179,7 @@ namespace StudentsFetcher.StudentMarking
 				sb.AppendFormat(componentComments);
 			}
 			// sb.AppendFormat("Feedback:\r\n\r\n");
-			var sqlTable = $"select * from QComments where SCOM_Ptr_Submission = {id} order by cpnt_order, COMM_Section";
+			var sqlTable = $"select * from QComments where SCOM_Ptr_Submission = {shortId} order by cpnt_order, COMM_Section";
 			dt = GetDataTable(sqlTable);
 			var prevSection = "";
 			foreach (DataRow item in dt.Rows)
@@ -454,7 +450,29 @@ namespace StudentsFetcher.StudentMarking
 			}
 		}
 
-		
+		public int GetStudentShortId(string NumericUserId, out string email)
+		{
+			email = "";
+			var s = $"select SUB_ID, SUB_email from TB_Submissions where cast(SUB_NumericUserID as int) = cast({NumericUserId} as int)";
+			var dt = GetDataTable(s);
+			if (dt.Rows.Count != 1)
+				return -1;
+			
+			var r = dt.Rows[0];
+			if (r is null)
+				return -1;
+
+			var id = r["SUB_ID"];
+			if (id == DBNull.Value)
+				return -1;
+			if (!int.TryParse(id.ToString(), out var numeric))
+				return -1;
+
+			var tmpEmail = r["SUB_email"];
+			if (tmpEmail is not null && tmpEmail != DBNull.Value)
+				email = tmpEmail.ToString() ?? string.Empty;
+			return numeric;
+		}
 
 		public string BareName
 		{

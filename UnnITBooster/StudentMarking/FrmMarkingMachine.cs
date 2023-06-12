@@ -156,9 +156,9 @@ public partial class FrmMarkingMachine : Form
 			sb.AppendLine($"SUB_id\tSUB_LastName\tSUB_FirstName\tSUB_PaperID\tSUB_NumericUserID\tMARKS\ttotmark");
 			foreach (DataRow item in dt.Rows)
             {
-                var totmark = mc.GetFinalMark(item["SUB_NumericUserId"].ToString(), _config);
+                int subId = Convert.ToInt32(item["SUB_id"].ToString());
+				var totmark = mc.GetFinalMark(subId, _config, true);
                 sb.AppendLine($"{item["SUB_id"]}\t{item["SUB_LastName"]}\t{item["SUB_FirstName"]}\t{item["SUB_PaperID"]}\t{item["SUB_NumericUserID"]}\t{item["MARKS"]}\t{totmark}");
-
                 sbDataUpload.AppendFormat($"\"{item["SUB_LastName"]}\"\t\"{item["SUB_FirstName"]}\"\t\"{item["SUB_UserID"]}\"\t\"{item["SUB_NumericUserID"]}\"\t\"{item["SUB_email"]}\"\t\t\t\"{totmark}.00\"\n");
             }
 
@@ -211,7 +211,8 @@ public partial class FrmMarkingMachine : Form
 
     private void txtSearch_KeyDown(object sender, KeyEventArgs e)
     {
-        if (e.KeyCode == Keys.Enter)
+        txtStudentId.Visible = true;
+		if (e.KeyCode == Keys.Enter)
         {
             var addComponentMatch = Regex.Match(txtSearch.Text, "component (\\d+) (\\d+) (.*)", RegexOptions.IgnoreCase);
 			var setComponentCommentMatch = Regex.Match(txtSearch.Text, "componentComment (\\d+) (.*)", RegexOptions.IgnoreCase);
@@ -269,12 +270,16 @@ public partial class FrmMarkingMachine : Form
             {
 				CleanMcrf();
 			}
-			else if (txtSearch.Text.Equals("marks", StringComparison.OrdinalIgnoreCase))
+			else if (
+                txtSearch.Text.Equals("marks", StringComparison.OrdinalIgnoreCase)
+                || txtSearch.Text.Equals("marks with emails", StringComparison.OrdinalIgnoreCase)
+				)
             {
-				GetMarks();
+				GetMarks(txtSearch.Text);
 			}
 			else if (txtSearch.Text.Equals("turnitinsort", StringComparison.OrdinalIgnoreCase))
 			{
+				txtStudentId.Visible = false;
 				GetTurnitinOrder();
 			}
 			else if (
@@ -308,8 +313,9 @@ public partial class FrmMarkingMachine : Form
                         <Id#>: preloads the comment of type #Id for the current student to be modified
 
                     marks
-                       if ids in textbox (one per row), used to fill MCRF with selected IDs
-                       otherwise produces all available marks
+                        if NumericUserIds in textbox (one per row), useful to fill MCRF 
+                        otherwise produces all available marks
+                        use 'marks with emails' to add the email address to the output
 
                     turnitinsort
                         produces the order of entries like turnitin would
@@ -322,7 +328,7 @@ public partial class FrmMarkingMachine : Form
                        lists students that got a specific comment in their feedback
 
                     stat|stats|transcript
-                       Provides student transcript information, if available
+                       Provides transcript information for the selected student, if available
 
                     setlevel [ug|pg]
                        determines the verbal conversion of marks at 40 to sufficient or inadequate
@@ -691,32 +697,34 @@ public partial class FrmMarkingMachine : Form
         }
     }
 
-    private void GetMarks()
+    private void GetMarks(string text)
     {
+        StringBuilder sb = new StringBuilder();
         string[] ids;
 		if (string.IsNullOrWhiteSpace(txtLibReport.Text))
 			ids = _config.GetStudentIds();
         else
             ids = txtLibReport.Text.Split(new[] { "\r\n" }, StringSplitOptions.None);
-        
+
+        var WithEmail = text.ToLowerInvariant().Contains("email");
             
         var markgen = _config.GetMarkCalculator();
-        foreach (var idWithSlash in ids)
+        foreach (var fullStringId in ids)
         {
-            var result = "";
-            var idParts = idWithSlash.Split(new[] { "/" }, StringSplitOptions.None);
-            if (idParts.Length == 2)
-            {
-                var id = idParts[0];
-                result = markgen.GetFinalMark(id, _config).ToString();
-            }
-            else if (idWithSlash.Length == 8)
-            {
-				// idWithSlash does not have the slash
-				result = markgen.GetFinalMark(idWithSlash, _config).ToString();
-			}
-            txtStudentreport.Text += $"{idWithSlash}\t{result}\r\n";
+			var idParts = fullStringId.Split(new[] { "/" }, StringSplitOptions.None);
+			var useId = (idParts.Length == 2)
+                ? idParts[0]
+                : fullStringId;
+			var	intId = _config.GetStudentShortId(useId, out string email);
+            var result = markgen.GetFinalMark(intId, _config, true).ToString();
+			if (!WithEmail)
+                sb.AppendLine($"{fullStringId}\t{result}");
+            else
+                sb.AppendLine($"{fullStringId}\t{result}\t{email}");
         }
+        txtStudentreport.Text = sb.ToString();
+
+
     }
 
     private void AddComponent(Match m)
@@ -1107,7 +1115,7 @@ public partial class FrmMarkingMachine : Form
                     repvalue = _config.GetStudentReport(iStudentId, chkSendModerationNotice.Checked);
                     break;
                 case "FinalMark":
-                    repvalue = mcalc.GetFinalMark(row["SUB_NumericUserId"].ToString(), _config).ToString();
+                    repvalue = mcalc.GetFinalMark(iStudentId, _config, true).ToString();
                     break;
                 case "AllMarks":
                     break;
@@ -1157,7 +1165,7 @@ public partial class FrmMarkingMachine : Form
                 lvi.Tag = ProgressiveId;
 				lvi.SubItems.Add(item["marks"].ToString());
                 var numUID = item["SUB_NumericUserId"].ToString();
-                lvi.SubItems.Add(mcalc.GetFinalMark(ProgressiveId, _config).ToString());
+                lvi.SubItems.Add(mcalc.GetFinalMark(ProgressiveId, _config, true).ToString());
                 lvi.SubItems.Add(localDateTime);
                 lvi.SubItems.Add(item["NumComments"].ToString());
                 lvi.SubItems.Add($"Overalp: {item["SUB_Overlap"]} Internet: {item["SUB_InternetOverlap"]} Pub: {item["SUB_PublicationsOverlap"]} Student: {item["SUB_StudentPapersOverlap"]}");
