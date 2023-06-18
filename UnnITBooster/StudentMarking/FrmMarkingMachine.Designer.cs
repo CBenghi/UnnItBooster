@@ -143,6 +143,9 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnExportExcel = new System.Windows.Forms.Button();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.BtnOpenFolder = new System.Windows.Forms.Button();
+			this.tabPage10 = new System.Windows.Forms.TabPage();
+			this.TxtMergeReportFolder = new System.Windows.Forms.TextBox();
+			this.BtnMergeReport = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -186,6 +189,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage8.SuspendLayout();
 			this.tabPage9.SuspendLayout();
 			this.tableLayoutPanel4.SuspendLayout();
+			this.tabPage10.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// txtStudentId
@@ -1288,11 +1292,11 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// txtReport
 			// 
-			this.txtReport.Location = new System.Drawing.Point(418, 40);
+			this.txtReport.Location = new System.Drawing.Point(444, 40);
 			this.txtReport.Multiline = true;
 			this.txtReport.Name = "txtReport";
 			this.txtReport.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtReport.Size = new System.Drawing.Size(373, 181);
+			this.txtReport.Size = new System.Drawing.Size(347, 181);
 			this.txtReport.TabIndex = 26;
 			// 
 			// tabControl3
@@ -1301,10 +1305,11 @@ namespace StudentsFetcher.StudentMarking
 			this.tabControl3.Controls.Add(this.tabPage7);
 			this.tabControl3.Controls.Add(this.tabPage8);
 			this.tabControl3.Controls.Add(this.tabPage9);
+			this.tabControl3.Controls.Add(this.tabPage10);
 			this.tabControl3.Location = new System.Drawing.Point(5, 18);
 			this.tabControl3.Name = "tabControl3";
 			this.tabControl3.SelectedIndex = 0;
-			this.tabControl3.Size = new System.Drawing.Size(407, 207);
+			this.tabControl3.Size = new System.Drawing.Size(433, 207);
 			this.tabControl3.TabIndex = 26;
 			// 
 			// tabPage6
@@ -1316,7 +1321,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage6.Location = new System.Drawing.Point(4, 22);
 			this.tabPage6.Name = "tabPage6";
 			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage6.Size = new System.Drawing.Size(399, 181);
+			this.tabPage6.Size = new System.Drawing.Size(425, 181);
 			this.tabPage6.TabIndex = 0;
 			this.tabPage6.Text = "Gradebook";
 			this.tabPage6.UseVisualStyleBackColor = true;
@@ -1346,7 +1351,7 @@ namespace StudentsFetcher.StudentMarking
 			this.btnCompleteData.Location = new System.Drawing.Point(21, 135);
 			this.btnCompleteData.Margin = new System.Windows.Forms.Padding(2);
 			this.btnCompleteData.Name = "btnCompleteData";
-			this.btnCompleteData.Size = new System.Drawing.Size(339, 26);
+			this.btnCompleteData.Size = new System.Drawing.Size(365, 26);
 			this.btnCompleteData.TabIndex = 18;
 			this.btnCompleteData.Text = "Update database from gradebook";
 			this.btnCompleteData.UseVisualStyleBackColor = true;
@@ -1359,7 +1364,7 @@ namespace StudentsFetcher.StudentMarking
 			this.button7.Location = new System.Drawing.Point(21, 105);
 			this.button7.Margin = new System.Windows.Forms.Padding(2);
 			this.button7.Name = "button7";
-			this.button7.Size = new System.Drawing.Size(339, 26);
+			this.button7.Size = new System.Drawing.Size(365, 26);
 			this.button7.TabIndex = 19;
 			this.button7.Text = "Initialize database from gradebook";
 			this.button7.UseVisualStyleBackColor = true;
@@ -1492,7 +1497,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage9.Location = new System.Drawing.Point(4, 22);
 			this.tabPage9.Name = "tabPage9";
 			this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage9.Size = new System.Drawing.Size(399, 181);
+			this.tabPage9.Size = new System.Drawing.Size(425, 181);
 			this.tabPage9.TabIndex = 3;
 			this.tabPage9.Text = "Excel";
 			this.tabPage9.UseVisualStyleBackColor = true;
@@ -1503,7 +1508,7 @@ namespace StudentsFetcher.StudentMarking
 			this.TxtExcelComponentSource.Location = new System.Drawing.Point(6, 106);
 			this.TxtExcelComponentSource.Multiline = true;
 			this.TxtExcelComponentSource.Name = "TxtExcelComponentSource";
-			this.TxtExcelComponentSource.Size = new System.Drawing.Size(387, 22);
+			this.TxtExcelComponentSource.Size = new System.Drawing.Size(413, 22);
 			this.TxtExcelComponentSource.TabIndex = 10;
 			this.TxtExcelComponentSource.TabStop = false;
 			// 
@@ -1558,6 +1563,38 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnOpenFolder.TabIndex = 13;
 			this.BtnOpenFolder.UseVisualStyleBackColor = true;
 			this.BtnOpenFolder.Click += new System.EventHandler(this.BtnOpenFolder_Click);
+			// 
+			// tabPage10
+			// 
+			this.tabPage10.Controls.Add(this.TxtMergeReportFolder);
+			this.tabPage10.Controls.Add(this.BtnMergeReport);
+			this.tabPage10.Location = new System.Drawing.Point(4, 22);
+			this.tabPage10.Name = "tabPage10";
+			this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage10.Size = new System.Drawing.Size(425, 181);
+			this.tabPage10.TabIndex = 4;
+			this.tabPage10.Text = "PlagiarismReport";
+			this.tabPage10.UseVisualStyleBackColor = true;
+			// 
+			// TxtMergeReportFolder
+			// 
+			this.TxtMergeReportFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.TxtMergeReportFolder.Location = new System.Drawing.Point(15, 116);
+			this.TxtMergeReportFolder.Multiline = true;
+			this.TxtMergeReportFolder.Name = "TxtMergeReportFolder";
+			this.TxtMergeReportFolder.Size = new System.Drawing.Size(392, 22);
+			this.TxtMergeReportFolder.TabIndex = 12;
+			this.TxtMergeReportFolder.TabStop = false;
+			// 
+			// BtnMergeReport
+			// 
+			this.BtnMergeReport.Location = new System.Drawing.Point(15, 16);
+			this.BtnMergeReport.Name = "BtnMergeReport";
+			this.BtnMergeReport.Size = new System.Drawing.Size(169, 42);
+			this.BtnMergeReport.TabIndex = 11;
+			this.BtnMergeReport.Text = "Merge reports";
+			this.BtnMergeReport.UseVisualStyleBackColor = true;
+			this.BtnMergeReport.Click += new System.EventHandler(this.BtnMergeReport_Click);
 			// 
 			// FrmMarkingMachine
 			// 
@@ -1626,6 +1663,8 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage9.PerformLayout();
 			this.tableLayoutPanel4.ResumeLayout(false);
 			this.tableLayoutPanel4.PerformLayout();
+			this.tabPage10.ResumeLayout(false);
+			this.tabPage10.PerformLayout();
 			this.ResumeLayout(false);
 
         }
@@ -1744,6 +1783,9 @@ namespace StudentsFetcher.StudentMarking
 		private Label LblOverlap;
 		private NumericUpDown NudOverlap;
 		private CheckBox ChkExclude0;
+		private TabPage tabPage10;
+		private TextBox TxtMergeReportFolder;
+		private Button BtnMergeReport;
 	}
 }
 

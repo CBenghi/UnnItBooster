@@ -18,6 +18,7 @@ using System.IO.Compression;
 using UnnItBooster.StudentMarking;
 using MathNet.Numerics;
 using UnnFunctions.Models;
+using System.Security.Cryptography.Xml;
 
 namespace StudentsFetcher.StudentMarking;
 
@@ -1805,4 +1806,41 @@ public partial class FrmMarkingMachine : Form
 
 		return false;
     }
+
+	private void BtnMergeReport_Click(object sender, EventArgs e)
+	{
+        if (string.IsNullOrEmpty( TxtMergeReportFolder.Text ))
+        {
+			openFileDialog1.DefaultExt = "html";
+			openFileDialog1.Multiselect = false;
+			openFileDialog1.ShowDialog();
+			if (openFileDialog1.FileName != "")
+			{
+                FileInfo f = new FileInfo(openFileDialog1.FileName);
+                if (!f.Exists)
+                    return;
+                TxtMergeReportFolder.Text = f.Directory.FullName;
+			}
+		}
+        else
+        {
+            DirectoryInfo d = new DirectoryInfo(TxtMergeReportFolder.Text);
+            if (!d.Exists)
+                return;
+            var htmls = d.GetFiles("AI Detection *.html");
+            Regex r = new Regex("AI Detection (?<name>.*)\\.html");
+
+			foreach ( var html in htmls )
+            {
+                var m = r.Match(html.Name);
+                if (!m.Success)
+                    continue;
+                var name = m.Groups["name"].Value;
+                var referenceDet = new FileInfo(Path.Combine(d.FullName, $"Reference Detection {name}.txt"));
+                if (!referenceDet.Exists)
+                    continue;
+				TurnitinHtmlReports.Merge(html, referenceDet, name);
+            }
+        }
+	}
 }
