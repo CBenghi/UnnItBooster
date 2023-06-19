@@ -1,4 +1,7 @@
 ﻿using OfficeOpenXml.Drawing.Chart;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -13,7 +16,7 @@ namespace UnnFunctions.Models
 {
 	public class TurnitinHtmlReports
 	{
-		public static void Merge(FileInfo html, FileInfo referenceDet, string name)
+		public static void Merge(FileInfo html, FileInfo referenceDet, string name, double hardCodedScale)
 		{
 			if (html == null || referenceDet == null) 
 				return;
@@ -34,34 +37,94 @@ namespace UnnFunctions.Models
 			if (!htmlLines.Any())
 				return;
 
-			double scale = 1;
+			
 			Regex pageLine = new Regex("alt=\"Page (?<page>\\d+)\"");
-			Regex scaleR = new Regex("scale\\((?<scale>[\\d\\.]+)\\)");
-			TunritinReferencePage? current = null;
+			TunritinReferencePage? currentRefPageContent = null;
 			using var w = f.CreateText();
 			foreach (var sourceLine in htmlLines)
 			{
+				var line = sourceLine;
 				var plm = pageLine.Match(sourceLine);	
-				var scm = scaleR.Match(sourceLine);	
 				if (plm.Success)
 				{
 					if (!int.TryParse(plm.Groups["page"].Value, out var pg))
 						return;
-					dic.TryGetValue(pg, out current);
+					dic.TryGetValue(pg, out currentRefPageContent);
 				}
-				else if (scm.Success)
+				else if (TunritinAiPage.IsTransformLine(sourceLine, out _))
 				{
-					if (!double.TryParse(scm.Groups["scale"].Value, out scale))
-						scale = 1;
+					// here we attempt to pre-compute the scaling so it can be printed (due to chrome quirkness with background scaling
+					line = TunritinAiPage.ComputeScaling(sourceLine);
 				}
 				else if (sourceLine == "</div>")
 				{
-					if (current != null)
-						current.WriteTo(w, scale);					
+					if (currentRefPageContent != null)
+						currentRefPageContent.WriteTo(w, hardCodedScale);					
 				}
-				w.WriteLine(sourceLine);
+				w.WriteLine(line);
 			}
 		}
+	}
+
+	internal class TunritinAiPage
+	{
+		private class Scaler
+		{
+			private double scale;
+
+			public Scaler(double scale)
+			{
+				this.scale = scale;
+			}
+
+			public string Replace(Match m)
+			{
+				if (!double.TryParse(m.Groups["value"].Value, out var val))
+					return m.Value;
+				return m.Value.Replace(m.Groups["value"].Value, (val * scale).ToString());
+			}
+		}
+
+		static Regex scaleR = new Regex("scale\\((?<scale>[\\d\\.]+)\\);");
+
+		static string[] properties = new[] { "top", "left", "width", "height" };
+
+		public static string ComputeScaling(string scaleTransform)
+		{
+			if (!IsTransformLine(scaleTransform, out var scale))
+				return scaleTransform;
+			// fix the scale
+			var line = scaleR.Replace(scaleTransform, "scale(1.0);");
+			Scaler scaler = new Scaler(scale);
+			var eval = new MatchEvaluator(scaler.Replace);
+			// now fix the measures
+			foreach (var prop in properties)
+			{
+				var p = new Regex($"{prop}: (?<value>[\\d\\.]+)px;");
+				line = p.Replace(line, eval);
+			}
+			return line;
+		}
+
+		
+
+		public static bool IsTransformLine(string s, out double scale)
+		{
+			var scm = scaleR.Match(s);
+			if (!scm.Success)
+			{
+				scale = 1;
+				return false;
+			}
+			if (!double.TryParse(scm.Groups["scale"].Value, out scale))
+			{
+				scale = 1;
+				return false;
+			}
+			return true;
+		}
+
+		
 	}
 
 	internal class TunritinReferencePage
@@ -165,16 +228,16 @@ namespace UnnFunctions.Models
 			Areas.Add(d);
 		}
 
-		internal void WriteTo(StreamWriter w, double scale)
+		internal void WriteTo(StreamWriter w, double hardCodeScaling)
 		{
 			if (!Areas.Any())
 				return;
 			w.WriteLine("<tii-doc-simple-glyph-layer>");
 			w.WriteLine("<div class=\"react-wc-mount-point undefined\">");
-			w.WriteLine($"""<div class="" style="position: absolute; top: 0px; left: 0px; transform: scale({1/scale});">""");
+			w.WriteLine($"""<div class="referenceScaling" >""");
 			foreach (var area in Areas)
 			{
-				w.WriteLine($"""<div class="region reference-region" style="top: {area.Top}px; left: {area.Left}px; width: {area.W}px; height: {area.H}px; position: absolute;"></div>""");
+				w.WriteLine($"""<div class="region reference-region" style="top: {area.Top * hardCodeScaling}px; left: {area.Left * hardCodeScaling}px; width: {area.W * hardCodeScaling}px; height: {area.H * hardCodeScaling}px; position: absolute;"></div>""");
 			}
 			w.WriteLine();
 			w.WriteLine("</div>");

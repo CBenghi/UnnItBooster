@@ -141,11 +141,13 @@ namespace StudentsFetcher.StudentMarking
 			this.TxtExcelComponentSource = new System.Windows.Forms.TextBox();
 			this.BtnImportExcel = new System.Windows.Forms.Button();
 			this.BtnExportExcel = new System.Windows.Forms.Button();
-			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-			this.BtnOpenFolder = new System.Windows.Forms.Button();
 			this.tabPage10 = new System.Windows.Forms.TabPage();
+			this.label12 = new System.Windows.Forms.Label();
+			this.TxtScaleFactor = new System.Windows.Forms.TextBox();
 			this.TxtMergeReportFolder = new System.Windows.Forms.TextBox();
 			this.BtnMergeReport = new System.Windows.Forms.Button();
+			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+			this.BtnOpenFolder = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -188,8 +190,8 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage7.SuspendLayout();
 			this.tabPage8.SuspendLayout();
 			this.tabPage9.SuspendLayout();
-			this.tableLayoutPanel4.SuspendLayout();
 			this.tabPage10.SuspendLayout();
+			this.tableLayoutPanel4.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// txtStudentId
@@ -1382,7 +1384,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage7.Location = new System.Drawing.Point(4, 22);
 			this.tabPage7.Name = "tabPage7";
 			this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage7.Size = new System.Drawing.Size(399, 181);
+			this.tabPage7.Size = new System.Drawing.Size(425, 181);
 			this.tabPage7.TabIndex = 1;
 			this.tabPage7.Text = "Other AMM database";
 			this.tabPage7.UseVisualStyleBackColor = true;
@@ -1464,7 +1466,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage8.Controls.Add(this.button9);
 			this.tabPage8.Location = new System.Drawing.Point(4, 22);
 			this.tabPage8.Name = "tabPage8";
-			this.tabPage8.Size = new System.Drawing.Size(399, 181);
+			this.tabPage8.Size = new System.Drawing.Size(425, 181);
 			this.tabPage8.TabIndex = 2;
 			this.tabPage8.Text = "DocumentArchive";
 			this.tabPage8.UseVisualStyleBackColor = true;
@@ -1532,6 +1534,58 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnExportExcel.UseVisualStyleBackColor = true;
 			this.BtnExportExcel.Click += new System.EventHandler(this.BtnExportExcel_Click);
 			// 
+			// tabPage10
+			// 
+			this.tabPage10.Controls.Add(this.label12);
+			this.tabPage10.Controls.Add(this.TxtScaleFactor);
+			this.tabPage10.Controls.Add(this.TxtMergeReportFolder);
+			this.tabPage10.Controls.Add(this.BtnMergeReport);
+			this.tabPage10.Location = new System.Drawing.Point(4, 22);
+			this.tabPage10.Name = "tabPage10";
+			this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage10.Size = new System.Drawing.Size(425, 181);
+			this.tabPage10.TabIndex = 4;
+			this.tabPage10.Text = "PlagiarismReport";
+			this.tabPage10.UseVisualStyleBackColor = true;
+			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.Location = new System.Drawing.Point(12, 87);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(34, 13);
+			this.label12.TabIndex = 14;
+			this.label12.Text = "Scale";
+			// 
+			// TxtScaleFactor
+			// 
+			this.TxtScaleFactor.Location = new System.Drawing.Point(52, 84);
+			this.TxtScaleFactor.Name = "TxtScaleFactor";
+			this.TxtScaleFactor.Size = new System.Drawing.Size(132, 20);
+			this.TxtScaleFactor.TabIndex = 13;
+			this.TxtScaleFactor.Text = "1.0";
+			this.TxtScaleFactor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// TxtMergeReportFolder
+			// 
+			this.TxtMergeReportFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.TxtMergeReportFolder.Location = new System.Drawing.Point(15, 116);
+			this.TxtMergeReportFolder.Multiline = true;
+			this.TxtMergeReportFolder.Name = "TxtMergeReportFolder";
+			this.TxtMergeReportFolder.Size = new System.Drawing.Size(392, 22);
+			this.TxtMergeReportFolder.TabIndex = 12;
+			this.TxtMergeReportFolder.TabStop = false;
+			// 
+			// BtnMergeReport
+			// 
+			this.BtnMergeReport.Location = new System.Drawing.Point(15, 16);
+			this.BtnMergeReport.Name = "BtnMergeReport";
+			this.BtnMergeReport.Size = new System.Drawing.Size(169, 42);
+			this.BtnMergeReport.TabIndex = 11;
+			this.BtnMergeReport.Text = "Merge reports";
+			this.BtnMergeReport.UseVisualStyleBackColor = true;
+			this.BtnMergeReport.Click += new System.EventHandler(this.BtnMergeReport_Click);
+			// 
 			// tableLayoutPanel4
 			// 
 			this.tableLayoutPanel4.ColumnCount = 5;
@@ -1563,38 +1617,6 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnOpenFolder.TabIndex = 13;
 			this.BtnOpenFolder.UseVisualStyleBackColor = true;
 			this.BtnOpenFolder.Click += new System.EventHandler(this.BtnOpenFolder_Click);
-			// 
-			// tabPage10
-			// 
-			this.tabPage10.Controls.Add(this.TxtMergeReportFolder);
-			this.tabPage10.Controls.Add(this.BtnMergeReport);
-			this.tabPage10.Location = new System.Drawing.Point(4, 22);
-			this.tabPage10.Name = "tabPage10";
-			this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage10.Size = new System.Drawing.Size(425, 181);
-			this.tabPage10.TabIndex = 4;
-			this.tabPage10.Text = "PlagiarismReport";
-			this.tabPage10.UseVisualStyleBackColor = true;
-			// 
-			// TxtMergeReportFolder
-			// 
-			this.TxtMergeReportFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.TxtMergeReportFolder.Location = new System.Drawing.Point(15, 116);
-			this.TxtMergeReportFolder.Multiline = true;
-			this.TxtMergeReportFolder.Name = "TxtMergeReportFolder";
-			this.TxtMergeReportFolder.Size = new System.Drawing.Size(392, 22);
-			this.TxtMergeReportFolder.TabIndex = 12;
-			this.TxtMergeReportFolder.TabStop = false;
-			// 
-			// BtnMergeReport
-			// 
-			this.BtnMergeReport.Location = new System.Drawing.Point(15, 16);
-			this.BtnMergeReport.Name = "BtnMergeReport";
-			this.BtnMergeReport.Size = new System.Drawing.Size(169, 42);
-			this.BtnMergeReport.TabIndex = 11;
-			this.BtnMergeReport.Text = "Merge reports";
-			this.BtnMergeReport.UseVisualStyleBackColor = true;
-			this.BtnMergeReport.Click += new System.EventHandler(this.BtnMergeReport_Click);
 			// 
 			// FrmMarkingMachine
 			// 
@@ -1661,10 +1683,10 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage8.ResumeLayout(false);
 			this.tabPage9.ResumeLayout(false);
 			this.tabPage9.PerformLayout();
-			this.tableLayoutPanel4.ResumeLayout(false);
-			this.tableLayoutPanel4.PerformLayout();
 			this.tabPage10.ResumeLayout(false);
 			this.tabPage10.PerformLayout();
+			this.tableLayoutPanel4.ResumeLayout(false);
+			this.tableLayoutPanel4.PerformLayout();
 			this.ResumeLayout(false);
 
         }
@@ -1786,6 +1808,8 @@ namespace StudentsFetcher.StudentMarking
 		private TabPage tabPage10;
 		private TextBox TxtMergeReportFolder;
 		private Button BtnMergeReport;
+		private Label label12;
+		private TextBox TxtScaleFactor;
 	}
 }
 
