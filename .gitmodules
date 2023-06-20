@@ -1,4 +1,0 @@
-[submodule "UnnWebHelper"]
-	path = UnnWebHelper
-	url = https://github.com/CBenghi/UnnWebHelper.git
-	branch = main
