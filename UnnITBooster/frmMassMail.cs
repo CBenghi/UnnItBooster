@@ -14,6 +14,9 @@ using System.DirectoryServices;
 using UnnItBooster.Models;
 using NPOI.Util.Collections;
 using StudentsFetcher.StudentMarking;
+using UnnItBooster.Properties;
+using System.Linq;
+using System.Globalization;
 
 namespace StudentMarking
 {
@@ -30,14 +33,14 @@ namespace StudentMarking
 			txtEmailSubject.Text = StudentsFetcher.Properties.Settings.Default.emailSubject;
 			txtEmailCC.Text = StudentsFetcher.Properties.Settings.Default.emailCC;
             studentsRepo = new StudentsRepository(StudentsFetcher.Properties.Settings.Default.StudentsFolder);
-			//cmbSelectedModule.Items.Clear();
-			//studentsRepo.Reload();
-			//foreach (var coll in studentsRepo.GetPersonCollections())
-			//{
-			//	var ct = new ComboTag($"{coll.Name} - {coll.Students.Count}", coll.Name);
-			//	cmbSelectedModule.Items.Add(ct);
-			//}
-        }
+			cmbSelectedModule.Items.Clear();
+			studentsRepo.Reload();
+			foreach (var coll in studentsRepo.GetPersonCollections())
+			{
+				var ct = new ComboTag($"{coll.Name} - {coll.Students.Count}", coll.Name);
+				cmbSelectedModule.Items.Add(ct);
+			}
+		}
 
 		private void cmdSelectFile_Click(object sender, EventArgs e)
 		{
@@ -133,11 +136,11 @@ namespace StudentMarking
 			UpdateUI(dt);
 		}
 
-		private DataTable? currenTable = null;
+		private DataTable? currentTable = null;
 
 		private void UpdateUI(DataTable dt)
 		{
-			currenTable = dt;
+			currentTable = dt;
 			UpdateCombos();
 			UpdateList();
 		}
@@ -148,9 +151,9 @@ namespace StudentMarking
 			cmbEmailField.Items.Clear();
 			lstEmailSendSelection.Columns.Clear();
 			lstEmailSendSelection.Columns.Add("FirstCol");
-			if (currenTable is not null)
+			if (currentTable is not null)
 			{
-				foreach (DataColumn clm in currenTable.Columns)
+				foreach (DataColumn clm in currentTable.Columns)
 				{
 					if (string.IsNullOrEmpty(curr))
 					{
@@ -172,19 +175,16 @@ namespace StudentMarking
 			{
 
 			}
-
 		}
-
-        
 
         private void UpdateList()
 		{
 			// a regex to get the email from text
 			var emaiRegex = new Regex(".+@.+\\..+");
 			lstEmailSendSelection.Items.Clear();
-			if (currenTable == null)
+			if (currentTable == null)
 				return;
-			foreach (DataRow row in currenTable.Rows)
+			foreach (DataRow row in currentTable.Rows)
 			{
 				if (!string.IsNullOrEmpty(cmbEmailField.Text))
 				{
@@ -199,7 +199,6 @@ namespace StudentMarking
 				lstEmailSendSelection.Items.Add(lvi);
 			}
 		}
-
 
 		List<string> GetReplacementList(string emailbody)
 		{
@@ -239,19 +238,15 @@ namespace StudentMarking
 				try
 				{
 					string emailtext = GetMailBody(replacements, row);
-
 					var emailSubject = replaceFields(txtEmailSubject.Text, replacements, row);
-
 					var destEmail = row[cmbEmailField.Text].ToString();
 					if (chkEmailDryRun.Checked)
 						app.SendOutlookEmail("claudio.benghi@gmail.com", emailSubject, emailtext, txtEmailCC.Text);
 					else
 						app.SendOutlookEmail(destEmail, emailSubject, emailtext, txtEmailCC.Text);
-
 				}
 				catch (Exception ex)
 				{
-
 					MessageBox.Show(ex.Message, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
 				}
@@ -293,27 +288,48 @@ namespace StudentMarking
 
 		private string replaceFields(string emailtext, IEnumerable<string> replacements, DataRow row)
 		{
-
-
 			foreach (var item in replacements)
 			{
-				var repvalue = "";
-				repvalue = row[item].ToString();
-				repvalue = repvalue.Replace("\n", "\r\n");
-				var oValue = row[item];
-				if (oValue.GetType() == typeof(double))
+				var data = item.Split(':');
+				var dataId = data[0];
+
+                // start with the data
+                var repvalue = "";
+                repvalue = row[dataId].ToString();
+                repvalue = repvalue.Replace("\n", "\r\n");
+                var oValue = row[dataId];
+                if (oValue.GetType() == typeof(double))
+                {
+                    // repvalue = Math.Ceiling((double) oValue).ToString();
+                    repvalue = Math.Round((double)oValue).ToString();
+                }
+				// any modifier?
+                if (data.Length > 1)
 				{
-					// repvalue = Math.Ceiling((double) oValue).ToString();
-					repvalue = Math.Round((double)oValue).ToString();
-				}
-
-
+                    var dataFun = data[1].ToLowerInvariant();
+					switch(dataFun)
+					{
+						case "capitalize":
+							repvalue = capitalize(repvalue.ToLowerInvariant()); 
+							break;
+					}
+                }				
+				// now fix it
 				emailtext = emailtext.Replace("{" + item + "}", repvalue);
 			}
 			return emailtext;
 		}
 
-		private void cmdReload_Click(object sender, EventArgs e)
+		private string capitalize(string repvalue)
+		{
+			// Creates a TextInfo based on the "en-US" culture.
+			TextInfo textInfo = new CultureInfo("en-GB", false).TextInfo;
+
+			// Changes a string to titlecase.
+			return textInfo.ToTitleCase(repvalue);
+		}
+
+        private void cmdReload_Click(object sender, EventArgs e)
 		{
 			ReloadDb();
 		}
@@ -417,5 +433,37 @@ namespace StudentMarking
 		{
 			ReloadTable();
 		}
-	}
+
+        private void cmdSetModule_Click(object sender, EventArgs e)
+        {
+			var sel = cmbSelectedModule.SelectedItem as ComboTag;
+			if (sel == null)
+				return;
+			var code = sel.Tag.ToString();
+			var c = studentsRepo.GetPersonCollections().ToList();
+            var  coll = c.Where(x => x.Name == code).FirstOrDefault();
+			if (coll == null) 
+				return;
+
+            // Create a table with a schema that matches that of the query results.
+            var table = new DataTable();
+            table.Columns.Add("email", typeof(string));
+            table.Columns.Add("first", typeof(string));
+            table.Columns.Add("last", typeof(string));
+            table.Columns.Add("full", typeof(string));
+			var query = coll.Students.Where(x => !string.IsNullOrEmpty(x.Email)).Select(x=>ToDataRow(x, table));
+            query.CopyToDataTable(table, LoadOption.PreserveChanges);
+            UpdateUI(table);
+        }
+
+        private DataRow ToDataRow(Student x, DataTable table)
+        {
+			var r = table.NewRow();
+			r["email"] = x.Email;
+			r["first"] = x.Forename;
+			r["last"] = x.Surname;
+			r["full"] = x.FullName;
+			return r;
+        }
+    }
 }

@@ -30,15 +30,19 @@ namespace StudentMarking
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMassMail));
             this.cmdSelectFile = new System.Windows.Forms.Button();
             this.txtExcelFileName = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.cmbTableNames = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cmdReload = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.cmbSelectedModule = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -63,12 +67,11 @@ namespace StudentMarking
             this.label10 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.cmbSelectedModule = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.cmdSetModule = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
@@ -79,9 +82,6 @@ namespace StudentMarking
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.tabControl2.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmdSelectFile
@@ -116,6 +116,42 @@ namespace StudentMarking
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1026, 134);
             this.panel1.TabIndex = 11;
+            // 
+            // tabControl2
+            // 
+            this.tabControl2.Controls.Add(this.tabPage1);
+            this.tabControl2.Controls.Add(this.tabPage4);
+            this.tabControl2.Location = new System.Drawing.Point(6, 9);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(1009, 113);
+            this.tabControl2.TabIndex = 16;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.button2);
+            this.tabPage1.Controls.Add(this.txtExcelFileName);
+            this.tabPage1.Controls.Add(this.cmbTableNames);
+            this.tabPage1.Controls.Add(this.cmdSelectFile);
+            this.tabPage1.Controls.Add(this.label3);
+            this.tabPage1.Controls.Add(this.cmdReload);
+            this.tabPage1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1001, 80);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Database";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 9);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(83, 20);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Database:";
             // 
             // button2
             // 
@@ -159,14 +195,36 @@ namespace StudentMarking
             this.cmdReload.UseVisualStyleBackColor = true;
             this.cmdReload.Click += new System.EventHandler(this.cmdReload_Click);
             // 
-            // label5
+            // tabPage4
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 9);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(83, 20);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Database:";
+            this.tabPage4.Controls.Add(this.cmdSetModule);
+            this.tabPage4.Controls.Add(this.cmbSelectedModule);
+            this.tabPage4.Controls.Add(this.label4);
+            this.tabPage4.Location = new System.Drawing.Point(4, 29);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(1001, 80);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "Student repo";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // cmbSelectedModule
+            // 
+            this.cmbSelectedModule.FormattingEnabled = true;
+            this.cmbSelectedModule.Location = new System.Drawing.Point(103, 5);
+            this.cmbSelectedModule.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbSelectedModule.Name = "cmbSelectedModule";
+            this.cmbSelectedModule.Size = new System.Drawing.Size(653, 28);
+            this.cmbSelectedModule.TabIndex = 16;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 7);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 20);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Module";
             // 
             // openFileDialog1
             // 
@@ -371,10 +429,9 @@ namespace StudentMarking
             this.txtEmailPreview.Multiline = true;
             this.txtEmailPreview.Name = "txtEmailPreview";
             this.txtEmailPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtEmailPreview.Size = new System.Drawing.Size(674, 253);
+            this.txtEmailPreview.Size = new System.Drawing.Size(674, 255);
             this.txtEmailPreview.TabIndex = 7;
             this.txtEmailPreview.TabStop = false;
-            this.txtEmailPreview.Text = resources.GetString("txtEmailPreview.Text");
             // 
             // txtEmailCC
             // 
@@ -442,67 +499,22 @@ namespace StudentMarking
             this.tabPage3.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage3.Size = new System.Drawing.Size(1018, 671);
+            this.tabPage3.Size = new System.Drawing.Size(1018, 600);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Tools";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // tabControl2
+            // cmdSetModule
             // 
-            this.tabControl2.Controls.Add(this.tabPage1);
-            this.tabControl2.Controls.Add(this.tabPage4);
-            this.tabControl2.Location = new System.Drawing.Point(6, 9);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(1009, 113);
-            this.tabControl2.TabIndex = 16;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.button2);
-            this.tabPage1.Controls.Add(this.txtExcelFileName);
-            this.tabPage1.Controls.Add(this.cmbTableNames);
-            this.tabPage1.Controls.Add(this.cmdSelectFile);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.cmdReload);
-            this.tabPage1.Location = new System.Drawing.Point(4, 29);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1001, 80);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Database";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.cmbSelectedModule);
-            this.tabPage4.Controls.Add(this.label4);
-            this.tabPage4.Location = new System.Drawing.Point(4, 29);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1001, 80);
-            this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "Student repo";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // cmbSelectedModule
-            // 
-            this.cmbSelectedModule.FormattingEnabled = true;
-            this.cmbSelectedModule.Location = new System.Drawing.Point(103, 5);
-            this.cmbSelectedModule.Margin = new System.Windows.Forms.Padding(2);
-            this.cmbSelectedModule.Name = "cmbSelectedModule";
-            this.cmbSelectedModule.Size = new System.Drawing.Size(653, 28);
-            this.cmbSelectedModule.TabIndex = 16;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 7);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(52, 20);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "Table:";
+            this.cmdSetModule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdSetModule.Location = new System.Drawing.Point(761, 6);
+            this.cmdSetModule.Name = "cmdSetModule";
+            this.cmdSetModule.Size = new System.Drawing.Size(145, 27);
+            this.cmdSetModule.TabIndex = 17;
+            this.cmdSetModule.TabStop = false;
+            this.cmdSetModule.Text = "Set";
+            this.cmdSetModule.UseVisualStyleBackColor = true;
+            this.cmdSetModule.Click += new System.EventHandler(this.cmdSetModule_Click);
             // 
             // frmMassMail
             // 
@@ -516,6 +528,11 @@ namespace StudentMarking
             this.Name = "frmMassMail";
             this.Text = "Mass mailing";
             this.panel1.ResumeLayout(false);
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
@@ -529,11 +546,6 @@ namespace StudentMarking
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.tabControl2.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -579,6 +591,7 @@ namespace StudentMarking
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.ComboBox cmbSelectedModule;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button cmdSetModule;
     }
 }
 
