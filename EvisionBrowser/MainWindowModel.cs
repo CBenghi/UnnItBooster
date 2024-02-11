@@ -104,7 +104,7 @@ namespace EvisionBrowser
 			//}
 			//Report = stringBuilder.ToString();
 
-			var src = await GetSource();
+			var src = await GetPageSource();
 
 			var script = "document.getElementById('sc5054').click();";
 			Report = await GetScriptString(script);
@@ -115,7 +115,7 @@ namespace EvisionBrowser
 		[RelayCommand]
 		private async void CopyHtml()
 		{
-			var src = await GetSource();
+			var src = await GetPageSource();
 			if (string.IsNullOrEmpty(src))
 				return;
             TextCopy.Clipboard clipboard = new();
@@ -171,7 +171,7 @@ namespace EvisionBrowser
 		[RelayCommand()]
 		private async Task<bool> ProcessStudents()
 		{
-			var studentsSource = await GetSource();
+			var studentsSource = await GetPageSource();
 			var students = eVision.GetStudentsFromEvisionHtml(studentsSource).ToList();
 
 			if (UpdateOnly) // remove students that are not yet in the collection
@@ -218,7 +218,7 @@ namespace EvisionBrowser
 
 		private async void ProcessAvailableDataAsync(QueueAction context, HashSet<string>? interestingIds = null)
 		{
-			var src = await GetSource();
+			var src = await GetPageSource();
 			switch (context.DataSource)
 			{
 				// these funcions may enrich the queue and archive any data found
@@ -295,7 +295,7 @@ namespace EvisionBrowser
 
 		public string QueueDisplayText => $"{QueueStatus} {queuedActions.Count}";
 
-		private async Task<string> GetSource()
+		private async Task<string> GetPageSource()
 		{
 			var script = "document.documentElement.outerHTML;";
 			return await GetScriptString(script);
@@ -352,7 +352,7 @@ namespace EvisionBrowser
 		{
 			Dictionary<string, string> studentMarks = eVisionMarkEntry.FromTabSeparated(McrfMarks);
 
-			var source = await GetSource();
+			var source = await GetPageSource();
 			var entries = eVisionMarkEntry.GetEntries(source).ToList();
 			if (entries is null)
 			{
