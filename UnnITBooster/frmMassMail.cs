@@ -11,6 +11,9 @@ using System.Threading;
 using StudentsFetcher;
 using System.Net;
 using System.DirectoryServices;
+using UnnItBooster.Models;
+using NPOI.Util.Collections;
+using StudentsFetcher.StudentMarking;
 
 namespace StudentMarking
 {
@@ -18,15 +21,23 @@ namespace StudentMarking
 	public partial class frmMassMail : Form
 	{
 
+        private StudentsRepository studentsRepo;
 
-		public frmMassMail()
+        public frmMassMail()
 		{
 			InitializeComponent();
 			txtEmailBody.Text = StudentsFetcher.Properties.Settings.Default.emailBody;
 			txtEmailSubject.Text = StudentsFetcher.Properties.Settings.Default.emailSubject;
 			txtEmailCC.Text = StudentsFetcher.Properties.Settings.Default.emailCC;
-
-		}
+            studentsRepo = new StudentsRepository(StudentsFetcher.Properties.Settings.Default.StudentsFolder);
+			//cmbSelectedModule.Items.Clear();
+			//studentsRepo.Reload();
+			//foreach (var coll in studentsRepo.GetPersonCollections())
+			//{
+			//	var ct = new ComboTag($"{coll.Name} - {coll.Students.Count}", coll.Name);
+			//	cmbSelectedModule.Items.Add(ct);
+			//}
+        }
 
 		private void cmdSelectFile_Click(object sender, EventArgs e)
 		{
@@ -127,11 +138,8 @@ namespace StudentMarking
 		private void UpdateUI(DataTable dt)
 		{
 			currenTable = dt;
-
 			UpdateCombos();
-
 			UpdateList();
-
 		}
 
 		private void UpdateCombos()
@@ -167,7 +175,9 @@ namespace StudentMarking
 
 		}
 
-		private void UpdateList()
+        
+
+        private void UpdateList()
 		{
 			// a regex to get the email from text
 			var emaiRegex = new Regex(".+@.+\\..+");
