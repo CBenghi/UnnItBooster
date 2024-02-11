@@ -12,7 +12,14 @@ namespace UnnOutlookAddin.MailManagement
 {
 	public static class MessageClassificationExtensions
 	{
+		/// <summary>
+		/// string starting with smtp
+		/// </summary>
 		static readonly Regex regexStudentEmailPattern = new Regex(@"smtp:([a-zA-Z]\d{4,})@", RegexOptions.Compiled);
+		/// <summary>
+		/// simple student email pattern
+		/// </summary>
+		static readonly Regex regexSimpleEmailPattern = new Regex(@"([a-zA-Z]\d{4,})@", RegexOptions.Compiled);
 
 		internal static bool SenderHasStudentId(this Outlook.MailItem mail, out string id)
 		{
@@ -22,7 +29,12 @@ namespace UnnOutlookAddin.MailManagement
 
 		internal static bool HasStudentId(this Outlook.AddressEntry entry, out string id)
 		{
-			var emails = entry.GetAllEmailAddresses();
+			var emails = entry.GetAllEmailAddresses().ToList();
+			if (!emails.Any())
+			{
+				if (entry.Name.Contains("@")) // this should contain the email
+                    emails.Add(entry.Name); 
+			}
 			return HasStudentId(emails, out id);
 		}
 
@@ -115,11 +127,19 @@ namespace UnnOutlookAddin.MailManagement
 		{
 			foreach (var emailaddress in emails)
 			{
+
 				var m = regexStudentEmailPattern.Match(emailaddress);
 				if (m.Success)
 				{
 					return m.Groups[1].Value;
 				}
+
+				var m2 = regexSimpleEmailPattern.Match(emailaddress);
+				if (m2.Success)
+				{
+					return m2.Groups[1].Value;
+				}
+
 			}
 			return string.Empty;
 		}
@@ -158,7 +178,7 @@ namespace UnnOutlookAddin.MailManagement
 			if (entry == null)
 				return null;
 			var user = entry.GetExchangeUser();
-			if (entry.HasStudentId(out var id))
+			if (user != null && entry.HasStudentId(out var id))
 			{
 				var s = new Student()
 				{

@@ -80,7 +80,7 @@ public class StudentsRepository
 		return sb.ToString();
 	}
 
-	private readonly string dataFolder;
+	private string dataFolder { get; set; }
 
 	public IEnumerable<IStudentCollection> GetPersonCollections()
 	{

@@ -54,9 +54,7 @@ namespace UnnFunctions.ModelConversions
 				};
 				yield return student;
 			}
-			
 		}
-
 
 	}
 }

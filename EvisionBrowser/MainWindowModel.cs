@@ -25,7 +25,7 @@ namespace EvisionBrowser
 	[ObservableObject]
 	public partial class MainWindow 
 	{
-		private StudentsRepository studentsRepo = new StudentsRepository(@"C:\Users\Claudio\OneDrive - Northumbria University - Production Azure AD\2022\Students");
+		private StudentsRepository studentsRepo = new StudentsRepository(@"C:\Users\Claudio\OneDrive - Northumbria University - Production Azure AD\2023\Students");
 
 		DispatcherTimer dispatcherTimer;
 #if stopW
