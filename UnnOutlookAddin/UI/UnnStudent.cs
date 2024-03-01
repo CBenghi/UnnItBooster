@@ -261,6 +261,10 @@ namespace UnnOutlookAddin.UI
 						ComboAction.From(f)
 						);
 				}
+				else
+				{
+					txtInformation.Text += $"\r\nOutlook Folder {container.OutlookFolder} not found.";
+				} 
             }
 			if (CmbFolder.Items.Count > 0)
 			{

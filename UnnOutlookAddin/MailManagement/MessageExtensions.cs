@@ -107,8 +107,8 @@ namespace UnnOutlookAddin.MailManagement
 			if (repo.TryGetStudentByEmail(mail.GetSenderEmailAddress(), out var st))
 				studentId = st.NumericStudentId;
 			else
-				mail.SenderHasStudentId(out studentId);
-			
+				mail.SenderHasStudentId(out studentId);		
+
 			// tag if it is a student
 			if (!string.IsNullOrEmpty(studentId))
 			{
@@ -127,7 +127,8 @@ namespace UnnOutlookAddin.MailManagement
 		{
 			foreach (var emailaddress in emails)
 			{
-
+				if (emailaddress.StartsWith("SPO:"))
+					continue;
 				var m = regexStudentEmailPattern.Match(emailaddress);
 				if (m.Success)
 				{

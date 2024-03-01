@@ -141,7 +141,7 @@ namespace StudentsFetcher.StudentMarking
 				{
 					foreach (var item in st.AlternativeEmails)
 					{
-						sb.AppendLine($"Alternative email: {st.Email}");
+						sb.AppendLine($"Alternative email: {item}");
 					}
 				}
 				sb.AppendLine($"");
@@ -234,10 +234,14 @@ namespace StudentsFetcher.StudentMarking
 		{
 			if (displayedStudent == null)
 				return;
-			studentsRepo.AddAlternativeEmail(
+			var students = studentsRepo.AddAlternativeEmail(
 				displayedStudent,
 				txtAlternativeEmail.Text
 				);
+			if (students > 0)
+			{
+				txtAlternativeEmail.Text = $"{students} found";
+			}
 		}
 
 		private void button7_Click(object sender, EventArgs e)
