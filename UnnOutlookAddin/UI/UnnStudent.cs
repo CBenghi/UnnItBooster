@@ -76,14 +76,11 @@ namespace UnnOutlookAddin.UI
 		{
 			if (viewPicture && !string.IsNullOrWhiteSpace(imagePath))
 			{
-				groupBox1.Visible = false;
 				StudImage.Visible = true;
 				StudImage.Load(imagePath);
 			}
 			else
 			{
-				imagePath = null;
-				groupBox1.Visible = true;
 				StudImage.Visible = false;
 			}
 		}
@@ -97,6 +94,8 @@ namespace UnnOutlookAddin.UI
 
 		internal async void SetMessageAsync(Outlook.MailItem mailItem)
 		{
+			// provide basic information
+			//
 			currentMailItem = mailItem;
 			var snd = MessageClassificationExtensions.GetSenderEmailAddress(mailItem);
 			var txt = SetEmail(snd);
@@ -104,6 +103,10 @@ namespace UnnOutlookAddin.UI
 			if (folder != null)
 				txt += $"\r\nFolder: {folder.Name}";
 			txtInformation.Text = txt;
+
+			// evaluate thread
+			//
+			PopulateComboActions();
 		}
 
 		IEnumerable<Outlook.MailItem> GetConversationItems(Outlook.MailItem mailItem)
@@ -166,33 +169,48 @@ namespace UnnOutlookAddin.UI
 		
 		private void ButtonThread_Click(object sender, EventArgs e)
 		{
-			if (currentMailItem == null)
-				return;
-			var mailItems = GetConversationItems(currentMailItem).ToList();
-			
+			txtInformation.Text += PopulateComboActions().ToString();
+		}
 
-			txtInformation.Text += "\r\n\r\n";
+		private StringBuilder PopulateComboActions()
+		{
+			StringBuilder sb = new StringBuilder();
+			if (currentMailItem == null)
+			{
+				sb.Append("No current mail item.");
+				return sb;
+			}
+			var mailItems = GetConversationItems(currentMailItem).ToList();
+
+			sb.Append("\r\n\r\n");
 			List<Student> students = new List<Student>();
 			foreach (var mailItem in mailItems)
 			{
 				students.AddRange(mailItem.GetAllStudents());
 				Outlook.Folder inFolder = mailItem.Parent as Outlook.Folder;
 				var senderName = mailItem.Sender is null ? "Undefined sender" : mailItem.Sender.Name;
-				txtInformation.Text += $"{mailItem.Subject} in folder {inFolder.Name} - {senderName}\r\n";				
+				sb.Append($"{mailItem.Subject} in folder {inFolder.Name} - {senderName}\r\n");
 			}
 
 			var distinctStudents = students.GroupBy(x => x.NumericStudentId).Select(x => x.First()).ToList();
 			cmbAction.Items.Clear();
 			if (!distinctStudents.Any())
-				return;
+			{
+				sb.AppendLine("No student");
+				return sb;
+			}
 
-			txtInformation.Text += "\r\n" + StringStudentCollection.PersistString(distinctStudents);
+			sb.Append("\r\n" + StringStudentCollection.PersistString(distinctStudents));
 			var lst = new List<ComboAction>();
 			foreach (var st in distinctStudents)
 			{
 				lst.AddRange(ComboAction.From(st));
 			}
 			cmbAction.Items.AddRange(lst.ToArray());
+			if (cmbAction.Items.Count > 0)
+				cmbAction.SelectedIndex = cmbAction.Items.Count - 1;
+			
+			return sb;
 		}
 
 		private void ButtonToggleWrap_Click(object sender, EventArgs e)
