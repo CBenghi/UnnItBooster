@@ -1303,6 +1303,7 @@ public partial class FrmMarkingMachine : Form
         public enum grouping
         {
             Classification,
+            HalfClassification,
             Detailed,
             Individual
         }
@@ -1313,26 +1314,37 @@ public partial class FrmMarkingMachine : Form
 			switch (type)
 			{
 				case grouping.Detailed:
+					
+					ret.Ranges.Add(new MarkRange(0, 0));
+					ret.Ranges.Add(new MarkRange(1, 29));
+					for (int i = 3; i < 9; i++)
 					{
-						ret.Ranges.Add(new MarkRange(0, 0));
-						ret.Ranges.Add(new MarkRange(1, 29));
-						for (int i = 3; i < 9; i++)
-						{
-							var dec = i * 10;
-							ret.Ranges.Add(new MarkRange(dec, dec + 2));
-							ret.Ranges.Add(new MarkRange(dec + 3, dec + 6));
-							ret.Ranges.Add(new MarkRange(dec + 7, dec + 9));
-						}
-						ret.Ranges.Add(new MarkRange(90, 100));
-						break;
+						var dec = i * 10;
+						ret.Ranges.Add(new MarkRange(dec, dec + 2));
+						ret.Ranges.Add(new MarkRange(dec + 3, dec + 6));
+						ret.Ranges.Add(new MarkRange(dec + 7, dec + 9));
 					}
+					ret.Ranges.Add(new MarkRange(90, 100));
+					break;
+					
+                case grouping.HalfClassification:
+                    
+					ret.Ranges.Add(new MarkRange(0, 0));
+					ret.Ranges.Add(new MarkRange(1, 29));
+					for (int i = 3; i < 9; i++)
+					{
+						var dec = i * 10;
+						ret.Ranges.Add(new MarkRange(dec, dec + 4));
+						ret.Ranges.Add(new MarkRange(dec + 5, dec + 9));
+					}
+					ret.Ranges.Add(new MarkRange(90, 100));
+					break;
+					
 				case grouping.Individual:
-                    {
-						for (int i = 0; i < 100; i++)
-						{
-							ret.Ranges.Add(new MarkRange(i, i));
-						}
-					}
+					for (int i = 0; i < 100; i++)
+					{
+						ret.Ranges.Add(new MarkRange(i, i));
+					}					
 					break;
 				default:
 					ret.Ranges.Add(new MarkRange(0, 9));
