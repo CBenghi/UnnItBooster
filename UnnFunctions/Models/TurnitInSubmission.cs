@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlTypes;
+using System.Diagnostics;
 using System.Linq;
 using UnnItBooster.ModelConversions;
 
 namespace UnnItBooster.Models;
 
+[DebuggerDisplay("{FirstName} {LastName} {FullName} - {Email}")]
 public class TurnitInSubmission
 {
 	public string FirstName = "";
@@ -57,7 +59,7 @@ public class TurnitInSubmission
 	internal static SqlCouple[] GetSqlCouples(TurnitInSubmission? item = null)
 	{
 		return new[] {
-			new SqlCouple("SUB_LastName", item?.LastName ?? ""),
+			new SqlCouple("SUB_LastName", !string.IsNullOrEmpty(item?.LastName) ? item.LastName : item?.FullName),
 			new SqlCouple("SUB_FirstName", item?.FirstName?? ""),
 			new SqlCouple("SUB_UserID",  item?.UserId?? ""),
 			new SqlCouple("SUB_Title",  item?.Title?? ""),

@@ -127,6 +127,8 @@ namespace UnnOutlookAddin.MailManagement
 		{
 			foreach (var emailaddress in emails)
 			{
+				if (emailaddress is null) 
+					continue;
 				if (emailaddress.StartsWith("SPO:"))
 					continue;
 				var m = regexStudentEmailPattern.Match(emailaddress);

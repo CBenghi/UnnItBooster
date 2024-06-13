@@ -1338,7 +1338,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// button8
 			// 
-			this.button8.Location = new System.Drawing.Point(335, 78);
+			this.button8.Location = new System.Drawing.Point(366, 51);
 			this.button8.Name = "button8";
 			this.button8.Size = new System.Drawing.Size(25, 22);
 			this.button8.TabIndex = 25;
@@ -1355,7 +1355,7 @@ namespace StudentsFetcher.StudentMarking
 			this.btnCompleteData.Name = "btnCompleteData";
 			this.btnCompleteData.Size = new System.Drawing.Size(365, 26);
 			this.btnCompleteData.TabIndex = 18;
-			this.btnCompleteData.Text = "Update database from gradebook";
+			this.btnCompleteData.Text = "Update database from elp Learning Analytics";
 			this.btnCompleteData.UseVisualStyleBackColor = true;
 			this.btnCompleteData.Click += new System.EventHandler(this.BtnCompleteData_Click);
 			// 
@@ -1363,12 +1363,13 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.button7.Location = new System.Drawing.Point(21, 105);
+			this.button7.Location = new System.Drawing.Point(21, 78);
 			this.button7.Margin = new System.Windows.Forms.Padding(2);
 			this.button7.Name = "button7";
-			this.button7.Size = new System.Drawing.Size(365, 26);
+			this.button7.Size = new System.Drawing.Size(365, 53);
 			this.button7.TabIndex = 19;
-			this.button7.Text = "Initialize database from gradebook";
+			this.button7.Text = "Initialize database from elp Learning Analytics  (link on top of submission list)" +
+    "";
 			this.button7.UseVisualStyleBackColor = true;
 			this.button7.Click += new System.EventHandler(this.Button7_Click);
 			// 
