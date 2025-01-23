@@ -49,6 +49,9 @@ namespace UnnFunctions.ModelConversions
 			}
 		}
 
+		/// <summary>
+		/// returns a dictionary where key is student and value is mark (both strings)
+		/// </summary>
 		public static Dictionary<string, string> FromTabSeparated(string mcrfMarks)
 		{
 			var ret = new Dictionary<string, string>();
@@ -57,8 +60,8 @@ namespace UnnFunctions.ModelConversions
 				var arr = line.Split(new[] { '\t', ' ' });
 				if (arr.Length != 2)
 					continue;
-				var stud = arr[0];
-				var mark = arr[1];
+				var stud = arr[0].Trim();
+				var mark = arr[1].Trim();
 				if (ret.ContainsKey(stud)) 
 					continue;
 				ret.Add(stud, mark);

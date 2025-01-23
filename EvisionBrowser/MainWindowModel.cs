@@ -361,7 +361,7 @@ namespace EvisionBrowser
 			}
 
 			StringBuilder sb = new StringBuilder();
-			sb.AppendLine($"{entries.Count()} fields student fields");		
+			sb.AppendLine($"{entries.Count()} student fields");		
 			foreach (var f in entries)
 			{
 				if (!studentMarks.TryGetValue(f.StudentId, out var mark))

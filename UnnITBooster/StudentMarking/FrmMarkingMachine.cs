@@ -352,6 +352,7 @@ public partial class FrmMarkingMachine : Form
 
                     selectModeration
                         prepares the list of students to perform moderation
+                        e.g. selectModeration KA7065
 
                     prepareModeration
                         prepares the moderation information for the student ShortIDs listed in the central part of the UI
@@ -501,11 +502,13 @@ public partial class FrmMarkingMachine : Form
 	{
         StringBuilder stringBuilder = new StringBuilder();
         var res = _config.GetDataTable("SELECT SUB_ID, SUB_LastName, SUB_Overlap from TB_Submissions order by cast (SUB_Overlap as INT) , SUB_LastName");
-        foreach (DataRow row in res.Rows)
-        {
-            stringBuilder.AppendLine(row[0].ToString());
-        }
-        txtLibReport.Text = stringBuilder.ToString();
+        //foreach (DataRow row in res.Rows)
+        //{
+        //    stringBuilder.AppendLine(row[0].ToString());
+        //}
+        for (int i = 51; i> 0;i--)
+			stringBuilder.AppendLine(i.ToString());
+		txtLibReport.Text = stringBuilder.ToString();
 	}
 
 	private void SetLevel(Match levelMatch)

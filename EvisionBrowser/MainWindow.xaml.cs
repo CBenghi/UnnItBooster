@@ -64,5 +64,10 @@ namespace EvisionBrowser
 				Url.Text = "https://sits.northumbria.ac.uk/live/sits.urd/run/siw_sso.saml";
 			wbSample.Source = new Uri(Url.Text);
 		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }

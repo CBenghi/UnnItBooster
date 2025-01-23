@@ -30,7 +30,7 @@ namespace UnnFunctions.Models
 			// sb.AppendLine($"Selecting one in {each} submissions."); 
 			sb.AppendLine();
 
-			sb.AppendLine("InternalId\tUserId\tFirstName\tLastName\tPaperId\tMark\tSelected");
+			sb.AppendLine("InternalId\tUserId\tFirstName\tLastName\tPaperId\tMark\tSelected\tSelected Id");
 			int progInt = 0;
 			double progDbl = 0;
 			int nextHit = 0;
@@ -54,7 +54,8 @@ namespace UnnFunctions.Models
 						
 					}
 				}
-				sb.AppendLine($"{entry.Sub.InternalShortId}\t{entry.Sub.NumericUserId}\t{entry.Sub.FirstName}\t{entry.Sub.LastName}\t{entry.Sub.PaperId}\t{entry.Totmark}%\t{selected}");
+				var selectedId = (selected == "yes") ? entry.Sub.InternalShortId.ToString() : "";
+				sb.AppendLine($"{entry.Sub.InternalShortId}\t{entry.Sub.NumericUserId}\t{entry.Sub.FirstName}\t{entry.Sub.LastName}\t{entry.Sub.PaperId}\t{entry.Totmark}%\t{selected}\t{selectedId}");
 			}
 			return sb.ToString();
 		}
