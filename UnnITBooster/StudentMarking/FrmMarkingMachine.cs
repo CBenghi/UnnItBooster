@@ -223,12 +223,28 @@ public partial class FrmMarkingMachine : Form
 			var removeMatch = Regex.Match(txtSearch.Text, @"Remove (\d+)", RegexOptions.IgnoreCase);
 			var levelMatch = Regex.Match(txtSearch.Text, @"setlevel (?<level>ug|pg)", RegexOptions.IgnoreCase);
 			var selectModerationMatch = Regex.Match(txtSearch.Text, @"SelectModeration *(?<name>.*)$", RegexOptions.IgnoreCase);
+			var associateMarkerMatch = Regex.Match(txtSearch.Text, @"^Associate ?Marker[s]?$", RegexOptions.IgnoreCase);
+			var reportMarkerMatch = Regex.Match(txtSearch.Text, @"^Report ?Marker[s]?$", RegexOptions.IgnoreCase);
+			var markingExcelsMatch = Regex.Match(txtSearch.Text, @"^Create ?MarkingFiles +(?<excelFileName>.*)$", RegexOptions.IgnoreCase);
             if (addComponentMatch.Success)
             {
                 AddComponent(addComponentMatch);
                 UpdateComponents();
             }
-            else if (editMatch.Success)
+            else if (markingExcelsMatch.Success)
+            {
+                txtLibReport.Text = CreateExcelMarkers(markingExcelsMatch);
+            }
+			else if (reportMarkerMatch.Success)
+			{
+				ReportMarkers();
+			}
+			else if (associateMarkerMatch.Success)
+            {
+                AssociateMarkers();
+				ReportMarkers();
+			}
+			else if (editMatch.Success)
             {
                 EditLoad(editMatch.Groups["par"].Value);
             }
@@ -357,11 +373,21 @@ public partial class FrmMarkingMachine : Form
                     prepareModeration
                         prepares the moderation information for the student ShortIDs listed in the central part of the UI
 
+                    Associate Markers
+                        adds markers depending on the data below the command with the following structure:
+                        <studentId> <markerEmail> <MarkerName>
+                        22049588 ala.suliman@northumbria.ac.uk Ala Suliman
+
+                    Report Markers
+                        creates a report with marker association to submissions and missing entries
+
+                    Create MarkingFiles <excelFileName>
+                        creates a file ready to receive individual marker feedback
+                        e.g. Create MarkingFiles markingTemplate.xlsx
+
                     <normal search>
                         separate text from section/area with `;`
                         ending the first term with a + searches in the pesonal text as well
-
-                    
                     """;
             }
             else
@@ -380,6 +406,41 @@ public partial class FrmMarkingMachine : Form
             e.SuppressKeyPress = true;
         }
     }
+
+	private string CreateExcelMarkers(Match markingExcelsMatch)
+	{
+        var f = markingExcelsMatch.Groups["excelFileName"].Value;
+        var fl = _config.GetLocalizedPathFrom(f);
+        if (fl == null)
+            return "matching template not found.";
+        if (!fl.Exists)
+            return "Excel file template not found.";
+        return _config.CreateExcelMarkingFilesFrom(fl);
+	}
+
+	private void ReportMarkers()
+	{
+        txtLibReport.Text = _config.ReportMarkers();
+	}
+
+	private void AssociateMarkers()
+	{
+        if (string.IsNullOrWhiteSpace(txtLibReport.Text))
+            return;
+        var assignments = txtLibReport.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+        var r = new Regex(@"^(\d+)\t+([^ ]+)\t+(.+)");
+        foreach (var assignment in assignments)
+        {
+            var m = r.Match(assignment);
+            if (m.Success)
+            {
+                var studId = m.Groups[1].Value;
+                var mrkrEmail = m.Groups[2].Value;
+                var mrkrName = m.Groups[3].Value;
+                _config.EnsureMarker(studId,  mrkrEmail, mrkrName);
+            }
+        }
+	}
 
 	private void SelectModeration(string name)
 	{

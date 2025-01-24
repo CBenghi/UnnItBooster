@@ -96,7 +96,6 @@ namespace UnnItBooster.Models
 			File.WriteAllText(fullName, t);
 		}
 
-
 		public void Save()
 		{
 			Save(this, directory);

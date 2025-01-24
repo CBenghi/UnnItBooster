@@ -1,7 +1,9 @@
 ﻿using LumenWorks.Framework.IO.Csv;
 using OfficeOpenXml;
 using StudentsFetcher.StudentMarking;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
@@ -47,10 +49,78 @@ public partial class TurnItIn
 		return students;
 	}
 
+	internal static DataTable GetData(SQLiteConnection c, string sql)
+	{
+		var dt = new DataTable();
+		try
+		{
+			using var dbCommand = new SQLiteCommand(sql, c);
+			using var da = new SQLiteDataAdapter(dbCommand);
+			da.Fill(dt);
+		}
+		catch (Exception ex)
+		{
+			dt.TableName = "ErrorTable";
+			dt.Columns.Add("ErrorName", typeof(string));
+			var r = dt.NewRow();
+			r[0] = ex.Message;
+			dt.Rows.Add(r);
+		}
+		return dt;
+	}
+
+	private static bool EnsureField(SQLiteConnection c, string tableName, string fieldName, string fieldType, string fieldInit)
+	{
+		using var tab = GetData(c, "PRAGMA table_info(" + tableName + ");");
+		if (tab.Rows.Count == 0)
+			throw new Exception("Error in parsing SQLITE database structure.");
+
+		if (!tab.Select($"name = '{fieldName}'").Any())
+		{
+			var sqlCreate = $"alter table {tableName} Add Column {fieldName} {fieldType}";
+			ExecuteSql(c, sqlCreate);
+
+			if (string.IsNullOrEmpty(fieldInit))
+				return true;
+			var sqlUpdate = $"update {tableName} set {fieldName} = {fieldInit}";
+			ExecuteSql(c, sqlUpdate);
+			return true;
+		}
+		return false;
+	}
+
+	private static void ExecuteSql(SQLiteConnection c, string sql)
+	{
+		using var cmd = new SQLiteCommand(c) { CommandText = sql };
+		cmd.ExecuteNonQuery();
+	}
+
+	public static void UpgradeDatabase(SQLiteConnection c)
+	{
+		EnsureField(c, "TB_Submissions", "SUB_ElpSite", "TEXT default NULL", "NULL");
+		ExecuteSql(c, TB_MarkersSql);
+		EnsureField(c, "TB_Submissions", "SUB_ElpSite", "TEXT default NULL", "NULL");
+	}
+
+	public static void UpgradeDatabase(string fullname)
+	{
+		var filename = Path.ChangeExtension(fullname, "sqlite");
+		using var c = new SQLiteConnection("Data source=" + filename + ";");
+		UpgradeDatabase(c);
+	}
+
+	const string TB_MarkersSql = "CREATE TABLE IF NOT EXISTS TB_Markers (" +
+				 "MRKR_ID INTEGER PRIMARY KEY, " +
+				 "MRKR_ptr_SubmissionUserID TEXT, " +
+				 "MRKR_MarkerEmail TEXT, " +
+				 "MRKR_MarkerName TEXT, " +
+				 "MRKR_Comment TEXT " +
+				 ")";
+
 	private static void CreateDatabase(string fullname)
 	{
 		var filename = Path.ChangeExtension(fullname, "sqlite");
-		var c = new SQLiteConnection("Data source=" + filename + ";");
+		using var c = new SQLiteConnection("Data source=" + filename + ";");
 		SQLiteCommand cmd;
 		string sql;
 		c.Open();
@@ -72,7 +142,8 @@ public partial class TurnItIn
 				"SUB_Overlap text, " +
 				"SUB_InternetOverlap text, " +
 				"SUB_PublicationsOverlap text, " +
-				"SUB_StudentPapersOverlap text" +
+				"SUB_StudentPapersOverlap text," +
+				"SUB_ElpSite text" +
 				")";
 			cmd.CommandText = sql;
 			cmd.ExecuteNonQuery();
@@ -114,6 +185,9 @@ public partial class TurnItIn
 				 "CPNT_Comment TEXT" +
 				 ")";
 			cmd.CommandText = sql;
+			cmd.ExecuteNonQuery();
+
+			cmd.CommandText = TB_MarkersSql;
 			cmd.ExecuteNonQuery();
 
 			sql = "CREATE VIEW if not exists QComments AS " +

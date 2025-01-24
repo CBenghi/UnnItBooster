@@ -1,4 +1,6 @@
-﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+﻿using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,11 +19,15 @@ namespace StudentsFetcher.StudentMarking
 		public MarkingConfig(string dbName)
 		{
 			DbName = dbName;
+			using var c = GetConn();
+			c.Open();
+			TurnItIn.UpgradeDatabase(c);
+			c.Close();
 		}
 
 		public string DbName { get; set; }
 
-		public string GetFolderName()
+		public string? GetFolderName()
 		{
 			var f = new FileInfo(DbName);
 			return f.DirectoryName;
@@ -255,7 +261,6 @@ namespace StudentsFetcher.StudentMarking
 				c.Open();
 				bClose = true;
 			}
-
 			var cm = new SQLiteCommand(sql, c);
 			cm.ExecuteNonQuery();
 			if (bClose)
@@ -472,6 +477,256 @@ namespace StudentsFetcher.StudentMarking
 			if (tmpEmail is not null && tmpEmail != DBNull.Value)
 				email = tmpEmail.ToString() ?? string.Empty;
 			return numeric;
+		}
+
+		public void EnsureMarker(string studId, string mrkrEmail, string mrkrName)
+		{
+			var sql = 
+				$"""
+				select * from TB_Markers where 
+				MRKR_ptr_SubmissionUserID = '{studId}' and
+				MRKR_MarkerEmail = '{mrkrEmail}' and
+				MRKR_MarkerName = '{mrkrName}'
+				""";
+			var dt = GetDataTable(sql);
+			if (dt.Rows.Count > 0)
+				return;
+			sql =
+				$"""
+				insert into TB_Markers 
+				(MRKR_ptr_SubmissionUserID, MRKR_MarkerEmail, MRKR_MarkerName)
+				values 
+				('{studId}', '{mrkrEmail}', '{mrkrName}')
+				""";
+			Execute(sql);
+		}
+
+		public string ReportMarkers()
+		{
+			var sql =
+				$"""
+				select TB_Markers.*, TB_Submissions.* from 
+				TB_Markers LEFT JOIN TB_Submissions
+				on MRKR_ptr_SubmissionUserID = SUB_UserID
+				order by TB_Markers.MRKR_MarkerEmail
+				""";
+			var dt = GetDataTable(sql);
+			var lastReportMail = "";
+			var sb = new StringBuilder();
+			sb.AppendLine("# Report by marker");
+			sb.AppendLine();
+			foreach (DataRow row in dt.Rows)
+			{
+				var markMail = row["MRKR_MarkerEmail"].ToString();	
+				var markName = row["MRKR_MarkerName"].ToString();
+
+				if (markMail != lastReportMail)
+				{
+					sb.AppendLine($"{markMail}\t{markName}");
+					lastReportMail = markMail;
+				}
+				var studentEmail = row["SUB_email"] is not DBNull ? row["SUB_email"].ToString() : "<No student record>";
+				var studentComment = row["MRKR_Comment"] is not DBNull ? row["MRKR_Comment"].ToString() : "";
+				sb.AppendLine($"\t{row["MRKR_ptr_SubmissionUserID"]}\t{studentEmail}\t{studentComment}");
+			}
+			sb.AppendLine();
+
+			sql =
+				$"""
+				select TB_Markers.*, TB_Submissions.* from 
+				TB_Submissions LEFT JOIN TB_Markers
+				on MRKR_ptr_SubmissionUserID = SUB_UserID
+				order by SUB_email
+				""";
+			dt = GetDataTable(sql);
+			lastReportMail = "";
+			sb.AppendLine("# Report by student");
+			sb.AppendLine();
+			foreach (DataRow row in dt.Rows)
+			{
+				var studMail = $"{row["SUB_email"]}";
+				var studName = $"{row["SUB_FirstName"]} {row["SUB_LastName"]}"; 
+				var studId = row["SUB_UserId"] is not DBNull ? row["SUB_UserId"].ToString() : "<Null ID>";
+
+				if (studMail != lastReportMail)
+				{
+					sb.AppendLine($"{studMail}\t{studId}\t{studName}");
+					lastReportMail = studMail;
+				}
+				sb.AppendLine($"\t{row["MRKR_MarkerEmail"]}\t{row["MRKR_MarkerName"]}\t{row["MRKR_Comment"]}");
+			}
+			sb.AppendLine();
+
+			// missing:
+			sql =
+				$"""
+				select MRKR_ptr_SubmissionUserID, SUB_UserID from
+				TB_Submissions FULL OUTER JOIN TB_Markers
+				on MRKR_ptr_SubmissionUserID = SUB_UserID
+				where MRKR_ptr_SubmissionUserID is null 
+				or SUB_UserID is null 
+				""";
+			dt = GetDataTable(sql);
+			lastReportMail = "";
+			sb.AppendLine("# Report missing");
+			sb.AppendLine();
+			foreach (DataRow row in dt.Rows)
+			{
+				if (row["MRKR_ptr_SubmissionUserID"] is DBNull)
+					sb.AppendLine($"Missing marker assignment for\t{row["SUB_UserID"]}");
+				else
+					sb.AppendLine($"Missing student for assignment code\t{row["MRKR_ptr_SubmissionUserID"]}");
+
+			}
+			return sb.ToString();
+		}
+
+		public FileInfo? GetLocalizedPathFrom(string f)
+		{
+			var fld = GetFolderName();
+			if (fld == null)
+				return null;
+			var t = new FileInfo(Path.Combine(fld, f));
+			return t;
+		}
+
+		public class MarkingAssignment
+		{
+			public MarkingAssignment(string markMail, string markName)
+			{
+				MarkerEmail = markMail;
+				MarkerName = markName;
+			}
+
+			public string MarkerEmail { get; set; }
+			public string MarkerName { get; set; }
+			public List<MarkingAssignmentDetail> Details { get; set; } = new();
+
+			internal void Add(MarkingAssignmentDetail markingAssignmentDetail)
+			{
+				Details.Add(markingAssignmentDetail);
+			}
+
+			internal string FixFile(FileInfo dest)
+			{
+				var sb = new StringBuilder();
+				sb.AppendLine($"Preparing {dest.Name}.");
+				using var readFile = new FileStream(dest.FullName, FileMode.Open, FileAccess.Read);
+				var hssfwb = new XSSFWorkbook(readFile);
+				readFile.Close();
+				ISheet sheet = hssfwb.GetSheetAt(0);
+				IRow row = sheet.GetRow(0);
+				ICell cell = row.GetCell(2);
+				cell.SetCellValue(MarkerEmail);
+
+				ICellStyle unlockedCellStyle = hssfwb.CreateCellStyle();
+				unlockedCellStyle.IsLocked = false;
+
+				int iRow = 7; // starting at row 8
+				foreach (var det in Details)
+				{
+					row = sheet.GetRow(iRow++);
+					row.GetCell(1).SetCellValue(det.ElpId);
+					row.GetCell(2).SetCellValue(det.StudentId);
+					row.GetCell(3).SetCellValue(det.SubmissionId);
+
+                    for (int i = 4;	i < 10; i++)
+                    {
+						var thiscell = row.GetCell(i);
+						if (thiscell != null)
+							thiscell.CellStyle = unlockedCellStyle;
+						else
+							sb.AppendLine($"problem with null cell at row: {iRow-1} col: {i}");
+					}
+                }
+				// sheet.ShiftRows(39, 39, iRow - 39, true, false);
+				// while (iRow < 39)
+				// {
+				//	 sheet.RemoveRow(sheet.GetRow(iRow++));
+				//	 sheet.ShiftRows()
+				// }
+
+				sheet.ProtectSheet(""); // locks all cells except the unlocked
+				dest.Delete();
+				using var file = new FileStream(dest.FullName, FileMode.Create, FileAccess.Write);
+				hssfwb.Write(file, false);
+
+				return sb.ToString();
+			}
+		}
+
+		public class MarkingAssignmentDetail
+		{
+			public MarkingAssignmentDetail(string studentId, string studentPaper, string studentPortal)
+			{
+				StudentId = studentId;
+				SubmissionId = studentPaper;
+				ElpId = studentPortal;
+			}
+
+			public string StudentId { get; set; }
+			public string SubmissionId { get; set; }
+			public string ElpId { get; set; }
+		}
+
+		public IEnumerable<MarkingAssignment> GetMarkingAssignments()
+		{
+			var sql =
+				$"""
+				select TB_Markers.*, TB_Submissions.* from 
+				TB_Markers LEFT JOIN TB_Submissions
+				on MRKR_ptr_SubmissionUserID = SUB_UserID
+				order by TB_Markers.MRKR_MarkerEmail
+				""";
+			var dt = GetDataTable(sql);
+			var lastReportMail = "";
+			var ret = new List<MarkingAssignment>();
+			MarkingAssignment? current = null;
+			foreach (DataRow row in dt.Rows)
+			{
+				var markMail = row["MRKR_MarkerEmail"].ToString()!;
+				var markName = row["MRKR_MarkerName"].ToString()!;
+
+				if (current == null || markMail != lastReportMail) 
+				{
+					current = new MarkingAssignment(markMail, markName);
+					ret.Add(current);
+					lastReportMail = markMail;
+				}
+				var studentId = row["MRKR_ptr_SubmissionUserID"] is not DBNull ? row["MRKR_ptr_SubmissionUserID"].ToString()! : "<missing id>";
+				var studentPaper = row["SUB_PaperID"] is not DBNull ? row["SUB_PaperID"].ToString()! : "<missing submission>";
+				var studentPortal = row["SUB_ElpSite"] is not DBNull ? row["SUB_ElpSite"].ToString()! : "<undefined>";
+				current.Add(new MarkingAssignmentDetail(
+					studentId, studentPaper, studentPortal
+					));
+			}
+			return ret;
+		}
+
+		public string CreateExcelMarkingFilesFrom(FileInfo fl)
+		{
+			var sb = new StringBuilder();
+			var ass = GetMarkingAssignments();
+			foreach (var assItem in ass)
+			{
+				sb.AppendLine(CreateExcelMarking(fl, assItem));
+			}
+			return sb.ToString();
+		}
+
+		private string CreateExcelMarking(FileInfo fl, MarkingAssignment assItem)
+		{
+			var dest = GetLocalizedPathFrom($"{assItem.MarkerEmail}.xlsx");
+			if (dest is null)
+			{
+				return $"Invalid name for {assItem.MarkerEmail}";
+			}
+			var sb = new StringBuilder();
+			if (dest.Exists)
+				dest.Delete();
+			fl.CopyTo(dest.FullName);
+			sb.Append(assItem.FixFile(dest));
+			return sb.ToString();
 		}
 
 		public string BareName

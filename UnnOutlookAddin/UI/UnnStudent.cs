@@ -180,19 +180,7 @@ namespace UnnOutlookAddin.UI
 				sb.Append("No current mail item.");
 				return sb;
 			}
-			var mailItems = GetConversationItems(currentMailItem).ToList();
-
-			sb.Append("\r\n\r\n");
-			List<Student> students = new List<Student>();
-			foreach (var mailItem in mailItems)
-			{
-				students.AddRange(mailItem.GetAllStudents());
-				Outlook.Folder inFolder = mailItem.Parent as Outlook.Folder;
-				var senderName = mailItem.Sender is null ? "Undefined sender" : mailItem.Sender.Name;
-				sb.Append($"{mailItem.Subject} in folder {inFolder.Name} - {senderName}\r\n");
-			}
-
-			var distinctStudents = students.GroupBy(x => x.NumericStudentId).Select(x => x.First()).ToList();
+			List<Student> distinctStudents = GetDistinctThreadStudents(sb);
 			cmbAction.Items.Clear();
 			if (!distinctStudents.Any())
 			{
@@ -209,8 +197,25 @@ namespace UnnOutlookAddin.UI
 			cmbAction.Items.AddRange(lst.ToArray());
 			if (cmbAction.Items.Count > 0)
 				cmbAction.SelectedIndex = cmbAction.Items.Count - 1;
-			
+
 			return sb;
+		}
+
+		private List<Student> GetDistinctThreadStudents(StringBuilder sb = null)
+		{
+			var mailItems = GetConversationItems(currentMailItem).ToList();
+			sb?.Append("\r\n\r\n");
+			List<Student> students = new List<Student>();
+			foreach (var mailItem in mailItems)
+			{
+				students.AddRange(mailItem.GetAllStudents());
+				Outlook.Folder inFolder = mailItem.Parent as Outlook.Folder;
+				var senderName = mailItem.Sender is null ? "Undefined sender" : mailItem.Sender.Name;
+				sb?.Append($"{mailItem.Subject} in folder {inFolder.Name} - {senderName}\r\n");
+			}
+
+			var distinctStudents = students.GroupBy(x => x.NumericStudentId).Select(x => x.First()).ToList();
+			return distinctStudents;
 		}
 
 		private void ButtonToggleWrap_Click(object sender, EventArgs e)
@@ -292,6 +297,13 @@ namespace UnnOutlookAddin.UI
 
 		private void BtnSolveStudentName_Click(object sender, EventArgs e)
 		{
+			string prompt = "This routine looks for all students in the repository and tries to resolve their name, based on their email address.";
+			var ret = MessageBox.Show(prompt, "Continue?", MessageBoxButtons.YesNoCancel);
+			if (ret != DialogResult.Yes)
+			{
+				txtSystemInfo.Text = "Cancelled";
+				return;
+			}
 			StringBuilder sb = new StringBuilder();
 			var attemptedEmail = new List<string>();
 			var attemptedStudents = new List<Student>();
@@ -328,6 +340,30 @@ namespace UnnOutlookAddin.UI
 				sb.Append($"Updating: {stud.Email} updated: {cnt}");
 			}
 			txtSystemInfo.Text = sb.ToString();
+		}
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+			string prompt = "This routine looks for all students in email thread and creates a collection to be saved to disk.";
+			var ret = MessageBox.Show(prompt, "Continue?", MessageBoxButtons.YesNoCancel);
+			
+			if (string.IsNullOrEmpty(txtCollection.Name))
+			{
+				txtSystemInfo.Text = "Collection name cannot be empty.";
+				return;
+			}
+			if (!Repository.IsValidNewCollectionName(txtCollection.Text, out var returnd))
+			{
+				txtSystemInfo.Text = $"Invalid new collection name '{txtCollection.Text}'.";
+				return;
+			}
+			if (ret != DialogResult.Yes)
+			{
+				txtSystemInfo.Text = "Cancelled";
+				return;
+			}
+			var distinctStudents = GetDistinctThreadStudents();
+			txtSystemInfo.Text = Repository.ConsiderNewStudents(distinctStudents, txtCollection.Text);
 		}
 	}
 }

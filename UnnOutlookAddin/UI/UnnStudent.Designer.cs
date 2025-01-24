@@ -43,6 +43,9 @@
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.BtnSolveStudentName = new System.Windows.Forms.Button();
 			this.txtSystemInfo = new System.Windows.Forms.TextBox();
+			this.button2 = new System.Windows.Forms.Button();
+			this.txtCollection = new System.Windows.Forms.TextBox();
+			this.label1 = new System.Windows.Forms.Label();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -196,6 +199,9 @@
 			// 
 			// tabPage2
 			// 
+			this.tabPage2.Controls.Add(this.label1);
+			this.tabPage2.Controls.Add(this.txtCollection);
+			this.tabPage2.Controls.Add(this.button2);
 			this.tabPage2.Controls.Add(this.BtnSolveStudentName);
 			this.tabPage2.Controls.Add(this.txtSystemInfo);
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -226,8 +232,39 @@
 			this.txtSystemInfo.Location = new System.Drawing.Point(6, 40);
 			this.txtSystemInfo.Multiline = true;
 			this.txtSystemInfo.Name = "txtSystemInfo";
-			this.txtSystemInfo.Size = new System.Drawing.Size(247, 318);
+			this.txtSystemInfo.Size = new System.Drawing.Size(247, 258);
 			this.txtSystemInfo.TabIndex = 0;
+			// 
+			// button2
+			// 
+			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.button2.Location = new System.Drawing.Point(6, 309);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(247, 23);
+			this.button2.TabIndex = 2;
+			this.button2.Text = "Add thread students to Collection";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click);
+			// 
+			// txtCollection
+			// 
+			this.txtCollection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtCollection.Location = new System.Drawing.Point(65, 338);
+			this.txtCollection.Name = "txtCollection";
+			this.txtCollection.Size = new System.Drawing.Size(188, 20);
+			this.txtCollection.TabIndex = 3;
+			// 
+			// label1
+			// 
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(6, 341);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(53, 13);
+			this.label1.TabIndex = 4;
+			this.label1.Text = "Collection";
 			// 
 			// UnnStudent
 			// 
@@ -264,5 +301,8 @@
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.ComboBox cmbAction;
 		private System.Windows.Forms.Button ButtonThread;
+		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.TextBox txtCollection;
+		private System.Windows.Forms.Label label1;
 	}
 }
