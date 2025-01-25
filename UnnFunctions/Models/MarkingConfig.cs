@@ -479,14 +479,15 @@ namespace StudentsFetcher.StudentMarking
 			return numeric;
 		}
 
-		public void EnsureMarker(string studId, string mrkrEmail, string mrkrName)
+		public void EnsureMarker(string studId, string mrkrEmail, string mrkrName, string role)
 		{
 			var sql = 
 				$"""
 				select * from TB_Markers where 
 				MRKR_ptr_SubmissionUserID = '{studId}' and
 				MRKR_MarkerEmail = '{mrkrEmail}' and
-				MRKR_MarkerName = '{mrkrName}'
+				MRKR_MarkerName = '{mrkrName}' and
+				MRKR_MarkerRole = '{role}'
 				""";
 			var dt = GetDataTable(sql);
 			if (dt.Rows.Count > 0)
@@ -494,52 +495,40 @@ namespace StudentsFetcher.StudentMarking
 			sql =
 				$"""
 				insert into TB_Markers 
-				(MRKR_ptr_SubmissionUserID, MRKR_MarkerEmail, MRKR_MarkerName)
+				(MRKR_ptr_SubmissionUserID, MRKR_MarkerEmail, MRKR_MarkerName, MRKR_MarkerRole)
 				values 
-				('{studId}', '{mrkrEmail}', '{mrkrName}')
+				('{studId}', '{mrkrEmail}', '{mrkrName}', '{role}')
 				""";
 			Execute(sql);
 		}
 
 		public string ReportMarkers()
 		{
-			var sql =
-				$"""
-				select TB_Markers.*, TB_Submissions.* from 
-				TB_Markers LEFT JOIN TB_Submissions
-				on MRKR_ptr_SubmissionUserID = SUB_UserID
-				order by TB_Markers.MRKR_MarkerEmail
-				""";
-			var dt = GetDataTable(sql);
-			var lastReportMail = "";
 			var sb = new StringBuilder();
+			var ass = GetMarkingAssignments();
+			
 			sb.AppendLine("# Report by marker");
 			sb.AppendLine();
-			foreach (DataRow row in dt.Rows)
+			foreach (var assignment in ass)
 			{
-				var markMail = row["MRKR_MarkerEmail"].ToString();	
-				var markName = row["MRKR_MarkerName"].ToString();
+				sb.AppendLine($"{assignment.MarkerEmail}\t{assignment.MarkerName}");
 
-				if (markMail != lastReportMail)
+				foreach (var item in assignment.Details)
 				{
-					sb.AppendLine($"{markMail}\t{markName}");
-					lastReportMail = markMail;
+					sb.AppendLine($"\t{item.MarkingRole}\tw{item.StudentId}\t{item.SubmissionId}");
 				}
-				var studentEmail = row["SUB_email"] is not DBNull ? row["SUB_email"].ToString() : "<No student record>";
-				var studentComment = row["MRKR_Comment"] is not DBNull ? row["MRKR_Comment"].ToString() : "";
-				sb.AppendLine($"\t{row["MRKR_ptr_SubmissionUserID"]}\t{studentEmail}\t{studentComment}");
 			}
 			sb.AppendLine();
 
-			sql =
+			var sql =
 				$"""
 				select TB_Markers.*, TB_Submissions.* from 
 				TB_Submissions LEFT JOIN TB_Markers
 				on MRKR_ptr_SubmissionUserID = SUB_UserID
 				order by SUB_email
 				""";
-			dt = GetDataTable(sql);
-			lastReportMail = "";
+			var dt = GetDataTable(sql);
+			var lastReportMail = "";
 			sb.AppendLine("# Report by student");
 			sb.AppendLine();
 			foreach (DataRow row in dt.Rows)
@@ -560,7 +549,7 @@ namespace StudentsFetcher.StudentMarking
 			// missing:
 			sql =
 				$"""
-				select MRKR_ptr_SubmissionUserID, SUB_UserID from
+				select MRKR_ptr_SubmissionUserID, SUB_UserID, MRKR_MarkerEmail from
 				TB_Submissions FULL OUTER JOIN TB_Markers
 				on MRKR_ptr_SubmissionUserID = SUB_UserID
 				where MRKR_ptr_SubmissionUserID is null 
@@ -573,11 +562,16 @@ namespace StudentsFetcher.StudentMarking
 			foreach (DataRow row in dt.Rows)
 			{
 				if (row["MRKR_ptr_SubmissionUserID"] is DBNull)
-					sb.AppendLine($"Missing marker assignment for\t{row["SUB_UserID"]}");
+					sb.AppendLine($"Missing marker assignment for submission of student\t{row["SUB_UserID"]}");
 				else
-					sb.AppendLine($"Missing student for assignment code\t{row["MRKR_ptr_SubmissionUserID"]}");
+					sb.AppendLine($"Missing submission for assignment code\t{row["MRKR_ptr_SubmissionUserID"]}, {row["MRKR_MarkerEmail"]}");
 
 			}
+
+			sb.AppendLine("# Markers emails");
+			sb.AppendLine();
+			var emails = ass.Select(x => x.MarkerEmail).ToList();
+			sb.AppendLine(string.Join("; ", emails));
 			return sb.ToString();
 		}
 
@@ -612,14 +606,14 @@ namespace StudentsFetcher.StudentMarking
 				var sb = new StringBuilder();
 				sb.AppendLine($"Preparing {dest.Name}.");
 				using var readFile = new FileStream(dest.FullName, FileMode.Open, FileAccess.Read);
-				var hssfwb = new XSSFWorkbook(readFile);
+				var workbook = new XSSFWorkbook(readFile);
 				readFile.Close();
-				ISheet sheet = hssfwb.GetSheetAt(0);
+				ISheet sheet = workbook.GetSheetAt(0);
 				IRow row = sheet.GetRow(0);
 				ICell cell = row.GetCell(2);
 				cell.SetCellValue(MarkerEmail);
 
-				ICellStyle unlockedCellStyle = hssfwb.CreateCellStyle();
+				ICellStyle unlockedCellStyle = workbook.CreateCellStyle();
 				unlockedCellStyle.IsLocked = false;
 
 				int iRow = 7; // starting at row 8
@@ -627,9 +621,11 @@ namespace StudentsFetcher.StudentMarking
 				{
 					row = sheet.GetRow(iRow++);
 					row.GetCell(1).SetCellValue(det.ElpId);
-					row.GetCell(2).SetCellValue(det.StudentId);
+					row.GetCell(2).SetCellValue($"w{det.StudentId}");
 					row.GetCell(3).SetCellValue(det.SubmissionId);
 
+					// the marking cells need to be unlocked
+					//
                     for (int i = 4;	i < 10; i++)
                     {
 						var thiscell = row.GetCell(i);
@@ -638,18 +634,32 @@ namespace StudentsFetcher.StudentMarking
 						else
 							sb.AppendLine($"problem with null cell at row: {iRow-1} col: {i}");
 					}
-                }
+
+					// get the cell style of the comment and make it unlocked
+					//
+
+					var commentCell = row.GetCell(10);
+					var newCellStyle = workbook.CreateCellStyle();
+					newCellStyle.CloneStyleFrom(commentCell.CellStyle);
+					newCellStyle.IsLocked = false;
+					commentCell.CellStyle = newCellStyle;
+				}
 				// sheet.ShiftRows(39, 39, iRow - 39, true, false);
-				// while (iRow < 39)
-				// {
-				//	 sheet.RemoveRow(sheet.GetRow(iRow++));
-				//	 sheet.ShiftRows()
-				// }
+				while (iRow < 39)
+				{
+					row = sheet.GetRow(iRow++);
+					// 11 includes the comment
+					for (int i = 11; i < 18; i++)
+					{
+						var thiscell = row.GetCell(i);
+						thiscell.SetBlank();
+					}
+				}
 
 				sheet.ProtectSheet(""); // locks all cells except the unlocked
 				dest.Delete();
 				using var file = new FileStream(dest.FullName, FileMode.Create, FileAccess.Write);
-				hssfwb.Write(file, false);
+				workbook.Write(file, false);
 
 				return sb.ToString();
 			}
@@ -657,16 +667,18 @@ namespace StudentsFetcher.StudentMarking
 
 		public class MarkingAssignmentDetail
 		{
-			public MarkingAssignmentDetail(string studentId, string studentPaper, string studentPortal)
+			public MarkingAssignmentDetail(string studentId, string studentPaper, string studentPortal, string markingRole)
 			{
 				StudentId = studentId;
 				SubmissionId = studentPaper;
 				ElpId = studentPortal;
+				MarkingRole = markingRole;
 			}
 
 			public string StudentId { get; set; }
 			public string SubmissionId { get; set; }
 			public string ElpId { get; set; }
+			public string MarkingRole { get; set; }
 		}
 
 		public IEnumerable<MarkingAssignment> GetMarkingAssignments()
@@ -696,8 +708,9 @@ namespace StudentsFetcher.StudentMarking
 				var studentId = row["MRKR_ptr_SubmissionUserID"] is not DBNull ? row["MRKR_ptr_SubmissionUserID"].ToString()! : "<missing id>";
 				var studentPaper = row["SUB_PaperID"] is not DBNull ? row["SUB_PaperID"].ToString()! : "<missing submission>";
 				var studentPortal = row["SUB_ElpSite"] is not DBNull ? row["SUB_ElpSite"].ToString()! : "<undefined>";
+				var studentRole = row["MRKR_MarkerRole"] is not DBNull ? row["MRKR_MarkerRole"].ToString()! : "<undefined role>";
 				current.Add(new MarkingAssignmentDetail(
-					studentId, studentPaper, studentPortal
+					studentId, studentPaper, studentPortal, studentRole
 					));
 			}
 			return ret;

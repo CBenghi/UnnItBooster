@@ -148,6 +148,8 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnMergeReport = new System.Windows.Forms.Button();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.BtnOpenFolder = new System.Windows.Forms.Button();
+			this.label13 = new System.Windows.Forms.Label();
+			this.txtElpCode = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -1316,6 +1318,8 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// tabPage6
 			// 
+			this.tabPage6.Controls.Add(this.txtElpCode);
+			this.tabPage6.Controls.Add(this.label13);
 			this.tabPage6.Controls.Add(this.txtSourceTurnitin);
 			this.tabPage6.Controls.Add(this.button8);
 			this.tabPage6.Controls.Add(this.btnCompleteData);
@@ -1330,7 +1334,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// txtSourceTurnitin
 			// 
-			this.txtSourceTurnitin.Location = new System.Drawing.Point(23, 17);
+			this.txtSourceTurnitin.Location = new System.Drawing.Point(23, 6);
 			this.txtSourceTurnitin.Multiline = true;
 			this.txtSourceTurnitin.Name = "txtSourceTurnitin";
 			this.txtSourceTurnitin.Size = new System.Drawing.Size(337, 56);
@@ -1338,7 +1342,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// button8
 			// 
-			this.button8.Location = new System.Drawing.Point(366, 51);
+			this.button8.Location = new System.Drawing.Point(366, 40);
 			this.button8.Name = "button8";
 			this.button8.Size = new System.Drawing.Size(25, 22);
 			this.button8.TabIndex = 25;
@@ -1350,7 +1354,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			this.btnCompleteData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCompleteData.Location = new System.Drawing.Point(21, 135);
+			this.btnCompleteData.Location = new System.Drawing.Point(23, 150);
 			this.btnCompleteData.Margin = new System.Windows.Forms.Padding(2);
 			this.btnCompleteData.Name = "btnCompleteData";
 			this.btnCompleteData.Size = new System.Drawing.Size(365, 26);
@@ -1363,7 +1367,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.button7.Location = new System.Drawing.Point(21, 78);
+			this.button7.Location = new System.Drawing.Point(23, 93);
 			this.button7.Margin = new System.Windows.Forms.Padding(2);
 			this.button7.Name = "button7";
 			this.button7.Size = new System.Drawing.Size(365, 53);
@@ -1619,6 +1623,22 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnOpenFolder.UseVisualStyleBackColor = true;
 			this.BtnOpenFolder.Click += new System.EventHandler(this.BtnOpenFolder_Click);
 			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.Location = new System.Drawing.Point(23, 71);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(48, 13);
+			this.label13.TabIndex = 26;
+			this.label13.Text = "elp code";
+			// 
+			// txtElpCode
+			// 
+			this.txtElpCode.Location = new System.Drawing.Point(156, 68);
+			this.txtElpCode.Name = "txtElpCode";
+			this.txtElpCode.Size = new System.Drawing.Size(230, 20);
+			this.txtElpCode.TabIndex = 27;
+			// 
 			// FrmMarkingMachine
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1811,6 +1831,8 @@ namespace StudentsFetcher.StudentMarking
 		private Button BtnMergeReport;
 		private Label label12;
 		private TextBox TxtScaleFactor;
+		private TextBox txtElpCode;
+		private Label label13;
 	}
 }
 

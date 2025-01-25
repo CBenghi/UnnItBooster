@@ -170,6 +170,7 @@ namespace UnnOutlookAddin.UI
 		private void ButtonThread_Click(object sender, EventArgs e)
 		{
 			txtInformation.Text += PopulateComboActions().ToString();
+			MessageBox.Show("Any IDs found have been extracted listed in the information tab.");
 		}
 
 		private StringBuilder PopulateComboActions()

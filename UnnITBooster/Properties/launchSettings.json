@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "UnnItBooster": {
+      "commandName": "Project",
+      "commandLineArgs": "-mm \"C:\\Users\\Claudio\\OneDrive - Northumbria University - Production Azure AD\\2024\\Dissertation marks\\2025 01 - Marks.sqlite\" -max"
+    }
+  }
+}

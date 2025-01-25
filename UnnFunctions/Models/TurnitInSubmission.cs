@@ -25,6 +25,7 @@ public class TurnitInSubmission
 	public string StudentPapersOverlap = "";
 	public string NumericUserId = "";
 	public string Email = "";
+	public string ElpSite = "";
 	public int InternalShortId = -1;
 
 	public static TurnitInSubmission FromRow(DataRow row)
@@ -43,6 +44,7 @@ public class TurnitInSubmission
 		item.StudentPapersOverlap = Some("SUB_StudentPapersOverlap", row);
 		item.NumericUserId = Some("SUB_NumericUserID", row);
 		item.Email = Some("SUB_email", row);
+		item.ElpSite = Some("SUB_ElpSite", row);
 		var sid = row["SUB_Id"].ToString();
 		if (!string.IsNullOrEmpty(sid) && int.TryParse(sid, out var result))
 			item.InternalShortId = result;
@@ -56,8 +58,11 @@ public class TurnitInSubmission
 
 	public static IEnumerable<string> Fields => GetSqlCouples().Select(x => x.Field);
 
-	internal static SqlCouple[] GetSqlCouples(TurnitInSubmission? item = null)
+	internal static SqlCouple[] GetSqlCouples(TurnitInSubmission? item = null, string? elpSiteCode = null)
 	{
+		var elpCode = elpSiteCode
+			?? item?.ElpSite
+			?? "";
 		return new[] {
 			new SqlCouple("SUB_LastName", !string.IsNullOrEmpty(item?.LastName) ? item.LastName : item?.FullName),
 			new SqlCouple("SUB_FirstName", item?.FirstName?? ""),
@@ -71,7 +76,8 @@ public class TurnitInSubmission
 			new SqlCouple("SUB_PublicationsOverlap",  item?.PublicationsOverlap?? ""),
 			new SqlCouple("SUB_StudentPapersOverlap",  item?.StudentPapersOverlap?? ""),
 			new SqlCouple("SUB_NumericUserID",  item?.NumericUserId?? ""),
-			new SqlCouple("SUB_email", item?.Email?? "")
+			new SqlCouple("SUB_email", item?.Email?? ""),
+			new SqlCouple("SUB_ElpSite", elpCode)
 			};
 	}
 }

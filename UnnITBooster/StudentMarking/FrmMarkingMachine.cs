@@ -375,8 +375,8 @@ public partial class FrmMarkingMachine : Form
 
                     Associate Markers
                         adds markers depending on the data below the command with the following structure:
-                        <studentId> <markerEmail> <MarkerName>
-                        22049588 ala.suliman@northumbria.ac.uk Ala Suliman
+                        <studentId> <markerEmail> <MarkerRole> <MarkerName>
+                        22049588 ala.suliman@northumbria.ac.uk Supervisor Ala Suliman
 
                     Report Markers
                         creates a report with marker association to submissions and missing entries
@@ -428,16 +428,17 @@ public partial class FrmMarkingMachine : Form
         if (string.IsNullOrWhiteSpace(txtLibReport.Text))
             return;
         var assignments = txtLibReport.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-        var r = new Regex(@"^(\d+)\t+([^ ]+)\t+(.+)");
+        var r = new Regex(@"^(?<studId>\d+)\t+(?<email>[^ ]+)\t+(?<role>[^ ]+)\t+(?<name>.+)");
         foreach (var assignment in assignments)
         {
             var m = r.Match(assignment);
             if (m.Success)
             {
-                var studId = m.Groups[1].Value;
-                var mrkrEmail = m.Groups[2].Value;
-                var mrkrName = m.Groups[3].Value;
-                _config.EnsureMarker(studId,  mrkrEmail, mrkrName);
+                var studId = m.Groups["studId"].Value;
+                var mrkrEmail = m.Groups["email"].Value;
+                var mrkrRole = m.Groups["role"].Value;
+                var mrkrName = m.Groups["name"].Value;
+                _config.EnsureMarker(studId,  mrkrEmail, mrkrName, mrkrRole);
             }
         }
 	}
@@ -1629,7 +1630,7 @@ public partial class FrmMarkingMachine : Form
         var destFile = Path.ChangeExtension(f.FullName, "sqlite");
         var repository = new StudentsRepository(Settings.Default.StudentsFolder);
         var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f, repository).ToList();
-        TurnItIn.PopulateDatabase(destFile, submissions);
+        TurnItIn.PopulateDatabase(destFile, submissions, txtElpCode.Text);
         txtExcelFileName.Text = destFile;
         Reload();
     }
@@ -1643,7 +1644,7 @@ public partial class FrmMarkingMachine : Form
             return;
         var repository = new StudentsRepository(Settings.Default.StudentsFolder);
         var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f, repository).ToList();
-        txtReport.Text = TurnItIn.UpdateDatabase(txtExcelFileName.Text, submissions);
+        txtReport.Text = TurnItIn.UpdateDatabase(txtExcelFileName.Text, submissions, txtElpCode.Text);
         Reload();
     }
 
@@ -1702,6 +1703,8 @@ public partial class FrmMarkingMachine : Form
 						sb.AppendLine($"SHORTENED: {entry.FullName} to {destinationPath}");
                         shortened++;
 					}
+                    if (File.Exists(destinationPath))
+                        File.Delete(destinationPath);
                     entry.ExtractToFile(destinationPath);
                     sb.AppendLine($"Extracted: {destinationPath}");
                 }
@@ -1930,5 +1933,11 @@ public partial class FrmMarkingMachine : Form
 		if (!referenceDet.Exists)
 			return;
 		TurnitinHtmlReports.Merge(html, referenceDet, name, scl);
+	}
+
+	internal void SetSqlFile(string v)
+	{
+        txtExcelFileName.Text = v;
+        // Reload();
 	}
 }

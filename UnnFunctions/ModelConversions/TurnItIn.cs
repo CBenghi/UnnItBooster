@@ -100,6 +100,7 @@ public partial class TurnItIn
 		EnsureField(c, "TB_Submissions", "SUB_ElpSite", "TEXT default NULL", "NULL");
 		ExecuteSql(c, TB_MarkersSql);
 		EnsureField(c, "TB_Submissions", "SUB_ElpSite", "TEXT default NULL", "NULL");
+		EnsureField(c, "TB_Markers", "MRKR_MarkerRole", "TEXT default NULL", "NULL");
 	}
 
 	public static void UpgradeDatabase(string fullname)
@@ -114,6 +115,7 @@ public partial class TurnItIn
 				 "MRKR_ptr_SubmissionUserID TEXT, " +
 				 "MRKR_MarkerEmail TEXT, " +
 				 "MRKR_MarkerName TEXT, " +
+				 "MRKR_MarkerRole TEXT, " +
 				 "MRKR_Comment TEXT " +
 				 ")";
 
@@ -308,7 +310,7 @@ public partial class TurnItIn
 		}
 	}
 
-	public static void PopulateDatabase(string fullname, IEnumerable<TurnitInSubmission> submissions)
+	public static void PopulateDatabase(string fullname, IEnumerable<TurnitInSubmission> submissions, string elpSiteCode)
 	{
 		var filename = Path.ChangeExtension(fullname, "sqlite");
 
@@ -319,7 +321,7 @@ public partial class TurnItIn
 		c.Open();
 		foreach (var item in submissions)
 		{
-			var vc = TurnitInSubmission.GetSqlCouples(item);
+			var vc = TurnitInSubmission.GetSqlCouples(item, elpSiteCode);
 			var flds = string.Join(", ", vc.Select(x => x.Field));
 			var vals = string.Join(", ", vc.Select(x => x.GetValue()));
 			var sql = $"insert into TB_Submissions ({flds}) values ({vals})";
@@ -329,7 +331,7 @@ public partial class TurnItIn
 		c.Close();
 	}
 
-	public static string UpdateDatabase(string fullname, List<TurnitInSubmission> submissions)
+	public static string UpdateDatabase(string fullname, List<TurnitInSubmission> submissions, string elpSiteCode)
 	{
 		var filename = Path.ChangeExtension(fullname, "sqlite");
 		if (!File.Exists(filename))
@@ -348,7 +350,11 @@ public partial class TurnItIn
 
 		foreach (var item in submissions)
 		{
-			var vc = TurnitInSubmission.GetSqlCouples(item).Where(x => !string.IsNullOrWhiteSpace(x.Value));
+			var vc = TurnitInSubmission.GetSqlCouples(item, elpSiteCode).Where(x => !string.IsNullOrWhiteSpace(x.Value));
+			if (!string.IsNullOrEmpty(elpSiteCode))
+			{
+				vc = vc.ToList().Append(new SqlCouple("SUB_ElpSite", elpSiteCode));
+			}
 			if (existingEmails.Contains(item.Email))
 			{
 				// update
