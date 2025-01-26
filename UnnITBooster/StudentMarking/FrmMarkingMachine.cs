@@ -225,12 +225,18 @@ public partial class FrmMarkingMachine : Form
 			var selectModerationMatch = Regex.Match(txtSearch.Text, @"SelectModeration *(?<name>.*)$", RegexOptions.IgnoreCase);
 			var associateMarkerMatch = Regex.Match(txtSearch.Text, @"^Associate ?Marker[s]?$", RegexOptions.IgnoreCase);
 			var reportMarkerMatch = Regex.Match(txtSearch.Text, @"^Report ?Marker[s]?$", RegexOptions.IgnoreCase);
+			var importMarksMatch = Regex.Match(txtSearch.Text, @"^Import ?Marker[s]?$", RegexOptions.IgnoreCase);
 			var markingExcelsMatch = Regex.Match(txtSearch.Text, @"^Create ?MarkingFiles +(?<excelFileName>.*)$", RegexOptions.IgnoreCase);
             if (addComponentMatch.Success)
             {
                 AddComponent(addComponentMatch);
                 UpdateComponents();
             }
+            else if (importMarksMatch.Success)
+            {
+                _config.GetExcelMarkedEntries(out var marks);
+				txtLibReport.Text = SingleSubmissionMark.Report(marks);
+			}
             else if (markingExcelsMatch.Success)
             {
                 txtLibReport.Text = CreateExcelMarkers(markingExcelsMatch);
@@ -384,6 +390,9 @@ public partial class FrmMarkingMachine : Form
                     Create MarkingFiles <excelFileName>
                         creates a file ready to receive individual marker feedback
                         e.g. Create MarkingFiles markingTemplate.xlsx
+
+                    Import Markers
+                        reads externally marked excel files back into the database
 
                     <normal search>
                         separate text from section/area with `;`
@@ -1302,137 +1311,6 @@ public partial class FrmMarkingMachine : Form
         Reload();
     }
 
-    [DebuggerDisplay("Range {Min}-{Max}: {Count}")]
-    public class MarkRange
-    {
-		public MarkRange(int min, int max)
-		{
-            Min = min; 
-            Max = max;
-		}
-
-		public int Min { get; set; }
-        public int Max { get; set; }
-        public int Count { get; set; } = 0;
-        public double Place
-        {
-            get
-            {
-                if (Min < 0 || Max > 100)
-						return 100;
-                return (Max + Min) / 2.0;
-            }
-        }
-
-		public string Description
-        {
-            get
-            {
-                if (Count == 0)
-                    return "";
-                if (Min < 0 || Max > 100)
-                    return "unmarked";
-                if (Min == Max)
-                    return $"{Min}";
-                return $"{Min}:{Max}";
-            }
-        }
-
-		public bool Includes(int Mark)
-        {
-            var found = Mark >= Min && Mark <= Max;
-			return found;
-        }
-    }
-
-    public class MarksCollection
-    {
-        public List<MarkRange> Ranges { get; set; } = new();
-		public int MaxCount
-        {
-            get
-            {
-                return Ranges.Max(x => x.Count);
-            }
-        }
-
-		public bool Add(int mark)
-        {
-            var range = Ranges.FirstOrDefault(x => x.Includes(mark));
-            if (range == null)
-                return false;
-            range.Count = range.Count + 1;
-            return true;
-        }
-
-        public enum grouping
-        {
-            Classification,
-            HalfClassification,
-            Detailed,
-            Individual
-        }
-    
-        public static MarksCollection Initialize(grouping type)
-        {
-            var ret = new MarksCollection();
-			switch (type)
-			{
-				case grouping.Detailed:
-					
-					ret.Ranges.Add(new MarkRange(0, 0));
-					ret.Ranges.Add(new MarkRange(1, 29));
-					for (int i = 3; i < 9; i++)
-					{
-						var dec = i * 10;
-						ret.Ranges.Add(new MarkRange(dec, dec + 2));
-						ret.Ranges.Add(new MarkRange(dec + 3, dec + 6));
-						ret.Ranges.Add(new MarkRange(dec + 7, dec + 9));
-					}
-					ret.Ranges.Add(new MarkRange(90, 100));
-					break;
-					
-                case grouping.HalfClassification:
-                    
-					ret.Ranges.Add(new MarkRange(0, 0));
-					ret.Ranges.Add(new MarkRange(1, 29));
-					for (int i = 3; i < 9; i++)
-					{
-						var dec = i * 10;
-						ret.Ranges.Add(new MarkRange(dec, dec + 4));
-						ret.Ranges.Add(new MarkRange(dec + 5, dec + 9));
-					}
-					ret.Ranges.Add(new MarkRange(90, 100));
-					break;
-					
-				case grouping.Individual:
-					for (int i = 0; i < 100; i++)
-					{
-						ret.Ranges.Add(new MarkRange(i, i));
-					}					
-					break;
-				default:
-					ret.Ranges.Add(new MarkRange(0, 9));
-					ret.Ranges.Add(new MarkRange(10, 19));
-					ret.Ranges.Add(new MarkRange(20, 29));
-					ret.Ranges.Add(new MarkRange(30, 39));
-					ret.Ranges.Add(new MarkRange(40, 49));
-					ret.Ranges.Add(new MarkRange(50, 59));
-					ret.Ranges.Add(new MarkRange(60, 69));
-					ret.Ranges.Add(new MarkRange(70, 79));
-					ret.Ranges.Add(new MarkRange(80, 89));
-					ret.Ranges.Add(new MarkRange(90, 100));
-					break;
-			}
-			return ret;
-        }
-
-		internal void RemoveZeros()
-		{
-			Ranges.RemoveAll(x=>x.Includes(0));
-		}
-	}
-
     private void button4_Click(object sender, EventArgs e)
     {
         var tag = ((ComboTag)CmbGrouping.SelectedItem).Tag;
@@ -1440,8 +1318,6 @@ public partial class FrmMarkingMachine : Form
         var coll = MarksCollection.Initialize(mode);
         if (ChkExclude0.Checked)
             coll.RemoveZeros();
-
-            
         if (ChkIncludeNoMark.Checked)
             coll.Ranges.Add(new MarkRange(-1, -1));
         var mcalc = _config.GetMarkCalculator();

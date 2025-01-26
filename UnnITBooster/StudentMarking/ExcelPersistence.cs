@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -11,6 +12,7 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using StudentsFetcher.StudentMarking;
+using UnnFunctions.Models;
 
 namespace UnnItBooster.StudentMarking;
 
@@ -138,53 +140,19 @@ internal class ExcelPersistence
 		public int ColNumber { get; set; }
 	}
 
-	static bool IsFileLocked(FileInfo file)
-	{
-		try
-		{
-			using (FileStream stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None))
-			{
-				stream.Close();
-			}
-		}
-		catch (IOException)
-		{
-			//the file is unavailable because it is:
-			//still being written to
-			//or being processed by another thread
-			//or does not exist (has already been processed)
-			return true;
-		}
-
-		//file is not locked
-		return false;
-	}
-
 	internal static string ReadComponents(MarkingConfig config, string excelName)
 	{
-		FileInfo fi = new FileInfo(excelName);	
-		if (!fi.Exists)
-		{
-			return $"File not found '{excelName}'";
-		}
-
-		if (IsFileLocked(fi))
-			return $"File is locked '{excelName}'";
-
-		
-
-		XSSFWorkbook hssfwb;
-		using FileStream file = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read);
-		hssfwb = new XSSFWorkbook(file);
-		ISheet sheet = hssfwb.GetSheet("Marks");
+		if (!ExcelFunctions.TryReadExcel(excelName, out var excelWorkbook, out string report))
+			return report;
+		ISheet sheet = excelWorkbook.GetSheet("Marks");
 		if (sheet is null)
 			return $"Marks sheet not found in '{excelName}'";
 		
-		StringBuilder sb = new StringBuilder();
+		var sb = new StringBuilder();
 		bool processing = false;
 		int StudentCount = 0;
 		int ComponentMarkCount = 0;
-		List<Component> components = new List<Component>();
+		var components = new List<Component>();
 		for (int rowId = 0; rowId <= sheet.LastRowNum; rowId++)
 		{
 			var row = sheet.GetRow(rowId);

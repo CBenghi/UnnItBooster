@@ -1,6 +1,4 @@
-﻿using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
+﻿using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,7 +12,7 @@ using UnnItBooster.Models;
 
 namespace StudentsFetcher.StudentMarking
 {
-	public class MarkingConfig
+	public partial class MarkingConfig
 	{
 		public MarkingConfig(string dbName)
 		{
@@ -584,103 +582,6 @@ namespace StudentsFetcher.StudentMarking
 			return t;
 		}
 
-		public class MarkingAssignment
-		{
-			public MarkingAssignment(string markMail, string markName)
-			{
-				MarkerEmail = markMail;
-				MarkerName = markName;
-			}
-
-			public string MarkerEmail { get; set; }
-			public string MarkerName { get; set; }
-			public List<MarkingAssignmentDetail> Details { get; set; } = new();
-
-			internal void Add(MarkingAssignmentDetail markingAssignmentDetail)
-			{
-				Details.Add(markingAssignmentDetail);
-			}
-
-			internal string FixFile(FileInfo dest)
-			{
-				var sb = new StringBuilder();
-				sb.AppendLine($"Preparing {dest.Name}.");
-				using var readFile = new FileStream(dest.FullName, FileMode.Open, FileAccess.Read);
-				var workbook = new XSSFWorkbook(readFile);
-				readFile.Close();
-				ISheet sheet = workbook.GetSheetAt(0);
-				IRow row = sheet.GetRow(0);
-				ICell cell = row.GetCell(2);
-				cell.SetCellValue(MarkerEmail);
-
-				ICellStyle unlockedCellStyle = workbook.CreateCellStyle();
-				unlockedCellStyle.IsLocked = false;
-
-				int iRow = 7; // starting at row 8
-				foreach (var det in Details)
-				{
-					row = sheet.GetRow(iRow++);
-					row.GetCell(1).SetCellValue(det.ElpId);
-					row.GetCell(2).SetCellValue($"w{det.StudentId}");
-					row.GetCell(3).SetCellValue(det.SubmissionId);
-
-					// the marking cells need to be unlocked
-					//
-                    for (int i = 4;	i < 10; i++)
-                    {
-						var thiscell = row.GetCell(i);
-						if (thiscell != null)
-							thiscell.CellStyle = unlockedCellStyle;
-						else
-							sb.AppendLine($"problem with null cell at row: {iRow-1} col: {i}");
-					}
-
-					// get the cell style of the comment and make it unlocked
-					//
-
-					var commentCell = row.GetCell(10);
-					var newCellStyle = workbook.CreateCellStyle();
-					newCellStyle.CloneStyleFrom(commentCell.CellStyle);
-					newCellStyle.IsLocked = false;
-					commentCell.CellStyle = newCellStyle;
-				}
-				// sheet.ShiftRows(39, 39, iRow - 39, true, false);
-				while (iRow < 39)
-				{
-					row = sheet.GetRow(iRow++);
-					// 11 includes the comment
-					for (int i = 11; i < 18; i++)
-					{
-						var thiscell = row.GetCell(i);
-						thiscell.SetBlank();
-					}
-				}
-
-				sheet.ProtectSheet(""); // locks all cells except the unlocked
-				dest.Delete();
-				using var file = new FileStream(dest.FullName, FileMode.Create, FileAccess.Write);
-				workbook.Write(file, false);
-
-				return sb.ToString();
-			}
-		}
-
-		public class MarkingAssignmentDetail
-		{
-			public MarkingAssignmentDetail(string studentId, string studentPaper, string studentPortal, string markingRole)
-			{
-				StudentId = studentId;
-				SubmissionId = studentPaper;
-				ElpId = studentPortal;
-				MarkingRole = markingRole;
-			}
-
-			public string StudentId { get; set; }
-			public string SubmissionId { get; set; }
-			public string ElpId { get; set; }
-			public string MarkingRole { get; set; }
-		}
-
 		public IEnumerable<MarkingAssignment> GetMarkingAssignments()
 		{
 			var sql =
@@ -716,6 +617,27 @@ namespace StudentsFetcher.StudentMarking
 			return ret;
 		}
 
+		public string GetExcelMarkedEntries(out IEnumerable<SingleSubmissionMark> marks)
+		{
+			var sb = new StringBuilder();
+			var folderName = GetFolderName()!;
+			var d = new DirectoryInfo(Path.Combine(folderName, "ReceivedMarks"));
+			var excelFiles = d.GetFiles("*.xlsx");
+			var retmarks = new List<SingleSubmissionMark>();
+			foreach (var excelFile in excelFiles)
+			{
+				if (!ExcelFunctions.TryReadExcel(excelFile.FullName, out var workbook, out var report))
+				{
+					sb.AppendLine(report);
+					continue;
+				}
+				retmarks.AddRange(SingleSubmissionMark.GetMarks(workbook, out var getMarksReport));
+				
+			}
+			marks = retmarks;
+			return sb.ToString();
+		}
+
 		public string CreateExcelMarkingFilesFrom(FileInfo fl)
 		{
 			var sb = new StringBuilder();
@@ -742,12 +664,6 @@ namespace StudentsFetcher.StudentMarking
 			return sb.ToString();
 		}
 
-		public string BareName
-		{
-			get
-			{
-				return Path.GetFileNameWithoutExtension(DbName);
-			}
-		}
+		public string BareName => Path.GetFileNameWithoutExtension(DbName);
 	}
 }
