@@ -45,6 +45,11 @@ public class SingleSubmissionMark
 	public string StudentId { get; set; }
 	public string SubmissionId { get; set; }
 	public string Comment { get; set; }
+
+	public int GetMark()
+	{
+		return Components.Sum(x => x.Mark);
+	}
 	public List<ComponentMark> Components { get; set; }
 
 	public SingleSubmissionMark(string markerEmail, string studentId, string submissionId, string comment, IEnumerable<ComponentMark> components)
@@ -180,7 +185,7 @@ public class SingleSubmissionMark
 					"\t",
 					mark.Components.Select(x => x.ToString())
 					);
-			sb.AppendLine($"{mark.MarkerEmail}\t{mark.StudentId}\t{mks}\t{mark.Comment}");
+			sb.AppendLine($"{mark.MarkerEmail}\t{mark.GetMark()}\t{mark.StudentId}\t{mks}\t{mark.Comment}");
 		}
 		return sb.ToString();
 	}

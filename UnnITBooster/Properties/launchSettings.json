@@ -1,8 +1,11 @@
 {
   "profiles": {
-    "UnnItBooster": {
+    "diss debug": {
       "commandName": "Project",
-      "commandLineArgs": "-mm \"C:\\Users\\Claudio\\OneDrive - Northumbria University - Production Azure AD\\2024\\Dissertation marks\\2025 01 - Marks.sqlite\" -max"
+      "commandLineArgs": "-mm \"C:\\Users\\Claudio\\OneDrive - Northumbria University - Production Azure AD\\2024\\KA7068 - Research project\\SEM1 - marking\\2025 01 - Marks.sqlite\" -max"
+    },
+    "bare debug": {
+      "commandName": "Project"
     }
   }
 }

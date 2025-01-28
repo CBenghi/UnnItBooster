@@ -259,6 +259,8 @@ namespace UnnItBooster.ModelConversions
 			//   div for the content of the year
 
 			var doc = new HtmlAgilityPack.HtmlDocument();
+			if (doc is null)
+				return null;
 			doc.LoadHtml(htmlSource);
 			// get the table header for the student number
 			//

@@ -385,7 +385,7 @@ public partial class FrmMarkingMachine : Form
                         22049588 ala.suliman@northumbria.ac.uk Supervisor Ala Suliman
 
                     Report Markers
-                        creates a report with marker association to submissions and missing entries
+                        Creates a report with marker association to submissions and missing entries
 
                     Create MarkingFiles <excelFileName>
                         creates a file ready to receive individual marker feedback

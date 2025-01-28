@@ -563,9 +563,8 @@ namespace StudentsFetcher.StudentMarking
 					sb.AppendLine($"Missing marker assignment for submission of student\t{row["SUB_UserID"]}");
 				else
 					sb.AppendLine($"Missing submission for assignment code\t{row["MRKR_ptr_SubmissionUserID"]}, {row["MRKR_MarkerEmail"]}");
-
 			}
-
+			sb.AppendLine();
 			sb.AppendLine("# Markers emails");
 			sb.AppendLine();
 			var emails = ass.Select(x => x.MarkerEmail).ToList();
