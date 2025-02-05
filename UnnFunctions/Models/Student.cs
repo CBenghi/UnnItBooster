@@ -135,8 +135,10 @@ namespace UnnItBooster.Models
 
 		public List<ModuleResult>? TranscriptResults { get; set; }
 
-		public bool HasEmail(string seekEmail)
+		public bool HasEmail(string? seekEmail)
 		{
+			if (seekEmail is null)
+				return false;
 			if (Email is not null && Email.ToLowerInvariant() == seekEmail.ToLowerInvariant())
 				return true;
 			if (EmailByStudentID is not null && EmailByStudentID.ToLowerInvariant() == seekEmail.ToLowerInvariant())

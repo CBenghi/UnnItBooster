@@ -1,12 +1,33 @@
 using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Text.RegularExpressions;
 using UnnFunctions.ModelConversions;
 using UnnItBooster.ModelConversions;
+using Xunit.Abstractions;
 
 namespace DevelopmentTests
 {
 	public class evisionTests
 	{
+        public evisionTests(ITestOutputHelper outputWriter)
+		{
+			output = outputWriter;
+			logger = GetXunitLogger(outputWriter);
+		}
+		private readonly ITestOutputHelper output;
+		ILogger logger;
+
+		internal static ILogger GetXunitLogger(ITestOutputHelper helper)
+		{
+			var services = new ServiceCollection()
+						.AddLogging((builder) => builder.AddXUnit(helper).SetMinimumLevel(LogLevel.Debug));
+			IServiceProvider provider = services.BuildServiceProvider();
+			var logg = provider.GetRequiredService<ILogger<evisionTests>>();
+			Assert.NotNull(logg);
+			return logg;
+		}
+
 		[Fact]
 		public void TestGetTextEntries()
 		{
@@ -23,14 +44,17 @@ namespace DevelopmentTests
 
 		[Theory]
 		[InlineData("Files/transcript.html")]
+		[InlineData("Files/transcriptNew.html")]
 		[InlineData("Files/transcriptMultiple.html")]
 		public void TestTranscript(string fileName)
 		{
 			var src = File.ReadAllText(fileName);
-			var stud = eVision.GetStudentTranscript(src,
-				new UnnFunctions.Models.QueueAction(null, UnnFunctions.Models.QueueAction.ActionRequiredData.studentTranscript,
-				 UnnFunctions.Models.QueueAction.ActionSource.studentTranscript, "Some"));
-			string s = stud.NumericStudentId;
+			var context = new UnnFunctions.Models.QueueAction(null, UnnFunctions.Models.QueueAction.ActionRequiredData.studentTranscript,
+				 UnnFunctions.Models.QueueAction.ActionSource.studentTranscript, "Some");
+			var stud = eVision.GetStudentTranscript(src, context)!;
+			stud.Should().NotBeNull();
+			logger?.LogInformation("studentId: {studentId}", stud.NumericStudentId);
+			logger?.LogInformation("studentTranscript: {studentId}", stud.TranscriptResults.Count);
 		}
 
 		[Fact]

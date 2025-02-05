@@ -263,7 +263,7 @@ public class StudentsRepository
 			&& string.IsNullOrEmpty(student.NumericStudentId)
 			)
 			return false;
-		var toUpdate = coll.Students.FirstOrDefault(x => x.HasEmail(student.Email!));
+		var toUpdate = coll.Students.FirstOrDefault(x => x.HasEmail(student.Email));
 		if (toUpdate is null && !string.IsNullOrEmpty(student.NumericStudentId))
 		{
 			toUpdate = coll.Students.FirstOrDefault(x => x.NumericStudentId == student.NumericStudentId);

@@ -1,5 +1,4 @@
-﻿#define stopW
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
@@ -28,10 +27,9 @@ namespace EvisionBrowser
 		private StudentsRepository studentsRepo = new StudentsRepository(@"C:\Users\Claudio\OneDrive - Northumbria University - Production Azure AD\2024\Students");
 
 		DispatcherTimer dispatcherTimer;
-#if stopW
+
 		Stopwatch? stopwatch;
 		List<long> elapsedTimes = new List<long>();
-#endif
 
 		/// <summary>
 		/// Actions are started here, and their results analysed in <see cref="NavigationDone(object, WebViewCore.CoreWebView2NavigationCompletedEventArgs)"/>
@@ -42,13 +40,15 @@ namespace EvisionBrowser
 		{
 			if (!QueueActive)
 				return;
+			
+			{
+
+			}
 			if (currentAction is null && queuedActions.Any())
 			{
 				currentAction = queuedActions.Dequeue(); // action is started here, but then set to null when page is loaded
 				OnPropertyChanged(nameof(QueueDisplayText));
-#if stopW
 				stopwatch = Stopwatch.StartNew();
-#endif
 				wbSample.Source = currentAction.Page;
 			}
 			else if (!queuedActions.Any())
@@ -57,8 +57,8 @@ namespace EvisionBrowser
 			}
 		}
 
-#if stopW
-		private async void PerformStatUpdate()
+
+		private void PerformStatUpdate()
 		{
 			if (elapsedTimes.Any())
 			{
@@ -70,23 +70,22 @@ namespace EvisionBrowser
 				Report = sb.ToString();
 			}
 		}
-#endif
 
-		private void NavigationDone(object sender, WebViewCore.CoreWebView2NavigationCompletedEventArgs e)
+		private async void NavigationDone(object sender, WebViewCore.CoreWebView2NavigationCompletedEventArgs e)
 		{
 			var viewer = sender as WebViewWpf.WebView2;
 			if (viewer == null)
 				return;
 			Url.Text = viewer.Source.ToString();
-#if stopW
+
 			stopwatch?.Stop();
 			if (stopwatch != null) 
 				elapsedTimes.Add(stopwatch.ElapsedMilliseconds);
 			PerformStatUpdate();
-#endif
+
 			if (currentAction != null)
 			{
-				ProcessAvailableDataAsync(currentAction); // from navigation done
+				await ProcessAvailableDataAsync(currentAction); // from navigation done
 			}
 		}
 
@@ -108,8 +107,6 @@ namespace EvisionBrowser
 
 			var script = "document.getElementById('sc5054').click();";
 			Report = await GetScriptString(script);
-
-
 		}
 
 		[RelayCommand]
@@ -216,27 +213,33 @@ namespace EvisionBrowser
 			return true;
 		}
 
-		private async void ProcessAvailableDataAsync(QueueAction context, HashSet<string>? interestingIds = null)
+		private async Task<bool> ProcessAvailableDataAsync(QueueAction context, HashSet<string>? interestingIds = null)
 		{
+			var ret = false;
 			var src = await GetPageSource();
 			switch (context.DataSource)
 			{
 				// these funcions may enrich the queue and archive any data found
 				case ActionSource.studentsList:
 					ProcessStudentList(src, context, interestingIds);
+					ret = true;
 					break;
 				case ActionSource.studentsListWithPictures:
+					ret = true;
 					break;
 				case ActionSource.studentDetails:
 					ProcessStudentDetails(src, context);
+					ret = true;
 					break;
 				case ActionSource.studentTranscript:
 					ProcessStudentTranscript(src, context);
+					ret = true;
 					break;
 				default:
 					break;
 			}
 			currentAction = null;
+			return ret;
 		}
 
 		private void ProcessStudentTranscript(string src, QueueAction context)
@@ -401,7 +404,5 @@ namespace EvisionBrowser
 			Report = sb.ToString();
 			return true;
 		}
-
-
 	}
 }
