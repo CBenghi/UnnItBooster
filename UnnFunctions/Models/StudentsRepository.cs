@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -89,6 +90,8 @@ public class StudentsRepository
 			yield return item;
 		}
 	}
+
+
 
 	public IEnumerable<Student> Students
 	{
@@ -211,6 +214,23 @@ public class StudentsRepository
 		return tally;
 	}
 
+	public bool TryGetStudentByAnyReference(string reference, [NotNullWhen(true)] out Student? returnStudent)
+	{
+		var userIdReg = new Regex(@"^[wW]?(?<simpleId>\d{8})$");
+		returnStudent = null;
+		if (userIdReg.IsMatch(reference)) // inefficient but small numbers
+		{
+			var m = userIdReg.Match(reference);
+			var id = m.Groups["simpleId"].Value;
+			returnStudent = GetStudentById(id);
+		}
+		if (returnStudent is null && reference.Contains("@"))
+		{
+			return TryGetStudentByEmail(reference, out returnStudent);
+		}
+		return returnStudent != null;		
+	}
+
 	public bool TryGetStudentByEmail(string seekingEmail, [NotNullWhen(true)]out Student? returnStudent)
 	{
 		returnStudent = Students.FirstOrDefault(x => x.HasEmail(seekingEmail));
@@ -307,6 +327,18 @@ public class StudentsRepository
 				continue;
 			if (collection.Students.Any(x => x.HasEmail(senderEmailAddress)))
 				yield return collection;
+		}
+	}
+
+	public IEnumerable<(IStudentCollection collection, Student student)> StudentsByCollection(Func<Student, bool> criterion)
+	{
+		foreach (var collection in collections)
+		{
+			if (collection is null)
+				continue;
+			var studs = collection.Students.Where(criterion);
+			foreach (var student in studs)
+				yield return (collection, student);
 		}
 	}
 }

@@ -10,6 +10,7 @@ using UnnOutlookAddin.Actions;
 using StudentsFetcher.StudentMarking;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using UnnFunctions.ModelConversions;
+using Microsoft.Office.Core;
 
 namespace UnnOutlookAddin.UI
 {
@@ -26,12 +27,31 @@ namespace UnnOutlookAddin.UI
 		{
 			var stringBuilder = new StringBuilder();
 			stringBuilder.AppendLine($"Students folder: {Repository.ConfigurationFolder.FullName}");
-			stringBuilder.AppendLine($"");
+			stringBuilder.AppendLine();
 			stringBuilder.AppendLine($"Collections:");
 			foreach (var coll in Repository.GetPersonCollections())
 			{
 				stringBuilder.AppendLine($"- {coll.Name} ({coll.Students.Count})");
 			}
+			stringBuilder.AppendLine();
+
+			var ctn = Repository.StudentsByCollection(x =>
+				string.IsNullOrEmpty(x.Surname)
+				|| string.IsNullOrEmpty(x.Forename)
+				).ToArray();
+			if (ctn.Length > 0)
+			{
+				stringBuilder.AppendLine($"WARNING: {ctn.Length} students have null or empty name or last name.");
+				stringBuilder.AppendLine($"WARNING: This can be fixed with the command above.");
+				if (ctn.Length < 20)
+				{
+					foreach (var item in ctn)
+					{
+						var stud = item.student;
+						stringBuilder.AppendLine($"- {item.collection.Name} {stud.Email}, {stud.FullName}, {stud.NumericStudentId}.");
+					}
+				}
+			}	
 			txtSystemInfo.Text = stringBuilder.ToString();
 		}
 
@@ -49,18 +69,20 @@ namespace UnnOutlookAddin.UI
 			CmbFolder.Items.Clear();
 			SetPicture(false);
 
-			var students = Repository.Students.Where(x => x.Email == email).ToList();
+			var students = Repository.StudentsByCollection(x => x.HasEmail(email)).ToList();
 			StringBuilder stringBuilder = new StringBuilder();
-			stringBuilder.AppendLine($"Found: {students.Count} students.");
-			stringBuilder.AppendLine($"");
-			foreach (var stud in students)
+			stringBuilder.AppendLine($"Found: {students.Count} student records.");
+			stringBuilder.AppendLine();
+			foreach (var pair in students)
 			{
+				var stud = pair.student;
+				stringBuilder.AppendLine($"=== Collection: {pair.collection.Name}, {pair.collection.OutlookFolder}");
 				if (string.IsNullOrEmpty(imagePath))
 					Repository.HasImage(stud, out imagePath);
-				stringBuilder.AppendLine($"{stud.NumericStudentId}");
-				stringBuilder.AppendLine($"{stud.Route} {stud.CourseYear}");
-				stringBuilder.AppendLine($"{stud.Occurrence}");
-				stringBuilder.AppendLine($"{stud.Module}");
+				stringBuilder.AppendLine($"ID: w{stud.NumericStudentId} {stud.NumericStudentId}");
+				stringBuilder.AppendLine($"Route/Year: {stud.Route} {stud.CourseYear}");
+				stringBuilder.AppendLine($"Occurrence: {stud.Occurrence}");
+				stringBuilder.AppendLine($"Module: {stud.Module}");
 				stringBuilder.AppendLine($"First: {stud.Forename}");
 				stringBuilder.AppendLine($"Last: {stud.Surname}");
 				stringBuilder.AppendLine($"Full: {stud.FullName}");
@@ -98,10 +120,11 @@ namespace UnnOutlookAddin.UI
 			//
 			currentMailItem = mailItem;
 			var snd = MessageClassificationExtensions.GetSenderEmailAddress(mailItem);
-			var txt = SetEmail(snd);
 			var folder = mailItem.Parent as Outlook.MAPIFolder;
+			var txt = "";
 			if (folder != null)
-				txt += $"\r\nFolder: {folder.Name}";
+				txt += $"Folder: {folder.Name}\r\n";
+			txt += SetEmail(snd);
 			txtInformation.Text = txt;
 
 			// evaluate thread
@@ -170,7 +193,7 @@ namespace UnnOutlookAddin.UI
 		private void ButtonThread_Click(object sender, EventArgs e)
 		{
 			txtInformation.Text += PopulateComboActions().ToString();
-			MessageBox.Show("Any IDs found have been extracted listed in the information tab.");
+			MessageBox.Show("Any IDs found have been listed in the information tab.");
 		}
 
 		private StringBuilder PopulateComboActions()
@@ -338,7 +361,7 @@ namespace UnnOutlookAddin.UI
 			foreach (var stud in attemptedStudents)
 			{
 				var cnt = ThisAddIn.StudentsRepository.UpdateStudentInfo(stud);
-				sb.Append($"Updating: {stud.Email} updated: {cnt}");
+				sb.AppendLine($"Updating: {stud.Email} (<{stud.Forename}> <{stud.Surname}>) updatedrecords: {cnt}");
 			}
 			txtSystemInfo.Text = sb.ToString();
 		}

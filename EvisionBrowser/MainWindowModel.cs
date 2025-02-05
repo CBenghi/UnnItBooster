@@ -293,7 +293,21 @@ namespace EvisionBrowser
 
 		private string QueueStatus => QueueActive ? "Processing" : "Paused";
 
-		public string QueueDisplayText => $"{QueueStatus} {queuedActions.Count}";
+		public string QueueDisplayText
+		{
+			get
+			{
+				StringBuilder sb = new();
+				sb.AppendLine($"{QueueStatus}");
+				foreach (var item in queuedActions.GroupBy(x => x.DataSource))
+				{
+					sb.AppendLine($"{item.Key} {item.Count()}");
+				}
+				return sb.ToString();
+			}
+		}
+
+			
 
 		private async Task<string> GetPageSource()
 		{

@@ -17,6 +17,7 @@ using StudentsFetcher.StudentMarking;
 using UnnItBooster.Properties;
 using System.Linq;
 using System.Globalization;
+using MathNet.Numerics.Distributions;
 
 namespace StudentMarking
 {
@@ -309,8 +310,25 @@ namespace StudentMarking
                     var dataFun = data[1].ToLowerInvariant();
 					switch(dataFun)
 					{
-						case "capitalize":
+						case "capitalize": // case is checked lowered
 							repvalue = capitalize(repvalue.ToLowerInvariant()); 
+							break;
+						case "resolvestudentname": // case is checked lowered
+							{
+								if (studentsRepo.TryGetStudentByAnyReference(repvalue, out var student))
+								{
+									repvalue = student.Forename;
+								}
+							}
+							break;
+						case "firstcomponent": // case is checked lowered
+							{
+								var tmp = repvalue.Split(new char[] {' ','\t'}, StringSplitOptions.RemoveEmptyEntries);
+								if (tmp.Length > 0)
+								{
+									repvalue = tmp[0];
+								}
+							}
 							break;
 					}
                 }				

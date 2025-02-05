@@ -8,6 +8,14 @@ using UnnFunctions.Models;
 
 namespace UnnItBooster.Models
 {
+	public static class StringExtensions
+	{
+		public static bool Matches(this string source, string toCheck)
+		{
+			return source?.IndexOf(toCheck, StringComparison.OrdinalIgnoreCase) >= 0;
+		}
+	}
+	
 	[DebuggerDisplay("{FullName} {NumericStudentId} {Email}")]
 	public class Student
 	{
@@ -48,12 +56,15 @@ namespace UnnItBooster.Models
 		private string numericStudentId = string.Empty;
 		private string? forename;
 
+		/// <summary>
+		/// Best attempt at presenting the student ID with 8 numeric digits only.
+		/// </summary>
 		public string NumericStudentId
 		{
 			get => numericStudentId;
 			set
 			{
-				if (value.StartsWith("w"))
+				if (value.StartsWith("w") || value.StartsWith("W"))
 				{
 					numericStudentId = value.Substring(1);
 					return;
@@ -71,6 +82,8 @@ namespace UnnItBooster.Models
 		public string? Occurrence { get; set; } = string.Empty;
 		public string? Module { get; set; } = string.Empty;
 		public string? Email { get; set; } = string.Empty;
+		public string? EmailByStudentID =>  string.IsNullOrWhiteSpace(NumericStudentId) ? null : $"w{NumericStudentId}@northumbria.ac.uk";
+
 		public List<string>? AlternativeEmails { get; set; } = null;
 
 		public bool AddAlternativeEmail(string newEmail)
@@ -98,19 +111,19 @@ namespace UnnItBooster.Models
 
 		public bool Matches(string filter)
 		{
-			if (FullName == filter)
+			if (FullName is not null && FullName.Matches(filter))
 				return true;
-			if (Surname != null && Surname.Contains(filter))
+			if (Surname != null && Surname.Matches(filter))
 				return true;
-			if (Forename != null && Forename.Contains(filter))
+			if (Forename != null && Forename.Matches(filter))
 				return true;
-			if (NumericStudentId != null && NumericStudentId.Contains(filter))
+			if (NumericStudentId != null && NumericStudentId.Matches(filter))
 				return true;
-			if (Phone != null && Phone.Contains(filter))
+			if (Phone != null && Phone.Matches(filter))
 				return true;
-			if (Email != null && Email.Contains(filter))
+			if (Email != null && Email.Matches(filter))
 				return true;
-			if (AlternativeEmails is not null && AlternativeEmails.Any(x=>x.Contains(filter)))
+			if (AlternativeEmails is not null && AlternativeEmails.Any(x=>x.Matches(filter)))
 				return true;
 			return false;
 		}
@@ -122,13 +135,15 @@ namespace UnnItBooster.Models
 
 		public List<ModuleResult>? TranscriptResults { get; set; }
 
-		internal bool HasEmail(string seekEmail)
+		public bool HasEmail(string seekEmail)
 		{
-			if (Email == seekEmail)
+			if (Email is not null && Email.ToLowerInvariant() == seekEmail.ToLowerInvariant())
+				return true;
+			if (EmailByStudentID is not null && EmailByStudentID.ToLowerInvariant() == seekEmail.ToLowerInvariant())
 				return true;
 			if (AlternativeEmails == null)
 				return false;
-			return AlternativeEmails.Any(x => x == seekEmail);
+			return AlternativeEmails.Any(x => x.ToLowerInvariant() == seekEmail.ToLowerInvariant());
 		}
 
 		internal void SetModuleMark(ModuleResult res)

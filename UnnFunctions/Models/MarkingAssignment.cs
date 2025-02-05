@@ -81,7 +81,6 @@ public class MarkingAssignment
 				thiscell.SetBlank();
 			}
 		}
-
 		sheet.ProtectSheet(""); // locks all cells except the unlocked
 		dest.Delete();
 		using var file = new FileStream(dest.FullName, FileMode.Create, FileAccess.Write);
