@@ -51,7 +51,7 @@ namespace DevelopmentTests
 			var src = File.ReadAllText(fileName);
 			var context = new UnnFunctions.Models.QueueAction(null, UnnFunctions.Models.QueueAction.ActionRequiredData.studentTranscript,
 				 UnnFunctions.Models.QueueAction.ActionSource.studentTranscript, "Some");
-			var stud = eVision.GetStudentTranscript(src, context)!;
+			var stud = eVision.GetStudentTranscript(src, context, logger)!;
 			stud.Should().NotBeNull();
 			logger?.LogInformation("studentId: {studentId}", stud.NumericStudentId);
 			logger?.LogInformation("studentTranscript: {studentId}", stud.TranscriptResults.Count);

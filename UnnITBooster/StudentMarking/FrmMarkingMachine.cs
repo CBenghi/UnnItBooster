@@ -19,6 +19,8 @@ using UnnItBooster.StudentMarking;
 using MathNet.Numerics;
 using UnnFunctions.Models;
 using System.Security.Cryptography.Xml;
+using System.Runtime.Serialization.Formatters;
+using MathNet.Numerics.Statistics;
 
 namespace StudentsFetcher.StudentMarking;
 
@@ -224,7 +226,7 @@ public partial class FrmMarkingMachine : Form
 			var levelMatch = Regex.Match(txtSearch.Text, @"setlevel (?<level>ug|pg)", RegexOptions.IgnoreCase);
 			var selectModerationMatch = Regex.Match(txtSearch.Text, @"SelectModeration *(?<name>.*)$", RegexOptions.IgnoreCase);
 			var associateMarkerMatch = Regex.Match(txtSearch.Text, @"^Associate ?Marker[s]?$", RegexOptions.IgnoreCase);
-			var reportMarkerMatch = Regex.Match(txtSearch.Text, @"^Report ?Marker[s]?$", RegexOptions.IgnoreCase);
+			var reportMarkerMatch = Regex.Match(txtSearch.Text, @"^Report ?Marker[s]?(\s+(?<options>-missing|-marks)?)?$", RegexOptions.IgnoreCase);
 			var importMarksMatch = Regex.Match(txtSearch.Text, @"^Import ?Marker[s]?$", RegexOptions.IgnoreCase);
 			var markingExcelsMatch = Regex.Match(txtSearch.Text, @"^Create ?MarkingFiles +(?<excelFileName>.*)$", RegexOptions.IgnoreCase);
             if (addComponentMatch.Success)
@@ -243,7 +245,22 @@ public partial class FrmMarkingMachine : Form
             }
 			else if (reportMarkerMatch.Success)
 			{
-				ReportMarkers();
+                var option = reportMarkerMatch.Groups["options"].Value;
+                switch (option)
+                {
+                    case "-missing":
+						var assignments = _config.GetMarkingAssignments();
+                        _ = _config.GetExcelMarkedEntries(out var marks);
+						txtLibReport.Text = ReportMarkersAvailability(assignments, marks);
+						break;
+					case "-marks":
+						_ = _config.GetExcelMarkedEntries(out var marksToEvaluate);
+						txtLibReport.Text = ReportMarkersMarks(_config.GetMarkingAssignmentsByStudents(), marksToEvaluate);
+						break;
+					default:
+				        ReportMarkers();
+                        break;
+                }
 			}
 			else if (associateMarkerMatch.Success)
             {
@@ -415,6 +432,87 @@ public partial class FrmMarkingMachine : Form
             e.SuppressKeyPress = true;
         }
     }
+
+	private string ReportMarkersMarks(IEnumerable<(string StudentId, string MarkerEmail, string MarkerRole)> enumerable, IEnumerable<SingleSubmissionMark> marksToEvaluate)
+	{
+		var sb = new StringBuilder();
+
+        var dicStudentToMarkers = enumerable.GroupBy(x=>x.StudentId).ToDictionary(x=>x.Key, x=>x.Select(y=>(y.MarkerEmail, y.MarkerRole)).ToList()); 
+		var marksGroups = marksToEvaluate.GroupBy(x => x.StudentId).ToList();
+
+        int tallyCompleted = 0;
+        int tallyPartial = 0;
+        var stats = new List<DescriptiveStatistics>();
+
+        foreach (var marksGroup in marksGroups)
+        {
+            bool studentCompleted = true;
+            dicStudentToMarkers.TryGetValue(marksGroup.Key, out var assignedMarkers);
+            sb.AppendLine($"Student: {marksGroup.Key}");
+            foreach (var mark in marksGroup)
+            {
+                var m = mark.MarkerEmail;
+                var assignemnt = assignedMarkers.First(x => x.MarkerEmail == m);
+                sb.AppendLine($"- {mark.GetMark()} - {mark.MarkerEmail} - {assignemnt.MarkerRole} - {mark.Comment}");
+                assignedMarkers?.Remove(assignemnt); // if one is found we remove it from the list
+            }
+            if (assignedMarkers is not null)
+            {
+                if (assignedMarkers.Any())
+                {
+                    studentCompleted = false;
+                }
+                foreach (var item in assignedMarkers)
+                {
+                    sb.AppendLine($"- <missing> - {item}");
+                }
+            }
+            var doubleMarks = marksGroup.Select(x => (double)x.GetMark());
+            if (doubleMarks.Count() > 1)
+            {
+                stats.Add(new DescriptiveStatistics(doubleMarks));
+			}
+
+            if (studentCompleted)
+                tallyCompleted++;
+            else
+                tallyPartial++;
+			sb.AppendLine();
+        }
+		sb.AppendLine($"Completed: {tallyCompleted}");
+		sb.AppendLine($"Partial:   {tallyPartial}");
+		sb.AppendLine($"Stats");
+        foreach (var series in stats)
+        {
+            // sb.AppendLine($"- mean {series.Mean}, variance: {series.Variance}, stdev: {series.StandardDeviation}");
+            sb.AppendLine($"- Mean: {series.Mean}, Minimum: {series.Minimum}, Maximum: {series.Maximum}, StDev: {series.StandardDeviation:0.##}, Range: {series.Maximum - series.Minimum}");
+		}
+		return sb.ToString();
+	}
+
+	private string ReportMarkersAvailability(IEnumerable<MarkingAssignment> assignments, IEnumerable<SingleSubmissionMark> marks)
+	{
+        var sb = new StringBuilder();
+        var m = marks.GroupBy(x => x.MarkerEmail).ToDictionary(g => g.Key, g => g.ToList());
+        foreach (var assignment in assignments)
+        {
+			if (!m.TryGetValue(assignment.MarkerEmail, out var marked))
+			{
+				sb.AppendLine($"Missing DATASET from: {assignment.MarkerEmail}");
+			}
+			else
+			{
+				foreach (var singleStudent in assignment.Details)
+				{
+                    if (!marked.Any(x => x.StudentId == singleStudent.StudentId))
+                    {
+                        sb.AppendLine($"Missing mark for: {assignment.MarkerEmail}, {singleStudent.StudentId}, {singleStudent.SubmissionId}");
+                    }
+				}
+			}
+		}
+        return sb.ToString();
+	}
 
 	private string CreateExcelMarkers(Match markingExcelsMatch)
 	{

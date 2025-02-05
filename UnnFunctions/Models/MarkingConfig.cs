@@ -663,6 +663,18 @@ namespace StudentsFetcher.StudentMarking
 			return sb.ToString();
 		}
 
+		public IEnumerable<(string StudentId , string MarkerEmail, string MarkerRole)> GetMarkingAssignmentsByStudents()
+		{
+			var ass = GetMarkingAssignments();
+			foreach (var assItem in ass)
+			{
+				foreach (var item in assItem.Details)
+				{
+					yield return (item.StudentId, assItem.MarkerEmail, item.MarkingRole);
+				}
+			}
+		}
+
 		public string BareName => Path.GetFileNameWithoutExtension(DbName);
 	}
 }

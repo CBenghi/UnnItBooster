@@ -1,1339 +1,1513 @@
-﻿<html><head><script type="text/javascript">
-sits_attach_event(window, "load", pageload7a);
-function pageload7a()
-{
-sits_accordion($("#SMR_accordion"), {heightStyle: "content", header: 'h3'});
-var dtOptions7a = {};
-dtOptions7a.bJQueryUI = false;
-dtOptions7a.bStateSave = false;
-dtOptions7a.bPaginate = false;
-dtOptions7a.bLengthChange = false;
-dtOptions7a.bFilter = false;
-dtOptions7a.bSort = false;
-dtOptions7a.bInfo = false;
-dtOptions7a.bAutoWidth = false;
-dtOptions7a.scrollX = false;
+﻿<html>
 
-sits_datatables_widget("#tabhead7a",dtOptions7a);
+<head>
+	<script type="text/javascript">
+		sits_attach_event(window, "load", pageload7a);
+		function pageload7a() {
+			sits_accordion($("#SMR_accordion"), { heightStyle: "content", header: 'h3' });
+			var dtOptions7a = {};
+			dtOptions7a.bJQueryUI = false;
+			dtOptions7a.bStateSave = false;
+			dtOptions7a.bPaginate = false;
+			dtOptions7a.bLengthChange = false;
+			dtOptions7a.bFilter = false;
+			dtOptions7a.bSort = false;
+			dtOptions7a.bInfo = false;
+			dtOptions7a.bAutoWidth = false;
+			dtOptions7a.scrollX = false;
 
-}
-</script>
+			sits_datatables_widget("#tabhead7a", dtOptions7a);
 
-  </head><body><div class="sv-panel sv-panel-primary">
-    <div class="sv-panel-heading">
-      <h2 class="sv-panel-title">Module Results</h2>
-    </div>
+		}
+	</script>
 
-<div class="sv-panel-body">
+</head>
 
-<div class="sv-table-container">
-    <table id="tabhead7a" class="sv-table sv-table-striped">
-<thead>
-<tr><th>Student Name</th><th>Student Course ID</th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td>Jack Ward</td>
-		<td>18038106/1</td>
-	</tr>
-</tbody>
-</table>
-</div>
+<body>
+	<div class="sv-panel sv-panel-primary">
+		<div class="sv-panel-heading">
+			<h2 class="sv-panel-title">Module Results</h2>
+		</div>
 
-<div class="sv-alert sv-alert-warning"><p>This page will show all module results for the student.  Clicking  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span><span class="sv-sr-only">Plus</span> will display the individual component marks of that module.</p></div>
+		<div class="sv-panel-body">
 
-<div id="SMR_accordion">
+			<div class="sv-table-container">
+				<table id="tabhead7a" class="sv-table sv-table-striped">
+					<thead>
+						<tr>
+							<th>Student Name</th>
+							<th>Student Course ID</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Jack Ward</td>
+							<td>18038106/1</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="sv-alert sv-alert-warning">
+				<p>This page will show all module results for the student. Clicking <span
+						class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span><span
+						class="sv-sr-only">Plus</span> will display the individual component marks of that module.</p>
+			</div>
+
+			<div id="SMR_accordion">
 
 
 
-<h3>2023/4</h3>
-<div>
-<div class="sv-row sv-hidden-xs sv-hidden-sm">
-	<div class="sv-col-md-1">
-		<p><strong>Module Code</strong></p>
+				<h3>2023/4</h3>
+				<div>
+					<div class="sv-row sv-hidden-xs sv-hidden-sm">
+						<div class="sv-col-md-1">
+							<p><strong>Module Code</strong></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><strong>Module Name</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Occurrence</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Period</strong> </p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Level</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Actual Mark / Grade</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Agreed Mark / Grade</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Credits</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Result</strong> </p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><strong>View Module Details</strong></p>
+						</div>
+					</div>
+
+					<div class="sv-row">
+						<div class="sv-col-md-1">
+							<p><span id="toggleComp_KA7068_2023_BND_YL"><span id="toggleCompPlus_KA7068_2023_BND_YL">
+										<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Plus</span>
+									</span><span id="toggleCompMinus_KA7068_2023_BND_YL" class="sv-hidden"><span
+											class="glyphicon glyphicon-minus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Minus</span>
+									</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong>
+									</span><strong>KA7068</strong></span></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Research
+								Project</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>YL</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>0 /
+								R</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>0 /
+								R</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>0</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>D</p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p>
+							<div class="sv-btn-container">
+								<div class="sv-col-sm-12">
+									<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KA7068"
+										onclick="window.open('../run/SIW_YGSL.start_url?6938C8088C564EAErIAqI1mKq2KX_N7KJxLGtzrnG5dAciNSY5eSTUaCt_V9aJQ5TSWGG-GTnBLtt7uB3zYfRceC80J98S_nYLWXnwZQPsteKDH3FaprrUo4LXDqofJMiGV5OtGdgYJXNhGY_KtoQKqs_ASJGGZqHy0osLUXZFZIHae92TUz7rq5TrbU99ji8bvOnzNIl_j6olxfoXxKHMfLZ6pnTG-SYsP7ppTJv_44BsJAqaFelslCUUPKG2V1Ld_iO0RlT3h9Nde675YC0xLDXAgz82qu5WqeGq2h','_blank')"
+										;="">
+								</div>
+							</div>
+							<p></p>
+						</div>
+					</div>
+
+					<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KA7068_2023_BND_YL">
+						<div style="border-style: solid; border-width:1px; border-radius: 5px"
+							class="sv-col-md-10 sv-col-md-offset-1"><br>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Dissertation (10,000 Words Or Equivalent</i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 100</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>NP</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>NP</p>
+								</div>
+							</div>
+
+
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>Resit Attempt: 1 (001)</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Dissertation (10,000 Words Or Equivalent</i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 100 </p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>AB</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Grade: </span>AB</p>
+								</div>
+							</div>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>Resit Attempt: 2 (002)</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Dissertation (10,000 Words Or Equivalent</i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 100 </p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span></p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Grade: </span></p>
+								</div>
+							</div>
+
+						</div>
+						<div class="sv-col-md-12">
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<script>
+
+						function DotoggleComp_KA7068_2023_BND_YL() {
+							$("#toggleCompPlus_KA7068_2023_BND_YL").toggleClass("sv-hidden");
+							$("#toggleCompMinus_KA7068_2023_BND_YL").toggleClass("sv-hidden");
+							$("#toggleCompSAS_KA7068_2023_BND_YL").toggleClass("sv-hidden");
+						}
+
+						$('#toggleComp_KA7068_2023_BND_YL').click(function () {
+							DotoggleComp_KA7068_2023_BND_YL();
+						});
+
+					</script>
+
+				</div>
+
+
+
+				<h3>2022/3</h3>
+				<div>
+					<div class="sv-row sv-hidden-xs sv-hidden-sm">
+						<div class="sv-col-md-1">
+							<p><strong>Module Code</strong></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><strong>Module Name</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Occurrence</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Period</strong> </p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Level</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Actual Mark / Grade</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Agreed Mark / Grade</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Credits</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Result</strong> </p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><strong>View Module Details</strong></p>
+						</div>
+					</div>
+
+					<div class="sv-row">
+						<div class="sv-col-md-1">
+							<p><span id="toggleComp_KA7066_2022_BND_SEM2"><span
+										id="toggleCompPlus_KA7066_2022_BND_SEM2">
+										<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Plus</span>
+									</span><span id="toggleCompMinus_KA7066_2022_BND_SEM2" class="sv-hidden"><span
+											class="glyphicon glyphicon-minus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Minus</span>
+									</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong>
+									</span><strong>KA7066</strong></span></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Integrated
+								Building Information Modelling Project</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM2</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>74 /
+								P</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>74 /
+								P</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>20</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>P</p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p>
+							<div class="sv-btn-container">
+								<div class="sv-col-sm-12">
+									<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KA7066"
+										onclick="window.open('../run/SIW_YGSL.start_url?AD8E5402EBD34053Nx9KQc5LgmNxubBl6w7RguL_zAVw4pnllY0lM4N9ikyB1ET1m86AMVHJAnvwc-7nYY755VPGNH4se55ZmZc95_vKidraSuzBC_kK4bdBKm42UqI3qwvOtA6USn_gWF_B1e1hQjDXkrYXIDtQqaOsjolWyKq9JvF5Qb-u6LxNXJ4UKXvkxRywD5mW9LR6MdA4pioT1XdMXRXEnl_H0o9-OjRXsqOv7nR9sAOdWlo4eJKGk0mJga8e0JTOB2JaHZ-cZIyWGiPLi_l0IdJZwvKHqdndTTeUGPibUwY','_blank')"
+										;="">
+								</div>
+							</div>
+							<p></p>
+						</div>
+					</div>
+
+					<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KA7066_2022_BND_SEM2">
+						<div style="border-style: solid; border-width:1px; border-radius: 5px"
+							class="sv-col-md-10 sv-col-md-offset-1"><br>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Coursework (4000 Words Or Equivalent) </i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 100</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>74</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>74</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
+								</div>
+							</div>
+
+
+
+						</div>
+						<div class="sv-col-md-12">
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<script>
+
+						function DotoggleComp_KA7066_2022_BND_SEM2() {
+							$("#toggleCompPlus_KA7066_2022_BND_SEM2").toggleClass("sv-hidden");
+							$("#toggleCompMinus_KA7066_2022_BND_SEM2").toggleClass("sv-hidden");
+							$("#toggleCompSAS_KA7066_2022_BND_SEM2").toggleClass("sv-hidden");
+						}
+
+						$('#toggleComp_KA7066_2022_BND_SEM2').click(function () {
+							DotoggleComp_KA7066_2022_BND_SEM2();
+						});
+
+					</script>
+
+				</div>
+
+
+
+
+
+				<h3>2020/1</h3>
+				<div>
+					<div class="sv-row sv-hidden-xs sv-hidden-sm">
+						<div class="sv-col-md-1">
+							<p><strong>Module Code</strong></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><strong>Module Name</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Occurrence</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Period</strong> </p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Level</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Actual Mark / Grade</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Agreed Mark / Grade</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Credits</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Result</strong> </p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><strong>View Module Details</strong></p>
+						</div>
+					</div>
+
+					<div class="sv-row">
+						<div class="sv-col-md-1">
+							<p><span id="toggleComp_KB7030_2020_BND_SEM1"><span
+										id="toggleCompPlus_KB7030_2020_BND_SEM1">
+										<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Plus</span>
+									</span><span id="toggleCompMinus_KB7030_2020_BND_SEM1" class="sv-hidden"><span
+											class="glyphicon glyphicon-minus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Minus</span>
+									</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong>
+									</span><strong>KB7030</strong></span></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Research
+								Methods</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM1</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>50 /
+								P</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>50 /
+								P</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>20</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>P</p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p>
+							<div class="sv-btn-container">
+								<div class="sv-col-sm-12">
+									<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7030"
+										onclick="window.open('../run/SIW_YGSL.start_url?F6DB670BA8FE4ECAYRPciUSCF9eOMumDIVAIWn2hKNOyvH3BvbLoElTG4ZwQd3deR1Sd1STNnpUuBAVmsxl_1aBSa5fc-XzWSkbZgLOUZJ4qo3xIRCj1d_KYyIQaAYZDJ8Uj8vMyQYKp_gFUVudNpUiCH8s_mQhaJJ7EbgCRw-ddgmzfqOTeUZB8G1HqhLIfT_ZMZjXDokPxuXLaw7rakIC1m5P0N0IMLwU2kroatMYbcZTi80S3-tL73RjOnq__qY_ylVXsLMqA3yIF9tc15bOnJPcKCxzvmnfwCZ8QRRttYQ','_blank')"
+										;="">
+								</div>
+							</div>
+							<p></p>
+						</div>
+					</div>
+
+					<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7030_2020_BND_SEM1">
+						<div style="border-style: solid; border-width:1px; border-radius: 5px"
+							class="sv-col-md-10 sv-col-md-offset-1"><br>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Examination (90 Minutes) </i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 100</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>50</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>50</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
+								</div>
+							</div>
+
+
+
+						</div>
+						<div class="sv-col-md-12">
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<script>
+
+						function DotoggleComp_KB7030_2020_BND_SEM1() {
+							$("#toggleCompPlus_KB7030_2020_BND_SEM1").toggleClass("sv-hidden");
+							$("#toggleCompMinus_KB7030_2020_BND_SEM1").toggleClass("sv-hidden");
+							$("#toggleCompSAS_KB7030_2020_BND_SEM1").toggleClass("sv-hidden");
+						}
+
+						$('#toggleComp_KB7030_2020_BND_SEM1').click(function () {
+							DotoggleComp_KB7030_2020_BND_SEM1();
+						});
+
+					</script>
+
+					<div class="sv-row">
+						<div class="sv-col-md-1">
+							<p><span id="toggleComp_KB7035_2020_BND_SEM1"><span
+										id="toggleCompPlus_KB7035_2020_BND_SEM1">
+										<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Plus</span>
+									</span><span id="toggleCompMinus_KB7035_2020_BND_SEM1" class="sv-hidden"><span
+											class="glyphicon glyphicon-minus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Minus</span>
+									</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong>
+									</span><strong>KB7035</strong></span></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Procurement
+								&amp; Supply Chain Management</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM1</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>50 /
+								P</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>50 /
+								P</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>20</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>P</p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p>
+							<div class="sv-btn-container">
+								<div class="sv-col-sm-12">
+									<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7035"
+										onclick="window.open('../run/SIW_YGSL.start_url?2AC49C62605F4412Z8JVEzPDJoYcRnuWIs6P0YcVfiSQsPteF2zXZlasitmarNkUoDxVJXjOPCuKyFPFp5hcBQbv-5CUMXhE7JBc81HSHCqNj5g0xoHzbsOKkzKj-rLCMhINzAGq1wGn1pTRIFaHded7BcO85rVEzI2wgtwliB5ALkppHXpIUd6laxyvnl_W9JA4E6Zx_aPjz8aYGqTGXWdXVEqRt-29B2JS9qYe7-G_3OXOFj0kFjpG_lWXrfVPyXJd5H-bpQCI1l3Jw7a3d4chtLEFL_HTkbUQiZyU','_blank')"
+										;="">
+								</div>
+							</div>
+							<p></p>
+						</div>
+					</div>
+
+					<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7035_2020_BND_SEM1">
+						<div style="border-style: solid; border-width:1px; border-radius: 5px"
+							class="sv-col-md-10 sv-col-md-offset-1"><br>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Coursework (4000 Words Or Equivalent) </i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 100</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>45</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>CD</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>45</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>CD</p>
+								</div>
+							</div>
+
+
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>Resit Attempt: 1 (001)</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Coursework (4000 Words Or Equivalent) </i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 100 </p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>AB</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Grade: </span>AB</p>
+								</div>
+							</div>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>Resit Attempt: 2 (002)</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Coursework (4000 Words Or Equivalent) </i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 100 </p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>85</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>85</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Grade: </span>P</p>
+								</div>
+							</div>
+
+						</div>
+						<div class="sv-col-md-12">
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<script>
+
+						function DotoggleComp_KB7035_2020_BND_SEM1() {
+							$("#toggleCompPlus_KB7035_2020_BND_SEM1").toggleClass("sv-hidden");
+							$("#toggleCompMinus_KB7035_2020_BND_SEM1").toggleClass("sv-hidden");
+							$("#toggleCompSAS_KB7035_2020_BND_SEM1").toggleClass("sv-hidden");
+						}
+
+						$('#toggleComp_KB7035_2020_BND_SEM1').click(function () {
+							DotoggleComp_KB7035_2020_BND_SEM1();
+						});
+
+					</script>
+
+					<div class="sv-row">
+						<div class="sv-col-md-1">
+							<p><span id="toggleComp_KB7038_2020_BND_SEM2"><span
+										id="toggleCompPlus_KB7038_2020_BND_SEM2">
+										<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Plus</span>
+									</span><span id="toggleCompMinus_KB7038_2020_BND_SEM2" class="sv-hidden"><span
+											class="glyphicon glyphicon-minus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Minus</span>
+									</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong>
+									</span><strong>KB7038</strong></span></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Integrated
+								Building Information Modelling Project</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM2</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>0 /
+								XR</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>0 /
+								RP</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>0</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>F</p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p>
+							<div class="sv-btn-container">
+								<div class="sv-col-sm-12">
+									<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7038"
+										onclick="window.open('../run/SIW_YGSL.start_url?6233D55AD899464DEF4mkkm_6_4w0rhB0JHbyplSQmOFmhQpUzDWLAwn1-qtGgU1bjn9RqLoPB-CjuPkbEjVHokms38mBu4L3svL9VHtB0VqfiKdzWHhx-WWQ52uuOKwEEvwgR1ZJRt6dDmaI5DGj_v2kQfOuCBGbMvpcnBtYKneIkVsn3aen3cbQo2HQQe8D0wF9KGjSpwQBLHgCndHSzrU-dVMvGZ3q_4VlAWjDfHIUDbfDagDg4iiIo9ZTtq79TRMoPJuOiNtEz3e0QdT7x_exzKJtZyFnaPueZs2eoJF1Sjytzo','_blank')"
+										;="">
+								</div>
+							</div>
+							<p></p>
+						</div>
+					</div>
+
+					<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7038_2020_BND_SEM2">
+						<div style="border-style: solid; border-width:1px; border-radius: 5px"
+							class="sv-col-md-10 sv-col-md-offset-1"><br>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Coursework (4000 Words Or Equivalent) </i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 100</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>PX</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>PX</p>
+								</div>
+							</div>
+
+
+
+						</div>
+						<div class="sv-col-md-12">
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<script>
+
+						function DotoggleComp_KB7038_2020_BND_SEM2() {
+							$("#toggleCompPlus_KB7038_2020_BND_SEM2").toggleClass("sv-hidden");
+							$("#toggleCompMinus_KB7038_2020_BND_SEM2").toggleClass("sv-hidden");
+							$("#toggleCompSAS_KB7038_2020_BND_SEM2").toggleClass("sv-hidden");
+						}
+
+						$('#toggleComp_KB7038_2020_BND_SEM2').click(function () {
+							DotoggleComp_KB7038_2020_BND_SEM2();
+						});
+
+					</script>
+
+				</div>
+
+
+
+				<h3>2019/0</h3>
+				<div>
+					<div class="sv-row sv-hidden-xs sv-hidden-sm">
+						<div class="sv-col-md-1">
+							<p><strong>Module Code</strong></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><strong>Module Name</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Occurrence</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Period</strong> </p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Level</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Actual Mark / Grade</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Agreed Mark / Grade</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Credits</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Result</strong> </p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><strong>View Module Details</strong></p>
+						</div>
+					</div>
+
+					<div class="sv-row">
+						<div class="sv-col-md-1">
+							<p><span id="toggleComp_KB7036_2019_BND_SEM2"><span
+										id="toggleCompPlus_KB7036_2019_BND_SEM2">
+										<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Plus</span>
+									</span><span id="toggleCompMinus_KB7036_2019_BND_SEM2" class="sv-hidden"><span
+											class="glyphicon glyphicon-minus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Minus</span>
+									</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong>
+									</span><strong>KB7036</strong></span></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>People in
+								Project Management</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM2</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>80 /
+								P</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>80 /
+								P</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>20</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>P</p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p>
+							<div class="sv-btn-container">
+								<div class="sv-col-sm-12">
+									<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7036"
+										onclick="window.open('../run/SIW_YGSL.start_url?CFB8D9F3394C40955agcRQ62ORgsujffUyA3KgQoUwRiOA_P1gmsUVqxbGtUvsiwY1E2EX4gdCNNCQIPevYFgSaYhPZBpCIoJ0QwBJTFZCqiuRZvWbIWfbLEME5pO_DXheNTqpGOBmSTSuD8WVRLxHDaHfVgE-AP1q1ac0HKUm63N3i97akXEQxUTKcPLYnMASfWpemPoi8EKdsz6iwo76diVnhIfBlUJg8J0lvLjP8RVYjQmn2zS7wev3358nB8fNAB5Rt4Twyqv9e-_vTiBSeIDyTARnsnqasZm1dO','_blank')"
+										;="">
+								</div>
+							</div>
+							<p></p>
+						</div>
+					</div>
+
+					<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7036_2019_BND_SEM2">
+						<div style="border-style: solid; border-width:1px; border-radius: 5px"
+							class="sv-col-md-10 sv-col-md-offset-1"><br>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Peer Review (1,000 Words) </i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 10</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>100</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>100</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
+								</div>
+							</div>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Academic Paper (3,000 Words) </i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 90</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>78</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>78</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
+								</div>
+							</div>
+
+
+
+						</div>
+						<div class="sv-col-md-12">
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<script>
+
+						function DotoggleComp_KB7036_2019_BND_SEM2() {
+							$("#toggleCompPlus_KB7036_2019_BND_SEM2").toggleClass("sv-hidden");
+							$("#toggleCompMinus_KB7036_2019_BND_SEM2").toggleClass("sv-hidden");
+							$("#toggleCompSAS_KB7036_2019_BND_SEM2").toggleClass("sv-hidden");
+						}
+
+						$('#toggleComp_KB7036_2019_BND_SEM2').click(function () {
+							DotoggleComp_KB7036_2019_BND_SEM2();
+						});
+
+					</script>
+
+					<div class="sv-row">
+						<div class="sv-col-md-1">
+							<p><span id="toggleComp_KB7039_2019_BND_SEM2"><span
+										id="toggleCompPlus_KB7039_2019_BND_SEM2">
+										<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Plus</span>
+									</span><span id="toggleCompMinus_KB7039_2019_BND_SEM2" class="sv-hidden"><span
+											class="glyphicon glyphicon-minus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Minus</span>
+									</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong>
+									</span><strong>KB7039</strong></span></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Construction
+								Project Planning and Delivery</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM2</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>66 /
+								P</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>66 /
+								P</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>20</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>P</p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p>
+							<div class="sv-btn-container">
+								<div class="sv-col-sm-12">
+									<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7039"
+										onclick="window.open('../run/SIW_YGSL.start_url?5C55C2AF6E354F1Fl8Un1-ihpaYXZCxVZXXoVvECpeiC6B8LbIsCifPlLN1moY6YnnDofbxPTy0Q0vRZlRQ5th7BiL0bvCT5HfQyhxEXs4FXgvOZ_FNSvYEZqaN7U0BqAUjZYXbkQjrGVKtP9FNNIEHG6Drh9qdLqbEPmzotf8H6Ol7ppv0L8mGKJC3bHQwSo8TnvZzGsP8DY256ewC6B-_YPcteHapAvBAVU5HtEAI_mGyloDkgykquEIvUCdwllBpUi9LZxTjTgYoKhvlM6cFvIRp-aQTPxH26AGGXkIb6WiCChX0','_blank')"
+										;="">
+								</div>
+							</div>
+							<p></p>
+						</div>
+					</div>
+
+					<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7039_2019_BND_SEM2">
+						<div style="border-style: solid; border-width:1px; border-radius: 5px"
+							class="sv-col-md-10 sv-col-md-offset-1"><br>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Group Presentation 15 Mins </i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 40</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>75</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>75</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
+								</div>
+							</div>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Portfolio 12 Pages </i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 60</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>60</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>60</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
+								</div>
+							</div>
+
+
+
+						</div>
+						<div class="sv-col-md-12">
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<script>
+
+						function DotoggleComp_KB7039_2019_BND_SEM2() {
+							$("#toggleCompPlus_KB7039_2019_BND_SEM2").toggleClass("sv-hidden");
+							$("#toggleCompMinus_KB7039_2019_BND_SEM2").toggleClass("sv-hidden");
+							$("#toggleCompSAS_KB7039_2019_BND_SEM2").toggleClass("sv-hidden");
+						}
+
+						$('#toggleComp_KB7039_2019_BND_SEM2').click(function () {
+							DotoggleComp_KB7039_2019_BND_SEM2();
+						});
+
+					</script>
+
+				</div>
+
+
+
+				<h3>2018/9</h3>
+				<div>
+					<div class="sv-row sv-hidden-xs sv-hidden-sm">
+						<div class="sv-col-md-1">
+							<p><strong>Module Code</strong></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><strong>Module Name</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Occurrence</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Period</strong> </p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Level</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Actual Mark / Grade</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Agreed Mark / Grade</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Credits</strong></p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><strong>Result</strong> </p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><strong>View Module Details</strong></p>
+						</div>
+					</div>
+
+					<div class="sv-row">
+						<div class="sv-col-md-1">
+							<p><span id="toggleComp_KB7034_2018_BND_SEM1"><span
+										id="toggleCompPlus_KB7034_2018_BND_SEM1">
+										<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Plus</span>
+									</span><span id="toggleCompMinus_KB7034_2018_BND_SEM1" class="sv-hidden"><span
+											class="glyphicon glyphicon-minus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Minus</span>
+									</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong>
+									</span><strong>KB7034</strong></span></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Building
+								Information Modelling Management, Theory and Practice</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM1</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>77 /
+								P</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>77 /
+								P</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>20</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>P</p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p>
+							<div class="sv-btn-container">
+								<div class="sv-col-sm-12">
+									<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7034"
+										onclick="window.open('../run/SIW_YGSL.start_url?30C717A87907470BTxOVZAiCHWgWx9Fec1AAEzc77DKNJ2p5fyHsR4g40s8Ub0BZyQahflDNFkgW0QuMrMNq6z4vjtb7ScRAJJ5ti1Kn1r8t6WO-Ph-dJA7-ySfb8H72q_BBdxH4eivDaNGTWkKtCALuGVcdNpKZXvCvbR8lcxNsxhI3ce0ESizU6-yTNWwgTNQGO-0Z4N7r6nTtKKwYYJH33sQvvSh7m8sFfXtlSSedkVgSY6g4sXrX2YyIo0jpv_LpYXYhKAwNdKRl8Z8rE6fx_CZ7YhaRpPXOCqdE','_blank')"
+										;="">
+								</div>
+							</div>
+							<p></p>
+						</div>
+					</div>
+
+					<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7034_2018_BND_SEM1">
+						<div style="border-style: solid; border-width:1px; border-radius: 5px"
+							class="sv-col-md-10 sv-col-md-offset-1"><br>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Working Literature Review (Indicative 2,</i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 40</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>75</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>75</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
+								</div>
+							</div>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Final Literature Review With New Content</i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 60</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>78</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>78</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
+								</div>
+							</div>
+
+
+
+						</div>
+						<div class="sv-col-md-12">
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<script>
+
+						function DotoggleComp_KB7034_2018_BND_SEM1() {
+							$("#toggleCompPlus_KB7034_2018_BND_SEM1").toggleClass("sv-hidden");
+							$("#toggleCompMinus_KB7034_2018_BND_SEM1").toggleClass("sv-hidden");
+							$("#toggleCompSAS_KB7034_2018_BND_SEM1").toggleClass("sv-hidden");
+						}
+
+						$('#toggleComp_KB7034_2018_BND_SEM1').click(function () {
+							DotoggleComp_KB7034_2018_BND_SEM1();
+						});
+
+					</script>
+
+					<div class="sv-row">
+						<div class="sv-col-md-1">
+							<p><span id="toggleComp_KB7036_2018_BND_SEM2"><span
+										id="toggleCompPlus_KB7036_2018_BND_SEM2">
+										<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Plus</span>
+									</span><span id="toggleCompMinus_KB7036_2018_BND_SEM2" class="sv-hidden"><span
+											class="glyphicon glyphicon-minus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Minus</span>
+									</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong>
+									</span><strong>KB7036</strong></span></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>People in
+								Project Management</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM2</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>0 /
+								WF</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>0 /
+								RP</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>0</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>F</p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p>
+							<div class="sv-btn-container">
+								<div class="sv-col-sm-12">
+									<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7036"
+										onclick="window.open('../run/SIW_YGSL.start_url?0AAB4A9A62D24081kesRKimMAFd30C6AjnXhX5q6yBAkLXqrqxqSZ0Gtqy3I35Gtl-6M_hI-SJIaBaMCXHAeEE0B4VULoKs7Ih8ZYOaep4n2CUvzIUTXCdembEJzGsDtusOakWYw6rq-yDfRj99opb13bfgp3bWCeyDS8trqLz1ZRoZQfE9w8DnJGPURUGeyvLp82xarCJvvbu4kxc85D2pSXk5v_1VljdyKst-Ew_U6DHuZPvWT0R5TfJhRMKZg6aWfnRm6RJ93R0vay4K8khQunAxIX9NM1TdQMKLm','_blank')"
+										;="">
+								</div>
+							</div>
+							<p></p>
+						</div>
+					</div>
+
+					<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7036_2018_BND_SEM2">
+						<div style="border-style: solid; border-width:1px; border-radius: 5px"
+							class="sv-col-md-10 sv-col-md-offset-1"><br>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Peer Review (1,000 Words) </i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 10</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>WD</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>WD</p>
+								</div>
+							</div>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Academic Paper (3,000 Words) </i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 90</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>WD</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>WD</p>
+								</div>
+							</div>
+
+
+
+						</div>
+						<div class="sv-col-md-12">
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<script>
+
+						function DotoggleComp_KB7036_2018_BND_SEM2() {
+							$("#toggleCompPlus_KB7036_2018_BND_SEM2").toggleClass("sv-hidden");
+							$("#toggleCompMinus_KB7036_2018_BND_SEM2").toggleClass("sv-hidden");
+							$("#toggleCompSAS_KB7036_2018_BND_SEM2").toggleClass("sv-hidden");
+						}
+
+						$('#toggleComp_KB7036_2018_BND_SEM2').click(function () {
+							DotoggleComp_KB7036_2018_BND_SEM2();
+						});
+
+					</script>
+
+					<div class="sv-row">
+						<div class="sv-col-md-1">
+							<p><span id="toggleComp_KB7039_2018_BND_SEM2"><span
+										id="toggleCompPlus_KB7039_2018_BND_SEM2">
+										<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Plus</span>
+									</span><span id="toggleCompMinus_KB7039_2018_BND_SEM2" class="sv-hidden"><span
+											class="glyphicon glyphicon-minus-sign" aria-hidden="true"
+											style="vertical-align: middle;float:left"></span><span
+											class="sv-sr-only">Minus</span>
+									</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong>
+									</span><strong>KB7039</strong></span></p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Construction
+								Project Planning and Delivery</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM2</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>0 /
+								WF</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>0 /
+								RP</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>0</p>
+						</div>
+						<div class="sv-col-md-1">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>F</p>
+						</div>
+						<div class="sv-col-md-2">
+							<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p>
+							<div class="sv-btn-container">
+								<div class="sv-col-sm-12">
+									<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7039"
+										onclick="window.open('../run/SIW_YGSL.start_url?26F72C2AA68C415FoX7Msdu7YdoaDJrGc5kR3mBDoRZeDKLydVTLpO4SsQdIrI9R9R9G50mLOCAMflCjq0IHLxXxh7UvpnN--mOotnRw-SkKyr1lIQXARCFc7_asuO1ULT_J07M0fMBvuLaYSsxnj6SlaGUMlofyKuTy013SZiuw2_wzaHIkT0v_sO4B1zewupNbkxCEjyVZODEn85fNvpdvDo1qG5vOXuq1smisQDACbf8SpQN2umsCVECZE04-d9sNZtW-gJ_kCQRZ__fVZF-76t0Rz3uJulrtSC8Funhj5uV7vLs','_blank')"
+										;="">
+								</div>
+							</div>
+							<p></p>
+						</div>
+					</div>
+
+					<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7039_2018_BND_SEM2">
+						<div style="border-style: solid; border-width:1px; border-radius: 5px"
+							class="sv-col-md-10 sv-col-md-offset-1"><br>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Group Presentation 15 Mins </i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 40</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>WD</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>WD</p>
+								</div>
+							</div>
+
+							<div class="sv-row">
+								<div class="sv-col-md-1">
+									<p><i>First Sit Attempt: 1</i></p>
+								</div>
+								<div class="sv-col-md-4">
+									<p><i>Portfolio 12 Pages </i></p>
+								</div>
+								<div class="sv-col-md-1">
+									<p>Weight: 60</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>WD</p>
+								</div>
+								<div class="sv-col-md-1">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
+								</div>
+								<div class="sv-col-md-3">
+									<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>WD</p>
+								</div>
+							</div>
+
+
+
+						</div>
+						<div class="sv-col-md-12">
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<script>
+
+						function DotoggleComp_KB7039_2018_BND_SEM2() {
+							$("#toggleCompPlus_KB7039_2018_BND_SEM2").toggleClass("sv-hidden");
+							$("#toggleCompMinus_KB7039_2018_BND_SEM2").toggleClass("sv-hidden");
+							$("#toggleCompSAS_KB7039_2018_BND_SEM2").toggleClass("sv-hidden");
+						}
+
+						$('#toggleComp_KB7039_2018_BND_SEM2').click(function () {
+							DotoggleComp_KB7039_2018_BND_SEM2();
+						});
+
+					</script>
+
+				</div>
+
+
+
+
+
+
+
+			</div>
+
+		</div>
 	</div>
-	<div class="sv-col-md-2">
-		<p><strong>Module Name</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Occurrence</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Period</strong>	</p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Level</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Actual Mark / Grade</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Agreed Mark / Grade</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Credits</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Result</strong>	</p>
-	</div>
-	<div class="sv-col-md-2">
-		<p><strong>View Module Details</strong></p>
-	</div>
-</div>
+</body>
 
-	<div class="sv-row">
-		<div class="sv-col-md-1">
-			<p><span id="toggleComp_KA7068_2023_BND_YL"><span id="toggleCompPlus_KA7068_2023_BND_YL">
-<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Plus</span>
-</span><span id="toggleCompMinus_KA7068_2023_BND_YL" class="sv-hidden"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Minus</span>
-</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong> </span><strong>KA7068</strong></span></p>
-		</div>
-		<div class="sv-col-md-2">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Research Project</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>YL</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>0 / R</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>0 / R</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>0</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>D</p>
-		</div>
-		<div class="sv-col-md-2">
-		<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p><div class="sv-btn-container">
-<div class="sv-col-sm-12">
-<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KA7068" onclick="window.open('../run/SIW_YGSL.start_url?6938C8088C564EAErIAqI1mKq2KX_N7KJxLGtzrnG5dAciNSY5eSTUaCt_V9aJQ5TSWGG-GTnBLtt7uB3zYfRceC80J98S_nYLWXnwZQPsteKDH3FaprrUo4LXDqofJMiGV5OtGdgYJXNhGY_KtoQKqs_ASJGGZqHy0osLUXZFZIHae92TUz7rq5TrbU99ji8bvOnzNIl_j6olxfoXxKHMfLZ6pnTG-SYsP7ppTJv_44BsJAqaFelslCUUPKG2V1Ld_iO0RlT3h9Nde675YC0xLDXAgz82qu5WqeGq2h','_blank')" ;="">
-</div>
-</div>
-<p></p>
-	</div>
-</div>
-
-<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KA7068_2023_BND_YL">
-<div style="border-style: solid; border-width:1px; border-radius: 5px" class="sv-col-md-10 sv-col-md-offset-1"><br>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Dissertation (10,000 Words Or Equivalent</i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:  100</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>NP</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>NP</p>
-			</div>
-</div>
-
-
-
-<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>Resit Attempt: 1 (001)</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Dissertation (10,000 Words Or Equivalent</i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight: 100 </p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>AB</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Grade: </span>AB</p>
-			</div>
-</div>
-
-<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>Resit Attempt: 2 (002)</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Dissertation (10,000 Words Or Equivalent</i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight: 100 </p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span></p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Grade: </span></p>
-			</div>
-</div>
-
-</div>
-<div class="sv-col-md-12"><p>&nbsp;</p></div>
-</div>
-<script>
-
-function DotoggleComp_KA7068_2023_BND_YL() {
-$("#toggleCompPlus_KA7068_2023_BND_YL").toggleClass("sv-hidden");
-$("#toggleCompMinus_KA7068_2023_BND_YL").toggleClass("sv-hidden");
-$("#toggleCompSAS_KA7068_2023_BND_YL").toggleClass("sv-hidden");
-}
-
-$('#toggleComp_KA7068_2023_BND_YL').click(function() {
- DotoggleComp_KA7068_2023_BND_YL();
-});
-
-</script>
-
-</div>
-
-
-
-<h3>2022/3</h3>
-<div>
-<div class="sv-row sv-hidden-xs sv-hidden-sm">
-	<div class="sv-col-md-1">
-		<p><strong>Module Code</strong></p>
-	</div>
-	<div class="sv-col-md-2">
-		<p><strong>Module Name</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Occurrence</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Period</strong>	</p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Level</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Actual Mark / Grade</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Agreed Mark / Grade</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Credits</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Result</strong>	</p>
-	</div>
-	<div class="sv-col-md-2">
-		<p><strong>View Module Details</strong></p>
-	</div>
-</div>
-
-	<div class="sv-row">
-		<div class="sv-col-md-1">
-			<p><span id="toggleComp_KA7066_2022_BND_SEM2"><span id="toggleCompPlus_KA7066_2022_BND_SEM2">
-<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Plus</span>
-</span><span id="toggleCompMinus_KA7066_2022_BND_SEM2" class="sv-hidden"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Minus</span>
-</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong> </span><strong>KA7066</strong></span></p>
-		</div>
-		<div class="sv-col-md-2">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Integrated Building Information Modelling Project</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM2</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>74 / P</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>74 / P</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>20</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>P</p>
-		</div>
-		<div class="sv-col-md-2">
-		<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p><div class="sv-btn-container">
-<div class="sv-col-sm-12">
-<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KA7066" onclick="window.open('../run/SIW_YGSL.start_url?AD8E5402EBD34053Nx9KQc5LgmNxubBl6w7RguL_zAVw4pnllY0lM4N9ikyB1ET1m86AMVHJAnvwc-7nYY755VPGNH4se55ZmZc95_vKidraSuzBC_kK4bdBKm42UqI3qwvOtA6USn_gWF_B1e1hQjDXkrYXIDtQqaOsjolWyKq9JvF5Qb-u6LxNXJ4UKXvkxRywD5mW9LR6MdA4pioT1XdMXRXEnl_H0o9-OjRXsqOv7nR9sAOdWlo4eJKGk0mJga8e0JTOB2JaHZ-cZIyWGiPLi_l0IdJZwvKHqdndTTeUGPibUwY','_blank')" ;="">
-</div>
-</div>
-<p></p>
-	</div>
-</div>
-
-<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KA7066_2022_BND_SEM2">
-<div style="border-style: solid; border-width:1px; border-radius: 5px" class="sv-col-md-10 sv-col-md-offset-1"><br>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Coursework (4000 Words Or Equivalent)   </i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:  100</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>74</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>74</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
-			</div>
-</div>
-
-
-
-</div>
-<div class="sv-col-md-12"><p>&nbsp;</p></div>
-</div>
-<script>
-
-function DotoggleComp_KA7066_2022_BND_SEM2() {
-$("#toggleCompPlus_KA7066_2022_BND_SEM2").toggleClass("sv-hidden");
-$("#toggleCompMinus_KA7066_2022_BND_SEM2").toggleClass("sv-hidden");
-$("#toggleCompSAS_KA7066_2022_BND_SEM2").toggleClass("sv-hidden");
-}
-
-$('#toggleComp_KA7066_2022_BND_SEM2').click(function() {
- DotoggleComp_KA7066_2022_BND_SEM2();
-});
-
-</script>
-
-</div>
-
-
-
-
-
-<h3>2020/1</h3>
-<div>
-<div class="sv-row sv-hidden-xs sv-hidden-sm">
-	<div class="sv-col-md-1">
-		<p><strong>Module Code</strong></p>
-	</div>
-	<div class="sv-col-md-2">
-		<p><strong>Module Name</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Occurrence</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Period</strong>	</p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Level</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Actual Mark / Grade</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Agreed Mark / Grade</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Credits</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Result</strong>	</p>
-	</div>
-	<div class="sv-col-md-2">
-		<p><strong>View Module Details</strong></p>
-	</div>
-</div>
-
-	<div class="sv-row">
-		<div class="sv-col-md-1">
-			<p><span id="toggleComp_KB7030_2020_BND_SEM1"><span id="toggleCompPlus_KB7030_2020_BND_SEM1">
-<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Plus</span>
-</span><span id="toggleCompMinus_KB7030_2020_BND_SEM1" class="sv-hidden"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Minus</span>
-</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong> </span><strong>KB7030</strong></span></p>
-		</div>
-		<div class="sv-col-md-2">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Research Methods</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM1</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>50 / P</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>50 / P</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>20</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>P</p>
-		</div>
-		<div class="sv-col-md-2">
-		<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p><div class="sv-btn-container">
-<div class="sv-col-sm-12">
-<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7030" onclick="window.open('../run/SIW_YGSL.start_url?F6DB670BA8FE4ECAYRPciUSCF9eOMumDIVAIWn2hKNOyvH3BvbLoElTG4ZwQd3deR1Sd1STNnpUuBAVmsxl_1aBSa5fc-XzWSkbZgLOUZJ4qo3xIRCj1d_KYyIQaAYZDJ8Uj8vMyQYKp_gFUVudNpUiCH8s_mQhaJJ7EbgCRw-ddgmzfqOTeUZB8G1HqhLIfT_ZMZjXDokPxuXLaw7rakIC1m5P0N0IMLwU2kroatMYbcZTi80S3-tL73RjOnq__qY_ylVXsLMqA3yIF9tc15bOnJPcKCxzvmnfwCZ8QRRttYQ','_blank')" ;="">
-</div>
-</div>
-<p></p>
-	</div>
-</div>
-
-<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7030_2020_BND_SEM1">
-<div style="border-style: solid; border-width:1px; border-radius: 5px" class="sv-col-md-10 sv-col-md-offset-1"><br>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Examination (90 Minutes)                </i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:  100</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>50</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>50</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
-			</div>
-</div>
-
-
-
-</div>
-<div class="sv-col-md-12"><p>&nbsp;</p></div>
-</div>
-<script>
-
-function DotoggleComp_KB7030_2020_BND_SEM1() {
-$("#toggleCompPlus_KB7030_2020_BND_SEM1").toggleClass("sv-hidden");
-$("#toggleCompMinus_KB7030_2020_BND_SEM1").toggleClass("sv-hidden");
-$("#toggleCompSAS_KB7030_2020_BND_SEM1").toggleClass("sv-hidden");
-}
-
-$('#toggleComp_KB7030_2020_BND_SEM1').click(function() {
- DotoggleComp_KB7030_2020_BND_SEM1();
-});
-
-</script>
-
-	<div class="sv-row">
-		<div class="sv-col-md-1">
-			<p><span id="toggleComp_KB7035_2020_BND_SEM1"><span id="toggleCompPlus_KB7035_2020_BND_SEM1">
-<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Plus</span>
-</span><span id="toggleCompMinus_KB7035_2020_BND_SEM1" class="sv-hidden"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Minus</span>
-</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong> </span><strong>KB7035</strong></span></p>
-		</div>
-		<div class="sv-col-md-2">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Procurement &amp; Supply Chain Management</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM1</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>50 / P</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>50 / P</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>20</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>P</p>
-		</div>
-		<div class="sv-col-md-2">
-		<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p><div class="sv-btn-container">
-<div class="sv-col-sm-12">
-<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7035" onclick="window.open('../run/SIW_YGSL.start_url?2AC49C62605F4412Z8JVEzPDJoYcRnuWIs6P0YcVfiSQsPteF2zXZlasitmarNkUoDxVJXjOPCuKyFPFp5hcBQbv-5CUMXhE7JBc81HSHCqNj5g0xoHzbsOKkzKj-rLCMhINzAGq1wGn1pTRIFaHded7BcO85rVEzI2wgtwliB5ALkppHXpIUd6laxyvnl_W9JA4E6Zx_aPjz8aYGqTGXWdXVEqRt-29B2JS9qYe7-G_3OXOFj0kFjpG_lWXrfVPyXJd5H-bpQCI1l3Jw7a3d4chtLEFL_HTkbUQiZyU','_blank')" ;="">
-</div>
-</div>
-<p></p>
-	</div>
-</div>
-
-<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7035_2020_BND_SEM1">
-<div style="border-style: solid; border-width:1px; border-radius: 5px" class="sv-col-md-10 sv-col-md-offset-1"><br>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Coursework (4000 Words Or Equivalent)   </i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:  100</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>45</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>CD</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>45</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>CD</p>
-			</div>
-</div>
-
-
-
-<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>Resit Attempt: 1 (001)</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Coursework (4000 Words Or Equivalent)   </i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight: 100 </p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>AB</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Grade: </span>AB</p>
-			</div>
-</div>
-
-<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>Resit Attempt: 2 (002)</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Coursework (4000 Words Or Equivalent)   </i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight: 100 </p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>85</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>85</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Grade: </span>P</p>
-			</div>
-</div>
-
-</div>
-<div class="sv-col-md-12"><p>&nbsp;</p></div>
-</div>
-<script>
-
-function DotoggleComp_KB7035_2020_BND_SEM1() {
-$("#toggleCompPlus_KB7035_2020_BND_SEM1").toggleClass("sv-hidden");
-$("#toggleCompMinus_KB7035_2020_BND_SEM1").toggleClass("sv-hidden");
-$("#toggleCompSAS_KB7035_2020_BND_SEM1").toggleClass("sv-hidden");
-}
-
-$('#toggleComp_KB7035_2020_BND_SEM1').click(function() {
- DotoggleComp_KB7035_2020_BND_SEM1();
-});
-
-</script>
-
-	<div class="sv-row">
-		<div class="sv-col-md-1">
-			<p><span id="toggleComp_KB7038_2020_BND_SEM2"><span id="toggleCompPlus_KB7038_2020_BND_SEM2">
-<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Plus</span>
-</span><span id="toggleCompMinus_KB7038_2020_BND_SEM2" class="sv-hidden"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Minus</span>
-</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong> </span><strong>KB7038</strong></span></p>
-		</div>
-		<div class="sv-col-md-2">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Integrated Building Information Modelling Project</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM2</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>0 / XR</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>0 / RP</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>0</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>F</p>
-		</div>
-		<div class="sv-col-md-2">
-		<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p><div class="sv-btn-container">
-<div class="sv-col-sm-12">
-<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7038" onclick="window.open('../run/SIW_YGSL.start_url?6233D55AD899464DEF4mkkm_6_4w0rhB0JHbyplSQmOFmhQpUzDWLAwn1-qtGgU1bjn9RqLoPB-CjuPkbEjVHokms38mBu4L3svL9VHtB0VqfiKdzWHhx-WWQ52uuOKwEEvwgR1ZJRt6dDmaI5DGj_v2kQfOuCBGbMvpcnBtYKneIkVsn3aen3cbQo2HQQe8D0wF9KGjSpwQBLHgCndHSzrU-dVMvGZ3q_4VlAWjDfHIUDbfDagDg4iiIo9ZTtq79TRMoPJuOiNtEz3e0QdT7x_exzKJtZyFnaPueZs2eoJF1Sjytzo','_blank')" ;="">
-</div>
-</div>
-<p></p>
-	</div>
-</div>
-
-<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7038_2020_BND_SEM2">
-<div style="border-style: solid; border-width:1px; border-radius: 5px" class="sv-col-md-10 sv-col-md-offset-1"><br>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Coursework (4000 Words Or Equivalent)   </i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:  100</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>PX</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>PX</p>
-			</div>
-</div>
-
-
-
-</div>
-<div class="sv-col-md-12"><p>&nbsp;</p></div>
-</div>
-<script>
-
-function DotoggleComp_KB7038_2020_BND_SEM2() {
-$("#toggleCompPlus_KB7038_2020_BND_SEM2").toggleClass("sv-hidden");
-$("#toggleCompMinus_KB7038_2020_BND_SEM2").toggleClass("sv-hidden");
-$("#toggleCompSAS_KB7038_2020_BND_SEM2").toggleClass("sv-hidden");
-}
-
-$('#toggleComp_KB7038_2020_BND_SEM2').click(function() {
- DotoggleComp_KB7038_2020_BND_SEM2();
-});
-
-</script>
-
-</div>
-
-
-
-<h3>2019/0</h3>
-<div>
-<div class="sv-row sv-hidden-xs sv-hidden-sm">
-	<div class="sv-col-md-1">
-		<p><strong>Module Code</strong></p>
-	</div>
-	<div class="sv-col-md-2">
-		<p><strong>Module Name</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Occurrence</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Period</strong>	</p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Level</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Actual Mark / Grade</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Agreed Mark / Grade</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Credits</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Result</strong>	</p>
-	</div>
-	<div class="sv-col-md-2">
-		<p><strong>View Module Details</strong></p>
-	</div>
-</div>
-
-	<div class="sv-row">
-		<div class="sv-col-md-1">
-			<p><span id="toggleComp_KB7036_2019_BND_SEM2"><span id="toggleCompPlus_KB7036_2019_BND_SEM2">
-<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Plus</span>
-</span><span id="toggleCompMinus_KB7036_2019_BND_SEM2" class="sv-hidden"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Minus</span>
-</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong> </span><strong>KB7036</strong></span></p>
-		</div>
-		<div class="sv-col-md-2">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>People in Project Management</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM2</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>80 / P</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>80 / P</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>20</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>P</p>
-		</div>
-		<div class="sv-col-md-2">
-		<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p><div class="sv-btn-container">
-<div class="sv-col-sm-12">
-<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7036" onclick="window.open('../run/SIW_YGSL.start_url?CFB8D9F3394C40955agcRQ62ORgsujffUyA3KgQoUwRiOA_P1gmsUVqxbGtUvsiwY1E2EX4gdCNNCQIPevYFgSaYhPZBpCIoJ0QwBJTFZCqiuRZvWbIWfbLEME5pO_DXheNTqpGOBmSTSuD8WVRLxHDaHfVgE-AP1q1ac0HKUm63N3i97akXEQxUTKcPLYnMASfWpemPoi8EKdsz6iwo76diVnhIfBlUJg8J0lvLjP8RVYjQmn2zS7wev3358nB8fNAB5Rt4Twyqv9e-_vTiBSeIDyTARnsnqasZm1dO','_blank')" ;="">
-</div>
-</div>
-<p></p>
-	</div>
-</div>
-
-<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7036_2019_BND_SEM2">
-<div style="border-style: solid; border-width:1px; border-radius: 5px" class="sv-col-md-10 sv-col-md-offset-1"><br>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Peer Review (1,000 Words)               </i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:   10</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>100</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>100</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
-			</div>
-</div>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Academic Paper (3,000 Words)            </i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:   90</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>78</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>78</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
-			</div>
-</div>
-
-
-
-</div>
-<div class="sv-col-md-12"><p>&nbsp;</p></div>
-</div>
-<script>
-
-function DotoggleComp_KB7036_2019_BND_SEM2() {
-$("#toggleCompPlus_KB7036_2019_BND_SEM2").toggleClass("sv-hidden");
-$("#toggleCompMinus_KB7036_2019_BND_SEM2").toggleClass("sv-hidden");
-$("#toggleCompSAS_KB7036_2019_BND_SEM2").toggleClass("sv-hidden");
-}
-
-$('#toggleComp_KB7036_2019_BND_SEM2').click(function() {
- DotoggleComp_KB7036_2019_BND_SEM2();
-});
-
-</script>
-
-	<div class="sv-row">
-		<div class="sv-col-md-1">
-			<p><span id="toggleComp_KB7039_2019_BND_SEM2"><span id="toggleCompPlus_KB7039_2019_BND_SEM2">
-<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Plus</span>
-</span><span id="toggleCompMinus_KB7039_2019_BND_SEM2" class="sv-hidden"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Minus</span>
-</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong> </span><strong>KB7039</strong></span></p>
-		</div>
-		<div class="sv-col-md-2">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Construction Project Planning and Delivery</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM2</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>66 / P</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>66 / P</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>20</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>P</p>
-		</div>
-		<div class="sv-col-md-2">
-		<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p><div class="sv-btn-container">
-<div class="sv-col-sm-12">
-<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7039" onclick="window.open('../run/SIW_YGSL.start_url?5C55C2AF6E354F1Fl8Un1-ihpaYXZCxVZXXoVvECpeiC6B8LbIsCifPlLN1moY6YnnDofbxPTy0Q0vRZlRQ5th7BiL0bvCT5HfQyhxEXs4FXgvOZ_FNSvYEZqaN7U0BqAUjZYXbkQjrGVKtP9FNNIEHG6Drh9qdLqbEPmzotf8H6Ol7ppv0L8mGKJC3bHQwSo8TnvZzGsP8DY256ewC6B-_YPcteHapAvBAVU5HtEAI_mGyloDkgykquEIvUCdwllBpUi9LZxTjTgYoKhvlM6cFvIRp-aQTPxH26AGGXkIb6WiCChX0','_blank')" ;="">
-</div>
-</div>
-<p></p>
-	</div>
-</div>
-
-<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7039_2019_BND_SEM2">
-<div style="border-style: solid; border-width:1px; border-radius: 5px" class="sv-col-md-10 sv-col-md-offset-1"><br>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Group Presentation 15 Mins              </i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:   40</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>75</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>75</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
-			</div>
-</div>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Portfolio 12 Pages                      </i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:   60</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>60</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>60</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
-			</div>
-</div>
-
-
-
-</div>
-<div class="sv-col-md-12"><p>&nbsp;</p></div>
-</div>
-<script>
-
-function DotoggleComp_KB7039_2019_BND_SEM2() {
-$("#toggleCompPlus_KB7039_2019_BND_SEM2").toggleClass("sv-hidden");
-$("#toggleCompMinus_KB7039_2019_BND_SEM2").toggleClass("sv-hidden");
-$("#toggleCompSAS_KB7039_2019_BND_SEM2").toggleClass("sv-hidden");
-}
-
-$('#toggleComp_KB7039_2019_BND_SEM2').click(function() {
- DotoggleComp_KB7039_2019_BND_SEM2();
-});
-
-</script>
-
-</div>
-
-
-
-<h3>2018/9</h3>
-<div>
-<div class="sv-row sv-hidden-xs sv-hidden-sm">
-	<div class="sv-col-md-1">
-		<p><strong>Module Code</strong></p>
-	</div>
-	<div class="sv-col-md-2">
-		<p><strong>Module Name</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Occurrence</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Period</strong>	</p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Level</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Actual Mark / Grade</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Agreed Mark / Grade</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Credits</strong></p>
-	</div>
-	<div class="sv-col-md-1">
-		<p><strong>Result</strong>	</p>
-	</div>
-	<div class="sv-col-md-2">
-		<p><strong>View Module Details</strong></p>
-	</div>
-</div>
-
-	<div class="sv-row">
-		<div class="sv-col-md-1">
-			<p><span id="toggleComp_KB7034_2018_BND_SEM1"><span id="toggleCompPlus_KB7034_2018_BND_SEM1">
-<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Plus</span>
-</span><span id="toggleCompMinus_KB7034_2018_BND_SEM1" class="sv-hidden"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Minus</span>
-</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong> </span><strong>KB7034</strong></span></p>
-		</div>
-		<div class="sv-col-md-2">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Building Information Modelling Management, Theory and Practice</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM1</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>77 / P</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>77 / P</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>20</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>P</p>
-		</div>
-		<div class="sv-col-md-2">
-		<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p><div class="sv-btn-container">
-<div class="sv-col-sm-12">
-<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7034" onclick="window.open('../run/SIW_YGSL.start_url?30C717A87907470BTxOVZAiCHWgWx9Fec1AAEzc77DKNJ2p5fyHsR4g40s8Ub0BZyQahflDNFkgW0QuMrMNq6z4vjtb7ScRAJJ5ti1Kn1r8t6WO-Ph-dJA7-ySfb8H72q_BBdxH4eivDaNGTWkKtCALuGVcdNpKZXvCvbR8lcxNsxhI3ce0ESizU6-yTNWwgTNQGO-0Z4N7r6nTtKKwYYJH33sQvvSh7m8sFfXtlSSedkVgSY6g4sXrX2YyIo0jpv_LpYXYhKAwNdKRl8Z8rE6fx_CZ7YhaRpPXOCqdE','_blank')" ;="">
-</div>
-</div>
-<p></p>
-	</div>
-</div>
-
-<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7034_2018_BND_SEM1">
-<div style="border-style: solid; border-width:1px; border-radius: 5px" class="sv-col-md-10 sv-col-md-offset-1"><br>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Working Literature Review (Indicative 2,</i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:   40</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>75</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>75</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
-			</div>
-</div>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Final Literature Review With New Content</i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:   60</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>78</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>P</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>78</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>P</p>
-			</div>
-</div>
-
-
-
-</div>
-<div class="sv-col-md-12"><p>&nbsp;</p></div>
-</div>
-<script>
-
-function DotoggleComp_KB7034_2018_BND_SEM1() {
-$("#toggleCompPlus_KB7034_2018_BND_SEM1").toggleClass("sv-hidden");
-$("#toggleCompMinus_KB7034_2018_BND_SEM1").toggleClass("sv-hidden");
-$("#toggleCompSAS_KB7034_2018_BND_SEM1").toggleClass("sv-hidden");
-}
-
-$('#toggleComp_KB7034_2018_BND_SEM1').click(function() {
- DotoggleComp_KB7034_2018_BND_SEM1();
-});
-
-</script>
-
-	<div class="sv-row">
-		<div class="sv-col-md-1">
-			<p><span id="toggleComp_KB7036_2018_BND_SEM2"><span id="toggleCompPlus_KB7036_2018_BND_SEM2">
-<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Plus</span>
-</span><span id="toggleCompMinus_KB7036_2018_BND_SEM2" class="sv-hidden"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Minus</span>
-</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong> </span><strong>KB7036</strong></span></p>
-		</div>
-		<div class="sv-col-md-2">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>People in Project Management</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM2</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>0 / WF</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>0 / RP</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>0</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>F</p>
-		</div>
-		<div class="sv-col-md-2">
-		<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p><div class="sv-btn-container">
-<div class="sv-col-sm-12">
-<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7036" onclick="window.open('../run/SIW_YGSL.start_url?0AAB4A9A62D24081kesRKimMAFd30C6AjnXhX5q6yBAkLXqrqxqSZ0Gtqy3I35Gtl-6M_hI-SJIaBaMCXHAeEE0B4VULoKs7Ih8ZYOaep4n2CUvzIUTXCdembEJzGsDtusOakWYw6rq-yDfRj99opb13bfgp3bWCeyDS8trqLz1ZRoZQfE9w8DnJGPURUGeyvLp82xarCJvvbu4kxc85D2pSXk5v_1VljdyKst-Ew_U6DHuZPvWT0R5TfJhRMKZg6aWfnRm6RJ93R0vay4K8khQunAxIX9NM1TdQMKLm','_blank')" ;="">
-</div>
-</div>
-<p></p>
-	</div>
-</div>
-
-<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7036_2018_BND_SEM2">
-<div style="border-style: solid; border-width:1px; border-radius: 5px" class="sv-col-md-10 sv-col-md-offset-1"><br>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Peer Review (1,000 Words)               </i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:   10</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>WD</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>WD</p>
-			</div>
-</div>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Academic Paper (3,000 Words)            </i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:   90</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>WD</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>WD</p>
-			</div>
-</div>
-
-
-
-</div>
-<div class="sv-col-md-12"><p>&nbsp;</p></div>
-</div>
-<script>
-
-function DotoggleComp_KB7036_2018_BND_SEM2() {
-$("#toggleCompPlus_KB7036_2018_BND_SEM2").toggleClass("sv-hidden");
-$("#toggleCompMinus_KB7036_2018_BND_SEM2").toggleClass("sv-hidden");
-$("#toggleCompSAS_KB7036_2018_BND_SEM2").toggleClass("sv-hidden");
-}
-
-$('#toggleComp_KB7036_2018_BND_SEM2').click(function() {
- DotoggleComp_KB7036_2018_BND_SEM2();
-});
-
-</script>
-
-	<div class="sv-row">
-		<div class="sv-col-md-1">
-			<p><span id="toggleComp_KB7039_2018_BND_SEM2"><span id="toggleCompPlus_KB7039_2018_BND_SEM2">
-<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Plus</span>
-</span><span id="toggleCompMinus_KB7039_2018_BND_SEM2" class="sv-hidden"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true" style="vertical-align: middle;float:left"></span><span class="sv-sr-only">Minus</span>
-</span>&nbsp;<span class="sv-hidden-md sv-hidden-lg"><strong>Module Code:</strong> </span><strong>KB7039</strong></span></p>
-		</div>
-		<div class="sv-col-md-2">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Module Name:</strong> </span>Construction Project Planning and Delivery</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Occurrence:</strong> </span>BND</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Period:</strong> </span>SEM2</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Level:</strong> </span>7</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Actual Mark / Grade:</strong> </span>0 / WF</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Agreed Mark / Grade:</strong> </span>0 / RP</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Credits:</strong> </span>0</p>
-		</div>
-		<div class="sv-col-md-1">
-			<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span>F</p>
-		</div>
-		<div class="sv-col-md-2">
-		<p><span class="sv-hidden-md sv-hidden-lg"><strong>Result:</strong> </span></p><div class="sv-btn-container">
-<div class="sv-col-sm-12">
-<input type="button" class="sv-btn sv-btn-block" target="_blank" value="View KB7039" onclick="window.open('../run/SIW_YGSL.start_url?26F72C2AA68C415FoX7Msdu7YdoaDJrGc5kR3mBDoRZeDKLydVTLpO4SsQdIrI9R9R9G50mLOCAMflCjq0IHLxXxh7UvpnN--mOotnRw-SkKyr1lIQXARCFc7_asuO1ULT_J07M0fMBvuLaYSsxnj6SlaGUMlofyKuTy013SZiuw2_wzaHIkT0v_sO4B1zewupNbkxCEjyVZODEn85fNvpdvDo1qG5vOXuq1smisQDACbf8SpQN2umsCVECZE04-d9sNZtW-gJ_kCQRZ__fVZF-76t0Rz3uJulrtSC8Funhj5uV7vLs','_blank')" ;="">
-</div>
-</div>
-<p></p>
-	</div>
-</div>
-
-<div class="sv-hidden sv-col-md-12" id="toggleCompSAS_KB7039_2018_BND_SEM2">
-<div style="border-style: solid; border-width:1px; border-radius: 5px" class="sv-col-md-10 sv-col-md-offset-1"><br>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Group Presentation 15 Mins              </i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:   40</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>WD</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>WD</p>
-			</div>
-</div>
-
-		<div class="sv-row">
-			<div class="sv-col-md-1">
-				<p><i>First Sit Attempt: 1</i></p>
-			</div>
-			<div class="sv-col-md-4">
-				<p><i>Portfolio 12 Pages                      </i></p>
-			</div>
-			<div class="sv-col-md-1">
-				<p>Weight:   60</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Actual Grade: </span>WD</p>
-			</div>
-			<div class="sv-col-md-1">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>0</p>
-			</div>
-			<div class="sv-col-md-3">
-				<p><span class="sv-hidden-md sv-hidden-lg">Agreed Mark: </span>WD</p>
-			</div>
-</div>
-
-
-
-</div>
-<div class="sv-col-md-12"><p>&nbsp;</p></div>
-</div>
-<script>
-
-function DotoggleComp_KB7039_2018_BND_SEM2() {
-$("#toggleCompPlus_KB7039_2018_BND_SEM2").toggleClass("sv-hidden");
-$("#toggleCompMinus_KB7039_2018_BND_SEM2").toggleClass("sv-hidden");
-$("#toggleCompSAS_KB7039_2018_BND_SEM2").toggleClass("sv-hidden");
-}
-
-$('#toggleComp_KB7039_2018_BND_SEM2').click(function() {
- DotoggleComp_KB7039_2018_BND_SEM2();
-});
-
-</script>
-
-</div>
-
-
-
-
-
-
-
-</div>
-
-</div>
-</div></body></html>
+</html>

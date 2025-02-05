@@ -11,6 +11,8 @@ namespace UnnItBooster.Models
 {
 	public class StudentJsonCollection : IStudentCollection
 	{
+		public string? OutlookFolder { get; set; }
+
 		// private const string StandardCollectionName = "students.json";
 		private const string CollectionFileName = "StudentCollection.json";
 
@@ -55,8 +57,6 @@ namespace UnnItBooster.Models
 		private string persistenceFileName => GetJsonPersistenceFile(directory);
 
 		public string Name => directory.Name;
-
-		public string? OutlookFolder { get; set; }
 
 		static string GetJsonPersistenceFile(DirectoryInfo d)
 		{

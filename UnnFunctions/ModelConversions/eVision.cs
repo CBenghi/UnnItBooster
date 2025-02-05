@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -250,7 +251,7 @@ namespace UnnItBooster.ModelConversions
 			}
 		}
 
-		public static Student? GetStudentTranscript(string htmlSource, QueueAction callingAction)
+		public static Student? GetStudentTranscript(string htmlSource, QueueAction callingAction, ILogger? logger = null)
 		{
 			// get the student id
 			// get the accordion class
@@ -282,22 +283,28 @@ namespace UnnItBooster.ModelConversions
 			var st = new Student() { NumericStudentId = m.Groups["id"].Value };
 			foreach (var sub in accordion.ChildNodes)
 			{
+				// logger?.LogDebug("accordion child: {child}", sub.Name);
 				if (sub.Name == "h3")
 				{
 					year = sub.FirstChild.InnerText.Trim();
+					logger?.LogDebug("year: {year}", year);
 				}
 				else if (sub.Name == "div")
 				{
 					var modules = sub.SelectNodes("div[@class='sv-row']");
+					logger?.LogDebug("modules: {count}", modules.Count());
 					foreach (var module in modules)
 					{
-						ModuleResult res = new ModuleResult();
-						res.Year = year;
+						var res = new ModuleResult
+						{
+							Year = year
+						};
 						var fields = module.SelectNodes("div");
 						foreach (var field in fields)
 						{
 							var txt = Clean(field);
-							EvaluateField(ref res, txt);
+							if (EvaluateField(ref res, txt, logger))
+								logger?.LogDebug("fld: {field}", txt);
 						}
 						if (res.TryGetMark(out _, out _))
 							st.SetModuleMark(res);
@@ -307,15 +314,15 @@ namespace UnnItBooster.ModelConversions
 			return st;
 		}
 
-		private static void EvaluateField(ref ModuleResult res, string txt)
+		private static bool EvaluateField(ref ModuleResult res, string txt, ILogger? logger)
 		{
-			var array = txt.Split(new[] { ':' });
+			var array = txt.Split([':']);
 			if (array.Length != 2)
-				return;
+				return false;
 			var key = array[0].Trim();
 			var val = array[1].Trim();
 			if (string.IsNullOrEmpty(val))
-				return;
+				return false;
 			res ??= new ModuleResult();
 			switch (key) 
 			{
@@ -338,6 +345,20 @@ namespace UnnItBooster.ModelConversions
 				case "Actual Mark":
 					res.ActualMark = val;
 					break;
+				case "Actual Mark / Grade":
+					{
+						var sub = val.Replace(" ", "").Split(['/']);
+						res.ActualMark = sub[0];
+						res.ActualResult= sub[1];
+					}
+					break;
+				case "Agreed Mark / Grade":
+					{
+						var sub = val.Replace(" ", "").Split(['/']);
+						res.AgreedMark = sub[0];
+						res.AgreedResult = sub[1];
+					}
+					break;
 				case "Actual Grade":
 					res.ActualResult = val;
 					break;
@@ -354,8 +375,10 @@ namespace UnnItBooster.ModelConversions
 					res.Result = val;
 					break;
 				default:
-					break;
+					logger?.LogError("Unexpected key: '{key}'", key);
+					return false;
 			}
+			return true;
 		}
 
 		private static string Clean(HtmlNode field)
