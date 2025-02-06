@@ -92,6 +92,10 @@
 			this.button5 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.lstModules = new System.Windows.Forms.CheckedListBox();
+			this.button10 = new System.Windows.Forms.Button();
+			this.label14 = new System.Windows.Forms.Label();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.tabControl3.SuspendLayout();
 			this.tabPage7.SuspendLayout();
 			this.tabPage6.SuspendLayout();
@@ -113,6 +117,7 @@
 			this.tabControl4.SuspendLayout();
 			this.tabPage9.SuspendLayout();
 			this.tabPage10.SuspendLayout();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// txtModuleCode
@@ -703,6 +708,7 @@
 			// 
 			// tabPage10
 			// 
+			this.tabPage10.Controls.Add(this.groupBox1);
 			this.tabPage10.Controls.Add(this.label13);
 			this.tabPage10.Controls.Add(this.BtnGetPhotos);
 			this.tabPage10.Controls.Add(this.label12);
@@ -793,8 +799,53 @@
 			this.lstModules.FormattingEnabled = true;
 			this.lstModules.Location = new System.Drawing.Point(14, 81);
 			this.lstModules.Name = "lstModules";
-			this.lstModules.Size = new System.Drawing.Size(176, 514);
+			this.lstModules.Size = new System.Drawing.Size(176, 529);
 			this.lstModules.TabIndex = 17;
+			// 
+			// button10
+			// 
+			this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.button10.Location = new System.Drawing.Point(6, 19);
+			this.button10.Name = "button10";
+			this.button10.Size = new System.Drawing.Size(186, 23);
+			this.button10.TabIndex = 25;
+			this.button10.Text = "Set Outlook Folder";
+			this.button10.UseVisualStyleBackColor = true;
+			this.button10.Click += new System.EventHandler(this.button10_Click);
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.Location = new System.Drawing.Point(203, 63);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(383, 13);
+			this.label14.TabIndex = 26;
+			this.label14.Text = "Check one collection to set its outlook folder, forward slash to identify subfold" +
+    "ers";
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox1.Controls.Add(this.textBox2);
+			this.groupBox1.Controls.Add(this.label14);
+			this.groupBox1.Controls.Add(this.button10);
+			this.groupBox1.Location = new System.Drawing.Point(23, 96);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(771, 103);
+			this.groupBox1.TabIndex = 27;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Outlook";
+			// 
+			// textBox2
+			// 
+			this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox2.Location = new System.Drawing.Point(206, 22);
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(559, 20);
+			this.textBox2.TabIndex = 27;
+			this.textBox2.Text = "Courses/2024/KA7068-SEM2";
 			// 
 			// StudentListForm
 			// 
@@ -834,6 +885,8 @@
 			this.tabPage9.PerformLayout();
 			this.tabPage10.ResumeLayout(false);
 			this.tabPage10.PerformLayout();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);
 
         }
@@ -904,5 +957,9 @@
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.Button BtnGetPhotos;
         private System.Windows.Forms.TextBox textBox1;
-    }
+		private System.Windows.Forms.Button button10;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.Label label14;
+	}
 }

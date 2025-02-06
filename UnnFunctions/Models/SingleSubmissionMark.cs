@@ -39,26 +39,31 @@ public class SingleSubmissionMark
 		}
 	}
 
-	
+	public class MarkerResponse
+	{
+		public string Comment { get; set; } = "";
+		public List<ComponentMark> Components { get; set; } = new();
+	}
 
 	public string MarkerEmail { get; set; }
 	public string StudentId { get; set; }
 	public string SubmissionId { get; set; }
-	public string Comment { get; set; }
 
 	public int GetMark()
 	{
-		return Components.Sum(x => x.Mark);
+		return Response.Components.Sum(x => x.Mark);
 	}
-	public List<ComponentMark> Components { get; set; }
+	
+
+	public MarkerResponse Response { get; } = new();
 
 	public SingleSubmissionMark(string markerEmail, string studentId, string submissionId, string comment, IEnumerable<ComponentMark> components)
     {
 		MarkerEmail = markerEmail;	
 		StudentId = studentId;
-		SubmissionId = submissionId;	
-		Comment = comment;
-		Components = components.ToList();
+		SubmissionId = submissionId;
+		Response.Comment = comment;
+		Response.Components = components.ToList();
 	}
 
 	public static IEnumerable<SingleSubmissionMark> GetMarks(XSSFWorkbook workbook, out string report)
@@ -183,9 +188,9 @@ public class SingleSubmissionMark
 		{
 			var mks = string.Join(
 					"\t",
-					mark.Components.Select(x => x.ToString())
+					mark.Response.Components.Select(x => x.ToString())
 					);
-			sb.AppendLine($"{mark.MarkerEmail}\t{mark.GetMark()}\t{mark.StudentId}\t{mks}\t{mark.Comment}");
+			sb.AppendLine($"{mark.MarkerEmail}\t{mark.GetMark()}\t{mark.StudentId}\t{mks}\t{mark.Response.Comment}");
 		}
 		return sb.ToString();
 	}

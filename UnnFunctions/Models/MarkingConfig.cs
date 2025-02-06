@@ -540,7 +540,7 @@ namespace StudentsFetcher.StudentMarking
 					sb.AppendLine($"{studMail}\t{studId}\t{studName}");
 					lastReportMail = studMail;
 				}
-				sb.AppendLine($"\t{row["MRKR_MarkerEmail"]}\t{row["MRKR_MarkerName"]}\t{row["MRKR_Comment"]}");
+				sb.AppendLine($"\t{row["MRKR_MarkerEmail"]}\t{row["MRKR_MarkerName"]}\t{row["MRKR_Role"]}");
 			}
 			sb.AppendLine();
 

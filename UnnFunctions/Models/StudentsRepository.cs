@@ -31,12 +31,13 @@ public class StudentsRepository
 		collections = new List<IStudentCollection>();
 		foreach (var possibleContainer in ConfigurationFolder.GetDirectories())
 		{
-			if (filters is null || filters.Any(x => filters.Contains(possibleContainer.Name)))
+			// skip if does not not match filter rules
+			if (filters is not null && !filters.Any(x => filters.Contains(possibleContainer.Name)))
+				continue;
+			
+			if (StudentJsonCollection.IsValid(possibleContainer))
 			{
-				if (StudentJsonCollection.IsValid(possibleContainer))
-				{
-					collections.Add(new StudentJsonCollection(possibleContainer));
-				}
+				collections.Add(new StudentJsonCollection(possibleContainer));
 			}
 		}
 	}

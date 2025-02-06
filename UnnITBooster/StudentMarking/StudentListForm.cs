@@ -332,5 +332,24 @@ namespace StudentsFetcher.StudentMarking
 				}
 			}
 		}
+
+		private void button10_Click(object sender, EventArgs e)
+		{
+			var sel = GetSelectedCollections();
+			if (sel.Count != 1)
+			{
+				MessageBox.Show("Check one, and only one collection.");
+				return;
+			}
+			var se = sel.First();
+			se.OutlookFolder = textBox2.Text;
+			se.Save();
+		}
+
+		private List<IStudentCollection> GetSelectedCollections()
+		{
+			var collNames = GetSelectedCollectionNames().ToList();
+			return studentsRepo.GetPersonCollections().Where(x => collNames.Contains(x.Name)).ToList();
+		}
 	}
 }

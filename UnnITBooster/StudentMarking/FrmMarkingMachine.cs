@@ -68,10 +68,8 @@ public partial class FrmMarkingMachine : Form
 			{
 				var cmp = Convert.ToInt32(item["MARK_ptr_Component"]);
 				var val = Convert.ToInt32(item["MARK_Value"]);
-
 				if (cmp == -1)
 					cmp = 0;
-
 				var m = flComponents.Controls[cmp] as ucComponentMark;
 				if (m is not null)
 				{
@@ -453,7 +451,7 @@ public partial class FrmMarkingMachine : Form
             {
                 var m = mark.MarkerEmail;
                 var assignemnt = assignedMarkers.First(x => x.MarkerEmail == m);
-                sb.AppendLine($"- {mark.GetMark()} - {mark.MarkerEmail} - {assignemnt.MarkerRole} - {mark.Comment}");
+                sb.AppendLine($"- {mark.GetMark()} - {mark.MarkerEmail} - {assignemnt.MarkerRole} - {mark.Response.Comment}");
                 assignedMarkers?.Remove(assignemnt); // if one is found we remove it from the list
             }
             if (assignedMarkers is not null)
@@ -481,8 +479,11 @@ public partial class FrmMarkingMachine : Form
         }
 		sb.AppendLine($"Completed: {tallyCompleted}");
 		sb.AppendLine($"Partial:   {tallyPartial}");
+		sb.AppendLine($"Missing:   {dicStudentToMarkers.Count() - tallyPartial - tallyCompleted}");
+		sb.AppendLine($"Total:   {dicStudentToMarkers.Count()}");
+		sb.AppendLine();
 		sb.AppendLine($"Stats");
-        foreach (var series in stats)
+        foreach (var series in stats.OrderBy(x => x.Maximum - x.Minimum))
         {
             // sb.AppendLine($"- mean {series.Mean}, variance: {series.Variance}, stdev: {series.StandardDeviation}");
             sb.AppendLine($"- Mean: {series.Mean}, Minimum: {series.Minimum}, Maximum: {series.Maximum}, StDev: {series.StandardDeviation:0.##}, Range: {series.Maximum - series.Minimum}");

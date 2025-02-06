@@ -7,7 +7,7 @@ using System.Diagnostics;
 namespace UnnItBooster.Helpers
 {
 	/// <summary>
-	/// part of the serialization solution at for <see cref="HeterogenousListConverter{TItem, TList}"/>
+	/// part of the serialization solution for <see cref="HeterogenousListConverter{TItem, TList}"/>
 	/// </summary>
 	/// <typeparam name="T1"></typeparam>
 	/// <typeparam name="T2"></typeparam>

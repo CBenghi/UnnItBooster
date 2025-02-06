@@ -116,7 +116,7 @@ public partial class TurnItIn
 				 "MRKR_MarkerEmail TEXT, " +
 				 "MRKR_MarkerName TEXT, " +
 				 "MRKR_MarkerRole TEXT, " +
-				 "MRKR_Comment TEXT " +
+				 "MRKR_Response TEXT " +
 				 ")";
 
 	private static void CreateDatabase(string fullname)
