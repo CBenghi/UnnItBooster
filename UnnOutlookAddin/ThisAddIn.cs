@@ -6,7 +6,6 @@ using System.Linq;
 using UnnItBooster.Models;
 using Microsoft.Office.Interop.Outlook;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace UnnOutlookAddin
 {

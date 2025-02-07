@@ -5,19 +5,14 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Diagnostics;
 using LateBindingTest;
 using System.Threading;
 using StudentsFetcher;
 using System.Net;
-using System.DirectoryServices;
 using UnnItBooster.Models;
-using NPOI.Util.Collections;
 using StudentsFetcher.StudentMarking;
-using UnnItBooster.Properties;
 using System.Linq;
 using System.Globalization;
-using MathNet.Numerics.Distributions;
 
 namespace StudentMarking
 {

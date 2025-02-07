@@ -1,11 +1,11 @@
-﻿using NPOI.SS.Formula.Functions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using UnnFunctions.Models;
 using UnnItBooster.ModelConversions;
 using UnnItBooster.Models;
@@ -513,7 +513,7 @@ namespace StudentsFetcher.StudentMarking
 
 				foreach (var item in assignment.Details)
 				{
-					sb.AppendLine($"\t{item.MarkingRole}\tw{item.StudentId}\t{item.SubmissionId}");
+					sb.AppendLine($"\t{item.MarkingRole}\tw{item.StudentId}\t{item.SubmissionId}\t{item.StudentEmail}");
 				}
 			}
 			sb.AppendLine();
@@ -540,7 +540,7 @@ namespace StudentsFetcher.StudentMarking
 					sb.AppendLine($"{studMail}\t{studId}\t{studName}");
 					lastReportMail = studMail;
 				}
-				sb.AppendLine($"\t{row["MRKR_MarkerEmail"]}\t{row["MRKR_MarkerName"]}\t{row["MRKR_Role"]}");
+				sb.AppendLine($"\t{row["MRKR_MarkerEmail"]}\t{row["MRKR_MarkerName"]}\t{row["MRKR_MarkerRole"]}");
 			}
 			sb.AppendLine();
 
@@ -552,6 +552,7 @@ namespace StudentsFetcher.StudentMarking
 				on MRKR_ptr_SubmissionUserID = SUB_UserID
 				where MRKR_ptr_SubmissionUserID is null 
 				or SUB_UserID is null 
+				order by MRKR_ptr_SubmissionUserID
 				""";
 			dt = GetDataTable(sql);
 			lastReportMail = "";
@@ -608,21 +609,52 @@ namespace StudentsFetcher.StudentMarking
 				var studentId = row["MRKR_ptr_SubmissionUserID"] is not DBNull ? row["MRKR_ptr_SubmissionUserID"].ToString()! : "<missing id>";
 				var studentPaper = row["SUB_PaperID"] is not DBNull ? row["SUB_PaperID"].ToString()! : "<missing submission>";
 				var studentPortal = row["SUB_ElpSite"] is not DBNull ? row["SUB_ElpSite"].ToString()! : "<undefined>";
-				var studentRole = row["MRKR_MarkerRole"] is not DBNull ? row["MRKR_MarkerRole"].ToString()! : "<undefined role>";
+				var markerRole = row["MRKR_MarkerRole"] is not DBNull ? row["MRKR_MarkerRole"].ToString()! : "<undefined role>";
+				var studentEmail = row["SUB_email"] is not DBNull ? row["SUB_email"].ToString()! : "<undefined email>";
 				current.Add(new MarkingAssignmentDetail(
-					studentId, studentPaper, studentPortal, studentRole
+					studentId, studentPaper, studentPortal, markerRole, studentEmail
 					));
 			}
 			return ret;
 		}
 
-		public string GetExcelMarkedEntries(out IEnumerable<SingleSubmissionMark> marks)
+		public Dictionary<string, IEnumerable<int>> GetDelegatedMarksByStudentId()
+		{
+			var t = GetDelegatedMarks();
+			var ret = t.GroupBy(x => x.StudentId).ToDictionary(y => y.Key, y => y.Select(z => z.GetMark()));
+			return ret;
+		}
+
+		public IEnumerable<DelegatedMarkResponse> GetDelegatedMarks()
+		{
+			var data = GetDataTable("select * from TB_Markers");
+			foreach (DataRow row in data.Rows)
+			{
+				var rspObj = row["MRKR_Response"];
+				if (rspObj is DBNull)
+					continue;
+				var responseString =  rspObj.ToString()!;
+				var response = JsonSerializer.Deserialize<DelegatedMarkResponse.MarkerResponse>(responseString);
+				if (response is null)
+					continue;
+				var markerEmail = row["MRKR_MarkerEmail"].ToString()!;
+				var studentId = row["MRKR_ptr_SubmissionUserID"].ToString()!;
+				if (string.IsNullOrEmpty(markerEmail)
+					|| string.IsNullOrEmpty(studentId))
+				{
+					continue;
+				}
+				yield return new DelegatedMarkResponse(markerEmail, studentId, response); 
+			}
+		}
+
+		public string GetDelegatedMarksFromExcel(out IEnumerable<DelegatedMarkResponse> marks)
 		{
 			var sb = new StringBuilder();
 			var folderName = GetFolderName()!;
 			var d = new DirectoryInfo(Path.Combine(folderName, "ReceivedMarks"));
 			var excelFiles = d.GetFiles("*.xlsx");
-			var retmarks = new List<SingleSubmissionMark>();
+			var retmarks = new List<DelegatedMarkResponse>();
 			foreach (var excelFile in excelFiles)
 			{
 				if (!ExcelFunctions.TryReadExcel(excelFile.FullName, out var workbook, out var report))
@@ -630,20 +662,50 @@ namespace StudentsFetcher.StudentMarking
 					sb.AppendLine(report);
 					continue;
 				}
-				retmarks.AddRange(SingleSubmissionMark.GetMarks(workbook, out var getMarksReport));
+				retmarks.AddRange(DelegatedMarkResponse.GetMarks(workbook, out var getMarksReport));
 				
 			}
 			marks = retmarks;
 			return sb.ToString();
 		}
 
-		public string CreateExcelMarkingFilesFrom(FileInfo fl)
+		public int SetExcelMarks(IEnumerable<DelegatedMarkResponse> marks)
+		{
+			int tally = 0;
+			string sql =
+				"""
+				UPDATE TB_Markers 
+				SET MRKR_Response = @Resp
+				WHERE MRKR_ptr_SubmissionUserID = @UserId 
+				AND MRKR_MarkerEmail = @MarkerEmail
+				""";
+			var cn = GetConn();
+			cn.Open();
+			var command = cn.CreateCommand();
+			command.CommandText = sql;
+			var resp = command.Parameters.Add("@Resp", DbType.String);
+			var studentId = command.Parameters.Add("@UserId", DbType.String);
+			var email = command.Parameters.Add("@MarkerEmail", DbType.String);
+			foreach (var mark in marks)
+			{
+				resp.Value = JsonSerializer.Serialize(mark.Response);
+				studentId.Value = mark.StudentId;
+				email.Value = mark.MarkerEmail;
+				tally += command.ExecuteNonQuery();
+			}
+			cn.Close();
+			return tally;
+		}
+
+		public string CreateExcelMarkingFilesFrom(FileInfo fl, string filter)
 		{
 			var sb = new StringBuilder();
-			var ass = GetMarkingAssignments();
-			foreach (var assItem in ass)
+			var assignments = GetMarkingAssignments();
+			foreach (var assignment in assignments)
 			{
-				sb.AppendLine(CreateExcelMarking(fl, assItem));
+				if (!string.IsNullOrWhiteSpace(filter) && !assignment.MarkerEmail.Contains(filter))
+					continue; // skip if does not contain filter				
+				sb.AppendLine(CreateExcelMarking(fl, assignment));
 			}
 			return sb.ToString();
 		}
@@ -674,6 +736,8 @@ namespace StudentsFetcher.StudentMarking
 				}
 			}
 		}
+
+		
 
 		public string BareName => Path.GetFileNameWithoutExtension(DbName);
 	}

@@ -1,7 +1,6 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Text.RegularExpressions;
 using UnnFunctions.ModelConversions;
 using UnnItBooster.ModelConversions;
 using Xunit.Abstractions;

@@ -1,5 +1,4 @@
-﻿using StudentMarking;
-using StudentsFetcher.StudentMarking;
+﻿using StudentsFetcher.StudentMarking;
 using System;
 using System.IO;
 using System.Linq;

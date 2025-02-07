@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UnnFunctions.Models
+﻿namespace UnnFunctions.Models
 {
-    public class StudentCode
+	public class StudentCode
     {
         public static string NumericFromString(string stringId)
         {

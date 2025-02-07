@@ -16,10 +16,7 @@ using UnnItBooster.ModelConversions;
 using ZedGraph;
 using System.IO.Compression;
 using UnnItBooster.StudentMarking;
-using MathNet.Numerics;
 using UnnFunctions.Models;
-using System.Security.Cryptography.Xml;
-using System.Runtime.Serialization.Formatters;
 using MathNet.Numerics.Statistics;
 
 namespace StudentsFetcher.StudentMarking;
@@ -224,9 +221,9 @@ public partial class FrmMarkingMachine : Form
 			var levelMatch = Regex.Match(txtSearch.Text, @"setlevel (?<level>ug|pg)", RegexOptions.IgnoreCase);
 			var selectModerationMatch = Regex.Match(txtSearch.Text, @"SelectModeration *(?<name>.*)$", RegexOptions.IgnoreCase);
 			var associateMarkerMatch = Regex.Match(txtSearch.Text, @"^Associate ?Marker[s]?$", RegexOptions.IgnoreCase);
-			var reportMarkerMatch = Regex.Match(txtSearch.Text, @"^Report ?Marker[s]?(\s+(?<options>-missing|-marks)?)?$", RegexOptions.IgnoreCase);
+			var reportMarkerMatch = Regex.Match(txtSearch.Text, @"^Report ?Marker[s]?(\s+(?<options>-missing|-marks|-missingexcel)?)?$", RegexOptions.IgnoreCase);
 			var importMarksMatch = Regex.Match(txtSearch.Text, @"^Import ?Marker[s]?$", RegexOptions.IgnoreCase);
-			var markingExcelsMatch = Regex.Match(txtSearch.Text, @"^Create ?MarkingFiles +(?<excelFileName>.*)$", RegexOptions.IgnoreCase);
+			var markingExcelsMatch = Regex.Match(txtSearch.Text, @"^Create ?MarkingFiles(\s+(?<filter>.+?))? +(?<excelFileName>.*)$", RegexOptions.IgnoreCase);
             if (addComponentMatch.Success)
             {
                 AddComponent(addComponentMatch);
@@ -234,8 +231,18 @@ public partial class FrmMarkingMachine : Form
             }
             else if (importMarksMatch.Success)
             {
-                _config.GetExcelMarkedEntries(out var marks);
-				txtLibReport.Text = SingleSubmissionMark.Report(marks);
+                var sb = new StringBuilder();
+                var readingReport = _config.GetDelegatedMarksFromExcel(out var marks); // from import
+                sb.AppendLine(readingReport);
+                sb.AppendLine();
+                sb.AppendLine($"{marks.Count()} marks found in excel files.");
+                
+                var updated = _config.SetExcelMarks(marks);
+                sb.AppendLine($"{updated} updated marks in database.");
+                sb.AppendLine();
+
+                sb.AppendLine(DelegatedMarkResponse.Report(marks));
+                txtLibReport.Text = sb.ToString();
 			}
             else if (markingExcelsMatch.Success)
             {
@@ -246,13 +253,32 @@ public partial class FrmMarkingMachine : Form
                 var option = reportMarkerMatch.Groups["options"].Value;
                 switch (option)
                 {
-                    case "-missing":
-						var assignments = _config.GetMarkingAssignments();
-                        _ = _config.GetExcelMarkedEntries(out var marks);
-						txtLibReport.Text = ReportMarkersAvailability(assignments, marks);
+                    case "-missingexcel":
+                        {
+                            txtLibReport.Text = "# Import errors from Excel";
+                            txtLibReport.Text += "\r\n";
+							var import = _config.GetDelegatedMarksFromExcel(out var marks);
+                            txtLibReport.Text += import;
+                            txtLibReport.Text += "\r\n";
+                            txtLibReport.Text += "# List imported";
+                            txtLibReport.Text += "\r\n";
+                            txtLibReport.Text += DelegatedMarkResponse.Report(marks);
+                            var assignments = _config.GetMarkingAssignments();
+                            txtLibReport.Text += "\r\n";
+							txtLibReport.Text += "# List imported";
+							txtLibReport.Text += "\r\n";
+							txtLibReport.Text += ReportMarkersAvailability(assignments, marks);
+                        }
+						break;
+					case "-missing":
+                        {
+                            var assignments = _config.GetMarkingAssignments();
+                            var marks = _config.GetDelegatedMarks();
+                            txtLibReport.Text = ReportMarkersAvailability(assignments, marks);
+                        }
 						break;
 					case "-marks":
-						_ = _config.GetExcelMarkedEntries(out var marksToEvaluate);
+						var marksToEvaluate = _config.GetDelegatedMarks();
 						txtLibReport.Text = ReportMarkersMarks(_config.GetMarkingAssignmentsByStudents(), marksToEvaluate);
 						break;
 					default:
@@ -296,7 +322,11 @@ public partial class FrmMarkingMachine : Form
             {
                 RemoveComment(removeMatch);
             }
-            else if (txtSearch.Text == "missing")
+			else if (txtSearch.Text == "wrap")
+			{
+                txtLibReport.WordWrap = !txtLibReport.WordWrap;
+			}
+			else if (txtSearch.Text == "missing")
             {
                 FindMissing();
             }
@@ -400,11 +430,16 @@ public partial class FrmMarkingMachine : Form
                         22049588 ala.suliman@northumbria.ac.uk Supervisor Ala Suliman
 
                     Report Markers
-                        Creates a report with marker association to submissions and missing entries
+                        Creates a report with marker association to submissions and missing entries.
+                        Report Markers -missing
+                            what excels and returned marks are missing (use import)
+                        Report Markers -marks
+                            
 
                     Create MarkingFiles <excelFileName>
                         creates a file ready to receive individual marker feedback
                         e.g. Create MarkingFiles markingTemplate.xlsx
+                        e.g. Create MarkingFiles claudio.benghi markingTemplate.xlsx
 
                     Import Markers
                         reads externally marked excel files back into the database
@@ -431,7 +466,7 @@ public partial class FrmMarkingMachine : Form
         }
     }
 
-	private string ReportMarkersMarks(IEnumerable<(string StudentId, string MarkerEmail, string MarkerRole)> enumerable, IEnumerable<SingleSubmissionMark> marksToEvaluate)
+	private string ReportMarkersMarks(IEnumerable<(string StudentId, string MarkerEmail, string MarkerRole)> enumerable, IEnumerable<DelegatedMarkResponse> marksToEvaluate)
 	{
 		var sb = new StringBuilder();
 
@@ -491,7 +526,7 @@ public partial class FrmMarkingMachine : Form
 		return sb.ToString();
 	}
 
-	private string ReportMarkersAvailability(IEnumerable<MarkingAssignment> assignments, IEnumerable<SingleSubmissionMark> marks)
+	private string ReportMarkersAvailability(IEnumerable<MarkingAssignment> assignments, IEnumerable<DelegatedMarkResponse> marks)
 	{
         var sb = new StringBuilder();
         var m = marks.GroupBy(x => x.MarkerEmail).ToDictionary(g => g.Key, g => g.ToList());
@@ -517,13 +552,21 @@ public partial class FrmMarkingMachine : Form
 
 	private string CreateExcelMarkers(Match markingExcelsMatch)
 	{
-        var f = markingExcelsMatch.Groups["excelFileName"].Value;
-        var fl = _config.GetLocalizedPathFrom(f);
-        if (fl == null)
-            return "matching template not found.";
-        if (!fl.Exists)
-            return "Excel file template not found.";
-        return _config.CreateExcelMarkingFilesFrom(fl);
+        var excelfile = markingExcelsMatch.Groups["excelFileName"].Value;
+        var filter = markingExcelsMatch.Groups["filter"].Value;
+        try
+        {
+			var localizedTemplateFile = _config.GetLocalizedPathFrom(excelfile);
+			if (localizedTemplateFile == null)
+				return "matching template not found.";
+			if (!localizedTemplateFile.Exists)
+				return "Excel file template not found.";
+			return _config.CreateExcelMarkingFilesFrom(localizedTemplateFile, filter);
+		}
+        catch (Exception ex)
+        {
+            return ex.Message;
+        }
 	}
 
 	private void ReportMarkers()
@@ -821,9 +864,7 @@ public partial class FrmMarkingMachine : Form
         foreach (DataRow r in dt.Rows)
         {
             var lookForId = r["sub_numericUserId"].ToString();
-
             var rEx = new Regex("" + lookForId + @"/(\d)");
-
             var bFound = false;
             foreach (var reqId in allIds)
             {
@@ -1312,7 +1353,12 @@ public partial class FrmMarkingMachine : Form
     {
         if (_config is null)
             return;
-        var mcalc = _config.GetMarkCalculator();
+        var showDelegate = chkShowDelegate.Checked;
+		var delegMarks = showDelegate 
+            ? _config.GetDelegatedMarksByStudentId()
+            : new Dictionary<string, IEnumerable<int>>();
+		
+		var mcalc = _config.GetMarkCalculator();
         lstEmailSendSelection.Items.Clear();
         try
         {
@@ -1341,8 +1387,29 @@ public partial class FrmMarkingMachine : Form
                 var numUID = item["SUB_NumericUserId"].ToString();
                 lvi.SubItems.Add(mcalc.GetFinalMark(ProgressiveId, _config, true).ToString());
                 lvi.SubItems.Add(localDateTime);
-                lvi.SubItems.Add(item["NumComments"].ToString());
-                lvi.SubItems.Add($"Overalp: {item["SUB_Overlap"]} Internet: {item["SUB_InternetOverlap"]} Pub: {item["SUB_PublicationsOverlap"]} Student: {item["SUB_StudentPapersOverlap"]}");
+                if (!showDelegate)
+                {
+                    lvi.SubItems.Add(item["NumComments"].ToString());
+                    lvi.SubItems.Add($"Overalp: {item["SUB_Overlap"]} Internet: {item["SUB_InternetOverlap"]} Pub: {item["SUB_PublicationsOverlap"]} Student: {item["SUB_StudentPapersOverlap"]}");
+                }
+                else
+                {
+                    var numComments = "";
+                    var markComments = "";
+					var student = studentRepository.GetStudentById(numUID);
+                    if (student != null && student.TranscriptResults is not null)
+                    {
+                        var mark = ModuleResult.WeightedAverage(student.TranscriptResults, out var maturedCredits);
+                        markComments = $"Avg: {mark:0.##} out of {maturedCredits} credits; ";
+                    }
+                    if (delegMarks.TryGetValue(numUID, out var delegateMarks))
+                    {
+                        numComments = $"{delegateMarks.Count()} ({string.Join(", ", delegateMarks)})";
+                        markComments += Describe(delegateMarks);
+					}
+					lvi.SubItems.Add(numComments);
+					lvi.SubItems.Add(markComments);
+				}
 
                 lstEmailSendSelection.Items.Add(lvi);
                 // lstEmailSendSelection.Items.Add(numUID);
@@ -1354,7 +1421,13 @@ public partial class FrmMarkingMachine : Form
         }
     }
 
-    private void cmdGetData_Click(object sender, EventArgs e)
+	private string Describe(IEnumerable<int> delegateMarks)
+	{
+        DescriptiveStatistics series = new DescriptiveStatistics(delegateMarks.Select(x => (double)x));
+        return $"Mean: {series.Mean}, Minimum: {series.Minimum}, Maximum: {series.Maximum}, StDev: {series.StandardDeviation:0.##}, Range: {series.Maximum - series.Minimum}";
+	}
+
+	private void cmdGetData_Click(object sender, EventArgs e)
     {
         if (!chkImportComponents.Checked && !chkCommentLib.Checked && !chkImportSubmissions.Checked)
             return;

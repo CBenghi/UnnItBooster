@@ -1,18 +1,12 @@
 ﻿using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
-using OfficeOpenXml.DataValidation;
-using OfficeOpenXml;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using NPOI.SS.Formula.Functions;
-using System.Drawing.Drawing2D;
 
 namespace UnnFunctions.Models;
 
-public class SingleSubmissionMark
+public class DelegatedMarkResponse
 {
 	public class ComponentMark
 	{
@@ -42,13 +36,13 @@ public class SingleSubmissionMark
 	public class MarkerResponse
 	{
 		public string Comment { get; set; } = "";
+		public string SubmissionId { get; set; } = "";
 		public List<ComponentMark> Components { get; set; } = new();
 	}
 
 	public string MarkerEmail { get; set; }
 	public string StudentId { get; set; }
-	public string SubmissionId { get; set; }
-
+	
 	public int GetMark()
 	{
 		return Response.Components.Sum(x => x.Mark);
@@ -57,22 +51,29 @@ public class SingleSubmissionMark
 
 	public MarkerResponse Response { get; } = new();
 
-	public SingleSubmissionMark(string markerEmail, string studentId, string submissionId, string comment, IEnumerable<ComponentMark> components)
+	public DelegatedMarkResponse(string markerEmail, string studentId, MarkerResponse response)
+	{
+		MarkerEmail = markerEmail;
+		StudentId = studentId;
+		Response = response;
+	}
+
+	public DelegatedMarkResponse(string markerEmail, string studentId, string submissionId, string comment, IEnumerable<ComponentMark> components)
     {
 		MarkerEmail = markerEmail;	
 		StudentId = studentId;
-		SubmissionId = submissionId;
+		Response.SubmissionId = submissionId;
 		Response.Comment = comment;
 		Response.Components = components.ToList();
 	}
 
-	public static IEnumerable<SingleSubmissionMark> GetMarks(XSSFWorkbook workbook, out string report)
+	public static IEnumerable<DelegatedMarkResponse> GetMarks(XSSFWorkbook workbook, out string report)
 	{
 		ISheet sheet = workbook.GetSheet("Project marks");
 		
 		if (sheet is null)
 			return RetError("Marks sheet not found", out report);
-		var ret = new List<SingleSubmissionMark>();
+		var ret = new List<DelegatedMarkResponse>();
 		var row = sheet.GetRow(0);
 		if (row == null) //null is when the row only contains empty cells 
 			return RetError("No valid row 0", out report);
@@ -94,6 +95,7 @@ public class SingleSubmissionMark
 			var stud = GetStudent(studRow);
 			if (stud is null)
 				break;
+			string submissionID = GetCellString(studRow, 3) ?? ""; 
 			var marks = GetStudentMarks(studRow, t.Count);
 			if (marks is null)
 				continue;
@@ -101,7 +103,7 @@ public class SingleSubmissionMark
 			var mks = ComponentMark.GetMarks(marks, t);
 			if (mks is null)
 				continue;
-			var newV = new SingleSubmissionMark(markerMail, stud, "", comment, mks);
+			var newV = new DelegatedMarkResponse(markerMail, stud, submissionID, comment, mks);
 			ret.Add(newV);
 		} while (true);
 
@@ -175,16 +177,16 @@ public class SingleSubmissionMark
 		return ret;
 	}
 
-	private static IEnumerable<SingleSubmissionMark> RetError(string reportVal, out string report)
+	private static IEnumerable<DelegatedMarkResponse> RetError(string reportVal, out string report)
 	{
 		report = reportVal;
-		return Enumerable.Empty<SingleSubmissionMark>();
+		return Enumerable.Empty<DelegatedMarkResponse>();
 	}
 
-	public static string Report(IEnumerable<SingleSubmissionMark> marks)
+	public static string Report(IEnumerable<DelegatedMarkResponse> marks)
 	{
-		StringBuilder sb = new StringBuilder();
-		foreach (SingleSubmissionMark mark in marks)
+		var sb = new StringBuilder();
+		foreach (DelegatedMarkResponse mark in marks)
 		{
 			var mks = string.Join(
 					"\t",

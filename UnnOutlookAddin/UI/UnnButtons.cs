@@ -6,14 +6,13 @@ using Microsoft.Office.Tools.Ribbon;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using UnnOutlookAddin.MailManagement;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
 using StudentsFetcher.StudentMarking;
 using System.Diagnostics;
 using UnnFunctions.Models;
 
 namespace UnnOutlookAddin.UI
 {
-    public partial class UnnButtons
+	public partial class UnnButtons
 	{
         private void BtnClassify_Click(object sender, RibbonControlEventArgs e)
 		{

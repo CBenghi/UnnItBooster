@@ -10,7 +10,6 @@ using UnnOutlookAddin.Actions;
 using StudentsFetcher.StudentMarking;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using UnnFunctions.ModelConversions;
-using Microsoft.Office.Core;
 
 namespace UnnOutlookAddin.UI
 {

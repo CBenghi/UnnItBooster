@@ -1,15 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using Microsoft.Web.WebView2.Core;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
-using UnnItBooster.Models;
 
 namespace EvisionBrowser
 {
@@ -63,11 +53,6 @@ namespace EvisionBrowser
 			else
 				Url.Text = "https://sits.northumbria.ac.uk/live/sits.urd/run/siw_sso.saml";
 			wbSample.Source = new Uri(Url.Text);
-		}
-
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-
-		}
+		}		
 	}
 }
