@@ -244,8 +244,11 @@ public class DelegatedMarkResponse
             var ret = ReportOption(transcriptResults, credits, mark, response.MarkerRole);
             sb.AppendLine(ret);
         }
-        var delegAverage = delegMarks.Select(x => x.GetMark()).Average();
-        sb.AppendLine(ReportOption(transcriptResults, credits, delegAverage, "markers average"));
+        if (delegMarks.Any())
+        {
+            var delegAverage = delegMarks.Select(x => x.GetMark()).Average();
+            sb.AppendLine(ReportOption(transcriptResults, credits, delegAverage, "markers average"));
+        }
         sb.AppendLine();
         sb.AppendLine("Marking range sensitivity analysis");
         sb.AppendLine(ReportOption(transcriptResults, credits, 50, "if bare pass"));

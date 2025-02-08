@@ -925,7 +925,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.99999F));
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.00001F));
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 106F));
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 107F));
 			this.tableLayoutPanel2.Controls.Add(this.cmdEmailRefreshStudents, 0, 0);
 			this.tableLayoutPanel2.Controls.Add(this.cmdSelectAll, 1, 0);
 			this.tableLayoutPanel2.Controls.Add(this.NudOverlap, 2, 0);
@@ -945,7 +945,7 @@ namespace StudentsFetcher.StudentMarking
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmdEmailRefreshStudents.Location = new System.Drawing.Point(3, 3);
 			this.cmdEmailRefreshStudents.Name = "cmdEmailRefreshStudents";
-			this.cmdEmailRefreshStudents.Size = new System.Drawing.Size(106, 23);
+			this.cmdEmailRefreshStudents.Size = new System.Drawing.Size(105, 23);
 			this.cmdEmailRefreshStudents.TabIndex = 2;
 			this.cmdEmailRefreshStudents.Text = "Refresh";
 			this.cmdEmailRefreshStudents.UseVisualStyleBackColor = true;
@@ -955,7 +955,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			this.cmdSelectAll.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdSelectAll.Location = new System.Drawing.Point(115, 3);
+			this.cmdSelectAll.Location = new System.Drawing.Point(114, 3);
 			this.cmdSelectAll.Name = "cmdSelectAll";
 			this.cmdSelectAll.Size = new System.Drawing.Size(106, 23);
 			this.cmdSelectAll.TabIndex = 4;
@@ -966,7 +966,7 @@ namespace StudentsFetcher.StudentMarking
 			// NudOverlap
 			// 
 			this.NudOverlap.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.NudOverlap.Location = new System.Drawing.Point(244, 5);
+			this.NudOverlap.Location = new System.Drawing.Point(243, 5);
 			this.NudOverlap.Name = "NudOverlap";
 			this.NudOverlap.Size = new System.Drawing.Size(60, 20);
 			this.NudOverlap.TabIndex = 5;
@@ -981,7 +981,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			this.chkShowDelegate.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.chkShowDelegate.AutoSize = true;
-			this.chkShowDelegate.Location = new System.Drawing.Point(343, 6);
+			this.chkShowDelegate.Location = new System.Drawing.Point(342, 6);
 			this.chkShowDelegate.Name = "chkShowDelegate";
 			this.chkShowDelegate.Size = new System.Drawing.Size(69, 17);
 			this.chkShowDelegate.TabIndex = 6;

@@ -48,12 +48,13 @@ namespace DevelopmentTests
 		public void TestTranscript(string fileName)
 		{
 			var src = File.ReadAllText(fileName);
-			var context = new UnnFunctions.Models.QueueAction(null, UnnFunctions.Models.QueueAction.ActionRequiredData.studentTranscript,
+			var fileUri = new Uri(new Uri("file://"), fileName);
+			var context = new UnnFunctions.Models.QueueAction(fileUri, UnnFunctions.Models.QueueAction.ActionRequiredData.studentTranscript,
 				 UnnFunctions.Models.QueueAction.ActionSource.studentTranscript, "Some");
-			var stud = eVision.GetStudentTranscript(src, context, logger)!;
-			stud.Should().NotBeNull();
-			logger?.LogInformation("studentId: {studentId}", stud.NumericStudentId);
-			logger?.LogInformation("studentTranscript: {studentId}", stud.TranscriptResults.Count);
+			var studentWithTranscript = eVision.GetStudentTranscript(src, context, logger)!;
+			studentWithTranscript.Should().NotBeNull();
+			logger?.LogInformation("studentId: {studentId}", studentWithTranscript.NumericStudentId);
+			logger?.LogInformation("studentTranscript: {studentId}", studentWithTranscript.TranscriptResults.Count);
 		}
 
 		[Fact]

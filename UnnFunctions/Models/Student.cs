@@ -133,7 +133,7 @@ namespace UnnItBooster.Models
 			return Path.Combine(pictureFolder, string.Format("{0}.jpg", NumericStudentId));
 		}
 
-		public List<ModuleResult>? TranscriptResults { get; set; }
+		public List<ModuleResult> TranscriptResults { get; set; } = new();
 
 		public bool HasEmail(string? seekEmail)
 		{
@@ -165,7 +165,90 @@ namespace UnnItBooster.Models
 			return FullName;
 		}
 
-		public string ReportTranscript()
+		public string ReportTranscriptClassificationChart()
+		{
+			var sb = new StringBuilder();
+			if (TranscriptResults is not null)
+			{
+				foreach (var levelMarks in TranscriptResults.GroupBy(x => x.Level))
+				{
+					sb.AppendLine($"Chart at level: {levelMarks.Key}");
+					AppendChart(sb, levelMarks);
+				}
+			}
+			sb.AppendLine();
+			return sb.ToString();
+		}
+
+		private void AppendChart(StringBuilder sb, IEnumerable<ModuleResult> enumerable)
+		{
+			var c = new chart();
+			foreach (var item in enumerable)
+			{
+				c.Add(item);	
+			}
+			c.ReportTo(sb);
+		}
+
+		class chart
+		{
+			internal int[] MarksAtBand = new int[10];
+
+			internal List<string> failures = new();
+			
+			internal void Add(ModuleResult item)
+			{
+				if (!item.TryGetMark(out var mk, out var credits))
+				{
+					return;
+				}
+				if (credits == 0)
+				{
+					failures.Add(item.ActualMark);
+				}
+				var mkBand = Convert.ToInt32(Math.Floor((double)mk / 10));
+				MarksAtBand[mkBand] += credits;
+			}
+
+			internal void ReportTo(StringBuilder sb)
+			{
+				int minRange = 10;
+				int maxRange = 0;
+				for (int i = 9; i >= 0; i--)
+				{
+					if (MarksAtBand[i] > 0)
+					{
+						minRange = Math.Min(i, minRange);
+						maxRange = Math.Max(i, maxRange);
+					}
+				}
+				for (int i = maxRange; i >= minRange; i--)
+				{
+					sb.AppendLine($"{Desc(i)}\t{Bar(MarksAtBand[i])}\t{MarksAtBand[i]}");
+				}
+				if (failures.Any())
+					sb.AppendLine($"Fails: {string.Join(", ", failures.ToArray())}");
+			}
+
+			private string Bar(int credits)
+			{
+				var mx = MarksAtBand.Max() / 10;
+				var count = credits / 10;
+
+				return new string('#', count) 
+					+ new string('_', mx-count);
+			}
+
+			private string Desc(int i)
+			{
+				return (i * 10).ToString("##");
+			}
+		}
+
+
+
+
+		public string ReportTranscript(bool addLegenda = true)
 		{
 			var sb = new StringBuilder();
 			if (TranscriptResults is not null)
@@ -175,7 +258,8 @@ namespace UnnItBooster.Models
 				{
 					if (transcript.Year != yr)
 					{
-						sb.AppendLine($"");
+						if (yr != "")
+							sb.AppendLine($"");
 						yr = transcript.Year;
 						sb.AppendLine($"{yr}");
 					}
@@ -184,12 +268,15 @@ namespace UnnItBooster.Models
 				var res = ModuleResult.WeightedAverage(TranscriptResults, out var credits);
 				if (res > 0)
 				{
-					sb.AppendLine($"\r\nWeighed average {res:0.0}% over {credits} credits\r\n");
+					sb.AppendLine($"\r\nWeighted average {res:0.0}% over {credits} credits\r\n");
 				}
-				sb.AppendLine("Legenda:");
-				foreach (var code in UsedCodes().Distinct())
+				if (addLegenda)
 				{
-					ModuleResult.Report(sb, code);
+					sb.AppendLine("Legenda:");
+					foreach (var code in UsedCodes().Distinct())
+					{
+						ModuleResult.Report(sb, code);
+					}
 				}
 			}
 			else
@@ -211,5 +298,7 @@ namespace UnnItBooster.Models
 				}
 			}
 		}
+
+		
 	}
 }

@@ -17,7 +17,7 @@ namespace ExtendedTextBox
 
 		public event CtrlKeyPressed OnCtrlEnter;
 		public event CtrlKeyPressed OnCtrlTab;
-		public event CtrlKeyPressed OnSimpleKey;
+		// public event CtrlKeyPressed OnSimpleKey;
 		public event CtrlKeyboardPressed OnCtrlKey;
 
 		private string _originalText = "";

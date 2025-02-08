@@ -195,7 +195,7 @@ namespace EvisionBrowser
 				if (r != ActionRequiredData.none)
 				{
 					var InterestingIds = new HashSet<string>(students.Select(x => x.NumericStudentId));
-					ProcessAvailableDataAsync(new QueueAction(wbSample.Source, r, ActionSource.studentsList, ModuleCode), InterestingIds); // from init
+					_ = ProcessAvailableDataAsync(new QueueAction(wbSample.Source, r, ActionSource.studentsList, ModuleCode), InterestingIds); // from init
 				}
 			}
 			else

@@ -51,9 +51,11 @@ public partial class FrmMarkingMachine : Form
         UpdateStudentMarksUi();
         if (ChkAutoStat.Checked)
         {
-            var txt = ReportTranscript(out var student);
+            var txt = ReportTranscript(out var student, false);
             if (student is not null)
             {
+                txt += student.ReportTranscriptClassificationChart();
+
                 var delegMarks = _config.GetDelegatedMarks().Where(x => x.StudentId == student.NumericStudentId).ToList();
                 txt += DelegatedMarkResponse.Report(delegMarks, true);
                 var missing = _config.GetMissingDelegateMarkingResponses().Where(x => x.StudentId == student.NumericStudentId).ToArray();
@@ -398,7 +400,7 @@ public partial class FrmMarkingMachine : Form
 				|| txtSearch.Text.Equals("transcript", StringComparison.OrdinalIgnoreCase)
                 )
 			{
-				SetReport(ReportTranscript(out _));
+				SetReport(ReportTranscript(out _, true));
 			}
 			else if (txtSearch.Text.Equals("imagematch", StringComparison.OrdinalIgnoreCase))
 			{
@@ -579,7 +581,7 @@ public partial class FrmMarkingMachine : Form
         {
 			if (!m.TryGetValue(assignment.MarkerEmail, out var marked))
 			{
-				sb.AppendLine($"Missing DATASET from: {assignment.MarkerEmail}");
+				sb.AppendLine($"Missing DATASET from: {assignment.MarkerEmail} - {assignment.Details.Count} marks expected");
 			}
 			else
 			{
@@ -813,7 +815,7 @@ public partial class FrmMarkingMachine : Form
 		txtLibReport.Text = reportText; 
 	}
 
-	private string ReportTranscript(out Student? studentFound)
+	private string ReportTranscript(out Student? studentFound, bool AddLegenda)
 	{
         var t = GetCurrentSubmission();
 		if (t is null)
@@ -826,7 +828,7 @@ public partial class FrmMarkingMachine : Form
         {
 			return "No student found in repository";
 		}
-		return studentFound.ReportTranscript(); 
+		return studentFound.ReportTranscript(false); 
 	}
 
 	private void EditLoad(string value)
@@ -1954,7 +1956,7 @@ public partial class FrmMarkingMachine : Form
 
 	private void BtnShowStudentStat_Click(object sender, EventArgs e)
 	{
-		SetReport(ReportTranscript(out _));
+		SetReport(ReportTranscript(out _, true));
 	}
 
     private double OverlapThreshold
