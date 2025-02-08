@@ -29,29 +29,29 @@ public class TurnitInSubmission
 	public static TurnitInSubmission FromRow(DataRow row)
 	{
 		var item = new TurnitInSubmission();
-		item.LastName = Some("SUB_LastName", row);
-		item.FirstName = Some("SUB_FirstName", row);
-		item.UserId = Some("SUB_UserID", row);
-		item.Title = Some("SUB_Title", row);
-		item.PaperId = Some("SUB_PaperID", row);
-		item.DateUploaded = Some("SUB_DateUploaded", row);
-		item.Grade = Some("SUB_Grade", row);
-		item.Overlap = Some("SUB_Overlap", row);
-		item.InternetOverlap = Some("SUB_InternetOverlap", row);
-		item.PublicationsOverlap = Some("SUB_PublicationsOverlap", row);
-		item.StudentPapersOverlap = Some("SUB_StudentPapersOverlap", row);
-		item.NumericUserId = Some("SUB_NumericUserID", row);
-		item.Email = Some("SUB_email", row);
-		item.ElpSite = Some("SUB_ElpSite", row);
+		item.LastName = GetFromField("SUB_LastName", row);
+		item.FirstName = GetFromField("SUB_FirstName", row);
+		item.UserId = GetFromField("SUB_UserID", row);
+		item.Title = GetFromField("SUB_Title", row);
+		item.PaperId = GetFromField("SUB_PaperID", row);
+		item.DateUploaded = GetFromField("SUB_DateUploaded", row);
+		item.Grade = GetFromField("SUB_Grade", row);
+		item.Overlap = GetFromField("SUB_Overlap", row);
+		item.InternetOverlap = GetFromField("SUB_InternetOverlap", row);
+		item.PublicationsOverlap = GetFromField("SUB_PublicationsOverlap", row);
+		item.StudentPapersOverlap = GetFromField("SUB_StudentPapersOverlap", row);
+		item.NumericUserId = GetFromField("SUB_NumericUserID", row);
+		item.Email = GetFromField("SUB_email", row);
+		item.ElpSite = GetFromField("SUB_ElpSite", row);
 		var sid = row["SUB_Id"].ToString();
 		if (!string.IsNullOrEmpty(sid) && int.TryParse(sid, out var result))
 			item.InternalShortId = result;
 		return item;
 	}
 
-	private static string Some(string field, DataRow row)
+	private static string GetFromField(string field, DataRow row)
 	{
-		return row[field].ToString();
+		return row[field].ToString() ?? "";
 	}
 
 	public static IEnumerable<string> Fields => GetSqlCouples().Select(x => x.Field);
@@ -61,8 +61,11 @@ public class TurnitInSubmission
 		var elpCode = elpSiteCode
 			?? item?.ElpSite
 			?? "";
-		return new[] {
-			new SqlCouple("SUB_LastName", !string.IsNullOrEmpty(item?.LastName) ? item.LastName : item?.FullName),
+		var lastName = item is null
+			? ""
+			: !string.IsNullOrEmpty(item.LastName) ? item.LastName : item.FullName;
+		return [
+			new SqlCouple("SUB_LastName", lastName),
 			new SqlCouple("SUB_FirstName", item?.FirstName?? ""),
 			new SqlCouple("SUB_UserID",  item?.UserId?? ""),
 			new SqlCouple("SUB_Title",  item?.Title?? ""),
@@ -76,6 +79,6 @@ public class TurnitInSubmission
 			new SqlCouple("SUB_NumericUserID",  item?.NumericUserId?? ""),
 			new SqlCouple("SUB_email", item?.Email?? ""),
 			new SqlCouple("SUB_ElpSite", elpCode)
-			};
+			];
 	}
 }

@@ -20,5 +20,6 @@
     <PackageReference Include="EPPlus" Version="6.0.3" />
     <PackageReference Include="LumenWorksCsvReader" Version="4.0.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
+    <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
   </ItemGroup>
 </Project>

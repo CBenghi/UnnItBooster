@@ -403,7 +403,7 @@ public partial class TurnItIn
 				var t = procline.Split(split, System.StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
 				if (t == null)
 					continue;
-				var fullPath = Path.Combine(manifest.Directory.FullName, t);
+				var fullPath = Path.Combine(manifest.Directory!.FullName, t);
 				if (!File.Exists(fullPath))
 				{
 					// maybe the name has been cut
@@ -412,9 +412,9 @@ public partial class TurnItIn
 					{
 						var ext = Path.GetExtension(fullPath);
 						var found = manifest.Directory.GetFiles($"{nm.Groups["documentId"].Value}*{ext}");
-						if (found.Count() == 1)
+						if (found.Length == 1)
 						{
-							fullPath = found.FirstOrDefault().FullName;
+							fullPath = found.First().FullName;
 						}
 						else
 							continue;

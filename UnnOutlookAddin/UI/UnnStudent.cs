@@ -160,7 +160,7 @@ namespace UnnOutlookAddin.UI
 							}
 						}
 					}
-					catch (System.Exception ex)
+					catch (Exception)
 					{
 						
 					}

@@ -26,7 +26,7 @@ public static class StudentListExtensions
 			}
 			return Enrich.Values.Union(noChange).Union(extra);
 		}
-		catch (System.Exception ex)
+		catch (System.Exception)
 		{
 			return baseCollection;
 		}		

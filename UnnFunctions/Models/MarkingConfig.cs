@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using UnnFunctions.Models;
+using UnnFunctions.Models.DelegatedMarks;
 using UnnItBooster.ModelConversions;
 using UnnItBooster.Models;
 
 namespace StudentsFetcher.StudentMarking
 {
-	public partial class MarkingConfig
+    public partial class MarkingConfig
 	{
 		public MarkingConfig(string dbName)
 		{
@@ -25,10 +26,10 @@ namespace StudentsFetcher.StudentMarking
 
 		public string DbName { get; set; }
 
-		public string? GetFolderName()
+		public string GetFolderName()
 		{
 			var f = new FileInfo(DbName);
-			return f.DirectoryName;
+			return f.DirectoryName!;
 		}
 
 		public SQLiteConnection GetConn()
@@ -64,7 +65,7 @@ namespace StudentsFetcher.StudentMarking
 			var ret = new List<string>();
 			foreach (DataRow item in dt.Rows)
 			{
-				ret.Add(item[0].ToString().Trim());
+				ret.Add(item[0]?.ToString()?.Trim() ?? "");
 			}
 			return ret;
 		}
@@ -80,17 +81,17 @@ namespace StudentsFetcher.StudentMarking
 			}
 		}
 
-		public TurnitInSubmission? GetStudentSubmission(int id)
+		public TurnitInSubmission? GetStudentSubmission(int index)
 		{
-			var r = GetStudentRow(id);
+			var r = GetStudentRow(index);
 			if (r is null)
 				return null;
 			return TurnitInSubmission.FromRow(r);
 		}
 
-		public DataRow? GetStudentRow(int id)
+		public DataRow? GetStudentRow(int index)
 		{
-			var sql = "select * from TB_Submissions where SUB_Id = " + id;
+			var sql = "select * from TB_Submissions where SUB_Id = " + index;
 			var dt = GetDataTable(sql);
 			return dt.Rows.Count == 1
 				? dt.Rows[0]
@@ -156,7 +157,7 @@ namespace StudentsFetcher.StudentMarking
 
 					if (mark > 10)
 					{
-						var commentTemplate = item["cpnt_comment"].ToString();
+						var commentTemplate = item["cpnt_comment"].ToString() ?? "";
 						if (commentTemplate.Contains(@"{0}"))
 						{
 							var bandMark = mark.ToString().Substring(0, 1);
@@ -188,7 +189,7 @@ namespace StudentsFetcher.StudentMarking
 			var prevSection = "";
 			foreach (DataRow item in dt.Rows)
 			{
-				var thisSection = item["CPNT_Name"].ToString().Trim();
+				var thisSection = item["CPNT_Name"].ToString()?.Trim() ?? "";
 				var sec = item["COMM_Section"].ToString();
 				thisSection += string.IsNullOrEmpty(thisSection)
 					? sec
@@ -201,7 +202,7 @@ namespace StudentsFetcher.StudentMarking
 					prevSection = thisSection;
 				}
 				string lastchar = "";
-				var basecomment = item["COMM_Text"].ToString().Trim();
+				var basecomment = item["COMM_Text"].ToString()?.Trim() ?? "";
 				if (!string.IsNullOrEmpty(basecomment))
 				{
 					lastchar = basecomment.Substring(basecomment.Length - 1);
@@ -218,7 +219,7 @@ namespace StudentsFetcher.StudentMarking
 						lastchar = "";
 					}
 				}
-				var addNote = item["SCOM_AddNote"].ToString().Trim();
+				var addNote = item["SCOM_AddNote"].ToString()?.Trim() ?? "";
 				if (addNote.EndsWith("."))
 					addNote = addNote.Substring(0, addNote.Length - 1);
 				if (basecomment == "")
@@ -293,13 +294,13 @@ namespace StudentsFetcher.StudentMarking
 			var dt = GetDataTable("Select * from TB_Components order by CPNT_Order");
 			foreach (DataRow row in dt.Rows)
 			{
-				var m = new MarkComponent
-				{
-					id = Convert.ToInt32(row["CPNT_Id"]),
-					percent = Convert.ToDouble(row["CPNT_Percent"]),
-					Description = row["CPNT_Comment"].ToString(),
-					Name = row["CPNT_Name"].ToString(),
-				};
+				var m = new MarkComponent 
+				(
+					Convert.ToInt32(row["CPNT_Id"]),
+					Convert.ToDouble(row["CPNT_Percent"]),
+					row["CPNT_Comment"].ToString(),
+					row["CPNT_Name"].ToString()
+				);
 				ret.Marks.Add(m);
 			}
 
@@ -388,7 +389,7 @@ namespace StudentsFetcher.StudentMarking
 			var datat = GetDataTable(sql);
 			foreach (DataRow row in datat.Rows)
 			{
-				ids.Add(row[0].ToString());
+				ids.Add(row[0]?.ToString() ?? "");
 			}
 			return ids.ToArray();
 		}
@@ -582,7 +583,25 @@ namespace StudentsFetcher.StudentMarking
 			return t;
 		}
 
-		public IEnumerable<MarkingAssignment> GetMarkingAssignments()
+		public IEnumerable<MarkingAssignmentSubmissionInformation> GetMissingDelegateMarkingResponses()
+		{
+			var sql =
+				$"""
+				select TB_Markers.*, TB_Submissions.* from 
+				TB_Markers LEFT JOIN TB_Submissions
+				on MRKR_ptr_SubmissionUserID = SUB_UserID
+				where MRKR_Response is null
+				order by TB_Markers.MRKR_MarkerEmail
+				""";
+			var dt = GetDataTable(sql);
+			foreach (DataRow row in dt.Rows)
+			{
+				var thisRow = MarkingAssignmentSubmissionInformation.GetFromDataRow(row, out var markMail, out var markName);
+				yield return thisRow;		
+			}
+		}
+
+		public IEnumerable<DelegatedMarkerAssignments> GetMarkingAssignments()
 		{
 			var sql =
 				$"""
@@ -592,40 +611,32 @@ namespace StudentsFetcher.StudentMarking
 				order by TB_Markers.MRKR_MarkerEmail
 				""";
 			var dt = GetDataTable(sql);
-			var lastReportMail = "";
-			var ret = new List<MarkingAssignment>();
-			MarkingAssignment? current = null;
+			var lastMarkerMail = "";
+			var ret = new List<DelegatedMarkerAssignments>();
+			DelegatedMarkerAssignments? current = null;
 			foreach (DataRow row in dt.Rows)
 			{
-				var markMail = row["MRKR_MarkerEmail"].ToString()!;
-				var markName = row["MRKR_MarkerName"].ToString()!;
-
-				if (current == null || markMail != lastReportMail) 
+				var thisRow = MarkingAssignmentSubmissionInformation.GetFromDataRow(row, out var markMail, out var markName);
+				if (current == null || markMail != lastMarkerMail)
 				{
-					current = new MarkingAssignment(markMail, markName);
+					current = new DelegatedMarkerAssignments(markMail, markName);
 					ret.Add(current);
-					lastReportMail = markMail;
+					lastMarkerMail = markMail;
 				}
-				var studentId = row["MRKR_ptr_SubmissionUserID"] is not DBNull ? row["MRKR_ptr_SubmissionUserID"].ToString()! : "<missing id>";
-				var studentPaper = row["SUB_PaperID"] is not DBNull ? row["SUB_PaperID"].ToString()! : "<missing submission>";
-				var studentPortal = row["SUB_ElpSite"] is not DBNull ? row["SUB_ElpSite"].ToString()! : "<undefined>";
-				var markerRole = row["MRKR_MarkerRole"] is not DBNull ? row["MRKR_MarkerRole"].ToString()! : "<undefined role>";
-				var studentEmail = row["SUB_email"] is not DBNull ? row["SUB_email"].ToString()! : "<undefined email>";
-				current.Add(new MarkingAssignmentDetail(
-					studentId, studentPaper, studentPortal, markerRole, studentEmail
-					));
+				current.Add(thisRow);
 			}
 			return ret;
 		}
 
-		public Dictionary<string, IEnumerable<int>> GetDelegatedMarksByStudentId()
+
+		public Dictionary<string, IEnumerable<int>> GetBareDelegatedMarksByStudentId()
 		{
 			var t = GetDelegatedMarks();
 			var ret = t.GroupBy(x => x.StudentId).ToDictionary(y => y.Key, y => y.Select(z => z.GetMark()));
 			return ret;
 		}
 
-		public IEnumerable<DelegatedMarkResponse> GetDelegatedMarks()
+		public IEnumerable<DelegatedMarkResponseFull> GetDelegatedMarks()
 		{
 			var data = GetDataTable("select * from TB_Markers");
 			foreach (DataRow row in data.Rows)
@@ -644,7 +655,9 @@ namespace StudentsFetcher.StudentMarking
 				{
 					continue;
 				}
-				yield return new DelegatedMarkResponse(markerEmail, studentId, response); 
+				var markerRole = row["MRKR_MarkerRole"]?.ToString() ?? "<undefined>";
+				var markerName = row["MRKR_MarkerName"]?.ToString() ?? "<undefined>";
+				yield return new DelegatedMarkResponseFull(markerName, markerRole, markerEmail, studentId, response); 
 			}
 		}
 
@@ -710,7 +723,7 @@ namespace StudentsFetcher.StudentMarking
 			return sb.ToString();
 		}
 
-		private string CreateExcelMarking(FileInfo fl, MarkingAssignment assItem)
+		private string CreateExcelMarking(FileInfo fl, DelegatedMarkerAssignments assItem)
 		{
 			var dest = GetLocalizedPathFrom($"{assItem.MarkerEmail}.xlsx");
 			if (dest is null)

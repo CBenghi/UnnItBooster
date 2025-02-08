@@ -167,7 +167,7 @@ namespace UnnItBooster.Models
 
 		public string ReportTranscript()
 		{
-			StringBuilder sb = new StringBuilder();
+			var sb = new StringBuilder();
 			if (TranscriptResults is not null)
 			{
 				string yr = "";

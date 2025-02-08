@@ -49,6 +49,10 @@ namespace StudentsFetcher.StudentMarking
 			this.button5 = new System.Windows.Forms.Button();
 			this.label6 = new System.Windows.Forms.Label();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.cmdReportSizeDecrease = new System.Windows.Forms.Button();
+			this.cmdReportSizeIncrease = new System.Windows.Forms.Button();
+			this.cmdWrap = new System.Windows.Forms.Button();
 			this.label8 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.ChkCommNumber = new System.Windows.Forms.CheckBox();
@@ -91,6 +95,7 @@ namespace StudentsFetcher.StudentMarking
 			this.cmdEmailRefreshStudents = new System.Windows.Forms.Button();
 			this.cmdSelectAll = new System.Windows.Forms.Button();
 			this.NudOverlap = new System.Windows.Forms.NumericUpDown();
+			this.chkShowDelegate = new System.Windows.Forms.CheckBox();
 			this.StudImage = new System.Windows.Forms.PictureBox();
 			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			this.tabControl2 = new System.Windows.Forms.TabControl();
@@ -150,7 +155,6 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnMergeReport = new System.Windows.Forms.Button();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.BtnOpenFolder = new System.Windows.Forms.Button();
-			this.chkShowDelegate = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -164,6 +168,7 @@ namespace StudentsFetcher.StudentMarking
 			this.splitContainer2.Panel1.SuspendLayout();
 			this.splitContainer2.Panel2.SuspendLayout();
 			this.splitContainer2.SuspendLayout();
+			this.panel1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -209,11 +214,11 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// txtSearch
 			// 
-			this.txtSearch.Dock = System.Windows.Forms.DockStyle.Top;
+			this.txtSearch.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtSearch.Location = new System.Drawing.Point(0, 13);
 			this.txtSearch.Name = "txtSearch";
-			this.txtSearch.Size = new System.Drawing.Size(304, 29);
+			this.txtSearch.Size = new System.Drawing.Size(216, 29);
 			this.txtSearch.TabIndex = 3;
 			this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
 			// 
@@ -233,11 +238,11 @@ namespace StudentsFetcher.StudentMarking
 			this.txtLibReport.BackColor = System.Drawing.Color.LightYellow;
 			this.txtLibReport.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.txtLibReport.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtLibReport.Location = new System.Drawing.Point(0, 42);
+			this.txtLibReport.Location = new System.Drawing.Point(0, 40);
 			this.txtLibReport.Multiline = true;
 			this.txtLibReport.Name = "txtLibReport";
 			this.txtLibReport.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtLibReport.Size = new System.Drawing.Size(304, 433);
+			this.txtLibReport.Size = new System.Drawing.Size(304, 435);
 			this.txtLibReport.TabIndex = 2;
 			this.txtLibReport.TabStop = false;
 			// 
@@ -412,8 +417,7 @@ namespace StudentsFetcher.StudentMarking
 			// splitContainer2.Panel1
 			// 
 			this.splitContainer2.Panel1.Controls.Add(this.txtLibReport);
-			this.splitContainer2.Panel1.Controls.Add(this.txtSearch);
-			this.splitContainer2.Panel1.Controls.Add(this.label8);
+			this.splitContainer2.Panel1.Controls.Add(this.panel1);
 			this.splitContainer2.Panel1.Controls.Add(this.groupBox2);
 			// 
 			// splitContainer2.Panel2
@@ -424,6 +428,52 @@ namespace StudentsFetcher.StudentMarking
 			this.splitContainer2.SplitterDistance = 304;
 			this.splitContainer2.TabIndex = 0;
 			this.splitContainer2.TabStop = false;
+			// 
+			// panel1
+			// 
+			this.panel1.Controls.Add(this.txtSearch);
+			this.panel1.Controls.Add(this.cmdReportSizeDecrease);
+			this.panel1.Controls.Add(this.cmdReportSizeIncrease);
+			this.panel1.Controls.Add(this.cmdWrap);
+			this.panel1.Controls.Add(this.label8);
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel1.Location = new System.Drawing.Point(0, 0);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(304, 40);
+			this.panel1.TabIndex = 16;
+			// 
+			// cmdReportSizeDecrease
+			// 
+			this.cmdReportSizeDecrease.Dock = System.Windows.Forms.DockStyle.Right;
+			this.cmdReportSizeDecrease.Location = new System.Drawing.Point(216, 13);
+			this.cmdReportSizeDecrease.Name = "cmdReportSizeDecrease";
+			this.cmdReportSizeDecrease.Size = new System.Drawing.Size(24, 27);
+			this.cmdReportSizeDecrease.TabIndex = 17;
+			this.cmdReportSizeDecrease.Text = "-";
+			this.cmdReportSizeDecrease.UseVisualStyleBackColor = true;
+			this.cmdReportSizeDecrease.Click += new System.EventHandler(this.cmdReportSizeDecrease_Click);
+			// 
+			// cmdReportSizeIncrease
+			// 
+			this.cmdReportSizeIncrease.Dock = System.Windows.Forms.DockStyle.Right;
+			this.cmdReportSizeIncrease.Location = new System.Drawing.Point(240, 13);
+			this.cmdReportSizeIncrease.Name = "cmdReportSizeIncrease";
+			this.cmdReportSizeIncrease.Size = new System.Drawing.Size(24, 27);
+			this.cmdReportSizeIncrease.TabIndex = 16;
+			this.cmdReportSizeIncrease.Text = "+";
+			this.cmdReportSizeIncrease.UseVisualStyleBackColor = true;
+			this.cmdReportSizeIncrease.Click += new System.EventHandler(this.cmdReportSizeIncrease_Click);
+			// 
+			// cmdWrap
+			// 
+			this.cmdWrap.Dock = System.Windows.Forms.DockStyle.Right;
+			this.cmdWrap.Location = new System.Drawing.Point(264, 13);
+			this.cmdWrap.Name = "cmdWrap";
+			this.cmdWrap.Size = new System.Drawing.Size(40, 27);
+			this.cmdWrap.TabIndex = 15;
+			this.cmdWrap.Text = "wrap";
+			this.cmdWrap.UseVisualStyleBackColor = true;
+			this.cmdWrap.Click += new System.EventHandler(this.cmdWrap_Click);
 			// 
 			// label8
 			// 
@@ -795,7 +845,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			this.splitContainer3.Panel2.Controls.Add(this.tableLayoutPanel3);
 			this.splitContainer3.Size = new System.Drawing.Size(1083, 539);
-			this.splitContainer3.SplitterDistance = 432;
+			this.splitContainer3.SplitterDistance = 431;
 			this.splitContainer3.TabIndex = 3;
 			// 
 			// splitContainer5
@@ -814,7 +864,7 @@ namespace StudentsFetcher.StudentMarking
 			// splitContainer5.Panel2
 			// 
 			this.splitContainer5.Panel2.Controls.Add(this.StudImage);
-			this.splitContainer5.Size = new System.Drawing.Size(432, 539);
+			this.splitContainer5.Size = new System.Drawing.Size(431, 539);
 			this.splitContainer5.SplitterDistance = 240;
 			this.splitContainer5.SplitterWidth = 3;
 			this.splitContainer5.TabIndex = 14;
@@ -835,7 +885,7 @@ namespace StudentsFetcher.StudentMarking
 			this.lstEmailSendSelection.HideSelection = false;
 			this.lstEmailSendSelection.Location = new System.Drawing.Point(0, 30);
 			this.lstEmailSendSelection.Name = "lstEmailSendSelection";
-			this.lstEmailSendSelection.Size = new System.Drawing.Size(432, 210);
+			this.lstEmailSendSelection.Size = new System.Drawing.Size(431, 210);
 			this.lstEmailSendSelection.TabIndex = 3;
 			this.lstEmailSendSelection.UseCompatibleStateImageBehavior = false;
 			this.lstEmailSendSelection.View = System.Windows.Forms.View.Details;
@@ -875,7 +925,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.99999F));
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.00001F));
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 106F));
 			this.tableLayoutPanel2.Controls.Add(this.cmdEmailRefreshStudents, 0, 0);
 			this.tableLayoutPanel2.Controls.Add(this.cmdSelectAll, 1, 0);
 			this.tableLayoutPanel2.Controls.Add(this.NudOverlap, 2, 0);
@@ -886,7 +936,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
 			this.tableLayoutPanel2.RowCount = 1;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(432, 30);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(431, 30);
 			this.tableLayoutPanel2.TabIndex = 0;
 			// 
 			// cmdEmailRefreshStudents
@@ -895,7 +945,7 @@ namespace StudentsFetcher.StudentMarking
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmdEmailRefreshStudents.Location = new System.Drawing.Point(3, 3);
 			this.cmdEmailRefreshStudents.Name = "cmdEmailRefreshStudents";
-			this.cmdEmailRefreshStudents.Size = new System.Drawing.Size(109, 23);
+			this.cmdEmailRefreshStudents.Size = new System.Drawing.Size(106, 23);
 			this.cmdEmailRefreshStudents.TabIndex = 2;
 			this.cmdEmailRefreshStudents.Text = "Refresh";
 			this.cmdEmailRefreshStudents.UseVisualStyleBackColor = true;
@@ -905,9 +955,9 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			this.cmdSelectAll.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdSelectAll.Location = new System.Drawing.Point(118, 3);
+			this.cmdSelectAll.Location = new System.Drawing.Point(115, 3);
 			this.cmdSelectAll.Name = "cmdSelectAll";
-			this.cmdSelectAll.Size = new System.Drawing.Size(110, 23);
+			this.cmdSelectAll.Size = new System.Drawing.Size(106, 23);
 			this.cmdSelectAll.TabIndex = 4;
 			this.cmdSelectAll.Text = "All";
 			this.cmdSelectAll.UseVisualStyleBackColor = true;
@@ -916,7 +966,7 @@ namespace StudentsFetcher.StudentMarking
 			// NudOverlap
 			// 
 			this.NudOverlap.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.NudOverlap.Location = new System.Drawing.Point(251, 5);
+			this.NudOverlap.Location = new System.Drawing.Point(244, 5);
 			this.NudOverlap.Name = "NudOverlap";
 			this.NudOverlap.Size = new System.Drawing.Size(60, 20);
 			this.NudOverlap.TabIndex = 5;
@@ -927,13 +977,24 @@ namespace StudentsFetcher.StudentMarking
             0,
             0});
 			// 
+			// chkShowDelegate
+			// 
+			this.chkShowDelegate.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.chkShowDelegate.AutoSize = true;
+			this.chkShowDelegate.Location = new System.Drawing.Point(343, 6);
+			this.chkShowDelegate.Name = "chkShowDelegate";
+			this.chkShowDelegate.Size = new System.Drawing.Size(69, 17);
+			this.chkShowDelegate.TabIndex = 6;
+			this.chkShowDelegate.Text = "Delegate";
+			this.chkShowDelegate.UseVisualStyleBackColor = true;
+			// 
 			// StudImage
 			// 
 			this.StudImage.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.StudImage.Location = new System.Drawing.Point(0, 0);
 			this.StudImage.Margin = new System.Windows.Forms.Padding(2);
 			this.StudImage.Name = "StudImage";
-			this.StudImage.Size = new System.Drawing.Size(432, 296);
+			this.StudImage.Size = new System.Drawing.Size(431, 296);
 			this.StudImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.StudImage.TabIndex = 13;
 			this.StudImage.TabStop = false;
@@ -958,7 +1019,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(647, 539);
+			this.tableLayoutPanel3.Size = new System.Drawing.Size(648, 539);
 			this.tableLayoutPanel3.TabIndex = 8;
 			// 
 			// tabControl2
@@ -973,7 +1034,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tabControl2.Margin = new System.Windows.Forms.Padding(2);
 			this.tabControl2.Name = "tabControl2";
 			this.tabControl2.SelectedIndex = 0;
-			this.tabControl2.Size = new System.Drawing.Size(643, 460);
+			this.tabControl2.Size = new System.Drawing.Size(644, 460);
 			this.tabControl2.TabIndex = 7;
 			// 
 			// tabPage4
@@ -985,7 +1046,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage4.Margin = new System.Windows.Forms.Padding(2);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(2);
-			this.tabPage4.Size = new System.Drawing.Size(635, 434);
+			this.tabPage4.Size = new System.Drawing.Size(636, 434);
 			this.tabPage4.TabIndex = 0;
 			this.tabPage4.Text = "Template";
 			this.tabPage4.UseVisualStyleBackColor = true;
@@ -1026,7 +1087,7 @@ namespace StudentsFetcher.StudentMarking
 			this.txtEmailBody.MaxLength = 0;
 			this.txtEmailBody.Name = "txtEmailBody";
 			this.txtEmailBody.OriginalText = "";
-			this.txtEmailBody.Size = new System.Drawing.Size(628, 389);
+			this.txtEmailBody.Size = new System.Drawing.Size(629, 389);
 			this.txtEmailBody.SpellCheck = true;
 			this.txtEmailBody.TabIndex = 6;
 			this.txtEmailBody.TabStop = false;
@@ -1041,7 +1102,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage5.Margin = new System.Windows.Forms.Padding(2);
 			this.tabPage5.Name = "tabPage5";
 			this.tabPage5.Padding = new System.Windows.Forms.Padding(2);
-			this.tabPage5.Size = new System.Drawing.Size(466, 434);
+			this.tabPage5.Size = new System.Drawing.Size(636, 434);
 			this.tabPage5.TabIndex = 1;
 			this.tabPage5.Text = "Output";
 			this.tabPage5.UseVisualStyleBackColor = true;
@@ -1056,7 +1117,7 @@ namespace StudentsFetcher.StudentMarking
 			this.txtEmailPreview.Multiline = true;
 			this.txtEmailPreview.Name = "txtEmailPreview";
 			this.txtEmailPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtEmailPreview.Size = new System.Drawing.Size(460, 418);
+			this.txtEmailPreview.Size = new System.Drawing.Size(629, 418);
 			this.txtEmailPreview.TabIndex = 7;
 			this.txtEmailPreview.TabStop = false;
 			this.txtEmailPreview.Text = "Dear {SUB_FirstName}, \r\nThe marking and moderation process for BE1178 has been co" +
@@ -1068,7 +1129,7 @@ namespace StudentsFetcher.StudentMarking
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.button3.Location = new System.Drawing.Point(144, 52);
 			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(500, 20);
+			this.button3.Size = new System.Drawing.Size(501, 20);
 			this.button3.TabIndex = 0;
 			this.button3.Text = "Send";
 			this.button3.UseVisualStyleBackColor = true;
@@ -1090,7 +1151,7 @@ namespace StudentsFetcher.StudentMarking
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtEmailSubject.Location = new System.Drawing.Point(144, 3);
 			this.txtEmailSubject.Name = "txtEmailSubject";
-			this.txtEmailSubject.Size = new System.Drawing.Size(500, 20);
+			this.txtEmailSubject.Size = new System.Drawing.Size(501, 20);
 			this.txtEmailSubject.TabIndex = 3;
 			// 
 			// label10
@@ -1130,7 +1191,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tabPage3.Margin = new System.Windows.Forms.Padding(2);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(2);
-			this.tabPage3.Size = new System.Drawing.Size(809, 545);
+			this.tabPage3.Size = new System.Drawing.Size(1089, 545);
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "Tools";
 			this.tabPage3.UseVisualStyleBackColor = true;
@@ -1642,17 +1703,6 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnOpenFolder.UseVisualStyleBackColor = true;
 			this.BtnOpenFolder.Click += new System.EventHandler(this.BtnOpenFolder_Click);
 			// 
-			// chkShowDelegate
-			// 
-			this.chkShowDelegate.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.chkShowDelegate.AutoSize = true;
-			this.chkShowDelegate.Location = new System.Drawing.Point(347, 6);
-			this.chkShowDelegate.Name = "chkShowDelegate";
-			this.chkShowDelegate.Size = new System.Drawing.Size(69, 17);
-			this.chkShowDelegate.TabIndex = 6;
-			this.chkShowDelegate.Text = "Delegate";
-			this.chkShowDelegate.UseVisualStyleBackColor = true;
-			// 
 			// FrmMarkingMachine
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1679,6 +1729,8 @@ namespace StudentsFetcher.StudentMarking
 			this.splitContainer2.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
 			this.splitContainer2.ResumeLayout(false);
+			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
@@ -1849,6 +1901,10 @@ namespace StudentsFetcher.StudentMarking
 		private TextBox txtElpCode;
 		private Label label13;
 		private CheckBox chkShowDelegate;
+		private Panel panel1;
+		private Button cmdWrap;
+		private Button cmdReportSizeDecrease;
+		private Button cmdReportSizeIncrease;
 	}
 }
 

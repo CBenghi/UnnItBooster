@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using MathNet.Numerics.Statistics;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -8,18 +10,22 @@ namespace UnnFunctions.Models
 	[DebuggerDisplay("{Code} Credits:{Credits} {ActualMark} {AgreedMark}")]
 	public class ModuleResult
 	{
-		public string Title { get; set; } 
-		public string Code { get; set; }
-		public string Year { get; set; }
-		public string Extra { get; set; }
-		public string Level { get; set; }
-		public string Credits { get; set; }
-		public string ActualResult { get; set; }
-		public string ActualMark { get; set; }
-		public string AgreedResult { get; set; }
-		public string AgreedMark { get; set; }
-		public string Result { get; set; }
+		public string Title { get; set; } = "";
+		public string Code { get; set; } = "";
+		public string Year { get; set; } = "";
+		public string Extra { get; set; } = "";
+		public string Level { get; set; } = "";
+		public string Credits { get; set; } = "";
+		public string ActualResult { get; set; } = "";
+		public string ActualMark { get; set; } = "";
+		public string AgreedResult { get; set; } = "";
+		public string AgreedMark { get; set; } = "";
+		public string Result { get; set; } = "";
 
+		/// <summary>
+		/// This prioritises the agreed mark over the actual mark
+		/// </summary>
+		/// <returns></returns>
 		public string GetMarkString()
 		{
 			// prioritising agreed result
@@ -150,6 +156,12 @@ namespace UnnFunctions.Models
 				Result
 			}.Distinct().ToArray();
 			return string.Join(" / ", codes);
+		}
+
+		public static string Describe(IEnumerable<int> delegateMarks)
+		{
+			DescriptiveStatistics series = new DescriptiveStatistics(delegateMarks.Select(x => (double)x));
+			return $"Mean: {series.Mean}, Minimum: {series.Minimum}, Maximum: {series.Maximum}, StDev: {series.StandardDeviation:0.##}, Range: {series.Maximum - series.Minimum}";
 		}
 	}
 }

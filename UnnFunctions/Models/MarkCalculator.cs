@@ -30,12 +30,12 @@ namespace StudentsFetcher.StudentMarking
 			{
 				foreach (var mc in Marks)
 				{
-					sql = "select MARK_Value from TB_Marks where cast (mark_ptr_submission as int) = cast(" + shortProgressiveId + " as int) and MARK_ptr_Component = " + mc.id;
+					sql = "select MARK_Value from TB_Marks where cast (mark_ptr_submission as int) = cast(" + shortProgressiveId + " as int) and MARK_ptr_Component = " + mc.Id;
 					int mark = cfg.ExecuteScalar(sql);
 					if (mark != -1)
 					{
-						totMark += mark * mc.percent;
-						totPerc += mc.percent;
+						totMark += mark * mc.Percent;
+						totPerc += mc.Percent;
 					}
 				}
 
@@ -54,9 +54,17 @@ namespace StudentsFetcher.StudentMarking
 
 	public class MarkComponent
 	{
-		public int id;
-		public double percent;
-		public string Name;
-		public string Description;
+		public int Id;
+		public double Percent;
+		public string Name = "";
+		public string Description = "";
+
+		public MarkComponent(int id, double percent, string? name, string? description)
+		{
+			Id = id;
+			Percent = percent;
+			Name = name ?? "<unnamed>";
+			Description = description ?? "<empty>";
+		}
 	}
 }

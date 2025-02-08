@@ -55,7 +55,7 @@ internal class ExcelPersistence
         foreach (var comp in comps.Marks)
         {
 			ICell cell = row.CreateCell(iCol++);
-			cell.SetCellValue($"{comp.id} - {comp.Name}");
+			cell.SetCellValue($"{comp.Id} - {comp.Name}");
 		}
 		var TotalMarkCol = iCol;
 
@@ -68,7 +68,7 @@ internal class ExcelPersistence
 		foreach (var comp in comps.Marks)
 		{
 			ICell cell = row.CreateCell(iCol++);
-			cell.SetCellValue(comp.percent / 100.0);
+			cell.SetCellValue(comp.Percent / 100.0);
 			cell.CellStyle = percentageStyle;
 		}
 
