@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml;
 using UnnItBooster.Models;
 
 namespace UnnItBooster.ModelConversions;
@@ -101,6 +102,10 @@ public partial class TurnItIn
 		ExecuteSql(c, TB_MarkersSql);
 		EnsureField(c, "TB_Submissions", "SUB_ElpSite", "TEXT default NULL", "NULL");
 		EnsureField(c, "TB_Markers", "MRKR_MarkerRole", "TEXT default NULL", "NULL");
+
+		// ensure indices
+		var sql = "CREATE INDEX IF NOT EXISTS sub_userid on TB_Submissions(SUB_UserID)";
+		ExecuteSql(c, sql);
 	}
 
 	public static void UpgradeDatabase(string fullname)

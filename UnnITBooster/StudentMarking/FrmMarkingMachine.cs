@@ -19,13 +19,40 @@ using UnnItBooster.StudentMarking;
 using UnnFunctions.Models;
 using MathNet.Numerics.Statistics;
 using UnnFunctions.Models.DelegatedMarks;
+using MathNet.Numerics.Distributions;
+using MathNet.Numerics;
+using System.Runtime.InteropServices;
+
 
 namespace StudentsFetcher.StudentMarking;
 
 [AmmFormAttributes("Marking machine", 1)]
 public partial class FrmMarkingMachine : Form
 {
-    private MarkingConfig _config;
+
+
+	private const int EM_SETTABSTOPS = 0x00CB;
+
+	[DllImport("User32.dll", CharSet = CharSet.Auto)]
+	public static extern IntPtr SendMessage(IntPtr h, int msg, int wParam, int[] lParam);
+
+	public static void SetTabWidth(TextBox textbox, int tabWidth)
+	{
+		//Graphics graphics = textbox.CreateGraphics();
+		//var characterWidth = (int)graphics.MeasureString("M", textbox.Font).Width;
+		//SendMessage
+		//	(textbox.Handle
+		//	, EM_SETTABSTOPS
+		//	, 1
+		//	, new int[] { tabWidth * characterWidth }
+		//	);
+
+		SendMessage(textbox.Handle, EM_SETTABSTOPS, 1, [tabWidth * 4]);
+	}
+
+
+
+	private MarkingConfig _config;
     readonly StudentsRepository studentRepository;
 
     public FrmMarkingMachine()
@@ -54,10 +81,10 @@ public partial class FrmMarkingMachine : Form
             var txt = ReportTranscript(out var student, false);
             if (student is not null)
             {
-                txt += student.ReportTranscriptClassificationChart();
+				txt += Student.ReportTranscriptClassificationChart(student.TranscriptResults);
 
                 var delegMarks = _config.GetDelegatedMarks().Where(x => x.StudentId == student.NumericStudentId).ToList();
-                txt += DelegatedMarkResponse.Report(delegMarks, true);
+                txt += DelegatedMarkResponse.Report(delegMarks, true, GetComponentShortNames());
                 var missing = _config.GetMissingDelegateMarkingResponses().Where(x => x.StudentId == student.NumericStudentId).ToArray();
 
                 if (missing.Any())
@@ -239,7 +266,9 @@ public partial class FrmMarkingMachine : Form
         }
     }
 
-    private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+    Regex customSortMatcher = new Regex(@"sort\s+(?<mode>turnitin|marker)\s*(?<param>.*)$", RegexOptions.IgnoreCase);
+
+	private void txtSearch_KeyDown(object sender, KeyEventArgs e)
     {
         txtStudentId.Visible = true;
 		if (e.KeyCode == Keys.Enter)
@@ -257,6 +286,7 @@ public partial class FrmMarkingMachine : Form
 			var importMarksMatch = Regex.Match(txtSearch.Text, @"^Import ?Marker[s]?$", RegexOptions.IgnoreCase);
 			var markingExcelsMatch = Regex.Match(txtSearch.Text, @"^Create ?MarkingFiles(\s+(?<filter>.+?))? +(?<excelFileName>.*)$", RegexOptions.IgnoreCase);
 			var moduleCreditsMatch = Regex.Match(txtSearch.Text, @"^ModuleCredits (?<credits>\d+)$", RegexOptions.IgnoreCase);
+			var SetTabMatch = Regex.Match(txtSearch.Text, @"^SetTab (?<size>\d+)$", RegexOptions.IgnoreCase);
             if (addComponentMatch.Success)
             {
                 AddComponent(addComponentMatch);
@@ -267,13 +297,24 @@ public partial class FrmMarkingMachine : Form
                 if (int.TryParse(moduleCreditsMatch.Groups["credits"].Value, out var moduleCredits))
                 {
                     AssumedModuleCredits = moduleCredits;
-                    txtReport.Text = $"Module credits set to {AssumedModuleCredits}";
+					txtLibReport.Text = $"Module credits set to {AssumedModuleCredits}";
 				}
                 else
-                    txtReport.Text = $"Errror parsing module credits value";
+					txtLibReport.Text = $"Errror parsing module credits value";
 
             }
-            else if (importMarksMatch.Success)
+			else if (SetTabMatch.Success)
+			{
+				if (int.TryParse(SetTabMatch.Groups["size"].Value, out var tbSize))
+				{
+                    SetTabWidth(txtLibReport, tbSize);
+					txtLibReport.Text += $"tab size set to {tbSize}";
+				}
+				else
+					txtLibReport.Text += $"Errror parsing tab size value";
+
+			}
+			else if (importMarksMatch.Success)
             {
                 var sb = new StringBuilder();
                 var readingReport = _config.GetDelegatedMarksFromExcel(out var marks); // from import
@@ -292,9 +333,24 @@ public partial class FrmMarkingMachine : Form
             {
                 txtLibReport.Text = CreateExcelMarkers(markingExcelsMatch);
             }
+			else if (customSortMatcher.IsMatch(txtSearch.Text))
+			{
+                var m = customSortMatcher.Match(txtSearch.Text);
+                var mode = m.Groups["mode"].Value.ToLower();
+                var param = m.Groups["param"].Value;
+                switch (mode)
+                {
+                    case "turnitin":
+                        SetCustomOrder(GetTurnitinOrder(param));
+						break;
+					case "marker":
+						SetCustomOrder(GetDelegateMarkerPapers(param));
+						break;
+				}
+			}
 			else if (reportMarkerMatch.Success)
 			{
-                var option = reportMarkerMatch.Groups["options"].Value;
+                var option = reportMarkerMatch.Groups["options"].Value.ToLower();
                 switch (option)
                 {
                     case "-missingexcel":
@@ -389,11 +445,6 @@ public partial class FrmMarkingMachine : Form
             {
 				GetMarks(txtSearch.Text);
 			}
-			else if (txtSearch.Text.Equals("turnitinsort", StringComparison.OrdinalIgnoreCase))
-			{
-				txtStudentId.Visible = false;
-				GetTurnitinOrder();
-			}
 			else if (
                 txtSearch.Text.Equals("stat", StringComparison.OrdinalIgnoreCase)
                 || txtSearch.Text.Equals("stats", StringComparison.OrdinalIgnoreCase)
@@ -429,9 +480,13 @@ public partial class FrmMarkingMachine : Form
                         otherwise produces all available marks
                         use 'marks with emails' to add the email address to the output
 
-                    turnitinsort
-                        produces the order of entries like turnitin would
-                        Entries are then browsed +/- buttons as long as the text `turnitinsort` remains in the command line
+                    sort <mode:turnitin|marker> [param]
+                        produces a custom order of submission for ease of browsing
+                        Entries are navigated with +/- buttons as long as the search text remains in the command line
+                        The list of IDs is visible in the report of the Tools TAB
+                        e.g.
+                        - sort turnitin ELPSITENAME
+                        - sort marker claudio.benghi
 
                     Remove <commentId>
                        removes the comment from the current student by the ID of the comment
@@ -491,6 +546,10 @@ public partial class FrmMarkingMachine : Form
                         Defines the number of credits to adopt in the simulation
                         Default value is 60
 
+                    SetTab <int> 
+                        Sets the width of the tab character in the Report textBox
+                        e.g.: SetTab 8
+
                     <normal search>
                         separate text from section/area with `;`
                         ending the first term with a + searches in the pesonal text as well
@@ -512,6 +571,51 @@ public partial class FrmMarkingMachine : Form
             e.SuppressKeyPress = true;
         }
     }
+
+	private string GetDelegateMarkerPapers(string marker)
+	{
+        if (string.IsNullOrWhiteSpace(marker))
+        {
+            return string.Empty;
+        }
+        var sql = $"""
+                  SELECT SUB_ID from TB_Submissions INNER JOIN TB_Markers
+                  ON MRKR_ptr_SubmissionUserID = SUB_UserID
+                  WHERE MRKR_MarkerEmail like '%{marker}%'
+                  OR MRKR_MarkerName like '%{marker}%'
+                  Order by SUB_ID DESC
+                  """;
+		StringBuilder stringBuilder = new StringBuilder();
+		var res = _config.GetDataTable(sql);
+		foreach (DataRow row in res.Rows)
+		{
+			stringBuilder.AppendLine(row["SUB_ID"].ToString());
+		}
+		return stringBuilder.ToString();
+	}
+
+	private void SetCustomOrder(string orderedIds)
+	{
+        var list = GetSimpleIds(orderedIds).ToList();
+        if (!list.Any())
+        {
+            txtLibReport.Text = "No ids found for requested order";
+            return;
+        }
+        var index = GetStudentIndex();
+        if (!list.Contains(index))
+        {
+            // move to the first item
+            txtStudentId.Text = list.First().ToString();
+            UpdateStudentUi();
+        }
+		txtToolReport.Text = orderedIds;
+		txtStudentId.Visible = false;
+        txtLibReport.Text += "\r\n";
+        txtLibReport.Text += "==========================================================\r\n";
+        txtLibReport.Text += "Sort order set. See the tool tab report to check the list.\r\n";
+        txtLibReport.Text += $"{list.Count} items in browsing selection.\r\n";
+	}
 
 	private string ReportMarkersMarks(IEnumerable<(string StudentId, string MarkerEmail, string MarkerRole)> enumerable, IEnumerable<DelegatedMarkResponse> marksToEvaluate)
 	{
@@ -696,7 +800,7 @@ public partial class FrmMarkingMachine : Form
             return;
         StringBuilder errBuilder = new StringBuilder(); 
 		StringBuilder sb = new StringBuilder();
-        var ids = GetSimpleIds().ToList();
+        var ids = GetSimpleIds(txtLibReport.Text).ToList();
         errBuilder.AppendLine($"{ids.Count} to process.");
         errBuilder.AppendLine();
 
@@ -746,9 +850,9 @@ public partial class FrmMarkingMachine : Form
         return true;
 	}
 
-	private IEnumerable<int> GetSimpleIds()
+	private IEnumerable<int> GetSimpleIds(string inputText)
 	{
-        var lines = txtLibReport.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+        var lines = inputText.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
         foreach (var line in lines)
         {
             if (!string.IsNullOrEmpty(line) && int.TryParse(line, out var simpleId))
@@ -758,17 +862,20 @@ public partial class FrmMarkingMachine : Form
         }
 	}
 
-	private void GetTurnitinOrder()
+	private string GetTurnitinOrder(string elpSite)
 	{
+        var sql = "SELECT SUB_ID from TB_Submissions ";
+        if (!string.IsNullOrWhiteSpace(elpSite))
+            sql += $"Where SUB_ElpSite like '%{elpSite}%' ";		
+        sql += "Order by SUB_ID DESC";
+
         StringBuilder stringBuilder = new StringBuilder();
-        var res = _config.GetDataTable("SELECT SUB_ID, SUB_LastName, SUB_Overlap from TB_Submissions order by cast (SUB_Overlap as INT) , SUB_LastName");
-        //foreach (DataRow row in res.Rows)
-        //{
-        //    stringBuilder.AppendLine(row[0].ToString());
-        //}
-        for (int i = 51; i> 0;i--)
-			stringBuilder.AppendLine(i.ToString());
-		txtLibReport.Text = stringBuilder.ToString();
+		var res = _config.GetDataTable(sql);
+        foreach (DataRow row in res.Rows)
+        {
+            stringBuilder.AppendLine(row["SUB_ID"].ToString());
+        }
+		return stringBuilder.ToString();
 	}
 
 	private void SetLevel(Match levelMatch)
@@ -1284,9 +1391,17 @@ public partial class FrmMarkingMachine : Form
         return iComponent;
     }
 
+    private IEnumerable<string> GetComponentShortNames()
+    {
+		foreach (var comp in flComponents.Controls.OfType<ucComponentMark>())
+        {
+            yield return comp.ComponentName;
+        }
+	}
+
     private void CmdSaveMarks_Click(object sender, EventArgs e)
     {
-        var stud = GetStudentIndex();
+		var stud = GetStudentIndex();
 		if (stud == -1)
         {
             MessageBox.Show("Need student");
@@ -1576,7 +1691,7 @@ public partial class FrmMarkingMachine : Form
         {
             quartileSize.Add(quartiles[i] - quartiles[i-1]);
         }
-		txtReport.Text = 
+		txtToolReport.Text = 
             $"Mean = {MathNet.Numerics.Statistics.Statistics.Mean(collectionForStats)},\r\n" +
             $"StandardDeviation = {MathNet.Numerics.Statistics.Statistics.StandardDeviation(collectionForStats)},\r\n" +
             $"Skewness = {MathNet.Numerics.Statistics.Statistics.Skewness(collectionForStats)},\r\n" +
@@ -1616,11 +1731,11 @@ public partial class FrmMarkingMachine : Form
     private void MoveStudent(int Delta)
     {
 		var iSN = GetStudentIndex();
-		if (txtSearch.Text.Equals("turnitinsort", StringComparison.OrdinalIgnoreCase))
+		if (customSortMatcher.IsMatch(txtSearch.Text))
         {
-            var arr = txtLibReport.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.None).ToList();
+            var arr = txtToolReport.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
             var idx = arr.IndexOf(iSN.ToString());
-            if (idx == -1)
+            if (idx == -1) // current not found in list
                 return;
             idx += Delta;
             if (idx < 0 || idx >= arr.Count)
@@ -1740,7 +1855,7 @@ public partial class FrmMarkingMachine : Form
             return;
         var repository = new StudentsRepository(Settings.Default.StudentsFolder);
         var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f, repository).ToList();
-        txtReport.Text = TurnItIn.UpdateDatabase(txtExcelFileName.Text, submissions, txtElpCode.Text);
+        txtToolReport.Text = TurnItIn.UpdateDatabase(txtExcelFileName.Text, submissions, txtElpCode.Text);
         Reload();
     }
 
@@ -1808,7 +1923,7 @@ public partial class FrmMarkingMachine : Form
         }
 
         sb.AppendLine($"shortened {shortened} file names;");
-        txtReport.Text = sb.ToString();
+        txtToolReport.Text = sb.ToString();
     }
 
     private void Button10_Click(object sender, EventArgs e)
@@ -1817,11 +1932,11 @@ public partial class FrmMarkingMachine : Form
         var folder = new DirectoryInfo(folderName);
         var manifests = folder.GetFiles("manifest.txt", SearchOption.AllDirectories);
 
-        txtReport.Text = "";
+        txtToolReport.Text = "";
         foreach (var manifest in manifests)
         {
             var files = TurnItIn.GetFilesFromManifest(manifest).ToList();
-            txtReport.Text += _config.UpdateDatabase(files);
+            txtToolReport.Text += _config.UpdateDatabase(files);
         }
     }
 
@@ -1941,7 +2056,7 @@ public partial class FrmMarkingMachine : Form
             return;
 		}
         string excelName = TxtExcelComponentSource.Text;
-        txtReport.Text = ExcelPersistence.ReadComponents(_config, excelName);
+        txtToolReport.Text = ExcelPersistence.ReadComponents(_config, excelName);
 	}
 
 	private void txtTextOrPointer_OnCtrlTab()
@@ -2057,5 +2172,33 @@ public partial class FrmMarkingMachine : Form
 	private void cmdReportSizeDecrease_Click(object sender, EventArgs e)
 	{
 		ScaleReportText(1.0f/1.1f);
+	}
+
+	private void cmdSetFromDelegatedMarks_Click(object sender, EventArgs e)
+	{
+        var submission = GetCurrentSubmission();
+        if (submission is null)
+        {
+            txtToolReport.Text = "No current student submission.";
+			return;
+		}
+
+        var thisStudentDelegMarks = _config.GetDelegatedMarks().Where(x => x.StudentId == submission.NumericUserId).ToList();
+        if (!thisStudentDelegMarks.Any())
+        {
+            txtToolReport.Text = "No delegate marks found.";
+            return;
+        }
+
+        var componentMarks = _config.GetByComponent(thisStudentDelegMarks);
+		var stud = GetStudentIndex();
+		var sql = $"delete from TB_Marks where MARK_ptr_Submission = {stud}";
+		_config.Execute(sql);
+		for (int i = 0; i < componentMarks.Count; i++)
+		{
+            var averageOfComponent = Convert.ToInt32(componentMarks[i].Average().Round(0));
+			_config.SetStudentComponentMark(GetStudentIndex(), i+1, averageOfComponent, false);			
+		}
+		UpdateStudentUi();
 	}
 }

@@ -128,6 +128,8 @@ namespace StudentsFetcher.StudentMarking
 			sb.AppendLine($"- email: {tin.Email} (#{id})");
 			sb.AppendLine($"- Submission ID: {tin.PaperId}");
 			sb.AppendLine($"- Submission Title: {tin.Title}");
+			if (!string.IsNullOrWhiteSpace(tin.ElpSite))
+				sb.AppendLine($"- Elp: {tin.ElpSite}");
 			sb.AppendLine();
 			GetStudentFeedback(id, sendModerationNotice, sb, tin, includeCommentNumber);
 			var s = sb.ToString();
@@ -365,6 +367,8 @@ namespace StudentsFetcher.StudentMarking
 				: null;
 		}
 
+		/// <param name="markvalue">expressed in percentage 0 to 100</param>
+		/// <param name="deleteFirst">If you have already deleted all components in one go, setting false can save time</param>
 		public void SetStudentComponentMark(int iStudentNumber, int iComponent, int markvalue, bool deleteFirst)
 		{
 			if (deleteFirst)
@@ -750,7 +754,26 @@ namespace StudentsFetcher.StudentMarking
 			}
 		}
 
-		
+		/// <summary>
+		/// Gets the list of marks for each of the components (e.g. for 4 components the first list will have 4 entries, each with however many delegateMarks have been passed)
+		/// </summary>
+		/// <param name="delegateMarks"></param>
+		public List<List<double>> GetByComponent(List<DelegatedMarkResponseFull> delegateMarks)
+		{
+			var componentValues = new List<List<double>>();
+			foreach (var item in delegateMarks)
+			{
+				for (int i = 0; i < item.Response.Components.Count; i++)
+				{
+					if (componentValues.Count <= i)
+						componentValues.Add(new List<double>());
+					DelegatedMarkResponse.ComponentMark? component = item.Response.Components[i];
+					var thisCompAsPercentage = 100 * (double)component.Mark / component.OutOf ;
+					componentValues[i].Add(thisCompAsPercentage);
+				}
+			}
+			return componentValues;
+		}
 
 		public string BareName => Path.GetFileNameWithoutExtension(DbName);
 	}

@@ -50,15 +50,18 @@ namespace StudentsFetcher.StudentMarking
 			this.label6 = new System.Windows.Forms.Label();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.cmdReportSizeDecrease = new System.Windows.Forms.Button();
-			this.cmdReportSizeIncrease = new System.Windows.Forms.Button();
 			this.cmdWrap = new System.Windows.Forms.Button();
 			this.label8 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.ChkCommNumber = new System.Windows.Forms.CheckBox();
-			this.ChkAutoStat = new System.Windows.Forms.CheckBox();
-			this.button2 = new System.Windows.Forms.Button();
+			this.cmdSetFromDelegatedMarks = new System.Windows.Forms.Button();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.cmbDocuments = new System.Windows.Forms.ComboBox();
+			this.button2 = new System.Windows.Forms.Button();
+			this.ChkCommNumber = new System.Windows.Forms.CheckBox();
+			this.cmdReportSizeDecrease = new System.Windows.Forms.Button();
+			this.cmdReportSizeIncrease = new System.Windows.Forms.Button();
+			this.ChkAutoStat = new System.Windows.Forms.CheckBox();
+			this.BtnShowStudentStat = new System.Windows.Forms.Button();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
@@ -72,7 +75,6 @@ namespace StudentsFetcher.StudentMarking
 			this.label3 = new System.Windows.Forms.Label();
 			this.button11 = new System.Windows.Forms.Button();
 			this.BtnEditLast = new System.Windows.Forms.Button();
-			this.BtnShowStudentStat = new System.Windows.Forms.Button();
 			this.label7 = new System.Windows.Forms.Label();
 			this.cmdSelectFile = new System.Windows.Forms.Button();
 			this.txtExcelFileName = new System.Windows.Forms.TextBox();
@@ -124,7 +126,7 @@ namespace StudentsFetcher.StudentMarking
 			this.button4 = new System.Windows.Forms.Button();
 			this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.txtReport = new System.Windows.Forms.TextBox();
+			this.txtToolReport = new System.Windows.Forms.TextBox();
 			this.tabControl3 = new System.Windows.Forms.TabControl();
 			this.tabPage6 = new System.Windows.Forms.TabPage();
 			this.txtElpCode = new System.Windows.Forms.TextBox();
@@ -170,6 +172,7 @@ namespace StudentsFetcher.StudentMarking
 			this.splitContainer2.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
+			this.groupBox4.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
@@ -218,7 +221,7 @@ namespace StudentsFetcher.StudentMarking
 			this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtSearch.Location = new System.Drawing.Point(0, 13);
 			this.txtSearch.Name = "txtSearch";
-			this.txtSearch.Size = new System.Drawing.Size(216, 29);
+			this.txtSearch.Size = new System.Drawing.Size(304, 29);
 			this.txtSearch.TabIndex = 3;
 			this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
 			// 
@@ -242,7 +245,7 @@ namespace StudentsFetcher.StudentMarking
 			this.txtLibReport.Multiline = true;
 			this.txtLibReport.Name = "txtLibReport";
 			this.txtLibReport.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtLibReport.Size = new System.Drawing.Size(304, 435);
+			this.txtLibReport.Size = new System.Drawing.Size(304, 379);
 			this.txtLibReport.TabIndex = 2;
 			this.txtLibReport.TabStop = false;
 			// 
@@ -432,9 +435,6 @@ namespace StudentsFetcher.StudentMarking
 			// panel1
 			// 
 			this.panel1.Controls.Add(this.txtSearch);
-			this.panel1.Controls.Add(this.cmdReportSizeDecrease);
-			this.panel1.Controls.Add(this.cmdReportSizeIncrease);
-			this.panel1.Controls.Add(this.cmdWrap);
 			this.panel1.Controls.Add(this.label8);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -442,34 +442,12 @@ namespace StudentsFetcher.StudentMarking
 			this.panel1.Size = new System.Drawing.Size(304, 40);
 			this.panel1.TabIndex = 16;
 			// 
-			// cmdReportSizeDecrease
-			// 
-			this.cmdReportSizeDecrease.Dock = System.Windows.Forms.DockStyle.Right;
-			this.cmdReportSizeDecrease.Location = new System.Drawing.Point(216, 13);
-			this.cmdReportSizeDecrease.Name = "cmdReportSizeDecrease";
-			this.cmdReportSizeDecrease.Size = new System.Drawing.Size(24, 27);
-			this.cmdReportSizeDecrease.TabIndex = 17;
-			this.cmdReportSizeDecrease.Text = "-";
-			this.cmdReportSizeDecrease.UseVisualStyleBackColor = true;
-			this.cmdReportSizeDecrease.Click += new System.EventHandler(this.cmdReportSizeDecrease_Click);
-			// 
-			// cmdReportSizeIncrease
-			// 
-			this.cmdReportSizeIncrease.Dock = System.Windows.Forms.DockStyle.Right;
-			this.cmdReportSizeIncrease.Location = new System.Drawing.Point(240, 13);
-			this.cmdReportSizeIncrease.Name = "cmdReportSizeIncrease";
-			this.cmdReportSizeIncrease.Size = new System.Drawing.Size(24, 27);
-			this.cmdReportSizeIncrease.TabIndex = 16;
-			this.cmdReportSizeIncrease.Text = "+";
-			this.cmdReportSizeIncrease.UseVisualStyleBackColor = true;
-			this.cmdReportSizeIncrease.Click += new System.EventHandler(this.cmdReportSizeIncrease_Click);
-			// 
 			// cmdWrap
 			// 
-			this.cmdWrap.Dock = System.Windows.Forms.DockStyle.Right;
-			this.cmdWrap.Location = new System.Drawing.Point(264, 13);
+			this.cmdWrap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdWrap.Location = new System.Drawing.Point(258, 12);
 			this.cmdWrap.Name = "cmdWrap";
-			this.cmdWrap.Size = new System.Drawing.Size(40, 27);
+			this.cmdWrap.Size = new System.Drawing.Size(40, 21);
 			this.cmdWrap.TabIndex = 15;
 			this.cmdWrap.Text = "wrap";
 			this.cmdWrap.UseVisualStyleBackColor = true;
@@ -487,50 +465,42 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.cmdSetFromDelegatedMarks);
+			this.groupBox2.Controls.Add(this.groupBox4);
 			this.groupBox2.Controls.Add(this.ChkCommNumber);
+			this.groupBox2.Controls.Add(this.cmdReportSizeDecrease);
+			this.groupBox2.Controls.Add(this.cmdReportSizeIncrease);
+			this.groupBox2.Controls.Add(this.cmdWrap);
 			this.groupBox2.Controls.Add(this.ChkAutoStat);
-			this.groupBox2.Controls.Add(this.button2);
-			this.groupBox2.Controls.Add(this.cmbDocuments);
+			this.groupBox2.Controls.Add(this.BtnShowStudentStat);
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.groupBox2.Location = new System.Drawing.Point(0, 475);
+			this.groupBox2.Location = new System.Drawing.Point(0, 419);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(304, 64);
+			this.groupBox2.Size = new System.Drawing.Size(304, 120);
 			this.groupBox2.TabIndex = 15;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Documents downloaded";
 			// 
-			// ChkCommNumber
+			// cmdSetFromDelegatedMarks
 			// 
-			this.ChkCommNumber.AutoSize = true;
-			this.ChkCommNumber.Location = new System.Drawing.Point(81, 42);
-			this.ChkCommNumber.Margin = new System.Windows.Forms.Padding(2);
-			this.ChkCommNumber.Name = "ChkCommNumber";
-			this.ChkCommNumber.Size = new System.Drawing.Size(117, 17);
-			this.ChkCommNumber.TabIndex = 4;
-			this.ChkCommNumber.Text = "Add Comm Number";
-			this.ChkCommNumber.UseVisualStyleBackColor = true;
+			this.cmdSetFromDelegatedMarks.Location = new System.Drawing.Point(119, 34);
+			this.cmdSetFromDelegatedMarks.Name = "cmdSetFromDelegatedMarks";
+			this.cmdSetFromDelegatedMarks.Size = new System.Drawing.Size(179, 23);
+			this.cmdSetFromDelegatedMarks.TabIndex = 25;
+			this.cmdSetFromDelegatedMarks.Text = "Set components from delegates";
+			this.cmdSetFromDelegatedMarks.UseVisualStyleBackColor = true;
+			this.cmdSetFromDelegatedMarks.Click += new System.EventHandler(this.cmdSetFromDelegatedMarks_Click);
 			// 
-			// ChkAutoStat
+			// groupBox4
 			// 
-			this.ChkAutoStat.AutoSize = true;
-			this.ChkAutoStat.Location = new System.Drawing.Point(7, 41);
-			this.ChkAutoStat.Margin = new System.Windows.Forms.Padding(2);
-			this.ChkAutoStat.Name = "ChkAutoStat";
-			this.ChkAutoStat.Size = new System.Drawing.Size(68, 17);
-			this.ChkAutoStat.TabIndex = 3;
-			this.ChkAutoStat.Text = "Auto stat";
-			this.ChkAutoStat.UseVisualStyleBackColor = true;
-			// 
-			// button2
-			// 
-			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(234, 16);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(65, 23);
-			this.button2.TabIndex = 2;
-			this.button2.Text = "Open";
-			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.Open_Click);
+			this.groupBox4.Controls.Add(this.cmbDocuments);
+			this.groupBox4.Controls.Add(this.button2);
+			this.groupBox4.Location = new System.Drawing.Point(7, 67);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(291, 47);
+			this.groupBox4.TabIndex = 5;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "Documents downloaded";
 			// 
 			// cmbDocuments
 			// 
@@ -538,11 +508,76 @@ namespace StudentsFetcher.StudentMarking
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmbDocuments.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbDocuments.FormattingEnabled = true;
-			this.cmbDocuments.Location = new System.Drawing.Point(7, 18);
+			this.cmbDocuments.Location = new System.Drawing.Point(6, 19);
 			this.cmbDocuments.Name = "cmbDocuments";
-			this.cmbDocuments.Size = new System.Drawing.Size(221, 21);
+			this.cmbDocuments.Size = new System.Drawing.Size(208, 21);
 			this.cmbDocuments.TabIndex = 0;
 			this.cmbDocuments.TabStop = false;
+			// 
+			// button2
+			// 
+			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.button2.Location = new System.Drawing.Point(220, 17);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(65, 23);
+			this.button2.TabIndex = 2;
+			this.button2.Text = "Open";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.Open_Click);
+			// 
+			// ChkCommNumber
+			// 
+			this.ChkCommNumber.AutoSize = true;
+			this.ChkCommNumber.Location = new System.Drawing.Point(79, 16);
+			this.ChkCommNumber.Margin = new System.Windows.Forms.Padding(2);
+			this.ChkCommNumber.Name = "ChkCommNumber";
+			this.ChkCommNumber.Size = new System.Drawing.Size(117, 17);
+			this.ChkCommNumber.TabIndex = 4;
+			this.ChkCommNumber.Text = "Add Comm Number";
+			this.ChkCommNumber.UseVisualStyleBackColor = true;
+			// 
+			// cmdReportSizeDecrease
+			// 
+			this.cmdReportSizeDecrease.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdReportSizeDecrease.Location = new System.Drawing.Point(212, 12);
+			this.cmdReportSizeDecrease.Name = "cmdReportSizeDecrease";
+			this.cmdReportSizeDecrease.Size = new System.Drawing.Size(24, 21);
+			this.cmdReportSizeDecrease.TabIndex = 17;
+			this.cmdReportSizeDecrease.Text = "-";
+			this.cmdReportSizeDecrease.UseVisualStyleBackColor = true;
+			this.cmdReportSizeDecrease.Click += new System.EventHandler(this.cmdReportSizeDecrease_Click);
+			// 
+			// cmdReportSizeIncrease
+			// 
+			this.cmdReportSizeIncrease.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdReportSizeIncrease.Location = new System.Drawing.Point(236, 12);
+			this.cmdReportSizeIncrease.Name = "cmdReportSizeIncrease";
+			this.cmdReportSizeIncrease.Size = new System.Drawing.Size(24, 21);
+			this.cmdReportSizeIncrease.TabIndex = 16;
+			this.cmdReportSizeIncrease.Text = "+";
+			this.cmdReportSizeIncrease.UseVisualStyleBackColor = true;
+			this.cmdReportSizeIncrease.Click += new System.EventHandler(this.cmdReportSizeIncrease_Click);
+			// 
+			// ChkAutoStat
+			// 
+			this.ChkAutoStat.AutoSize = true;
+			this.ChkAutoStat.Location = new System.Drawing.Point(7, 16);
+			this.ChkAutoStat.Margin = new System.Windows.Forms.Padding(2);
+			this.ChkAutoStat.Name = "ChkAutoStat";
+			this.ChkAutoStat.Size = new System.Drawing.Size(68, 17);
+			this.ChkAutoStat.TabIndex = 3;
+			this.ChkAutoStat.Text = "Auto stat";
+			this.ChkAutoStat.UseVisualStyleBackColor = true;
+			// 
+			// BtnShowStudentStat
+			// 
+			this.BtnShowStudentStat.Location = new System.Drawing.Point(5, 34);
+			this.BtnShowStudentStat.Name = "BtnShowStudentStat";
+			this.BtnShowStudentStat.Size = new System.Drawing.Size(108, 23);
+			this.BtnShowStudentStat.TabIndex = 24;
+			this.BtnShowStudentStat.Text = "Show student stats";
+			this.BtnShowStudentStat.UseVisualStyleBackColor = true;
+			this.BtnShowStudentStat.Click += new System.EventHandler(this.BtnShowStudentStat_Click);
 			// 
 			// tableLayoutPanel1
 			// 
@@ -562,7 +597,6 @@ namespace StudentsFetcher.StudentMarking
 			this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.button11, 1, 1);
 			this.tableLayoutPanel1.Controls.Add(this.BtnEditLast, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.BtnShowStudentStat, 0, 6);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 13);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -727,16 +761,6 @@ namespace StudentsFetcher.StudentMarking
 			this.BtnEditLast.Text = "Edit last";
 			this.BtnEditLast.UseVisualStyleBackColor = true;
 			this.BtnEditLast.Click += new System.EventHandler(this.BtnEditLast_Click);
-			// 
-			// BtnShowStudentStat
-			// 
-			this.BtnShowStudentStat.Location = new System.Drawing.Point(3, 500);
-			this.BtnShowStudentStat.Name = "BtnShowStudentStat";
-			this.BtnShowStudentStat.Size = new System.Drawing.Size(69, 23);
-			this.BtnShowStudentStat.TabIndex = 24;
-			this.BtnShowStudentStat.Text = "Stat";
-			this.BtnShowStudentStat.UseVisualStyleBackColor = true;
-			this.BtnShowStudentStat.Click += new System.EventHandler(this.BtnShowStudentStat_Click);
 			// 
 			// label7
 			// 
@@ -925,7 +949,7 @@ namespace StudentsFetcher.StudentMarking
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.99999F));
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.00001F));
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 107F));
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111F));
 			this.tableLayoutPanel2.Controls.Add(this.cmdEmailRefreshStudents, 0, 0);
 			this.tableLayoutPanel2.Controls.Add(this.cmdSelectAll, 1, 0);
 			this.tableLayoutPanel2.Controls.Add(this.NudOverlap, 2, 0);
@@ -945,7 +969,7 @@ namespace StudentsFetcher.StudentMarking
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmdEmailRefreshStudents.Location = new System.Drawing.Point(3, 3);
 			this.cmdEmailRefreshStudents.Name = "cmdEmailRefreshStudents";
-			this.cmdEmailRefreshStudents.Size = new System.Drawing.Size(105, 23);
+			this.cmdEmailRefreshStudents.Size = new System.Drawing.Size(103, 23);
 			this.cmdEmailRefreshStudents.TabIndex = 2;
 			this.cmdEmailRefreshStudents.Text = "Refresh";
 			this.cmdEmailRefreshStudents.UseVisualStyleBackColor = true;
@@ -955,9 +979,9 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			this.cmdSelectAll.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdSelectAll.Location = new System.Drawing.Point(114, 3);
+			this.cmdSelectAll.Location = new System.Drawing.Point(112, 3);
 			this.cmdSelectAll.Name = "cmdSelectAll";
-			this.cmdSelectAll.Size = new System.Drawing.Size(106, 23);
+			this.cmdSelectAll.Size = new System.Drawing.Size(104, 23);
 			this.cmdSelectAll.TabIndex = 4;
 			this.cmdSelectAll.Text = "All";
 			this.cmdSelectAll.UseVisualStyleBackColor = true;
@@ -966,7 +990,7 @@ namespace StudentsFetcher.StudentMarking
 			// NudOverlap
 			// 
 			this.NudOverlap.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.NudOverlap.Location = new System.Drawing.Point(243, 5);
+			this.NudOverlap.Location = new System.Drawing.Point(239, 5);
 			this.NudOverlap.Name = "NudOverlap";
 			this.NudOverlap.Size = new System.Drawing.Size(60, 20);
 			this.NudOverlap.TabIndex = 5;
@@ -981,7 +1005,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			this.chkShowDelegate.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.chkShowDelegate.AutoSize = true;
-			this.chkShowDelegate.Location = new System.Drawing.Point(342, 6);
+			this.chkShowDelegate.Location = new System.Drawing.Point(340, 6);
 			this.chkShowDelegate.Name = "chkShowDelegate";
 			this.chkShowDelegate.Size = new System.Drawing.Size(69, 17);
 			this.chkShowDelegate.TabIndex = 6;
@@ -1347,7 +1371,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			// groupBox3
 			// 
-			this.groupBox3.Controls.Add(this.txtReport);
+			this.groupBox3.Controls.Add(this.txtToolReport);
 			this.groupBox3.Controls.Add(this.tabControl3);
 			this.groupBox3.Location = new System.Drawing.Point(6, 12);
 			this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
@@ -1358,14 +1382,14 @@ namespace StudentsFetcher.StudentMarking
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Import data";
 			// 
-			// txtReport
+			// txtToolReport
 			// 
-			this.txtReport.Location = new System.Drawing.Point(444, 40);
-			this.txtReport.Multiline = true;
-			this.txtReport.Name = "txtReport";
-			this.txtReport.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtReport.Size = new System.Drawing.Size(347, 181);
-			this.txtReport.TabIndex = 26;
+			this.txtToolReport.Location = new System.Drawing.Point(444, 40);
+			this.txtToolReport.Multiline = true;
+			this.txtToolReport.Name = "txtToolReport";
+			this.txtToolReport.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.txtToolReport.Size = new System.Drawing.Size(347, 181);
+			this.txtToolReport.TabIndex = 26;
 			// 
 			// tabControl3
 			// 
@@ -1733,6 +1757,7 @@ namespace StudentsFetcher.StudentMarking
 			this.panel1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
+			this.groupBox4.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
@@ -1860,7 +1885,7 @@ namespace StudentsFetcher.StudentMarking
         private System.Windows.Forms.CheckBox chkImportSubmissions;
 		private System.Windows.Forms.TextBox txtSourceTurnitin;
 		private System.Windows.Forms.Button button8;
-		private System.Windows.Forms.TextBox txtReport;
+		private System.Windows.Forms.TextBox txtToolReport;
 		private System.Windows.Forms.TabControl tabControl3;
 		private System.Windows.Forms.TabPage tabPage6;
 		private System.Windows.Forms.TabPage tabPage7;
@@ -1905,6 +1930,8 @@ namespace StudentsFetcher.StudentMarking
 		private Button cmdWrap;
 		private Button cmdReportSizeDecrease;
 		private Button cmdReportSizeIncrease;
+		private Button cmdSetFromDelegatedMarks;
+		private GroupBox groupBox4;
 	}
 }
 

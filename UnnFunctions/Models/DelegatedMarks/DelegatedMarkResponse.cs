@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnnItBooster.Models;
 
 namespace UnnFunctions.Models.DelegatedMarks;
 
@@ -185,12 +186,18 @@ public class DelegatedMarkResponse
         return Enumerable.Empty<DelegatedMarkResponse>();
     }
 
-    public static string Report(IEnumerable<DelegatedMarkResponse> marks, bool extended = false)
+    public static string Report(IEnumerable<DelegatedMarkResponse> marks, bool extended = false, IEnumerable<string>? componentNames = null)
     {
         var sb = new StringBuilder();
         if (extended)
         {
             sb.AppendLine("Marks:");
+        }
+        if (componentNames is not null)
+        {
+            var concatenatedCompNames = string.Join("\t", componentNames.Skip(1).Select(x => x.Substring(0, 10)));
+            if (!string.IsNullOrEmpty(concatenatedCompNames))
+                sb.AppendLine($"components\ttotal\t{concatenatedCompNames}");
         }
         foreach (var response in marks)
         {
@@ -260,8 +267,20 @@ public class DelegatedMarkResponse
         sb.AppendLine(ReportOption(transcriptResults, credits, 80, "if outstanding"));
         if (assignedMark != -1)
         {
+            sb.AppendLine();
+            sb.AppendLine("=============");
             sb.AppendLine("Current mark:");
             sb.AppendLine(ReportOption(transcriptResults, credits, assignedMark, "Assigned mark"));
+
+            var tmp = transcriptResults.Concat([new ModuleResult()
+            {
+                 ActualMark = assignedMark.ToString(), 
+                 Level = "7",
+                 ActualResult = "P",
+                 Credits = credits.ToString()
+            }]
+            );
+            sb.AppendLine(Student.ReportTranscriptClassificationChart(tmp));
         }
         return sb.ToString();
     }
@@ -269,9 +288,15 @@ public class DelegatedMarkResponse
     private static string ReportOption(IEnumerable<ModuleResult> startingMarks, int credits, double mark, string optionName)
     {
         int integerMark = (int)Math.Ceiling(mark);
+        if (integerMark < 50)
+        {
+			string failReport = $"option: {mark}, Average: N/A over N/A total credits, {optionName}\tFAIL";
+			return failReport;
+		}
         var tmpRes = new ModuleResult() { AgreedMark = integerMark.ToString(), Credits = credits.ToString() };
         var range = startingMarks.Concat([tmpRes]);
         var average = ModuleResult.WeightedAverage(range, out var matCred);
+        
         
         string thisReport = $"option: {mark}, Average: {average:0.00} over {matCred} total credits, {optionName}\t{Classify(average)}"; 
         return thisReport;

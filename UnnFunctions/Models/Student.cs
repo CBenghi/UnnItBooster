@@ -165,12 +165,14 @@ namespace UnnItBooster.Models
 			return FullName;
 		}
 
-		public string ReportTranscriptClassificationChart()
+		public static string ReportTranscriptClassificationChart(IEnumerable<ModuleResult>? transcript)
 		{
+			if (transcript is null || !transcript.Any())
+				return string.Empty;
 			var sb = new StringBuilder();
-			if (TranscriptResults is not null)
+			if (transcript is not null)
 			{
-				foreach (var levelMarks in TranscriptResults.GroupBy(x => x.Level))
+				foreach (var levelMarks in transcript.GroupBy(x => x.Level))
 				{
 					sb.AppendLine($"Chart at level: {levelMarks.Key}");
 					AppendChart(sb, levelMarks);
@@ -180,7 +182,7 @@ namespace UnnItBooster.Models
 			return sb.ToString();
 		}
 
-		private void AppendChart(StringBuilder sb, IEnumerable<ModuleResult> enumerable)
+		private static void AppendChart(StringBuilder sb, IEnumerable<ModuleResult> enumerable)
 		{
 			var c = new chart();
 			foreach (var item in enumerable)
