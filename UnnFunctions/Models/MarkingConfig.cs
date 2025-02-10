@@ -6,10 +6,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using UnnFunctions.Models;
 using UnnFunctions.Models.DelegatedMarks;
 using UnnItBooster.ModelConversions;
 using UnnItBooster.Models;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace StudentsFetcher.StudentMarking
 {
@@ -124,6 +126,8 @@ namespace StudentsFetcher.StudentMarking
 			}
 			var tin = TurnitInSubmission.FromRow(stud);
 			sb.AppendLine($"# {tin.FirstName} {tin.LastName} {tin.NumericUserId}");
+			if (includeCommentNumber)
+				sb.AppendLine($"- delegate marking tab: {tin.ElpSite}\t{tin.NumericUserId}\t{tin.PaperId}");
 			sb.AppendLine();
 			sb.AppendLine($"- email: {tin.Email} (#{id})");
 			sb.AppendLine($"- Submission ID: {tin.PaperId}");
@@ -253,7 +257,7 @@ namespace StudentsFetcher.StudentMarking
 			}
 		}
 
-		public void Execute(string sql, SQLiteConnection? c = null)
+		public int Execute(string sql, SQLiteConnection? c = null)
 		{
 			var bClose = false;
 			if (c == null)
@@ -263,9 +267,10 @@ namespace StudentsFetcher.StudentMarking
 				bClose = true;
 			}
 			var cm = new SQLiteCommand(sql, c);
-			cm.ExecuteNonQuery();
+			var cnt = cm.ExecuteNonQuery();
 			if (bClose)
 				c.Close();
+			return cnt;
 		}
 
 		public int ExecuteScalar(string sql, SQLiteConnection? c = null)
@@ -482,7 +487,7 @@ namespace StudentsFetcher.StudentMarking
 			return numeric;
 		}
 
-		public void EnsureMarker(string studId, string mrkrEmail, string mrkrName, string role)
+		public int EnsureMarker(string studId, string mrkrEmail, string mrkrName, string role)
 		{
 			var sql = 
 				$"""
@@ -494,7 +499,7 @@ namespace StudentsFetcher.StudentMarking
 				""";
 			var dt = GetDataTable(sql);
 			if (dt.Rows.Count > 0)
-				return;
+				return 0;
 			sql =
 				$"""
 				insert into TB_Markers 
@@ -502,7 +507,7 @@ namespace StudentsFetcher.StudentMarking
 				values 
 				('{studId}', '{mrkrEmail}', '{mrkrName}', '{role}')
 				""";
-			Execute(sql);
+			return Execute(sql);
 		}
 
 		public string ReportMarkers()
@@ -665,7 +670,7 @@ namespace StudentsFetcher.StudentMarking
 			}
 		}
 
-		public string GetDelegatedMarksFromExcel(out IEnumerable<DelegatedMarkResponse> marks)
+		public string GetDelegatedMarksFromExcel(string filter, out IEnumerable<DelegatedMarkResponse> marks)
 		{
 			var sb = new StringBuilder();
 			var folderName = GetFolderName()!;
@@ -674,7 +679,13 @@ namespace StudentsFetcher.StudentMarking
 			var retmarks = new List<DelegatedMarkResponse>();
 			foreach (var excelFile in excelFiles)
 			{
-				if (!ExcelFunctions.TryReadExcel(excelFile.FullName, out var workbook, out var report))
+                if (!string.IsNullOrWhiteSpace(filter))
+                {
+                    if (!excelFile.Name.Matches(filter))
+						continue;
+                }
+
+                if (!ExcelFunctions.TryReadExcel(excelFile.FullName, out var workbook, out var report))
 				{
 					sb.AppendLine(report);
 					continue;
@@ -686,8 +697,10 @@ namespace StudentsFetcher.StudentMarking
 			return sb.ToString();
 		}
 
-		public int SetExcelMarks(IEnumerable<DelegatedMarkResponse> marks)
+		public int SetExcelMarks(IEnumerable<DelegatedMarkResponse> marks, out IEnumerable<DelegatedMarkResponse> missed)
 		{
+			var notUpdated = new List<DelegatedMarkResponse>();
+			missed = notUpdated;
 			int tally = 0;
 			string sql =
 				"""
@@ -708,7 +721,12 @@ namespace StudentsFetcher.StudentMarking
 				resp.Value = JsonSerializer.Serialize(mark.Response);
 				studentId.Value = mark.StudentId;
 				email.Value = mark.MarkerEmail;
-				tally += command.ExecuteNonQuery();
+				var upd = command.ExecuteNonQuery();
+				tally += upd;
+				if (upd < 1)
+				{
+					notUpdated.Add(mark);
+				}
 			}
 			cn.Close();
 			return tally;
@@ -773,6 +791,23 @@ namespace StudentsFetcher.StudentMarking
 				}
 			}
 			return componentValues;
+		}
+
+		public IEnumerable<string> GetDocuementFiles(string paperId)
+		{
+			var r = new Regex(@"^\d+$");
+
+			var dir = new DirectoryInfo(GetFolderName());
+			var subdirs = dir.GetDirectories().Where(x => r.IsMatch(x.Name));
+			foreach (var subdir in subdirs)
+			{
+				var files = subdir.GetFiles($"{paperId}*.*");
+				foreach (var file in files)
+				{
+					yield return file.FullName.Substring(dir.FullName.Length + 1);
+				}
+			}
+
 		}
 
 		public string BareName => Path.GetFileNameWithoutExtension(DbName);

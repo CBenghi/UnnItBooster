@@ -247,12 +247,10 @@ namespace UnnItBooster.Models
 			}
 		}
 
-
-
-
 		public string ReportTranscript(bool addLegenda = true)
 		{
 			var sb = new StringBuilder();
+			sb.AppendLine($"ID: {NumericStudentId} - {Forename} {Surname?.ToUpper()} - {FullName}");
 			if (TranscriptResults is not null)
 			{
 				string yr = "";

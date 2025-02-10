@@ -19,18 +19,14 @@ using UnnItBooster.StudentMarking;
 using UnnFunctions.Models;
 using MathNet.Numerics.Statistics;
 using UnnFunctions.Models.DelegatedMarks;
-using MathNet.Numerics.Distributions;
 using MathNet.Numerics;
 using System.Runtime.InteropServices;
-
 
 namespace StudentsFetcher.StudentMarking;
 
 [AmmFormAttributes("Marking machine", 1)]
 public partial class FrmMarkingMachine : Form
 {
-
-
 	private const int EM_SETTABSTOPS = 0x00CB;
 
 	[DllImport("User32.dll", CharSet = CharSet.Auto)]
@@ -50,8 +46,6 @@ public partial class FrmMarkingMachine : Form
 		SendMessage(textbox.Handle, EM_SETTABSTOPS, 1, [tabWidth * 4]);
 	}
 
-
-
 	private MarkingConfig _config;
     readonly StudentsRepository studentRepository;
 
@@ -60,6 +54,8 @@ public partial class FrmMarkingMachine : Form
         InitializeComponent();
         LoadSettings();
         studentRepository = new StudentsRepository(Settings.Default.StudentsFolder);
+        SetTabWidth(txtLibReport, 10);
+        ChkAutoStat.Checked = true;
     }
 
     void txtStudentId_KeyDown(object sender, KeyEventArgs e)
@@ -240,10 +236,20 @@ public partial class FrmMarkingMachine : Form
     private void UpdateDocumentsList(TurnitInSubmission submission)
     {
         cmbDocuments.Items.Clear();
-        // todo: populate document
-        cmbDocuments.Items.Add(submission.Title);
-        if (!string.IsNullOrEmpty(submission.Title))
-            cmbDocuments.SelectedIndex = 0;
+        var list = _config.GetDocuementFiles(submission.PaperId).ToList();
+		if (!string.IsNullOrEmpty(submission.Title))
+			list.Add(submission.Title);
+        cmbDocuments.Items.AddRange(list.Distinct().ToArray());
+		for (int i = 0; i < cmbDocuments.Items.Count; i++)
+        {
+            var item = cmbDocuments.Items[i].ToString()!;
+            var fullname = Path.Combine(_config.GetFolderName(), item);
+			if (File.Exists(fullname))
+            {
+				cmbDocuments.SelectedIndex = i;
+                break;
+            }
+		}
     }
 
     /// <summary>
@@ -266,11 +272,8 @@ public partial class FrmMarkingMachine : Form
         }
     }
 
-    Regex customSortMatcher = new Regex(@"sort\s+(?<mode>turnitin|marker)\s*(?<param>.*)$", RegexOptions.IgnoreCase);
-
 	private void txtSearch_KeyDown(object sender, KeyEventArgs e)
     {
-        txtStudentId.Visible = true;
 		if (e.KeyCode == Keys.Enter)
         {
             var addComponentMatch = Regex.Match(txtSearch.Text, "component (\\d+) (\\d+) (.*)", RegexOptions.IgnoreCase);
@@ -283,9 +286,10 @@ public partial class FrmMarkingMachine : Form
 			var selectModerationMatch = Regex.Match(txtSearch.Text, @"SelectModeration *(?<name>.*)$", RegexOptions.IgnoreCase);
 			var associateMarkerMatch = Regex.Match(txtSearch.Text, @"^Associate ?Marker[s]?$", RegexOptions.IgnoreCase);
 			var reportMarkerMatch = Regex.Match(txtSearch.Text, @"^Report ?Marker[s]?(\s+(?<options>-missing|-marks|-missingexcel)?)?$", RegexOptions.IgnoreCase);
-			var importMarksMatch = Regex.Match(txtSearch.Text, @"^Import ?Marker[s]?$", RegexOptions.IgnoreCase);
+			var importMarksMatch = Regex.Match(txtSearch.Text, @"^Import ?Marker[s]?(\s+(?<filter>.+?)?)$", RegexOptions.IgnoreCase);
 			var markingExcelsMatch = Regex.Match(txtSearch.Text, @"^Create ?MarkingFiles(\s+(?<filter>.+?))? +(?<excelFileName>.*)$", RegexOptions.IgnoreCase);
 			var moduleCreditsMatch = Regex.Match(txtSearch.Text, @"^ModuleCredits (?<credits>\d+)$", RegexOptions.IgnoreCase);
+			var customSortMatcher = Regex.Match(txtSearch.Text, @"sort\s+(?<mode>turnitin|marker|comment|unmarked)\s*(?<param>.*)$", RegexOptions.IgnoreCase);
 			var SetTabMatch = Regex.Match(txtSearch.Text, @"^SetTab (?<size>\d+)$", RegexOptions.IgnoreCase);
             if (addComponentMatch.Success)
             {
@@ -316,15 +320,30 @@ public partial class FrmMarkingMachine : Form
 			}
 			else if (importMarksMatch.Success)
             {
-                var sb = new StringBuilder();
-                var readingReport = _config.GetDelegatedMarksFromExcel(out var marks); // from import
-                sb.AppendLine(readingReport);
-                sb.AppendLine();
+				var filter = importMarksMatch.Groups["filter"].Value;
+
+				var sb = new StringBuilder();
+                var readingReport = _config.GetDelegatedMarksFromExcel(filter, out var marks); // from import
+                if (!string.IsNullOrEmpty(readingReport))
+                {
+                    sb.AppendLine("Excel errors report:");
+                    sb.AppendLine(readingReport);
+                    sb.AppendLine();
+                }
                 sb.AppendLine($"{marks.Count()} marks found in excel files.");
                 
-                var updated = _config.SetExcelMarks(marks);
+                var updated = _config.SetExcelMarks(marks, out var notUpdated);
                 sb.AppendLine($"{updated} updated marks in database.");
                 sb.AppendLine();
+                if (notUpdated.Any())
+                {
+                    sb.AppendLine("You may add exra markers with the command: `Associate markers` with the following list");
+                    foreach (var item in notUpdated)
+                    {
+                        sb.AppendLine($"{item.StudentId} {item.MarkerEmail} 3rd <MarkerName>");
+                    }
+                    sb.AppendLine();
+                }
 
                 sb.AppendLine(DelegatedMarkResponse.Report(marks));
                 txtLibReport.Text = sb.ToString();
@@ -333,9 +352,9 @@ public partial class FrmMarkingMachine : Form
             {
                 txtLibReport.Text = CreateExcelMarkers(markingExcelsMatch);
             }
-			else if (customSortMatcher.IsMatch(txtSearch.Text))
+			else if (customSortMatcher.Success)
 			{
-                var m = customSortMatcher.Match(txtSearch.Text);
+                var m = customSortMatcher;
                 var mode = m.Groups["mode"].Value.ToLower();
                 var param = m.Groups["param"].Value;
                 switch (mode)
@@ -345,6 +364,12 @@ public partial class FrmMarkingMachine : Form
 						break;
 					case "marker":
 						SetCustomOrder(GetDelegateMarkerPapers(param));
+						break;
+					case "comment":
+						SetCustomOrder(GetPapersByComment(param));
+                        break;
+					case "unmarked":
+						SetCustomOrder(GetPapersUnmarked(param));
 						break;
 				}
 			}
@@ -357,7 +382,7 @@ public partial class FrmMarkingMachine : Form
                         {
                             txtLibReport.Text = "# Import errors from Excel";
                             txtLibReport.Text += "\r\n";
-							var import = _config.GetDelegatedMarksFromExcel(out var marks);
+							var import = _config.GetDelegatedMarksFromExcel(string.Empty, out var marks);
                             txtLibReport.Text += import;
                             txtLibReport.Text += "\r\n";
                             txtLibReport.Text += "# List imported";
@@ -382,14 +407,17 @@ public partial class FrmMarkingMachine : Form
 						txtLibReport.Text = ReportMarkersMarks(_config.GetMarkingAssignmentsByStudents(), marksToEvaluate);
 						break;
 					default:
-				        ReportMarkers();
+                        txtLibReport.Text = _config.ReportMarkers();
                         break;
                 }
 			}
 			else if (associateMarkerMatch.Success)
             {
-                AssociateMarkers();
-				ReportMarkers();
+                StringBuilder sb = new StringBuilder();
+				var count = AssociateMarkers();
+                sb.AppendLine($"{count} new delegate markers associated");
+                sb.AppendLine(_config.ReportMarkers());
+                txtLibReport.Text = sb.ToString();
 			}
 			else if (editMatch.Success)
             {
@@ -482,7 +510,7 @@ public partial class FrmMarkingMachine : Form
 
                     sort <mode:turnitin|marker> [param]
                         produces a custom order of submission for ease of browsing
-                        Entries are navigated with +/- buttons as long as the search text remains in the command line
+                        Entries are navigated with +/- buttons as long as the "Use Sorting" checkbox is flagged
                         The list of IDs is visible in the report of the Tools TAB
                         e.g.
                         - sort turnitin ELPSITENAME
@@ -572,6 +600,53 @@ public partial class FrmMarkingMachine : Form
         }
     }
 
+	private string GetPapersUnmarked(string param)
+	{
+		var sql = $"""
+                  select TB_Submissions.SUB_ID,  QFullyMarkedPapers.*
+                  from TB_Submissions left join QFullyMarkedPapers
+                  on sub_id = MARK_ptr_Submission
+                  where MARK_ptr_Submission is null
+                  order by SUB_ID desc
+                  """;
+		StringBuilder stringBuilder = new StringBuilder();
+		var res = _config.GetDataTable(sql);
+		foreach (DataRow row in res.Rows)
+		{
+			stringBuilder.AppendLine(row["SUB_ID"].ToString());
+		}
+		return stringBuilder.ToString();
+	}
+
+	private string GetPapersByComment(string numberOrText)
+	{
+		if (string.IsNullOrWhiteSpace(numberOrText))
+		{
+			return string.Empty;
+        }
+		var sql = $"""
+                  SELECT distinct SCOM_ptr_Submission from QComments 
+                  WHERE COMM_Text like '%{numberOrText}%'
+                  Order by SCOM_ptr_Submission DESC
+                  """;
+		if (int.TryParse(numberOrText, out var integerValue))
+        {
+			sql = $"""
+                  SELECT distinct SCOM_ptr_Submission from QComments 
+                  WHERE COMM_ID = {integerValue}
+                  Order by SCOM_ptr_Submission DESC
+                  """;
+		}
+
+		StringBuilder stringBuilder = new StringBuilder();
+		var res = _config.GetDataTable(sql);
+		foreach (DataRow row in res.Rows)
+		{
+			stringBuilder.AppendLine(row["SCOM_ptr_Submission"].ToString());
+		}
+		return stringBuilder.ToString();
+	}
+
 	private string GetDelegateMarkerPapers(string marker)
 	{
         if (string.IsNullOrWhiteSpace(marker))
@@ -611,7 +686,8 @@ public partial class FrmMarkingMachine : Form
         }
 		txtToolReport.Text = orderedIds;
 		txtStudentId.Visible = false;
-        txtLibReport.Text += "\r\n";
+        chkUseSorting.Checked = true;
+		txtLibReport.Text += "\r\n";
         txtLibReport.Text += "==========================================================\r\n";
         txtLibReport.Text += "Sort order set. See the tool tab report to check the list.\r\n";
         txtLibReport.Text += $"{list.Count} items in browsing selection.\r\n";
@@ -720,17 +796,13 @@ public partial class FrmMarkingMachine : Form
         }
 	}
 
-	private void ReportMarkers()
-	{
-        txtLibReport.Text = _config.ReportMarkers();
-	}
-
-	private void AssociateMarkers()
+	private int AssociateMarkers()
 	{
         if (string.IsNullOrWhiteSpace(txtLibReport.Text))
-            return;
+            return 0;
         var assignments = txtLibReport.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-        var r = new Regex(@"^(?<studId>\d+)\t+(?<email>[^ ]+)\t+(?<role>[^ ]+)\t+(?<name>.+)");
+        var r = new Regex(@"^(?<studId>\d+)\s+(?<email>[^ ]+)\s+(?<role>[^ ]+)\s+(?<name>.+)");
+        int tally = 0;
         foreach (var assignment in assignments)
         {
             var m = r.Match(assignment);
@@ -738,11 +810,14 @@ public partial class FrmMarkingMachine : Form
             {
                 var studId = m.Groups["studId"].Value;
                 var mrkrEmail = m.Groups["email"].Value;
+                if (!mrkrEmail.Contains("@"))
+                    continue;
                 var mrkrRole = m.Groups["role"].Value;
                 var mrkrName = m.Groups["name"].Value;
-                _config.EnsureMarker(studId,  mrkrEmail, mrkrName, mrkrRole);
+                tally += _config.EnsureMarker(studId,  mrkrEmail, mrkrName, mrkrRole);
             }
         }
+        return tally;
 	}
 
 	private void SelectModeration(string name)
@@ -1157,9 +1232,12 @@ public partial class FrmMarkingMachine : Form
 
         sql += " order by COMM_section";
 
-
 		var sb = new StringBuilder();
-        var dt = _config.GetDataTable(sql);
+
+        sb.AppendLine($"Executing search for: {txtSearch.Text}");
+        sb.AppendLine("=================");
+
+		var dt = _config.GetDataTable(sql);
         var section = "";
         foreach (DataRow item in dt.Rows)
         {
@@ -1430,7 +1508,8 @@ public partial class FrmMarkingMachine : Form
             var fullname = Path.Combine(
                 _config.GetFolderName(),
                 cmbDocuments.Text);
-            Process.Start(fullname);
+            if (File.Exists(fullname))
+                Process.Start(fullname);
         }
     }
 
@@ -1731,7 +1810,7 @@ public partial class FrmMarkingMachine : Form
     private void MoveStudent(int Delta)
     {
 		var iSN = GetStudentIndex();
-		if (customSortMatcher.IsMatch(txtSearch.Text))
+		if (chkUseSorting.Checked)
         {
             var arr = txtToolReport.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
             var idx = arr.IndexOf(iSN.ToString());
@@ -2200,5 +2279,13 @@ public partial class FrmMarkingMachine : Form
 			_config.SetStudentComponentMark(GetStudentIndex(), i+1, averageOfComponent, false);			
 		}
 		UpdateStudentUi();
+	}
+
+	private void chkUseSorting_CheckedChanged(object sender, EventArgs e)
+	{
+        if (!chkUseSorting.Checked)
+        {
+            txtStudentId.Visible = true;
+        }
 	}
 }

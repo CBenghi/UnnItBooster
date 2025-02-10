@@ -1,4 +1,5 @@
-﻿using NPOI.SS.Formula.Functions;
+﻿using NPOI.OpenXmlFormats.Dml.Chart;
+using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
@@ -78,12 +79,10 @@ public class DelegatedMarkResponse
             return RetError("Marks sheet not found", out report);
         var ret = new List<DelegatedMarkResponse>();
         var row = sheet.GetRow(0);
-        if (row == null) //null is when the row only contains empty cells 
-            return RetError("No valid row 0", out report);
-        var firstCell = row.GetCell(2);
-        if (firstCell == null)
-            return RetError("No valid marker email cell", out report);
-        var markerMail = firstCell.StringCellValue;
+        var sheetMarkerMail = string.Empty;
+		var firstCell = row?.GetCell(2);
+        if (firstCell is not null)
+            sheetMarkerMail = firstCell.StringCellValue.Trim();
         row = sheet.GetRow(4);
         var t = GetComponentsMax(row);
         if (t is null)
@@ -95,6 +94,14 @@ public class DelegatedMarkResponse
             var studRow = sheet.GetRow(rowId++);
             if (studRow == null)
                 break;
+            var thisRowMarker = sheetMarkerMail;
+            if (string.IsNullOrWhiteSpace(sheetMarkerMail))
+            {
+                var h = GetMarker(studRow);
+                if (h is null)
+                    continue;
+                thisRowMarker = h;
+			}
             var stud = GetStudent(studRow);
             if (stud is null)
                 break;
@@ -106,7 +113,7 @@ public class DelegatedMarkResponse
             var mks = ComponentMark.GetMarks(marks, t);
             if (mks is null)
                 continue;
-            var newV = new DelegatedMarkResponse(markerMail, stud, submissionID, comment, mks);
+            var newV = new DelegatedMarkResponse(thisRowMarker, stud, submissionID, comment, mks);
             ret.Add(newV);
         } while (true);
 
@@ -114,7 +121,17 @@ public class DelegatedMarkResponse
         return ret;
     }
 
-    private static string GetComment(IRow studRow, int count)
+	private static string? GetMarker(IRow studRow)
+	{
+		string ret = GetCellString(studRow, 0);
+        if (string.IsNullOrEmpty(ret))
+        {
+            return null;
+        }
+        return ret;
+	}
+
+	private static string GetComment(IRow studRow, int count)
     {
         return GetCellString(studRow, count + 4);
     }
@@ -147,6 +164,8 @@ public class DelegatedMarkResponse
     private static string GetCellString(IRow studRow, int col)
     {
         var cell = studRow.GetCell(col);
+        if (cell is null)
+            return "";
         var ret = "";
         if (cell.CellType == CellType.String)
             ret = cell.StringCellValue;
@@ -265,6 +284,8 @@ public class DelegatedMarkResponse
         sb.AppendLine(ReportOption(transcriptResults, credits, 70, "if distinction"));
         sb.AppendLine(ReportOption(transcriptResults, credits, 75, "if excellent"));
         sb.AppendLine(ReportOption(transcriptResults, credits, 80, "if outstanding"));
+        sb.AppendLine(ReportOption(transcriptResults, credits, 85, "if exceptional"));
+        sb.AppendLine(ReportOption(transcriptResults, credits, 90, "if perfect"));
         if (assignedMark != -1)
         {
             sb.AppendLine();

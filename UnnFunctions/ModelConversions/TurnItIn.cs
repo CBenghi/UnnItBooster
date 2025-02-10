@@ -106,6 +106,9 @@ public partial class TurnItIn
 		// ensure indices
 		var sql = "CREATE INDEX IF NOT EXISTS sub_userid on TB_Submissions(SUB_UserID)";
 		ExecuteSql(c, sql);
+
+		ExecuteSql(c, createFullymarkedView);
+
 	}
 
 	public static void UpgradeDatabase(string fullname)
@@ -197,6 +200,9 @@ public partial class TurnItIn
 			cmd.CommandText = TB_MarkersSql;
 			cmd.ExecuteNonQuery();
 
+			cmd.CommandText = createFullymarkedView;
+			cmd.ExecuteNonQuery();
+
 			sql = "CREATE VIEW if not exists QComments AS " +
 				"SELECT * FROM (TB_SubComments INNER JOIN TB_Comments " +
 				"on SCOM_ptr_Comment = COMM_ID) left join TB_Components " +
@@ -207,6 +213,18 @@ public partial class TurnItIn
 		catch { }
 		c.Close();
 	}
+
+	static string createFullymarkedView =
+		"""
+		CREATE VIEW if not exists QFullyMarkedPapers AS 
+		SELECT MARK_ptr_Submission,
+			(SELECT min(MARK_ptr_Component) = -1 FROM TB_Marks as SEC WHERE MAIN.MARK_ptr_Submission = SEC.MARK_ptr_Submission and MARK_ptr_Component < 0 ) AS HasMarkOverride,
+			(SELECT count(MARK_ptr_Component) = (select count(*) from TB_Components)
+			FROM TB_Marks as SEC WHERE MAIN.MARK_ptr_Submission = SEC.MARK_ptr_Submission and MARK_ptr_Component >0 ) AS HasAllComponents
+		FROM TB_Marks as MAIN
+		GROUP BY MARK_ptr_Submission
+		HAVING HasMarkOverride = 1 OR HasAllComponents = 1
+		""";
 
 	public static IEnumerable<TurnitInSubmission> GetSubmissionsFromLearningAnalytics(FileInfo learningAnalytics, StudentsRepository repo)
 	{
