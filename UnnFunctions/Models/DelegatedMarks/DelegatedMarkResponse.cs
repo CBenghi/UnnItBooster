@@ -311,15 +311,13 @@ public class DelegatedMarkResponse
         int integerMark = (int)Math.Ceiling(mark);
         if (integerMark < 50)
         {
-			string failReport = $"option: {mark}, Average: N/A over N/A total credits, {optionName}\tFAIL";
+			string failReport = $"option: {integerMark}, Average: N/A over N/A total credits, {optionName}\tFAIL";
 			return failReport;
 		}
         var tmpRes = new ModuleResult() { AgreedMark = integerMark.ToString(), Credits = credits.ToString() };
         var range = startingMarks.Concat([tmpRes]);
         var average = ModuleResult.WeightedAverage(range, out var matCred);
-        
-        
-        string thisReport = $"option: {mark}, Average: {average:0.00} over {matCred} total credits, {optionName}\t{Classify(average)}"; 
+        string thisReport = $"option: {integerMark}, Average: {average:0.00} over {matCred} total credits, {optionName}\t{Classify(average)}"; 
         return thisReport;
     }
 

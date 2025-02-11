@@ -161,7 +161,7 @@ namespace UnnFunctions.Models
 		public static string Describe(IEnumerable<int> delegateMarks)
 		{
 			DescriptiveStatistics series = new DescriptiveStatistics(delegateMarks.Select(x => (double)x));
-			return $"Mean: {series.Mean}, Minimum: {series.Minimum}, Maximum: {series.Maximum}, StDev: {series.StandardDeviation:0.##}, Range: {series.Maximum - series.Minimum}";
+			return $"Mean: {series.Mean:0.##}, Minimum: {series.Minimum}, Maximum: {series.Maximum}, StDev: {series.StandardDeviation:0.##}, Range: {series.Maximum - series.Minimum}";
 		}
 	}
 }
