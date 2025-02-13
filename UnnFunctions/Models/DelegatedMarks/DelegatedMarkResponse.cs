@@ -267,32 +267,34 @@ public class DelegatedMarkResponse
         foreach (var response in delegMarks)
         {
             var mark = response.GetMark();
-            var ret = ReportOption(transcriptResults, credits, mark, response.MarkerRole);
+            var ret = ReportOption(transcriptResults, credits, mark, response.MarkerRole, out _);
             sb.AppendLine(ret);
         }
         if (delegMarks.Any())
         {
             var delegAverage = delegMarks.Select(x => x.GetMark()).Average();
-            sb.AppendLine(ReportOption(transcriptResults, credits, delegAverage, "markers average"));
+            sb.AppendLine(ReportOption(transcriptResults, credits, delegAverage, "markers average", out _));
         }
         sb.AppendLine();
         sb.AppendLine("Marking range sensitivity analysis");
-        sb.AppendLine(ReportOption(transcriptResults, credits, 50, "if bare pass"));
-        sb.AppendLine(ReportOption(transcriptResults, credits, 55, "if ok pass"));
-        sb.AppendLine(ReportOption(transcriptResults, credits, 60, "if commendation"));
-        sb.AppendLine(ReportOption(transcriptResults, credits, 65, "if average"));
-        sb.AppendLine(ReportOption(transcriptResults, credits, 70, "if distinction"));
-        sb.AppendLine(ReportOption(transcriptResults, credits, 75, "if excellent"));
-        sb.AppendLine(ReportOption(transcriptResults, credits, 80, "if outstanding"));
-        sb.AppendLine(ReportOption(transcriptResults, credits, 85, "if exceptional"));
-        sb.AppendLine(ReportOption(transcriptResults, credits, 90, "if perfect"));
+        sb.AppendLine(ReportOption(transcriptResults, credits, 50, "if bare pass", out var prevClassification));
+        for (int i = 51; i <= 100; i++)
+        {
+            var buffer = ReportOption(transcriptResults, credits, i, "next level up", out var thisClassification);
+            if (thisClassification != prevClassification || i == 100)
+            {
+                sb.AppendLine(buffer);
+                prevClassification = thisClassification;
+            }
+            if (prevClassification == "Distinction")
+                break;
+		}
         if (assignedMark != -1)
         {
             sb.AppendLine();
             sb.AppendLine("=============");
             sb.AppendLine("Current mark:");
-            sb.AppendLine(ReportOption(transcriptResults, credits, assignedMark, "Assigned mark"));
-
+            sb.AppendLine(ReportOption(transcriptResults, credits, assignedMark, "Assigned mark", out _));
             var tmp = transcriptResults.Concat([new ModuleResult()
             {
                  ActualMark = assignedMark.ToString(), 
@@ -306,29 +308,23 @@ public class DelegatedMarkResponse
         return sb.ToString();
     }
 
-    private static string ReportOption(IEnumerable<ModuleResult> startingMarks, int credits, double mark, string optionName)
+    private static string ReportOption(IEnumerable<ModuleResult> startingMarks, int credits, double mark, string optionName, out string classification)
     {
         int integerMark = (int)Math.Ceiling(mark);
         if (integerMark < 50)
         {
-			string failReport = $"option: {integerMark}, Average: N/A over N/A total credits, {optionName}\tFAIL";
+            classification = "FAIL";
+			string failReport = $"option: {integerMark}, Average: N/A over N/A total credits, {optionName}\t{classification}";
 			return failReport;
 		}
         var tmpRes = new ModuleResult() { AgreedMark = integerMark.ToString(), Credits = credits.ToString() };
         var range = startingMarks.Concat([tmpRes]);
-        var average = ModuleResult.WeightedAverage(range, out var matCred);
-        string thisReport = $"option: {integerMark}, Average: {average:0.00} over {matCred} total credits, {optionName}\t{Classify(average)}"; 
-        return thisReport;
+        var average = ModuleResult.WeightedAverage(range, out var matCred, out classification, out var compensatedCode);
+        string thisReport = $"option: {integerMark}, Average: {average:0.00} over {matCred} total credits, {optionName}\t{classification}"; 
+        if (compensatedCode != string.Empty)
+			thisReport = $"option: {integerMark}, Average: {average:0.00} over {matCred} total credits, {optionName}\t{classification}, compensated on {compensatedCode}";
+		return thisReport;
     }
 
-	private static string Classify(double average)
-	{
-        if (average > 69)
-            return "Distinction";
-		if (average > 59)
-			return "Commendation";
-		if (average > 49)
-			return "Pass";
-        return "Fail";
-	}
+	
 }

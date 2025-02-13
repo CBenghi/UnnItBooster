@@ -265,10 +265,11 @@ namespace UnnItBooster.Models
 					}
 					sb.AppendLine($"{transcript.Year} Lvl:{transcript.Level} {transcript.Code} Mark: {transcript.GetMarkString()} ({transcript.Title} {transcript.Credits} credits with code {transcript.GetCodesString()}).");
 				}
-				var res = ModuleResult.WeightedAverage(TranscriptResults, out var credits);
+				var res = ModuleResult.WeightedAverage(TranscriptResults, out var credits, out _, out var compensatedCode);
 				if (res > 0)
 				{
-					sb.AppendLine($"\r\nWeighted average {res:0.0}% over {credits} credits\r\n");
+					var cmp =  compensatedCode == string.Empty ? "" : $" compensated on {compensatedCode}";
+					sb.AppendLine($"\r\nWeighted average {res:0.0}% over {credits} credits{cmp}\r\n");
 				}
 				if (addLegenda)
 				{

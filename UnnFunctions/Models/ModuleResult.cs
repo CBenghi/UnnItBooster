@@ -50,23 +50,67 @@ namespace UnnFunctions.Models
 			return int.TryParse(t, out mark);
 		}
 
-		public static double WeightedAverage(IEnumerable<ModuleResult> results, out int MaturedCredits)
+		public static double WeightedAverage(IEnumerable<ModuleResult> results, out int MaturedCredits, out string classification, out string compensatedCode)
 		{
 			var Tally = 0.0;
 			MaturedCredits = 0;
+			List<(int mark, int cred)> credits = new();
+			bool compensated = false;
+			compensatedCode = string.Empty;
+
+			var PassedModuleNames = new List<string>();
 			foreach (var result in results)
 			{
 				if (result.TryGetMark(out var mk, out var cred) && cred > 0)
 				{
+					credits.Add((mk, cred));
 					Tally += mk * cred;
 					MaturedCredits += cred;
+					PassedModuleNames.Add(result.Title);
+				}
+			}
+			if (MaturedCredits < 180)
+			{
+				// see if a failed module can be compensated
+				foreach (var result in results.Where(x=> !PassedModuleNames.Contains(x.Title)))
+				{
+					if (result.TryGetMark(out var mk, out var cred) && compensated == false && mk >= 40) // we can compensate
+					{
+						compensatedCode = result.Code;
+						Tally += mk * 20;
+						MaturedCredits += 20;
+						credits.Add((mk, 20));
+						compensated = true;
+					}
 				}
 			}
 			if (MaturedCredits > 0)
 			{
-				return Tally/MaturedCredits;
+				var avg = (double)Tally / MaturedCredits;
+				classification = Classify(avg, credits);
+				return avg;
 			}
+			classification = string.Empty;
 			return 0;
+		}
+
+		private static string Classify(double average, List<(int mark, int cred)> credits)
+		{
+			var countCredits = credits.Sum(x => x.cred);
+			if (countCredits < 180)
+				return "missing credits";
+
+            if (average >= 70)
+				return "Distinction";
+			if (average >= 68 && credits.Where(x=>x.mark>=70).Sum(y=>y.cred) > 90)
+				return "Distinction";
+			if (average >= 60)
+				return "Commendation";
+			if (average >= 58 && credits.Where(x=>x.mark>=60).Sum(y=>y.cred) > 90)
+				return "Commendation";
+			if (average > 49)
+				return "Pass";
+			return "Fail";
 		}
 
 		public static bool TryGetResultDescription(string code, out string shortDesc, out string longDesc)

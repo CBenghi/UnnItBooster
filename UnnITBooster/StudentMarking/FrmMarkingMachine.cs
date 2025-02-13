@@ -1701,8 +1701,9 @@ public partial class FrmMarkingMachine : Form
 					var student = studentRepository.GetStudentById(numUID);
 					if (student != null && student.TranscriptResults is not null)
 					{
-						var mark = ModuleResult.WeightedAverage(student.TranscriptResults, out var maturedCredits);
-						markComments = $"Avg: {mark:#.00} out of {maturedCredits} credits; ";
+						var mark = ModuleResult.WeightedAverage(student.TranscriptResults, out var maturedCredits, out _, out var compensatedCode);
+						var cmp = compensatedCode == string.Empty ? "" : $" compensated on {compensatedCode}";
+						markComments = $"Avg: {mark:#.00} out of {maturedCredits} credits{cmp}; ";
 					}
 					if (delegMarks.TryGetValue(numUID, out var delegateMarks))
 					{
