@@ -54,7 +54,7 @@ namespace UnnFunctions.Models
 		{
 			var Tally = 0.0;
 			MaturedCredits = 0;
-			List<(int mark, int cred)> credits = new();
+			List<(int mark, int cred)> credits = [];
 			bool compensated = false;
 			compensatedCode = string.Empty;
 

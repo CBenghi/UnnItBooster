@@ -1,9 +1,14 @@
-﻿using System;
+﻿using NPOI.OpenXmlFormats;
+using NPOI.XWPF.UserModel;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace UnnFunctions.Models
 {
@@ -15,6 +20,197 @@ namespace UnnFunctions.Models
 		{
 			file = f;
 		}
+
+		public string GetText()
+		{
+			var sb = new StringBuilder();
+			foreach (var par in GetParagraphs())
+			{
+				sb.AppendLine(par);
+			}
+			return sb.ToString();
+		}
+
+		public IEnumerable<string> GetInlinReferences()
+		{
+			foreach (var item in GetParagraphs())
+			{
+				foreach (var reference in GetReferencesFrom(item))
+				{
+					yield return reference;
+				}
+			}
+		}
+
+		public IEnumerable<string> GetReferenceList()
+		{
+			Regex refHeader = new Regex("^Reference[s]?$", RegexOptions.IgnoreCase);
+			Regex keepCapture = new Regex(@".+[\( \.,]\d{4}[a-z]?[\) \.,].+", RegexOptions.IgnoreCase);
+			bool isCapturing = false;
+			foreach (var item in GetParagraphs())
+			{
+				if (!isCapturing)
+				{
+					if (item.Contains("References"))
+					{
+
+					}
+					if (refHeader.IsMatch(item))
+					{
+						isCapturing = true;
+					}
+				}
+				else if (isCapturing)
+				{
+					if (!keepCapture.IsMatch(item))
+					{
+						yield break; 
+					}
+					yield return item;
+				}
+
+				
+			}
+			yield break;
+		}
+
+		private static IEnumerable<string> GetReferencesFrom(string origItem)
+		{
+			var item = origItem;
+			//char ct = '-';
+			//Debug.WriteLine((int)ct);
+			Regex cleanOpenPar = new Regex(@"\({2,}");
+			Regex cleanClosePar = new Regex(@"\){2,}");
+			item = cleanOpenPar.Replace(item, "(");
+			item = cleanClosePar.Replace(item, ")");
+			Regex parenthesisWithYear = new Regex(@"\((?<insidePar>[^\)]*\b\d{4}[a-z]?\b[^\)]*)\)");
+			Regex startsWithYear = new Regex(@"^\d{4}[a-z]?\b.*?$");
+			Regex invalid = new Regex(@"^[\x2D0-9]*$", RegexOptions.None);
+			// \p{Lu} is uppercase \p{Ll} is lowercase \p{L} is any
+			Regex namesBeforeBracket = new Regex(@"(?<citation>([\p{Lu}][\p{L}\.]+(\s|and|et|al\.|,)*?)+)\s*$", RegexOptions.CultureInvariant);
+
+			Regex removePage = new Regex(@"[\s,]*(p\.|pp\.|pag\.)\s*\d+([\s -]\d+)?", RegexOptions.IgnoreCase);
+			Regex removeDoublespace = new Regex(@"[\s]+", RegexOptions.IgnoreCase);
+
+			foreach (Match match in parenthesisWithYear.Matches(item))
+			{
+				var initialValue = match.Groups["insidePar"].Value;
+				var values = initialValue.Split(';').Select(value => value.Trim());
+				foreach (var singleValue in values)
+				{
+					var tmpValue = singleValue;
+					var beforeMatch = item.Substring(0, match.Index);
+					if (startsWithYear.IsMatch(tmpValue))
+					{
+						var capitalMatch = namesBeforeBracket.Match(beforeMatch);
+						if (capitalMatch.Success)
+						{
+							tmpValue = $"{capitalMatch.Groups["citation"].Value.Trim([' ', ','])}, {tmpValue}";
+						}
+					}
+					tmpValue = removePage.Replace(tmpValue, "");
+					tmpValue = removeDoublespace.Replace(tmpValue, " ");
+					tmpValue = tmpValue.Replace(" et al. ", " et al., ");
+					tmpValue = tmpValue.Replace(" ,", ",");
+					tmpValue = tmpValue.Replace(" & ", " and ");
+					if (tmpValue == "1987–2005")
+					{
+
+					}
+					if (invalid.IsMatch(tmpValue))
+					{
+						Debug.WriteLine($"Invalid reference result for `{initialValue}` - context: `{beforeMatch.Substring(Math.Max(0, beforeMatch.Length - 25))}{initialValue}`");
+						continue;
+					}
+					yield return tmpValue;
+				}
+			}
+		}
+
+		private List<string>? parags;
+
+		public IEnumerable<string> GetParagraphs()
+		{
+			try
+			{
+				if (parags is null)
+				{
+					using var fileStream = File.OpenRead(file.FullName);
+					using var doc = new XWPFDocument(fileStream);
+					parags = GetComponentsText(doc).ToList();
+				}
+				return parags ?? Enumerable.Empty<string>();
+			}
+			catch (Exception ex)
+			{
+				return [$"Error: {ex.Message}"];
+			}
+		}
+
+		private class HitStat
+		{
+			public HitStat(int initialHitCount)
+			{
+				HitCount = initialHitCount;
+			}
+
+			public int HitCount { get; set; } = 0;
+		}
+
+		private static IEnumerable<string> GetComponentsText(XWPFDocument doc)
+		{
+			Dictionary<string, HitStat> ignoredTypes = [];
+			var result = new List<string>();
+			foreach (var bodyElement in doc.BodyElements)
+			{
+				if (bodyElement is XWPFParagraph paragraph)
+				{
+					result.Add(paragraph.Text);
+					continue;
+				}
+				if (bodyElement is XWPFSDT unknown)
+				{
+					var cont = unknown.Content.Text;
+					var lines = cont.Split(['\n', '\r'], StringSplitOptions.RemoveEmptyEntries);
+					foreach (var line in lines)
+					{
+						result.Add(line);
+					}
+					continue;
+				}
+				// what types are not managed by the code
+				if (bodyElement is not XWPFTable table)
+				{
+					var tb = bodyElement.GetType();
+					var typeName =  tb.FullName;
+					if (ignoredTypes.TryGetValue(typeName, out var found))
+						found.HitCount++;
+					else
+						ignoredTypes.Add(typeName, new HitStat(1));
+					continue;
+				}
+
+				foreach (var row in table.Rows)
+				{
+					var tableLine = new StringBuilder();
+					foreach (var cell in row.GetTableCells())
+					{
+						foreach (var cellParagraph in cell.Paragraphs)
+						{
+							tableLine.Append(cellParagraph.Text);
+							tableLine.Append("| ");
+						}
+					}
+					result.Add(tableLine.ToString());
+				}
+			}
+			foreach (var ignoredType in ignoredTypes)
+			{
+				result.Add($"Ignored {ignoredType.Value.HitCount}: {ignoredType.Key}");
+			}
+			return result;
+		}
+
 
 		public bool Exists
 		{
@@ -79,6 +275,21 @@ namespace UnnFunctions.Models
 			}
 			return false;
 
+		}
+
+		public static IEnumerable<string> CleanReferences(IEnumerable<string> refs)
+		{
+			yield break;
+			Regex r = new Regex(@"^\((?<simpleRef>.+)\)$");
+			foreach (var referenceString in refs)
+			{
+				var m = r.Match(referenceString);
+                if (m.Success)
+                {
+                    
+                }
+                // if (.IsMatch(referenceString))
+			}
 		}
 	}
 }

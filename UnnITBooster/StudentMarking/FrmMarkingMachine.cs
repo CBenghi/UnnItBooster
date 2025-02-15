@@ -63,6 +63,7 @@ public partial class FrmMarkingMachine : Form
     {
         UpdateStudentReport();
         UpdateStudentMarksUi();
+        txtTextOrPointer.Text = "";
         if (ChkAutoStat.Checked)
         {
             var txt = ReportTranscript(out var student, false);
@@ -474,7 +475,11 @@ public partial class FrmMarkingMachine : Form
             {
                 txtLibReport.WordWrap = !txtLibReport.WordWrap;
             }
-            else if (txtSearch.Text == "missing")
+			else if (txtSearch.Text == "check references")
+			{
+                txtLibReport.Text = ReportReferenceCheck();
+			}
+			else if (txtSearch.Text == "missing")
             {
                 FindMissing();
             }
@@ -599,6 +604,11 @@ public partial class FrmMarkingMachine : Form
                         Sets the width of the tab character in the Report textBox
                         e.g.: SetTab 8
 
+                    check references
+                        tries to find the references from the file and then looks them
+                        up in the list of references that must be placed in the top right hand side
+                        textbox.
+
                     <normal search>
                         separate text from section/area with `;`
                         ending the first term with a + searches in the pesonal text as well
@@ -623,6 +633,62 @@ public partial class FrmMarkingMachine : Form
         {
             CommandCache(e.KeyCode);
         }
+    }
+
+    private string ReportReferenceCheck()
+    {
+        StringBuilder sb = new();
+        sb.AppendLine(
+            """
+            Tries to find the references from the file and then looks them up in the list 
+            of references that must be placed in the top right hand side textbox.
+            """
+            );
+
+        var fullname = Path.Combine(_config.GetFolderName(), cmbDocuments.Text);
+        var f = new FileInfo(fullname);
+        var wf = new WordFile(f);
+        if (wf.Exists)
+        {
+            sb.AppendLine("===");
+            sb.AppendLine("In text References");
+			if (string.IsNullOrEmpty(txtTextOrPointer.Text))
+            {
+                txtTextOrPointer.Text = string.Join(Environment.NewLine, wf.GetReferenceList());
+            }
+			var referenceList = new ReferenceList(txtTextOrPointer.Text);
+            var refs = wf.GetInlinReferences().ToList();
+            foreach (var item in refs.GroupBy(x => x).OrderBy(y => y.Key))
+            {
+                if (referenceList.TryGetMatchingReferences(item.Key, out var candidateRefs))
+                {
+                    if (candidateRefs.Count() == 1)
+                    {
+
+                    }
+                    else
+                    {
+                        sb.AppendLine($"- {item.Key}, (count: {item.Count()})");
+                        foreach (var candidate in candidateRefs)
+                        {
+                            sb.AppendLine($"  - {candidate}");
+                        }
+                    }
+                }
+                else
+                {
+					sb.AppendLine($"- {item.Key}, (count: {item.Count()})");
+					sb.AppendLine("  - ### Reference not found.");
+                }
+            }
+			sb.AppendLine("===");
+			sb.AppendLine("Unused references");
+            foreach (var item in referenceList.GetUnreferenced())
+            {
+			    sb.AppendLine($"- {item}");
+            }
+        }
+        return sb.ToString();
     }
 
 	private string GetPapersUnmarked(string param)
@@ -1056,7 +1122,7 @@ public partial class FrmMarkingMachine : Form
         {
 			return "No student found in repository";
 		}
-		return studentFound.ReportTranscript(false); 
+		return studentFound.ReportTranscript(AddLegenda); 
 	}
 
 	private void EditLoad(string value)
@@ -2293,6 +2359,7 @@ public partial class FrmMarkingMachine : Form
 	private void cmdWrap_Click(object sender, EventArgs e)
 	{
         txtLibReport.WordWrap = !txtLibReport.WordWrap;
+        txtTextOrPointer.Wrapping = txtLibReport.WordWrap;
 	}
 
 	private void cmdReportSizeIncrease_Click(object sender, EventArgs e)
@@ -2358,5 +2425,30 @@ public partial class FrmMarkingMachine : Form
         var t = LblMark.Text.Replace("%", "");
         t = LblMark.Text.Replace(" ", "");
 		Clipboard.SetText(t);
+	}
+
+	private void button13_Click(object sender, EventArgs e)
+	{
+		if (cmbDocuments.Text != "")
+		{
+			var fullname = Path.Combine(
+				_config.GetFolderName(),
+				cmbDocuments.Text);
+            FileInfo f = new FileInfo(fullname);
+			WordFile wf = new WordFile(f);
+            if (wf.Exists)
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine(wf.GetText());
+                sb.AppendLine("===");
+                sb.AppendLine("In text References");
+                var refs = wf.GetInlinReferences().ToList();
+				foreach (var item in refs.GroupBy(x => x).OrderBy(y=>y.Key))
+				{
+					sb.AppendLine($"- {item.Key}, ({item.Count()})");
+				}
+				txtLibReport.Text = sb.ToString();
+            }
+		}
 	}
 }
