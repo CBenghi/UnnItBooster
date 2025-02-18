@@ -300,7 +300,6 @@ public partial class FrmMarkingMachine : Form
             var setComponentCommentMatch = Regex.Match(txtSearch.Text, "componentComment (\\d+) (.*)", RegexOptions.IgnoreCase);
             var idsMatch = Regex.Match(txtSearch.Text, "ids", RegexOptions.IgnoreCase);
             var editMatch = Regex.Match(txtSearch.Text, "^edit (?<par>last|\\?|\\d+)$", RegexOptions.IgnoreCase);
-            var whoGotMatch = Regex.Match(txtSearch.Text, @"(WhoGotComment|WhoGot\w?) (?<commentId>\d+)", RegexOptions.IgnoreCase);
             var removeMatch = Regex.Match(txtSearch.Text, @"Remove (\d+)", RegexOptions.IgnoreCase);
             var levelMatch = Regex.Match(txtSearch.Text, @"setlevel (?<level>ug|pg)", RegexOptions.IgnoreCase);
             var selectModerationMatch = Regex.Match(txtSearch.Text, @"SelectModeration *(?<name>.*)$", RegexOptions.IgnoreCase);
@@ -309,7 +308,7 @@ public partial class FrmMarkingMachine : Form
             var importMarksMatch = Regex.Match(txtSearch.Text, @"^Import ?Marker[s]?(\s+(?<filter>.+?)?)$", RegexOptions.IgnoreCase);
             var markingExcelsMatch = Regex.Match(txtSearch.Text, @"^Create ?MarkingFiles(\s+(?<filter>.+?))? +(?<excelFileName>.*)$", RegexOptions.IgnoreCase);
             var moduleCreditsMatch = Regex.Match(txtSearch.Text, @"^ModuleCredits (?<credits>\d+)$", RegexOptions.IgnoreCase);
-            var customSortMatcher = Regex.Match(txtSearch.Text, @"sort\s+(?<mode>turnitin|marker|comment|unmarked)\s*(?<param>.*)$", RegexOptions.IgnoreCase);
+            var customSortMatcher = Regex.Match(txtSearch.Text, @"(sort|find|search)\s+(?<mode>turnitin|marker|comment|unmarked)\s*(?<param>.*)$", RegexOptions.IgnoreCase);
             var SetTabMatch = Regex.Match(txtSearch.Text, @"^SetTab (?<size>\d+)$", RegexOptions.IgnoreCase);
             if (addComponentMatch.Success)
             {
@@ -463,10 +462,6 @@ public partial class FrmMarkingMachine : Form
             {
                 GetIds();
             }
-            else if (whoGotMatch.Success)
-            {
-                GetCommentUse(whoGotMatch);
-            }
             else if (removeMatch.Success)
             {
                 RemoveComment(removeMatch);
@@ -534,6 +529,7 @@ public partial class FrmMarkingMachine : Form
                         use 'marks with emails' to add the email address to the output
 
                     sort <mode:turnitin|marker|comment|unmarked> [param]
+                        Also works with `Find` or `Search`
                         produces a custom order of submission for ease of browsing
                         Entries are navigated with +/- buttons as long as the "Use Sorting" checkbox is flagged
                         The list of IDs is visible in the report of the Tools TAB
@@ -541,12 +537,10 @@ public partial class FrmMarkingMachine : Form
                         - sort turnitin ELPSITENAME
                         - sort marker claudio.benghi
                         - sort comment misconduct
+                        - sort comment 33
 
                     Remove <commentId>
                        removes the comment from the current student by the ID of the comment
-
-                    WhoGotComment <#>
-                       lists students that got a specific comment in their feedback
 
                     stat|stats|transcript
                        Provides transcript information for the selected student, if available
@@ -1200,47 +1194,57 @@ public partial class FrmMarkingMachine : Form
     }
 
     private void FindMissing()
-    {
-        var allIds = txtLibReport.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-        txtStudentreport.Text += "Missing report:\r\n";
-        txtStudentreport.Text += "==============:\r\n";
-        var sql = "SELECT * FROM TB_Submissions";
-        var dt = _config.GetDataTable(sql);
-        foreach (DataRow r in dt.Rows)
-        {
-            var lookForId = r["sub_numericUserId"].ToString();
-            var rEx = new Regex("" + lookForId + @"/(\d)");
-            var bFound = false;
-            foreach (var reqId in allIds)
-            {
-                if (rEx.IsMatch(reqId))
-                {
-                    bFound = true;
-                    break;
-                }
-            }
-            if (!bFound)
-            {
-                txtStudentreport.Text += lookForId + " (#" + r["sub_ID"] + ") missing\r\n";
-            }
-        }
-    }
+	{
+		var allIds = LibReportToMcrfIds();
 
-    private void GetCommentUse(Match m4)
-    {
-        txtLibReport.Text = "Submissions:\r\n";
-        var sql = "SELECT SCOM_ptr_Submission, TB_Submissions.SUB_UserID FROM TB_SubComments inner join TB_Submissions on SCOM_ptr_Submission = SUB_ID where SCOM_ptr_comment = " + m4.Groups["commentId"].Value;
-        var dt = _config.GetDataTable(sql);
-        var reqIds = new List<string>();
-        foreach (DataRow item in dt.Rows)
-        {
-            txtLibReport.Text += $"{item[0]}\t{item[1]}\r\n";
-            // this submission's files
-            reqIds.Add(item[1].ToString());
-        }
-    }
+        var sb = new StringBuilder();
 
-    private void GetIds()
+		sb.AppendLine("Found IDs:");
+		sb.AppendLine("==============:");
+        sb.AppendLine($"Count: {allIds.Count()}");
+        sb.AppendLine($"Distinct: {allIds.Distinct().Count()}");
+		sb.AppendLine();
+
+		sb.AppendLine("Missing report:");
+		sb.AppendLine("==============:");
+		var sql = "SELECT * FROM TB_Submissions";
+		var dt = _config.GetDataTable(sql);
+		foreach (DataRow r in dt.Rows)
+		{	
+			var requiredId = r["sub_numericUserId"].ToString().Trim();
+            var found = allIds.Contains(requiredId);
+			if (!found)
+			{
+                sb.AppendLine($"{requiredId} (#{r["sub_ID"]}) missing");
+			}
+		}
+		txtStudentreport.Text = sb.ToString();
+	}
+
+	private IEnumerable<string> LibReportToMcrfIds()
+	{
+        var ids = new List<string>();
+		var candidates = txtLibReport.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+        var rJustId = new Regex(@"^(?<Id>\d{8})$");
+        var rMcrfFillingReturn = new Regex(@"^Student (?<Id>\d{8}) set to -?[\d]+\.$");
+
+        foreach (var item in candidates)
+        {
+            var m1 = rJustId.Match(item);
+            var m2 = rMcrfFillingReturn.Match(item);
+            if (m1.Success)
+            {
+                ids.Add(m1.Groups["Id"].Value);
+            }
+			if (m2.Success)
+			{
+				ids.Add(m2.Groups["Id"].Value);
+			}
+		}
+        return ids.ToArray();
+	}
+
+	private void GetIds()
     {
         txtLibReport.Text = "";
         var sql = "SELECT sub_userid, sub_numericUserId FROM TB_Submissions";
