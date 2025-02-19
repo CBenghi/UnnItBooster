@@ -6,6 +6,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="27" d:DesignWidth="306" AllowDrop="True" VisualTextHintingMode="Fixed" SnapsToDevicePixels="True">
     <DockPanel>
-        <TextBox SpellCheck.IsEnabled="True" TextWrapping="Wrap" Name="theTextBox" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" AcceptsTab="True" Text="" Cursor="IBeam" CaretBrush="#E6000000" />
+        <TextBox SpellCheck.IsEnabled="True" TextWrapping="Wrap" Name="theTextBox" 
+                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                 AcceptsReturn="True" AcceptsTab="True" Text="" Cursor="IBeam" CaretBrush="#E6000000"
+                 />
     </DockPanel>
 </UserControl>

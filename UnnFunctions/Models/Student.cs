@@ -263,7 +263,10 @@ namespace UnnItBooster.Models
 						yr = transcript.Year;
 						sb.AppendLine($"{yr}");
 					}
-					sb.AppendLine($"{transcript.Year} Lvl:{transcript.Level} {transcript.Code} Mark: {transcript.GetMarkString()} ({transcript.Title} {transcript.Credits} credits with code {transcript.GetCodesString()}).");
+					if (!addLegenda)
+						sb.AppendLine($"{transcript.Year} Lvl:{transcript.Level} {transcript.Code} Mark: {transcript.GetMarkString()} ({transcript.Title} {transcript.Credits} credits with {transcript.GetResultCodesDescription()}).");					
+					else
+						sb.AppendLine($"{transcript.Year} Lvl:{transcript.Level} {transcript.Code} Mark: {transcript.GetMarkString()} ({transcript.Title} {transcript.Credits} credits with code {transcript.GetResultCodesString()}).");
 				}
 				var res = ModuleResult.WeightedAverage(TranscriptResults, out var credits, out _, out var compensatedCode);
 				if (res > 0)

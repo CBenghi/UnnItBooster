@@ -174,8 +174,8 @@ namespace UnnFunctions.Models
 					longDesc = "Module Defer/Refer (Covid/Cyber Incident TEC)";
 					return true;
 				default:
-					shortDesc = "";
-					longDesc = "";
+					shortDesc = $"<{code} missing>";
+					longDesc = $"<{code} missing>";
 					return false;
 			}
 		}
@@ -192,7 +192,7 @@ namespace UnnFunctions.Models
 			}
 		}
 
-		internal string GetCodesString()
+		internal string GetResultCodesString()
 		{
 			var codes = new List<string>() {
 				ActualResult,
@@ -206,6 +206,23 @@ namespace UnnFunctions.Models
 		{
 			DescriptiveStatistics series = new DescriptiveStatistics(delegateMarks.Select(x => (double)x));
 			return $"Mean: {series.Mean:0.##}, Minimum: {series.Minimum}, Maximum: {series.Maximum}, StDev: {series.StandardDeviation:0.##}, Range: {series.Maximum - series.Minimum}";
+		}
+
+		internal string GetResultCodesDescription()
+		{
+			var ResultCodes = new List<string>() {
+				ActualResult,
+				AgreedResult,
+				Result
+			}.Distinct();
+
+			var res = new List<string>();
+			foreach (var resultCode in ResultCodes)
+			{
+				TryGetResultDescription(resultCode, out var shortDesc, out string longDesc);
+				res.Add(shortDesc);
+			}
+			return string.Join(" / ", res);
 		}
 	}
 }

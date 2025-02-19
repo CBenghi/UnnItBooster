@@ -22,6 +22,8 @@ namespace UnnFunctions.Models
 				).Distinct().ToArray();
 		}
 
+		public object ReferenceCount => references.Length;
+
 		public IEnumerable<string> GetUnreferenced()
 		{
 			return references.Except(matchedReferences);
@@ -33,10 +35,10 @@ namespace UnnFunctions.Models
 			var cit = GetCitationParts(referenceCitation);
 			if (cit.Count < 1)
 			{
-				refs = new List<string>();	
+				refs = [];	
 				return false;
 			}
-			foreach (string reference in references)
+			foreach (var reference in references)
 			{
 				if (IsMatch(cit, reference))
 				{
@@ -59,10 +61,12 @@ namespace UnnFunctions.Models
 
 		private bool IsMatch(IEnumerable<string> requiredParts, string reference)
 		{
-			foreach (var part in requiredParts)
+			var pts = requiredParts.ToArray();
+			for (int i = 0; i < pts.Length; i++)
 			{
+				var part = pts[i];
 				bool found;
-				if (part.EndsWith(" et al."))
+				if (i == 0 || part.EndsWith(" et al."))
 				{
 					var firstAuthor = part.Replace(" et al.", "");
 					// must be the first name in the reference

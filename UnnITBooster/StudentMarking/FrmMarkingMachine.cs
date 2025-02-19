@@ -64,7 +64,9 @@ public partial class FrmMarkingMachine : Form
         UpdateStudentReport();
         UpdateStudentMarksUi();
         txtTextOrPointer.Text = "";
-        if (ChkAutoStat.Checked)
+        txtAdditionalNote.Text = "";
+
+		if (ChkAutoStat.Checked)
         {
             var txt = ReportTranscript(out var student, false);
             if (student is not null)
@@ -644,14 +646,24 @@ public partial class FrmMarkingMachine : Form
         var wf = new WordFile(f);
         if (wf.Exists)
         {
-            sb.AppendLine("===");
-            sb.AppendLine("In text References");
+            // preparing content
 			if (string.IsNullOrEmpty(txtTextOrPointer.Text))
             {
                 txtTextOrPointer.Text = string.Join(Environment.NewLine, wf.GetReferenceList());
             }
 			var referenceList = new ReferenceList(txtTextOrPointer.Text);
-            var refs = wf.GetInlinReferences().ToList();
+
+            if (string.IsNullOrEmpty(txtAdditionalNote.Text))
+            {
+				txtAdditionalNote.Text = string.Join(Environment.NewLine, wf.GetInlinReferences().OrderBy(x=>x));
+			}
+            var refs = txtAdditionalNote.Text.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+			sb.AppendLine("===");
+			sb.AppendLine($"Reference count: {refs.Length}, reference list count: {referenceList.ReferenceCount}");
+            sb.AppendLine();
+
+			sb.AppendLine("Problematic in-text References");
+			var problematicTally = 0;
             foreach (var item in refs.GroupBy(x => x).OrderBy(y => y.Key))
             {
                 if (referenceList.TryGetMatchingReferences(item.Key, out var candidateRefs))
@@ -662,25 +674,32 @@ public partial class FrmMarkingMachine : Form
                     }
                     else
                     {
-                        sb.AppendLine($"- {item.Key}, (count: {item.Count()})");
+                        // too many found
+                        sb.AppendLine($"- {item.Key}, (usage count: {item.Count()})");
                         foreach (var candidate in candidateRefs)
                         {
                             sb.AppendLine($"  - {candidate}");
                         }
-                    }
+                        problematicTally++;
+					}
                 }
                 else
                 {
-					sb.AppendLine($"- {item.Key}, (count: {item.Count()})");
+                    // not found 
+					sb.AppendLine($"- {item.Key}, (usage count: {item.Count()})");
 					sb.AppendLine("  - ### Reference not found.");
-                }
+					problematicTally++;
+				}
             }
+			sb.AppendLine($"{problematicTally} problematic references.");
+			sb.AppendLine();
 			sb.AppendLine("===");
 			sb.AppendLine("Unused references");
             foreach (var item in referenceList.GetUnreferenced())
             {
 			    sb.AppendLine($"- {item}");
             }
+			sb.AppendLine($"Unused references count: {referenceList.GetUnreferenced().Count()}");
         }
         return sb.ToString();
     }
@@ -1477,6 +1496,7 @@ public partial class FrmMarkingMachine : Form
             e.Handled = true;
             DoAdd();
             txtTextOrPointer.Text = "";
+            txtAdditionalNote.Text = "";
         }
         else
         {
