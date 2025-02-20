@@ -6,6 +6,10 @@
     },
     "bare debug": {
       "commandName": "Project"
+    },
+    "mailer": {
+      "commandName": "Project",
+      "commandLineArgs": "-mail \"C:\\Users\\Claudio\\OneDrive - Northumbria University - Production Azure AD\\2024\\KA7058 - Research methods\\MCRF KA7058.xlsx\""
     }
   }
 }

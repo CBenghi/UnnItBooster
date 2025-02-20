@@ -13,20 +13,23 @@ using UnnItBooster.Models;
 using StudentsFetcher.StudentMarking;
 using System.Linq;
 using System.Globalization;
+using System.Text.Json;
+using UnnItBooster;
+using System.Windows.Media.Media3D;
+using UnnFunctions.Models;
 
 namespace StudentMarking
 {
 	[AmmFormAttributes("Mass mailing", 3)]
 	public partial class frmMassMail : Form
 	{
-
         private StudentsRepository studentsRepo;
 
         public frmMassMail()
 		{
 			InitializeComponent();
 			txtEmailBody.Text = StudentsFetcher.Properties.Settings.Default.emailBody;
-			txtEmailSubject.Text = StudentsFetcher.Properties.Settings.Default.emailSubject;
+			cmbEmailSubject.Text = StudentsFetcher.Properties.Settings.Default.emailSubject;
 			txtEmailCC.Text = StudentsFetcher.Properties.Settings.Default.emailCC;
             studentsRepo = new StudentsRepository(StudentsFetcher.Properties.Settings.Default.StudentsFolder);
 			cmbSelectedModule.Items.Clear();
@@ -36,6 +39,10 @@ namespace StudentMarking
 				var ct = new ComboTag($"{coll.Name} - {coll.Students.Count}", coll.Name);
 				cmbSelectedModule.Items.Add(ct);
 			}
+			var names = EmailContent.GetTemplateNames(studentsRepo.ConfigurationFolder);
+			cmbEmailSubject.Items.AddRange(names.ToArray());
+			cmbEmailTransformationRule.Items.AddRange(EmailContent.GetOptions());
+			cmbEmailTransformationRule.SelectedIndex = 0;
 		}
 
 		private void cmdSelectFile_Click(object sender, EventArgs e)
@@ -210,7 +217,7 @@ namespace StudentMarking
 
 		private void button3_Click(object sender, EventArgs e)
 		{
-			if (txtEmailSubject.Text == "")
+			if (cmbEmailSubject.Text == "")
 			{
 				MessageBox.Show("Subject is empty.");
 				return;
@@ -222,7 +229,13 @@ namespace StudentMarking
 				return;
 			}
 
-			var textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
+			if (!string.IsNullOrWhiteSpace(txtEmailCC.Text) && !txtEmailCC.Text.Trim().EndsWith(";"))
+			{
+				MessageBox.Show("email CC needs to end with semicolon.");
+				return;
+			}
+
+			// var textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
 			var app = new OutlookLateBindingEmailer();
 			var replacements = GetReplacementList(txtEmailBody.Text);
 			foreach (ListViewItem studentId in lstEmailSendSelection.Items)
@@ -234,10 +247,12 @@ namespace StudentMarking
 				try
 				{
 					string emailtext = GetMailBody(replacements, row);
-					var emailSubject = replaceFields(txtEmailSubject.Text, replacements, row);
-					var destEmail = row[cmbEmailField.Text].ToString();
+					var emailSubject = replaceFields(cmbEmailSubject.Text, replacements, row);
+					var destEmail = EmailContent.ResolveEmail(row[cmbEmailField.Text].ToString(), cmbEmailTransformationRule.Text);
+					if (string.IsNullOrWhiteSpace(destEmail))
+						continue;
 					if (chkEmailDryRun.Checked)
-						app.SendOutlookEmail("claudio.benghi@gmail.com", emailSubject, emailtext, txtEmailCC.Text);
+						app.SendOutlookEmail("claudio.benghi@gmail.com", emailSubject, emailtext, txtEmailCC.Text.Trim());
 					else
 						app.SendOutlookEmail(destEmail, emailSubject, emailtext, txtEmailCC.Text);
 				}
@@ -305,6 +320,20 @@ namespace StudentMarking
                     var dataFun = data[1].ToLowerInvariant();
 					switch(dataFun)
 					{
+						case "resultshort":
+						case "resultlong":
+							{
+								if (ModuleResult.TryGetResultDescription(repvalue, out var shortVal, out var longVal))
+								{
+									if (dataFun == "resultshort")
+										repvalue = shortVal;
+									else
+										repvalue = longVal;
+								}
+								else
+									repvalue = "";
+							}
+							break;
 						case "capitalize": // case is checked lowered
 							repvalue = capitalize(repvalue.ToLowerInvariant()); 
 							break;
@@ -325,6 +354,29 @@ namespace StudentMarking
 								}
 							}
 							break;
+						case "mcrfname": // case is checked lowered
+							{
+								var tmp = repvalue.Split(new char[] { ' ', '\t', ',' }, StringSplitOptions.RemoveEmptyEntries);
+								if (tmp.Length == 0)
+								{
+									repvalue = "";
+								}
+								else if (tmp.Length > 0 && !IsWorkaround(tmp[0]))
+								{
+									repvalue = capitalize(tmp[0]);
+								}
+								else if (tmp.Length > 1 && IsWorkaround(tmp[0]))
+								{
+									repvalue = string.Join(" ", tmp.Skip(1));
+									repvalue = capitalize(repvalue);
+								}
+								else
+								{
+
+								}
+
+							}
+							break;
 					}
                 }				
 				// now fix it
@@ -333,12 +385,22 @@ namespace StudentMarking
 			return emailtext;
 		}
 
+		private bool IsWorkaround(string name)
+		{
+			if (name == "-")
+				return true;
+			if (name == ".")
+				return true;
+			return false;
+		}
+
 		private string capitalize(string repvalue)
 		{
 			// Creates a TextInfo based on the "en-US" culture.
 			TextInfo textInfo = new CultureInfo("en-GB", false).TextInfo;
 
 			// Changes a string to titlecase.
+			repvalue = repvalue.ToLowerInvariant(); // all capital would be otherwise ignored because considered Acronyms
 			return textInfo.ToTitleCase(repvalue);
 		}
 
@@ -398,10 +460,14 @@ namespace StudentMarking
 			if (lstEmailSendSelection.SelectedItems.Count == 0)
 				return;
 
+
+
 			var row = lstEmailSendSelection.SelectedItems[0].Tag as DataRow;
 			if (row == null)
 				return;
 			var replacements = GetReplacementList(txtEmailBody.Text);
+			var destEmail = EmailContent.ResolveEmail(row[cmbEmailField.Text].ToString(), cmbEmailTransformationRule.Text);
+			lblSelectedEmail.Text = destEmail;
 			try
 			{
 				var emailtext = GetMailBody(replacements, row);
@@ -413,34 +479,28 @@ namespace StudentMarking
 			}
 		}
 
-		private void txtEmailSubject_TextChanged(object sender, EventArgs e)
-		{
-			SaveSettings();
-		}
+		
 
 		private void SaveSettings()
 		{
 			StudentsFetcher.Properties.Settings.Default.emailBody = txtEmailBody.Text;
-			StudentsFetcher.Properties.Settings.Default.emailSubject = txtEmailSubject.Text;
+			StudentsFetcher.Properties.Settings.Default.emailSubject = cmbEmailSubject.Text;
 			StudentsFetcher.Properties.Settings.Default.emailCC = txtEmailCC.Text;
 			StudentsFetcher.Properties.Settings.Default.Save();
-		}
 
-		private void txtEmailBody_TextChanged(object sender, EventArgs e)
-		{
-			SaveSettings();
+			var email = new EmailContent()
+			{
+				EmailBody = txtEmailBody.Text,
+				EmailCC = txtEmailCC.Text,
+				EmailSubject = cmbEmailSubject.Text
+			};
+			email.Save(studentsRepo.ConfigurationFolder);
 		}
-
+		
 		private void Button1_Click(object sender, EventArgs e)
 		{
 			SaveSettings();
 		}
-
-		#region emailing
-
-
-
-		#endregion
 
 		private void button2_Click(object sender, EventArgs e)
 		{
@@ -478,5 +538,23 @@ namespace StudentMarking
 			r["full"] = x.FullName;
 			return r;
         }
-    }
+
+		internal void SetMailerDatabase(string databaseSource)
+		{
+			txtExcelFileName.Text = databaseSource;
+		}
+
+		private void cmbEmailSubject_SelectedValueChanged(object sender, EventArgs e)
+		{
+			var email = EmailContent.FromFile(
+				studentsRepo.ConfigurationFolder,
+				cmbEmailSubject.Text
+				);
+			if (email is null)
+				return;
+			// cmbEmailSubject.Text = email.EmailSubject;
+			txtEmailCC.Text = email.EmailCC;
+			txtEmailBody.Text = email.EmailBody;
+		}
+	}
 }

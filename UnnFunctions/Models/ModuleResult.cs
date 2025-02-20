@@ -121,6 +121,10 @@ namespace UnnFunctions.Models
 					shortDesc = "Academic Misconduct";
 					longDesc = "Academic Misconduct proven or under investigation";
 					return true;
+				case "AB":
+					shortDesc = "Absent from examination or non-submission of coursework";
+					longDesc = "Our records indicate that you did not attend an exam or that you did not submit coursework. If this is not the case, you should contact Ask4Help as soon as possible";
+					return true;
 				case "C":
 					shortDesc = "Compensated";
 					longDesc = "PAB has agreed that module can be compensated (ARTA 2.5, 3.6). Agreed module grade is overwritten by C and a mark of 40 (UG) or 50 (PG) is assigned to the module";
@@ -133,13 +137,21 @@ namespace UnnFunctions.Models
 					shortDesc = "Fail";
 					longDesc = "Automatically calculated when referral attempt has been failed or entered manually following the PAB where the module has been failed and there is no referral opportunity in the current stage (e.g. where the progression average requirements have not been met). The student may be permitted to re-register on the failed module in the next academic year.";
 					return true;
+				case "NP":
+					shortDesc = "Non-submission with PEC (personal extenuating circumstances)";
+					longDesc = "Your personal extenuating circumstances claim has been accepted as a valid reason for non-attendance at an exam or non-submission of work";
+					return true;
 				case "P":
 					shortDesc = "Pass";
-					longDesc = "Default code / grade for pass";
+					longDesc = "Denotes a passed component or module";
+					return true;
+				case "PX":
+					shortDesc = "PEC (personal extenuating circumstances)";
+					longDesc = "Your Personal Extenuating Circumstances claim has been accepted for this component";
 					return true;
 				case "R":
 					shortDesc = "Refer";
-					longDesc = "Default code/grade for failed component/module";
+					longDesc = "Denotes a failed component or module";
 					return true;
 				case "RP":
 					shortDesc = "Repeated module";
@@ -163,7 +175,7 @@ namespace UnnFunctions.Models
 					return true;
 				case "XR":
 					shortDesc = "PEC and first sit";
-					longDesc = "Calculated outcome for module with failed mark and PEC. This allows for another first sit attempt.";
+					longDesc = "You have a deferral (first sit) opportunity. The mark for the deferral will count in full.";
 					return true;
 				case "ZP":
 					shortDesc = "Covid/cyber Pass";

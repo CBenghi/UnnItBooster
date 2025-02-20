@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 
 namespace LateBindingTest
@@ -41,11 +42,13 @@ namespace LateBindingTest
 			mail_item_type.InvokeMember("Subject", BindingFlags.SetProperty, null, oMailItem,
 				new object[] { subjectValue });
 			mail_item_type.InvokeMember("Body", BindingFlags.SetProperty, null, oMailItem, new object[] { bodyValue });
+			var mmbrs = mail_item_type.GetMembers().ToList();
+			//cc = "claudio.benghi@gmail.com;";
+			if (!string.IsNullOrEmpty(cc))
+			{
+				mail_item_type.InvokeMember("CC", BindingFlags.SetProperty, null, oMailItem, new object[] { cc });
+			}
 			mail_item_type.InvokeMember("Send", BindingFlags.InvokeMethod, null, oMailItem, null);
-			//if (!string.IsNullOrEmpty(cc))
-			//{
-			//    mail_item_type.InvokeMember("CC", BindingFlags.SetProperty, null, oMailItem, new object[] { cc });
-			//}
 		}
 	}
 }

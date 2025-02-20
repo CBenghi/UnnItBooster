@@ -1,4 +1,5 @@
-﻿using StudentsFetcher.StudentMarking;
+﻿using StudentMarking;
+using StudentsFetcher.StudentMarking;
 using System;
 using System.IO;
 using System.Linq;
@@ -21,6 +22,14 @@ namespace StudentsFetcher
 			{
 				FrmMarkingMachine machine  = new FrmMarkingMachine();
 				machine.SetSqlFile(args[1]);
+				if (args.Contains("-max"))
+					machine.WindowState = FormWindowState.Maximized;
+				Application.Run(machine);
+			}
+			if (args.Length > 1 && args[0] == "-mail" && File.Exists(args[1]))
+			{
+				var machine = new frmMassMail();
+				machine.SetMailerDatabase(args[1]);
 				if (args.Contains("-max"))
 					machine.WindowState = FormWindowState.Maximized;
 				Application.Run(machine);
