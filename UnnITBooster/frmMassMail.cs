@@ -15,7 +15,6 @@ using System.Linq;
 using System.Globalization;
 using System.Text.Json;
 using UnnItBooster;
-using System.Windows.Media.Media3D;
 using UnnFunctions.Models;
 
 namespace StudentMarking
