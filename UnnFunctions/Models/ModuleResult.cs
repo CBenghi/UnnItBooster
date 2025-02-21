@@ -72,7 +72,7 @@ namespace UnnFunctions.Models
 			if (MaturedCredits < 180)
 			{
 				// see if a failed module can be compensated
-				foreach (var result in results.Where(x=> !PassedModuleNames.Contains(x.Title)))
+				foreach (var result in results.Where(x => !PassedModuleNames.Contains(x.Title)))
 				{
 					if (result.TryGetMark(out var mk, out var cred) && compensated == false && mk >= 40) // we can compensate
 					{
@@ -100,13 +100,13 @@ namespace UnnFunctions.Models
 			if (countCredits < 180)
 				return "missing credits";
 
-            if (average >= 70)
+			if (average >= 70)
 				return "Distinction";
-			if (average >= 68 && credits.Where(x=>x.mark>=70).Sum(y=>y.cred) > 90)
+			if (average >= 68 && credits.Where(x => x.mark >= 70).Sum(y => y.cred) > 90)
 				return "Distinction";
 			if (average >= 60)
 				return "Commendation";
-			if (average >= 58 && credits.Where(x=>x.mark>=60).Sum(y=>y.cred) > 90)
+			if (average >= 58 && credits.Where(x => x.mark >= 60).Sum(y => y.cred) > 90)
 				return "Commendation";
 			if (average > 49)
 				return "Pass";

@@ -113,7 +113,7 @@ namespace UnnOutlookAddin
 				{
 					if (sub.Any())
 						return GetSubFolder(candidateFolder, sub);
-					else 
+					else
 						return candidateFolder;
 				}
 			}

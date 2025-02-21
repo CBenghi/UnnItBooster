@@ -22,7 +22,7 @@ namespace UnnItBooster.ModelConversions
 		public static Student? GetStudentFromIndividualSource(string htmlSource, QueueAction context)
 		{
 			var email = GetField("University Email", htmlSource);
-			
+
 			// there's a bit that goes something like <td>19017284/1</td>
 			// 
 			Regex getId = new Regex("<td>(?<Id>\\d{8})/\\d</td>");
@@ -225,7 +225,7 @@ namespace UnnItBooster.ModelConversions
 					s.Route = HtmlEntity.DeEntitize(cols[7].InnerText).Trim();
 					s.Module = "Tutor";
 				}
-				if (s!=null)
+				if (s != null)
 				{
 					students.Add(s);
 				}
@@ -322,7 +322,7 @@ namespace UnnItBooster.ModelConversions
 			if (string.IsNullOrEmpty(val))
 				return false;
 			res ??= new ModuleResult();
-			switch (key) 
+			switch (key)
 			{
 				case "Plus Minus Module Code":
 					res.Code = val;
@@ -347,7 +347,7 @@ namespace UnnItBooster.ModelConversions
 					{
 						var sub = val.Replace(" ", "").Split(['/']);
 						res.ActualMark = sub[0];
-						res.ActualResult= sub[1];
+						res.ActualResult = sub[1];
 					}
 					break;
 				case "Agreed Mark / Grade":

@@ -15,7 +15,7 @@ namespace EvisionBrowser
 			DataContext = this;
 			dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 			dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-			dispatcherTimer.Interval = new TimeSpan(0,0,3);
+			dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
 			dispatcherTimer.Start();
 		}
 
@@ -53,6 +53,6 @@ namespace EvisionBrowser
 			else
 				Url.Text = "https://sits.northumbria.ac.uk/live/sits.urd/run/siw_sso.saml";
 			wbSample.Source = new Uri(Url.Text);
-		}		
+		}
 	}
 }

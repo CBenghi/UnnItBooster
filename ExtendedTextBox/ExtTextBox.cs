@@ -300,7 +300,7 @@ namespace ExtendedTextBox
 		{
 			base.OnKeyPress(e);
 		}
-		
+
 
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
@@ -341,7 +341,7 @@ namespace ExtendedTextBox
 			}
 			else if (OnCtrlKey != null)
 			{
-			Handled = OnCtrlKey(d);
+				Handled = OnCtrlKey(d);
 			}
 
 			Debug.WriteLine(keyData);

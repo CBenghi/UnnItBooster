@@ -15,7 +15,7 @@ namespace UnnItBooster.Models
 			return source?.IndexOf(toCheck, StringComparison.OrdinalIgnoreCase) >= 0;
 		}
 	}
-	
+
 	[DebuggerDisplay("{FullName} {NumericStudentId} {Email}")]
 	public class Student
 	{
@@ -82,7 +82,7 @@ namespace UnnItBooster.Models
 		public string? Occurrence { get; set; } = string.Empty;
 		public string? Module { get; set; } = string.Empty;
 		public string? Email { get; set; } = string.Empty;
-		public string? EmailByStudentID =>  string.IsNullOrWhiteSpace(NumericStudentId) ? null : $"w{NumericStudentId}@northumbria.ac.uk";
+		public string? EmailByStudentID => string.IsNullOrWhiteSpace(NumericStudentId) ? null : $"w{NumericStudentId}@northumbria.ac.uk";
 
 		public List<string>? AlternativeEmails { get; set; } = null;
 
@@ -123,7 +123,7 @@ namespace UnnItBooster.Models
 				return true;
 			if (Email != null && Email.Matches(filter))
 				return true;
-			if (AlternativeEmails is not null && AlternativeEmails.Any(x=>x.Matches(filter)))
+			if (AlternativeEmails is not null && AlternativeEmails.Any(x => x.Matches(filter)))
 				return true;
 			return false;
 		}
@@ -187,7 +187,7 @@ namespace UnnItBooster.Models
 			var c = new chart();
 			foreach (var item in enumerable)
 			{
-				c.Add(item);	
+				c.Add(item);
 			}
 			c.ReportTo(sb);
 		}
@@ -197,7 +197,7 @@ namespace UnnItBooster.Models
 			internal int[] MarksAtBand = new int[10];
 
 			internal List<string> failures = new();
-			
+
 			internal void Add(ModuleResult item)
 			{
 				if (!item.TryGetMark(out var mk, out var credits))
@@ -237,8 +237,8 @@ namespace UnnItBooster.Models
 				var mx = MarksAtBand.Max() / 10;
 				var count = credits / 10;
 
-				return new string('#', count) 
-					+ new string('_', mx-count);
+				return new string('#', count)
+					+ new string('_', mx - count);
 			}
 
 			private string Desc(int i)
@@ -264,14 +264,14 @@ namespace UnnItBooster.Models
 						sb.AppendLine($"{yr}");
 					}
 					if (!addLegenda)
-						sb.AppendLine($"{transcript.Year} Lvl:{transcript.Level} {transcript.Code} Mark: {transcript.GetMarkString()} ({transcript.Title} {transcript.Credits} credits with {transcript.GetResultCodesDescription()}).");					
+						sb.AppendLine($"{transcript.Year} Lvl:{transcript.Level} {transcript.Code} Mark: {transcript.GetMarkString()} ({transcript.Title} {transcript.Credits} credits with {transcript.GetResultCodesDescription()}).");
 					else
 						sb.AppendLine($"{transcript.Year} Lvl:{transcript.Level} {transcript.Code} Mark: {transcript.GetMarkString()} ({transcript.Title} {transcript.Credits} credits with code {transcript.GetResultCodesString()}).");
 				}
 				var res = ModuleResult.WeightedAverage(TranscriptResults, out var credits, out _, out var compensatedCode);
 				if (res > 0)
 				{
-					var cmp =  compensatedCode == string.Empty ? "" : $" compensated on {compensatedCode}";
+					var cmp = compensatedCode == string.Empty ? "" : $" compensated on {compensatedCode}";
 					sb.AppendLine($"\r\nWeighted average {res:0.0}% over {credits} credits{cmp}\r\n");
 				}
 				if (addLegenda)
@@ -303,6 +303,6 @@ namespace UnnItBooster.Models
 			}
 		}
 
-		
+
 	}
 }

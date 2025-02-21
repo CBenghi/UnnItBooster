@@ -15,7 +15,7 @@ using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace StudentsFetcher.StudentMarking
 {
-    public partial class MarkingConfig
+	public partial class MarkingConfig
 	{
 		public MarkingConfig(string dbName)
 		{
@@ -181,7 +181,7 @@ namespace StudentsFetcher.StudentMarking
 			var totmark = GetMarkCalculator().GetFinalMark(shortId, this, true);
 			if (totmark != -1)
 				sb.AppendFormat("\r\nOverall mark: {0}%\r\n\r\n", totmark);
-			
+
 			var tmp = componentComments.Replace("\r\n", "").Trim();
 
 			if (tmp != string.Empty)
@@ -301,7 +301,7 @@ namespace StudentsFetcher.StudentMarking
 			var dt = GetDataTable("Select * from TB_Components order by CPNT_Order");
 			foreach (DataRow row in dt.Rows)
 			{
-				var m = new MarkComponent 
+				var m = new MarkComponent
 				(
 					Convert.ToInt32(row["CPNT_Id"]),
 					Convert.ToDouble(row["CPNT_Percent"]),
@@ -417,7 +417,7 @@ namespace StudentsFetcher.StudentMarking
 			WordFile w = new WordFile(f);
 			if (!w.Exists)
 				return "No word file";
-			
+
 			StringBuilder sb = new StringBuilder();
 			var imageFiles = w.GetImages().ToList();
 			sb.AppendLine($"Found {imageFiles.Count} images;");
@@ -436,7 +436,7 @@ namespace StudentsFetcher.StudentMarking
 				WordFile ow = new WordFile(of);
 				if (!ow.Exists)
 					continue;
-				
+
 				var oImageFiles = ow.GetImages().ToList();
 				var fnd = oImageFiles.Where(o => ratios.Contains(o.Ratio));
 				if (fnd.Any())
@@ -456,7 +456,7 @@ namespace StudentsFetcher.StudentMarking
 			var t = GetDataTable("select SUB_Title from TB_Submissions");
 			foreach (DataRow row in t.Rows)
 			{
-				var title  = row[0].ToString();
+				var title = row[0].ToString();
 				if (string.IsNullOrWhiteSpace(title))
 					continue;
 				yield return title;
@@ -470,7 +470,7 @@ namespace StudentsFetcher.StudentMarking
 			var dt = GetDataTable(s);
 			if (dt.Rows.Count != 1)
 				return -1;
-			
+
 			var r = dt.Rows[0];
 			if (r is null)
 				return -1;
@@ -489,7 +489,7 @@ namespace StudentsFetcher.StudentMarking
 
 		public int EnsureMarker(string studId, string mrkrEmail, string mrkrName, string role)
 		{
-			var sql = 
+			var sql =
 				$"""
 				select * from TB_Markers where 
 				MRKR_ptr_SubmissionUserID = '{studId}' and
@@ -514,7 +514,7 @@ namespace StudentsFetcher.StudentMarking
 		{
 			var sb = new StringBuilder();
 			var ass = GetMarkingAssignments();
-			
+
 			sb.AppendLine("# Report by marker");
 			sb.AppendLine();
 			foreach (var assignment in ass)
@@ -542,7 +542,7 @@ namespace StudentsFetcher.StudentMarking
 			foreach (DataRow row in dt.Rows)
 			{
 				var studMail = $"{row["SUB_email"]}";
-				var studName = $"{row["SUB_FirstName"]} {row["SUB_LastName"]}"; 
+				var studName = $"{row["SUB_FirstName"]} {row["SUB_LastName"]}";
 				var studId = row["SUB_UserId"] is not DBNull ? row["SUB_UserId"].ToString() : "<Null ID>";
 
 				if (studMail != lastReportMail)
@@ -606,7 +606,7 @@ namespace StudentsFetcher.StudentMarking
 			foreach (DataRow row in dt.Rows)
 			{
 				var thisRow = MarkingAssignmentSubmissionInformation.GetFromDataRow(row, out var markMail, out var markName);
-				yield return thisRow;		
+				yield return thisRow;
 			}
 		}
 
@@ -653,7 +653,7 @@ namespace StudentsFetcher.StudentMarking
 				var rspObj = row["MRKR_Response"];
 				if (rspObj is DBNull)
 					continue;
-				var responseString =  rspObj.ToString()!;
+				var responseString = rspObj.ToString()!;
 				var response = JsonSerializer.Deserialize<DelegatedMarkResponse.MarkerResponse>(responseString);
 				if (response is null)
 					continue;
@@ -666,7 +666,7 @@ namespace StudentsFetcher.StudentMarking
 				}
 				var markerRole = row["MRKR_MarkerRole"]?.ToString() ?? "<undefined>";
 				var markerName = row["MRKR_MarkerName"]?.ToString() ?? "<undefined>";
-				yield return new DelegatedMarkResponseFull(markerName, markerRole, markerEmail, studentId, response); 
+				yield return new DelegatedMarkResponseFull(markerName, markerRole, markerEmail, studentId, response);
 			}
 		}
 
@@ -679,19 +679,19 @@ namespace StudentsFetcher.StudentMarking
 			var retmarks = new List<DelegatedMarkResponse>();
 			foreach (var excelFile in excelFiles)
 			{
-                if (!string.IsNullOrWhiteSpace(filter))
-                {
-                    if (!excelFile.Name.Matches(filter))
+				if (!string.IsNullOrWhiteSpace(filter))
+				{
+					if (!excelFile.Name.Matches(filter))
 						continue;
-                }
+				}
 
-                if (!ExcelFunctions.TryReadExcel(excelFile.FullName, out var workbook, out var report))
+				if (!ExcelFunctions.TryReadExcel(excelFile.FullName, out var workbook, out var report))
 				{
 					sb.AppendLine(report);
 					continue;
 				}
 				retmarks.AddRange(DelegatedMarkResponse.GetMarks(workbook, out var getMarksReport));
-				
+
 			}
 			marks = retmarks;
 			return sb.ToString();
@@ -760,7 +760,7 @@ namespace StudentsFetcher.StudentMarking
 			return sb.ToString();
 		}
 
-		public IEnumerable<(string StudentId , string MarkerEmail, string MarkerRole)> GetMarkingAssignmentsByStudents()
+		public IEnumerable<(string StudentId, string MarkerEmail, string MarkerRole)> GetMarkingAssignmentsByStudents()
 		{
 			var ass = GetMarkingAssignments();
 			foreach (var assItem in ass)
@@ -786,7 +786,7 @@ namespace StudentsFetcher.StudentMarking
 					if (componentValues.Count <= i)
 						componentValues.Add(new List<double>());
 					DelegatedMarkResponse.ComponentMark? component = item.Response.Components[i];
-					var thisCompAsPercentage = 100 * (double)component.Mark / component.OutOf ;
+					var thisCompAsPercentage = 100 * (double)component.Mark / component.OutOf;
 					componentValues[i].Add(thisCompAsPercentage);
 				}
 			}

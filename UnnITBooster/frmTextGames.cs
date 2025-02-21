@@ -17,7 +17,7 @@ namespace StudentsFetcher
 			var frmt = new[] { TextDataFormat.Html }; // , TextDataFormat.Text, TextDataFormat.UnicodeText, TextDataFormat.Rtf };
 			foreach (var item in frmt)
 			{
-				
+
 				var txt = Clipboard.ContainsText(item);
 				if (txt)
 				{
@@ -26,7 +26,7 @@ namespace StudentsFetcher
 
 					v = v.Replace("improvement", "some else");
 
-					
+
 				}
 			}
 

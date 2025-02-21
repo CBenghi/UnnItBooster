@@ -18,12 +18,12 @@ namespace UnnItBooster.Models
 		public List<Student> Students { get; set; } = new List<Student>();
 
 		// only for persistence
-        public StudentJsonCollection()
-        {
+		public StudentJsonCollection()
+		{
 			directory = new DirectoryInfo(".");
-        }
+		}
 
-        public StudentJsonCollection(DirectoryInfo directory)
+		public StudentJsonCollection(DirectoryInfo directory)
 		{
 			if (directory == null)
 				throw new ArgumentNullException(nameof(directory));

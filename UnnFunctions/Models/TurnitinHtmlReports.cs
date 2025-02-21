@@ -10,14 +10,14 @@ namespace UnnFunctions.Models
 	{
 		public static void Merge(FileInfo html, FileInfo referenceDet, string name, double hardCodedScale)
 		{
-			if (html == null || referenceDet == null) 
+			if (html == null || referenceDet == null)
 				return;
 			if (!html.Exists || !referenceDet.Exists)
 				return;
 			if (html.Directory is null)
 				return;
 			var dic = TunritinReferencePage.FromFile(referenceDet);
-			if (dic == null) 
+			if (dic == null)
 				return;
 
 			FileInfo f = new FileInfo(Path.Combine(
@@ -29,14 +29,14 @@ namespace UnnFunctions.Models
 			if (!htmlLines.Any())
 				return;
 
-			
+
 			Regex pageLine = new Regex("alt=\"Page (?<page>\\d+)\"");
 			TunritinReferencePage? currentRefPageContent = null;
 			using var w = f.CreateText();
 			foreach (var sourceLine in htmlLines)
 			{
 				var line = sourceLine;
-				var plm = pageLine.Match(sourceLine);	
+				var plm = pageLine.Match(sourceLine);
 				if (plm.Success)
 				{
 					if (!int.TryParse(plm.Groups["page"].Value, out var pg))
@@ -51,7 +51,7 @@ namespace UnnFunctions.Models
 				else if (sourceLine == "</div>")
 				{
 					if (currentRefPageContent != null)
-						currentRefPageContent.WriteTo(w, hardCodedScale);					
+						currentRefPageContent.WriteTo(w, hardCodedScale);
 				}
 				w.WriteLine(line);
 			}
@@ -98,7 +98,7 @@ namespace UnnFunctions.Models
 			return line;
 		}
 
-		
+
 
 		public static bool IsTransformLine(string s, out double scale)
 		{
@@ -116,7 +116,7 @@ namespace UnnFunctions.Models
 			return true;
 		}
 
-		
+
 	}
 
 	internal class TunritinReferencePage
@@ -130,12 +130,12 @@ namespace UnnFunctions.Models
 
 		internal static Dictionary<int, TunritinReferencePage>? FromFile(FileInfo referenceFile)
 		{
-			var ret = new Dictionary<int, TunritinReferencePage> ();
+			var ret = new Dictionary<int, TunritinReferencePage>();
 			var txtLines = File.ReadAllLines(referenceFile.FullName);
 
 			TunritinReferencePage? page = null;
-			foreach ( var line in txtLines ) 
-			{ 
+			foreach (var line in txtLines)
+			{
 				if (line == "")
 				{
 					// ignore
@@ -149,16 +149,16 @@ namespace UnnFunctions.Models
 						return null;
 					ret.Add(pg, page);
 				}
-				else 
+				else
 				{
 					if (page is null)
 						return null;
 					if (line.StartsWith("area: "))
-						page.SetArea(line.Substring(6));					
+						page.SetArea(line.Substring(6));
 					else if (line.StartsWith("transform: "))
 						page.SetTransform(line.Substring(11));
 				}
-				
+
 			}
 
 			return ret;
@@ -172,7 +172,7 @@ namespace UnnFunctions.Models
 				return;
 			if (!double.TryParse(m.Groups["scale"].Value, out var t))
 				return;
-			scale = 1/t;
+			scale = 1 / t;
 		}
 
 		private double scale = 0;
@@ -207,7 +207,7 @@ namespace UnnFunctions.Models
 					return null;
 				if (!int.TryParse(arr[3], out var w))
 					return null;
-				return new Dimension(t,l,h,w);
+				return new Dimension(t, l, h, w);
 
 			}
 		}

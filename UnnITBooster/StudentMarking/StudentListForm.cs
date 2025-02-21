@@ -190,7 +190,7 @@ namespace StudentsFetcher.StudentMarking
 			RefreshModulesList();
 		}
 
-		
+
 
 		private void cmdSelectSource_Click(object sender, EventArgs e)
 		{
@@ -276,24 +276,24 @@ namespace StudentsFetcher.StudentMarking
 				if (studentsRepo.TryGetExtraImage(stud.NumericStudentId, out var image, txtContainerName.Text))
 					tallySuccess++;
 			}
-			MessageBox.Show($"Attempted image for {tallyTry}; {tallySuccess} found.");			
+			MessageBox.Show($"Attempted image for {tallyTry}; {tallySuccess} found.");
 		}
 
 		private void button9_Click(object sender, EventArgs e)
 		{
 			StringBuilder sb = new StringBuilder();
-			foreach (var code in GetAllCodes().Distinct().OrderBy(x=>x))
+			foreach (var code in GetAllCodes().Distinct().OrderBy(x => x))
 			{
 				ModuleResult.Report(sb, code);
 			}
-			txtReport.Text = sb.ToString();	
+			txtReport.Text = sb.ToString();
 		}
 
 		private IEnumerable<string> GetAllCodes()
 		{
 			foreach (var s in studentsRepo.Students)
 			{
-				foreach(var item in s.UsedCodes())
+				foreach (var item in s.UsedCodes())
 				{
 					yield return item;
 				}

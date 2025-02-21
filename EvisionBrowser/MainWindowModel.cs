@@ -21,7 +21,7 @@ using WebViewWpf = Microsoft.Web.WebView2.Wpf;
 namespace EvisionBrowser;
 
 [ObservableObject]
-public partial class MainWindow 
+public partial class MainWindow
 {
 	private StudentsRepository studentsRepo = new StudentsRepository(@"C:\Users\Claudio\OneDrive - Northumbria University - Production Azure AD\2024\Students");
 
@@ -39,7 +39,7 @@ public partial class MainWindow
 	{
 		if (!QueueActive)
 			return;
-		
+
 		{
 
 		}
@@ -78,7 +78,7 @@ public partial class MainWindow
 		Url.Text = viewer.Source.ToString();
 
 		stopwatch?.Stop();
-		if (stopwatch != null) 
+		if (stopwatch != null)
 			elapsedTimes.Add(stopwatch.ElapsedMilliseconds);
 		PerformStatUpdate();
 
@@ -103,7 +103,7 @@ public partial class MainWindow
 		var src = await GetPageSource();
 		if (string.IsNullOrEmpty(src))
 			return;
-            TextCopy.Clipboard clipboard = new();
+		TextCopy.Clipboard clipboard = new();
 		await clipboard.SetTextAsync(src);
 	}
 
@@ -254,12 +254,12 @@ public partial class MainWindow
 			context.DataRequired.HasFlag(ActionRequiredData.studentEmail) ||
 			context.DataRequired.HasFlag(ActionRequiredData.studentPersonalEmail) ||
 			context.DataRequired.HasFlag(ActionRequiredData.studentPhone) ||
-			context.DataRequired.HasFlag(ActionRequiredData.studentTranscript) 
+			context.DataRequired.HasFlag(ActionRequiredData.studentTranscript)
 			)
 		{
 			var actions = eVision.GetStudentIndividualSource(src, context).ToList();
 			if (interestingIds != null)
-				actions.RemoveAll(x=> x.StudentId == null || !interestingIds.Contains(x.StudentId));
+				actions.RemoveAll(x => x.StudentId == null || !interestingIds.Contains(x.StudentId));
 			QueueActions(actions);
 		}
 		// photos can also be downloaded from individual page, so if we go above we don't go below
@@ -298,7 +298,7 @@ public partial class MainWindow
 		}
 	}
 
-		
+
 
 	private async Task<string> GetPageSource()
 	{
@@ -321,7 +321,7 @@ public partial class MainWindow
 
 	[RelayCommand]
 	private void ToggleSidebar() => SideBarVisibility = !SideBarVisibility;
-	
+
 	[RelayCommand]
 	private void ToggleQueueProcessing() => QueueActive = !QueueActive;
 
@@ -344,7 +344,7 @@ public partial class MainWindow
 		if (ScrapeEmail) ret = ActionRequiredData.studentEmail | ret;
 		if (ScrapePersonalEmail) ret = ActionRequiredData.studentPersonalEmail | ret;
 		if (ScrapePictures) ret = ActionRequiredData.photos | ret;
-		if (ScrapeTelephone) ret =  ActionRequiredData.studentPhone | ret;
+		if (ScrapeTelephone) ret = ActionRequiredData.studentPhone | ret;
 		if (ScrapeTranscript) ret = ActionRequiredData.studentTranscript | ret;
 		return ret;
 	}
@@ -370,7 +370,7 @@ public partial class MainWindow
 		}
 
 		var sb = new StringBuilder();
-		sb.AppendLine($"{entries.Count()} student fields");		
+		sb.AppendLine($"{entries.Count()} student fields");
 		foreach (var f in entries)
 		{
 			if (!studentMarks.TryGetValue(f.StudentId, out var mark))

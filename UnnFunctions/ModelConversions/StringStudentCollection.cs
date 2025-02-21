@@ -12,7 +12,7 @@ namespace UnnFunctions.ModelConversions
 
 		public static string PersistString(IEnumerable<Student> distinctStudents)
 		{
-			if (!distinctStudents.Any()) 
+			if (!distinctStudents.Any())
 				return string.Empty;
 			var sb = new StringBuilder();
 			sb.AppendLine(Header);

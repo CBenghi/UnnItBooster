@@ -31,7 +31,7 @@ public class StudentsRepository
 			// skip if does not not match filter rules
 			if (filters is not null && !filters.Any(x => filters.Contains(possibleContainer.Name)))
 				continue;
-			
+
 			if (StudentJsonCollection.IsValid(possibleContainer))
 			{
 				collections.Add(new StudentJsonCollection(possibleContainer));
@@ -129,7 +129,7 @@ public class StudentsRepository
 		d = new DirectoryInfo(pho);
 		if (!d.Exists)
 			d.Create();
-		if (!string.IsNullOrEmpty(moduleCode)) 
+		if (!string.IsNullOrEmpty(moduleCode))
 		{
 			pho = Path.Combine(d.FullName, moduleCode);
 			d = new DirectoryInfo(pho);
@@ -226,10 +226,10 @@ public class StudentsRepository
 		{
 			return TryGetStudentByEmail(reference, out returnStudent);
 		}
-		return returnStudent != null;		
+		return returnStudent != null;
 	}
 
-	public bool TryGetStudentByEmail(string seekingEmail, [NotNullWhen(true)]out Student? returnStudent)
+	public bool TryGetStudentByEmail(string seekingEmail, [NotNullWhen(true)] out Student? returnStudent)
 	{
 		returnStudent = Students.FirstOrDefault(x => x.HasEmail(seekingEmail));
 		return returnStudent != null;

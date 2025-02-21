@@ -8,22 +8,22 @@ namespace UnnFunctions.Models.DelegatedMarks;
 /// </summary>
 public class MarkingAssignmentSubmissionInformation
 {
-    public MarkingAssignmentSubmissionInformation(string studentId, string studentPaper, string studentPortal, string markingRole, string studentEmail, string markerEmail)
-    {
-        StudentId = studentId;
-        SubmissionId = studentPaper;
-        ElpId = studentPortal;
-        MarkingRole = markingRole;
-        StudentEmail = studentEmail;
-        MarkerEmail = markerEmail;
-    }
+	public MarkingAssignmentSubmissionInformation(string studentId, string studentPaper, string studentPortal, string markingRole, string studentEmail, string markerEmail)
+	{
+		StudentId = studentId;
+		SubmissionId = studentPaper;
+		ElpId = studentPortal;
+		MarkingRole = markingRole;
+		StudentEmail = studentEmail;
+		MarkerEmail = markerEmail;
+	}
 
-    public string StudentId { get; set; }
-    public string SubmissionId { get; set; }
-    public string StudentEmail { get; set; }
-    public string MarkerEmail { get; set; }
-    public string ElpId { get; set; }
-    public string MarkingRole { get; set; }
+	public string StudentId { get; set; }
+	public string SubmissionId { get; set; }
+	public string StudentEmail { get; set; }
+	public string MarkerEmail { get; set; }
+	public string ElpId { get; set; }
+	public string MarkingRole { get; set; }
 
 	public static MarkingAssignmentSubmissionInformation GetFromDataRow(DataRow row, out string markMail, out string markName)
 	{
@@ -37,6 +37,6 @@ public class MarkingAssignmentSubmissionInformation
 		var thisRow = new MarkingAssignmentSubmissionInformation(
 			studentId, studentPaper, studentPortal, markerRole, studentEmail, markMail
 			);
-        return thisRow;
+		return thisRow;
 	}
 }

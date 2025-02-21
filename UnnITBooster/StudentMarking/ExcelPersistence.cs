@@ -52,8 +52,8 @@ internal class ExcelPersistence
 		// component headers
 		row = sheet.CreateRow(iRow++);
 		iCol = componentStart;
-        foreach (var comp in comps.Marks)
-        {
+		foreach (var comp in comps.Marks)
+		{
 			ICell cell = row.CreateCell(iCol++);
 			cell.SetCellValue($"{comp.Id} - {comp.Name}");
 		}
@@ -97,11 +97,11 @@ internal class ExcelPersistence
 
 		// format columns
 
-		for (int i = 0; i < componentStart; i++) 
+		for (int i = 0; i < componentStart; i++)
 			sheet.AutoSizeColumn(i);
-		for (int i = componentStart; i < TotalMarkCol; i++) 
+		for (int i = componentStart; i < TotalMarkCol; i++)
 			sheet.SetColumnWidth(i, 256 * 30);
-		
+
 		// writing (overwrites)
 		var name = GetMarksFileName(_config);
 		using var stream = new FileStream(name, FileMode.Create, FileAccess.Write);
@@ -124,7 +124,7 @@ internal class ExcelPersistence
 		FileInfo f = new FileInfo(config.DbName);
 		if (f.Exists)
 		{
-			return Path.Combine(f.Directory.FullName, MarksFileName);	
+			return Path.Combine(f.Directory.FullName, MarksFileName);
 		}
 		return string.Empty;
 	}
@@ -142,7 +142,7 @@ internal class ExcelPersistence
 		ISheet sheet = excelWorkbook.GetSheet("Marks");
 		if (sheet is null)
 			return $"Marks sheet not found in '{excelName}'";
-		
+
 		var sb = new StringBuilder();
 		bool processing = false;
 		int StudentCount = 0;
@@ -208,7 +208,7 @@ internal class ExcelPersistence
 					}
 					else
 						continue;
-					config.SetStudentComponentMark(progId, component.ProgNumber, mark, true);					
+					config.SetStudentComponentMark(progId, component.ProgNumber, mark, true);
 					thisStudent = true;
 					ComponentMarkCount++;
 				}

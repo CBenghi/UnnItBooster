@@ -13,7 +13,7 @@ class ComboTag
 	public string Text { get; private set; }
 	public object Tag { get; private set; }
 
-	
+
 	public override string ToString()
 	{
 		return Text;

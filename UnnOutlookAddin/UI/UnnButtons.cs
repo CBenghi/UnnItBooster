@@ -14,7 +14,7 @@ namespace UnnOutlookAddin.UI
 {
 	public partial class UnnButtons
 	{
-        private void BtnClassify_Click(object sender, RibbonControlEventArgs e)
+		private void BtnClassify_Click(object sender, RibbonControlEventArgs e)
 		{
 			var messageEditor = new MessageEditor(e.Control.Context);
 
@@ -81,10 +81,11 @@ namespace UnnOutlookAddin.UI
 			try
 			{
 				var uid = GetUserIds(e, true).FirstOrDefault();
-				var t = new StudentListForm();
-				if (!string.IsNullOrEmpty(uid))
-					t.SetSearch(uid);
-				t.Show();
+				MessageBox.Show("Function disabled, needs to be re-implemented.");
+				//var t = new StudentListForm();
+				//if (!string.IsNullOrEmpty(uid))
+				//	t.SetSearch(uid);
+				//t.Show();
 			}
 			catch (Exception ex)
 			{

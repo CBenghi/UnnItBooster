@@ -50,16 +50,16 @@ namespace UnnOutlookAddin.UI
 						stringBuilder.AppendLine($"- {item.collection.Name} {stud.Email}, {stud.FullName}, {stud.NumericStudentId}.");
 					}
 				}
-			}	
+			}
 			txtSystemInfo.Text = stringBuilder.ToString();
 		}
 
 		private StudentsRepository _repository = null;
-		internal StudentsRepository Repository 
-		{ 
+		internal StudentsRepository Repository
+		{
 			get
 			{
-				return _repository;				
+				return _repository;
 			}
 		}
 
@@ -135,7 +135,7 @@ namespace UnnOutlookAddin.UI
 		{
 			var ret = new List<Outlook.MailItem>();
 			ret.Add(mailItem);
-			
+
 			// Determine the store of the mail item. 
 			var folder = mailItem.Parent as Outlook.Folder;
 			var store = folder.Store;
@@ -145,7 +145,7 @@ namespace UnnOutlookAddin.UI
 				Outlook.Conversation conv = mailItem.GetConversation();
 				if (conv != null)
 				{
-			
+
 					try // Obtain root items and enumerate the conversation. 
 					{
 						var simpleRootItems = conv.GetRootItems();
@@ -155,14 +155,14 @@ namespace UnnOutlookAddin.UI
 							{
 								ret.Add(mail);
 								Outlook.Folder inFolder = mail.Parent as Outlook.Folder;
-								
+
 								ret.AddRange(EnumerateConversation(item, conv));
 							}
 						}
 					}
 					catch (Exception)
 					{
-						
+
 					}
 				}
 			}
@@ -188,7 +188,7 @@ namespace UnnOutlookAddin.UI
 			}
 			return list;
 		}
-		
+
 		private void ButtonThread_Click(object sender, EventArgs e)
 		{
 			txtInformation.Text += PopulateComboActions().ToString();
@@ -253,9 +253,10 @@ namespace UnnOutlookAddin.UI
 			switch (item.ActionType)
 			{
 				case ComboAction.Tp.Search:
-					var t = new StudentListForm();
-					t.SetSearch((string)item.Tag);
-					t.Show();
+					MessageBox.Show("Search is disabled, needs to be re-implemented.");
+					//var t = new StudentListForm();
+					//t.SetSearch((string)item.Tag);
+					//t.Show();
 					break;
 				case ComboAction.Tp.ShowImage:
 					if (!Repository.HasImage((string)item.Tag, out var image))
@@ -274,19 +275,19 @@ namespace UnnOutlookAddin.UI
 			if (CmbFolder.SelectedItem != null)
 			{
 				if (CmbFolder.SelectedItem is ComboAction item && item.ActionType == ComboAction.Tp.MoveToFolder && item.Tag is Outlook.Folder fld && currentMailItem != null)
-					currentMailItem.Move(fld);				
+					currentMailItem.Move(fld);
 				return;
 			}
 			CmbFolder.Items.Clear();
 			if (currentMailItem is null)
 				return;
 			var threadMessages = GetConversationItems(currentMailItem).ToList();
-			var folders = threadMessages.Where(x => x.Parent is Outlook.Folder).Select(x => x.Parent).OfType<Outlook.Folder>().ToList(); 
+			var folders = threadMessages.Where(x => x.Parent is Outlook.Folder).Select(x => x.Parent).OfType<Outlook.Folder>().ToList();
 			var distFolders = folders.GroupBy(p => p.Name)
 					  .Select(g => g.First())
 					  .ToList();
 
-			foreach ( var folder in distFolders) 
+			foreach (var folder in distFolders)
 			{
 				ComboAction act = ComboAction.From(folder);
 				if (folder.Name != "Inbox" && folder.Name != "Sent Items")
@@ -301,8 +302,8 @@ namespace UnnOutlookAddin.UI
 				if (string.IsNullOrEmpty(container.OutlookFolder))
 					continue;
 				var f = Globals.ThisAddIn.GetFolder(container.OutlookFolder);
-				if (f != null) 
-                {
+				if (f != null)
+				{
 					CmbFolder.Items.Add(
 						ComboAction.From(f)
 						);
@@ -310,8 +311,8 @@ namespace UnnOutlookAddin.UI
 				else
 				{
 					txtInformation.Text += $"\r\nOutlook Folder {container.OutlookFolder} not found.";
-				} 
-            }
+				}
+			}
 			if (CmbFolder.Items.Count > 0)
 			{
 				CmbFolder.SelectedItem = CmbFolder.Items[0];
@@ -369,7 +370,7 @@ namespace UnnOutlookAddin.UI
 		{
 			string prompt = "This routine looks for all students in email thread and creates a collection to be saved to disk.";
 			var ret = MessageBox.Show(prompt, "Continue?", MessageBoxButtons.YesNoCancel);
-			
+
 			if (string.IsNullOrEmpty(txtCollection.Name))
 			{
 				txtSystemInfo.Text = "Collection name cannot be empty.";

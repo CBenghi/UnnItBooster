@@ -9,7 +9,7 @@ namespace DevelopmentTests
 {
 	public class evisionTests
 	{
-        public evisionTests(ITestOutputHelper outputWriter)
+		public evisionTests(ITestOutputHelper outputWriter)
 		{
 			output = outputWriter;
 			logger = GetXunitLogger(outputWriter);

@@ -22,15 +22,15 @@ namespace StudentMarking
 	[AmmFormAttributes("Mass mailing", 3)]
 	public partial class frmMassMail : Form
 	{
-        private StudentsRepository studentsRepo;
+		private StudentsRepository studentsRepo;
 
-        public frmMassMail()
+		public frmMassMail()
 		{
 			InitializeComponent();
 			txtEmailBody.Text = StudentsFetcher.Properties.Settings.Default.emailBody;
 			cmbEmailSubject.Text = StudentsFetcher.Properties.Settings.Default.emailSubject;
 			txtEmailCC.Text = StudentsFetcher.Properties.Settings.Default.emailCC;
-            studentsRepo = new StudentsRepository(StudentsFetcher.Properties.Settings.Default.StudentsFolder);
+			studentsRepo = new StudentsRepository(StudentsFetcher.Properties.Settings.Default.StudentsFolder);
 			cmbSelectedModule.Items.Clear();
 			studentsRepo.Reload();
 			foreach (var coll in studentsRepo.GetPersonCollections())
@@ -179,7 +179,7 @@ namespace StudentMarking
 			}
 		}
 
-        private void UpdateList()
+		private void UpdateList()
 		{
 			// a regex to get the email from text
 			var emaiRegex = new Regex(".+@.+\\..+");
@@ -303,21 +303,21 @@ namespace StudentMarking
 				var data = item.Split(':');
 				var dataId = data[0];
 
-                // start with the data
-                var repvalue = "";
-                repvalue = row[dataId].ToString();
-                repvalue = repvalue.Replace("\n", "\r\n");
-                var oValue = row[dataId];
-                if (oValue.GetType() == typeof(double))
-                {
-                    // repvalue = Math.Ceiling((double) oValue).ToString();
-                    repvalue = Math.Round((double)oValue).ToString();
-                }
-				// any modifier?
-                if (data.Length > 1)
+				// start with the data
+				var repvalue = "";
+				repvalue = row[dataId].ToString();
+				repvalue = repvalue.Replace("\n", "\r\n");
+				var oValue = row[dataId];
+				if (oValue.GetType() == typeof(double))
 				{
-                    var dataFun = data[1].ToLowerInvariant();
-					switch(dataFun)
+					// repvalue = Math.Ceiling((double) oValue).ToString();
+					repvalue = Math.Round((double)oValue).ToString();
+				}
+				// any modifier?
+				if (data.Length > 1)
+				{
+					var dataFun = data[1].ToLowerInvariant();
+					switch (dataFun)
 					{
 						case "resultshort":
 						case "resultlong":
@@ -336,7 +336,7 @@ namespace StudentMarking
 							}
 							break;
 						case "capitalize": // case is checked lowered
-							repvalue = capitalize(repvalue.ToLowerInvariant()); 
+							repvalue = capitalize(repvalue.ToLowerInvariant());
 							break;
 						case "resolvestudentname": // case is checked lowered
 							{
@@ -348,7 +348,7 @@ namespace StudentMarking
 							break;
 						case "firstcomponent": // case is checked lowered
 							{
-								var tmp = repvalue.Split(new char[] {' ','\t'}, StringSplitOptions.RemoveEmptyEntries);
+								var tmp = repvalue.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 								if (tmp.Length > 0)
 								{
 									repvalue = tmp[0];
@@ -379,7 +379,7 @@ namespace StudentMarking
 							}
 							break;
 					}
-                }				
+				}
 				// now fix it
 				emailtext = emailtext.Replace("{" + item + "}", repvalue);
 			}
@@ -405,7 +405,7 @@ namespace StudentMarking
 			return textInfo.ToTitleCase(repvalue);
 		}
 
-        private void cmdReload_Click(object sender, EventArgs e)
+		private void cmdReload_Click(object sender, EventArgs e)
 		{
 			ReloadDb();
 		}
@@ -462,7 +462,7 @@ namespace StudentMarking
 				return;
 
 			var emailColumn = cmbEmailField.Text;
-			
+
 			var row = lstEmailSendSelection.SelectedItems[0].Tag as DataRow;
 			if (row == null)
 				return;
@@ -487,7 +487,7 @@ namespace StudentMarking
 			}
 		}
 
-		
+
 
 		private void SaveSettings()
 		{
@@ -506,7 +506,7 @@ namespace StudentMarking
 			};
 			email.Save(studentsRepo.ConfigurationFolder);
 		}
-		
+
 		private void Button1_Click(object sender, EventArgs e)
 		{
 			SaveSettings();
@@ -517,37 +517,37 @@ namespace StudentMarking
 			ReloadTable();
 		}
 
-        private void cmdSetModule_Click(object sender, EventArgs e)
-        {
+		private void cmdSetModule_Click(object sender, EventArgs e)
+		{
 			var sel = cmbSelectedModule.SelectedItem as ComboTag;
 			if (sel == null)
 				return;
 			var code = sel.Tag.ToString();
 			var c = studentsRepo.GetPersonCollections().ToList();
-            var  coll = c.Where(x => x.Name == code).FirstOrDefault();
-			if (coll == null) 
+			var coll = c.Where(x => x.Name == code).FirstOrDefault();
+			if (coll == null)
 				return;
 
-            // Create a table with a schema that matches that of the query results.
-            var table = new DataTable();
-            table.Columns.Add("email", typeof(string));
-            table.Columns.Add("first", typeof(string));
-            table.Columns.Add("last", typeof(string));
-            table.Columns.Add("full", typeof(string));
-			var query = coll.Students.Where(x => !string.IsNullOrEmpty(x.Email)).Select(x=>ToDataRow(x, table));
-            query.CopyToDataTable(table, LoadOption.PreserveChanges);
-            UpdateUI(table);
-        }
+			// Create a table with a schema that matches that of the query results.
+			var table = new DataTable();
+			table.Columns.Add("email", typeof(string));
+			table.Columns.Add("first", typeof(string));
+			table.Columns.Add("last", typeof(string));
+			table.Columns.Add("full", typeof(string));
+			var query = coll.Students.Where(x => !string.IsNullOrEmpty(x.Email)).Select(x => ToDataRow(x, table));
+			query.CopyToDataTable(table, LoadOption.PreserveChanges);
+			UpdateUI(table);
+		}
 
-        private DataRow ToDataRow(Student x, DataTable table)
-        {
+		private DataRow ToDataRow(Student x, DataTable table)
+		{
 			var r = table.NewRow();
 			r["email"] = x.Email;
 			r["first"] = x.Forename;
 			r["last"] = x.Surname;
 			r["full"] = x.FullName;
 			return r;
-        }
+		}
 
 		internal void SetMailerDatabase(string databaseSource)
 		{

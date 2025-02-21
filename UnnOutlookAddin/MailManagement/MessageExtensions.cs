@@ -31,7 +31,7 @@ namespace UnnOutlookAddin.MailManagement
 			if (!emails.Any())
 			{
 				if (entry.Name.Contains("@")) // this should contain the email
-                    emails.Add(entry.Name); 
+					emails.Add(entry.Name);
 			}
 			return HasStudentId(emails, out id);
 		}
@@ -105,7 +105,7 @@ namespace UnnOutlookAddin.MailManagement
 			if (repo.TryGetStudentByEmail(mail.GetSenderEmailAddress(), out var st))
 				studentId = st.NumericStudentId;
 			else
-				mail.SenderHasStudentId(out studentId);		
+				mail.SenderHasStudentId(out studentId);
 
 			// tag if it is a student
 			if (!string.IsNullOrEmpty(studentId))
@@ -118,14 +118,14 @@ namespace UnnOutlookAddin.MailManagement
 				mail.AddUserProperty(userIdPropertyName, userIdNotFound);
 			}
 		}
-		
-		
+
+
 
 		private static string GetStudentIdFromEmails(IEnumerable<string> emails)
 		{
 			foreach (var emailaddress in emails)
 			{
-				if (emailaddress is null) 
+				if (emailaddress is null)
 					continue;
 				if (emailaddress.StartsWith("SPO:"))
 					continue;
@@ -168,7 +168,7 @@ namespace UnnOutlookAddin.MailManagement
 			foreach (Outlook.Recipient recip in mail.Recipients)
 			{
 				var t = GetStudent(recip.AddressEntry);
-				if (t!= null)
+				if (t != null)
 					yield return t;
 			}
 		}
@@ -197,11 +197,11 @@ namespace UnnOutlookAddin.MailManagement
 
 		private static IEnumerable<string> GetAllEmailAddresses(this Outlook.AddressEntry sender)
 		{
-            if ( sender is null)
-            {
-                yield break;
-            }
-            if (sender.AddressEntryUserType == Outlook.OlAddressEntryUserType.olExchangeUserAddressEntry
+			if (sender is null)
+			{
+				yield break;
+			}
+			if (sender.AddressEntryUserType == Outlook.OlAddressEntryUserType.olExchangeUserAddressEntry
 				|| sender.AddressEntryUserType == Outlook.OlAddressEntryUserType.olExchangeRemoteUserAddressEntry)
 			{
 				Outlook.ExchangeUser exchUser = sender.GetExchangeUser();

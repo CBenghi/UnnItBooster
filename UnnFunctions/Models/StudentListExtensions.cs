@@ -29,7 +29,7 @@ public static class StudentListExtensions
 		catch (System.Exception)
 		{
 			return baseCollection;
-		}		
+		}
 	}
 
 	public static void MergeInformation(this Student destinationStudent, Student sourceStudent)

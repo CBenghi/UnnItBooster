@@ -17,7 +17,7 @@ namespace UnnFunctions.Models
 			text = text.Replace("\u00A0", " "); // non breaking space replacement
 			text = text.Replace("\t", " ");      // tab replaced
 			references = text.Split(
-				Environment.NewLine.ToCharArray(), 
+				Environment.NewLine.ToCharArray(),
 				StringSplitOptions.RemoveEmptyEntries
 				).Distinct().ToArray();
 		}
@@ -35,7 +35,7 @@ namespace UnnFunctions.Models
 			var cit = GetCitationParts(referenceCitation);
 			if (cit.Count < 1)
 			{
-				refs = [];	
+				refs = [];
 				return false;
 			}
 			foreach (var reference in references)
@@ -55,7 +55,7 @@ namespace UnnFunctions.Models
 		{
 			// referenceCitation = referenceCitation.Replace(" et al.", "");
 			referenceCitation = referenceCitation.Replace(" and ", ", ");
-			var t = referenceCitation.Split([","], StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim());
+			var t = referenceCitation.Split([","], StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
 			return t.ToList();
 		}
 
@@ -79,7 +79,7 @@ namespace UnnFunctions.Models
 				if (!found)
 					return false;
 			}
-			
+
 			return true;
 		}
 	}

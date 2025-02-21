@@ -282,10 +282,6 @@
       <Project>{5091bad3-4425-4c77-941e-0f3690ff8989}</Project>
       <Name>UnnFunctions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UnnITBooster\UnnItBooster.csproj">
-      <Project>{4f6802fc-4ce4-48f4-ac77-dbb8a833e617}</Project>
-      <Name>UnnItBooster</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Person.png" />

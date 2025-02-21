@@ -15,7 +15,7 @@ namespace UnnFunctions.ModelConversions
 				GradeTextId = $"msa_mrk_widget_GRD.1-{rowId}-1";
 			}
 
-			public string StudentId { get; set; } 
+			public string StudentId { get; set; }
 			public string MarkTextId { get; set; }
 			public string GradeTextId { get; set; }
 		}
@@ -50,13 +50,14 @@ namespace UnnFunctions.ModelConversions
 		{
 			var ret = new Dictionary<string, string>();
 			var lines = mcrfMarks.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-			foreach (var line in lines) {
+			foreach (var line in lines)
+			{
 				var arr = line.Split(new[] { '\t', ' ' });
 				if (arr.Length != 2)
 					continue;
 				var stud = arr[0].Trim();
 				var mark = arr[1].Trim();
-				if (ret.ContainsKey(stud)) 
+				if (ret.ContainsKey(stud))
 					continue;
 				ret.Add(stud, mark);
 			}

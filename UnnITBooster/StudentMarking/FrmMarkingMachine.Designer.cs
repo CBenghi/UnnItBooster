@@ -23,1822 +23,1865 @@ namespace StudentsFetcher.StudentMarking
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-			this.components = new System.ComponentModel.Container();
-			this.txtStudentId = new System.Windows.Forms.TextBox();
-			this.txtSearch = new System.Windows.Forms.TextBox();
-			this.cmdAdd = new System.Windows.Forms.Button();
-			this.txtLibReport = new System.Windows.Forms.TextBox();
-			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-			this.txtStudentreport = new ExtendedTextBox.ExtTextBox();
-			this.flComponents = new System.Windows.Forms.FlowLayoutPanel();
-			this.LblMark = new System.Windows.Forms.Label();
-			this.cmdSaveMarks = new System.Windows.Forms.Button();
-			this.panel2 = new System.Windows.Forms.Panel();
-			this.chkUseSorting = new System.Windows.Forms.CheckBox();
-			this.LblOverlap = new System.Windows.Forms.Label();
-			this.button12 = new System.Windows.Forms.Button();
-			this.button6 = new System.Windows.Forms.Button();
-			this.button5 = new System.Windows.Forms.Button();
-			this.label6 = new System.Windows.Forms.Label();
-			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.label8 = new System.Windows.Forms.Label();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.cmdSetFromDelegatedMarks = new System.Windows.Forms.Button();
-			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.button13 = new System.Windows.Forms.Button();
-			this.cmbDocuments = new System.Windows.Forms.ComboBox();
-			this.button2 = new System.Windows.Forms.Button();
-			this.ChkCommNumber = new System.Windows.Forms.CheckBox();
-			this.cmdReportSizeDecrease = new System.Windows.Forms.Button();
-			this.cmdReportSizeIncrease = new System.Windows.Forms.Button();
-			this.cmdWrap = new System.Windows.Forms.Button();
-			this.ChkAutoStat = new System.Windows.Forms.CheckBox();
-			this.BtnShowStudentStat = new System.Windows.Forms.Button();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.label4 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.txtTextOrPointer = new ExtendedTextBox.ExtTextBox();
-			this.txtAdditionalNote = new ExtendedTextBox.ExtTextBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.txtArea = new System.Windows.Forms.TextBox();
-			this.label11 = new System.Windows.Forms.Label();
-			this.cmbComponentComment = new System.Windows.Forms.ComboBox();
-			this.txtSection = new System.Windows.Forms.ComboBox();
-			this.label3 = new System.Windows.Forms.Label();
-			this.button11 = new System.Windows.Forms.Button();
-			this.BtnEditLast = new System.Windows.Forms.Button();
-			this.label7 = new System.Windows.Forms.Label();
-			this.cmdSelectFile = new System.Windows.Forms.Button();
-			this.txtExcelFileName = new System.Windows.Forms.TextBox();
-			this.cmdReload = new System.Windows.Forms.Button();
-			this.label5 = new System.Windows.Forms.Label();
-			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.tabControl1 = new System.Windows.Forms.TabControl();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-			this.splitContainer5 = new System.Windows.Forms.SplitContainer();
-			this.lstEmailSendSelection = new System.Windows.Forms.ListView();
-			this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.colNumMarks = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.colMark = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.colLastUpdate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.colNumComments = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.colSimilarity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.cmdEmailRefreshStudents = new System.Windows.Forms.Button();
-			this.cmdSelectAll = new System.Windows.Forms.Button();
-			this.NudOverlap = new System.Windows.Forms.NumericUpDown();
-			this.chkShowDelegate = new System.Windows.Forms.CheckBox();
-			this.StudImage = new System.Windows.Forms.PictureBox();
-			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-			this.tabControl2 = new System.Windows.Forms.TabControl();
-			this.tabPage4 = new System.Windows.Forms.TabPage();
-			this.button1 = new System.Windows.Forms.Button();
-			this.cmdSaveEmail = new System.Windows.Forms.Button();
-			this.txtEmailBody = new ExtendedTextBox.ExtTextBox();
-			this.tabPage5 = new System.Windows.Forms.TabPage();
-			this.txtEmailPreview = new System.Windows.Forms.TextBox();
-			this.button3 = new System.Windows.Forms.Button();
-			this.chkSendModerationNotice = new System.Windows.Forms.CheckBox();
-			this.txtEmailSubject = new System.Windows.Forms.TextBox();
-			this.label10 = new System.Windows.Forms.Label();
-			this.chkEmailDryRun = new System.Windows.Forms.CheckBox();
-			this.tabPage3 = new System.Windows.Forms.TabPage();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.ChkExclude0 = new System.Windows.Forms.CheckBox();
-			this.NudMarkOffset = new System.Windows.Forms.NumericUpDown();
-			this.label9 = new System.Windows.Forms.Label();
-			this.ChkRoundupX9 = new System.Windows.Forms.CheckBox();
-			this.ChkShowLabels = new System.Windows.Forms.CheckBox();
-			this.CmbGrouping = new System.Windows.Forms.ComboBox();
-			this.ChkIncludeNoMark = new System.Windows.Forms.CheckBox();
-			this.ChkOddRows = new System.Windows.Forms.CheckBox();
-			this.ChkEvenRows = new System.Windows.Forms.CheckBox();
-			this.button4 = new System.Windows.Forms.Button();
-			this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
-			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.txtToolReport = new System.Windows.Forms.TextBox();
-			this.tabControl3 = new System.Windows.Forms.TabControl();
-			this.tabPage6 = new System.Windows.Forms.TabPage();
-			this.txtElpCode = new System.Windows.Forms.TextBox();
-			this.label13 = new System.Windows.Forms.Label();
-			this.txtSourceTurnitin = new System.Windows.Forms.TextBox();
-			this.button8 = new System.Windows.Forms.Button();
-			this.btnCompleteData = new System.Windows.Forms.Button();
-			this.button7 = new System.Windows.Forms.Button();
-			this.tabPage7 = new System.Windows.Forms.TabPage();
-			this.txtSourceDataFile = new System.Windows.Forms.TextBox();
-			this.chkImportSubmissions = new System.Windows.Forms.CheckBox();
-			this.lblSourceData = new System.Windows.Forms.Label();
-			this.chkImportComponents = new System.Windows.Forms.CheckBox();
-			this.cmdSourceDataFile = new System.Windows.Forms.Button();
-			this.cmdGetData = new System.Windows.Forms.Button();
-			this.chkCommentLib = new System.Windows.Forms.CheckBox();
-			this.tabPage8 = new System.Windows.Forms.TabPage();
-			this.button10 = new System.Windows.Forms.Button();
-			this.button9 = new System.Windows.Forms.Button();
-			this.tabPage9 = new System.Windows.Forms.TabPage();
-			this.TxtExcelComponentSource = new System.Windows.Forms.TextBox();
-			this.BtnImportExcel = new System.Windows.Forms.Button();
-			this.BtnExportExcel = new System.Windows.Forms.Button();
-			this.tabPage10 = new System.Windows.Forms.TabPage();
-			this.label12 = new System.Windows.Forms.Label();
-			this.TxtScaleFactor = new System.Windows.Forms.TextBox();
-			this.TxtMergeReportFolder = new System.Windows.Forms.TextBox();
-			this.BtnMergeReport = new System.Windows.Forms.Button();
-			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-			this.BtnOpenFolder = new System.Windows.Forms.Button();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-			this.splitContainer1.Panel1.SuspendLayout();
-			this.splitContainer1.Panel2.SuspendLayout();
-			this.splitContainer1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
-			this.splitContainer4.Panel1.SuspendLayout();
-			this.splitContainer4.Panel2.SuspendLayout();
-			this.splitContainer4.SuspendLayout();
-			this.panel2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-			this.splitContainer2.Panel1.SuspendLayout();
-			this.splitContainer2.Panel2.SuspendLayout();
-			this.splitContainer2.SuspendLayout();
-			this.panel1.SuspendLayout();
-			this.groupBox2.SuspendLayout();
-			this.groupBox4.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
-			this.tabControl1.SuspendLayout();
-			this.tabPage1.SuspendLayout();
-			this.tabPage2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
-			this.splitContainer3.Panel1.SuspendLayout();
-			this.splitContainer3.Panel2.SuspendLayout();
-			this.splitContainer3.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
-			this.splitContainer5.Panel1.SuspendLayout();
-			this.splitContainer5.Panel2.SuspendLayout();
-			this.splitContainer5.SuspendLayout();
-			this.tableLayoutPanel2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.NudOverlap)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.StudImage)).BeginInit();
-			this.tableLayoutPanel3.SuspendLayout();
-			this.tabControl2.SuspendLayout();
-			this.tabPage4.SuspendLayout();
-			this.tabPage5.SuspendLayout();
-			this.tabPage3.SuspendLayout();
-			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.NudMarkOffset)).BeginInit();
-			this.groupBox3.SuspendLayout();
-			this.tabControl3.SuspendLayout();
-			this.tabPage6.SuspendLayout();
-			this.tabPage7.SuspendLayout();
-			this.tabPage8.SuspendLayout();
-			this.tabPage9.SuspendLayout();
-			this.tabPage10.SuspendLayout();
-			this.tableLayoutPanel4.SuspendLayout();
-			this.SuspendLayout();
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
+			txtStudentId = new TextBox();
+			txtSearch = new TextBox();
+			cmdAdd = new Button();
+			txtLibReport = new TextBox();
+			splitContainer1 = new SplitContainer();
+			splitContainer4 = new SplitContainer();
+			txtStudentreport = new ExtendedTextBox.ExtTextBox();
+			flComponents = new FlowLayoutPanel();
+			LblMark = new Label();
+			cmdSaveMarks = new Button();
+			panel2 = new Panel();
+			chkUseSorting = new CheckBox();
+			LblOverlap = new Label();
+			button12 = new Button();
+			button6 = new Button();
+			button5 = new Button();
+			label6 = new Label();
+			splitContainer2 = new SplitContainer();
+			panel1 = new Panel();
+			label8 = new Label();
+			groupBox2 = new GroupBox();
+			cmdSetFromDelegatedMarks = new Button();
+			groupBox4 = new GroupBox();
+			button13 = new Button();
+			cmbDocuments = new ComboBox();
+			button2 = new Button();
+			ChkCommNumber = new CheckBox();
+			cmdReportSizeDecrease = new Button();
+			cmdReportSizeIncrease = new Button();
+			cmdWrap = new Button();
+			ChkAutoStat = new CheckBox();
+			BtnShowStudentStat = new Button();
+			tableLayoutPanel1 = new TableLayoutPanel();
+			label4 = new Label();
+			label2 = new Label();
+			txtTextOrPointer = new ExtendedTextBox.ExtTextBox();
+			txtAdditionalNote = new ExtendedTextBox.ExtTextBox();
+			label1 = new Label();
+			txtArea = new TextBox();
+			label11 = new Label();
+			cmbComponentComment = new ComboBox();
+			txtSection = new ComboBox();
+			label3 = new Label();
+			button11 = new Button();
+			BtnEditLast = new Button();
+			label7 = new Label();
+			cmdSelectFile = new Button();
+			txtExcelFileName = new TextBox();
+			cmdReload = new Button();
+			label5 = new Label();
+			openFileDialog1 = new OpenFileDialog();
+			tabControl1 = new TabControl();
+			tabPage1 = new TabPage();
+			tabPage2 = new TabPage();
+			splitContainer3 = new SplitContainer();
+			splitContainer5 = new SplitContainer();
+			lstEmailSendSelection = new ListView();
+			colName = new ColumnHeader();
+			colNumMarks = new ColumnHeader();
+			colMark = new ColumnHeader();
+			colLastUpdate = new ColumnHeader();
+			colNumComments = new ColumnHeader();
+			colSimilarity = new ColumnHeader();
+			tableLayoutPanel2 = new TableLayoutPanel();
+			cmdEmailRefreshStudents = new Button();
+			cmdSelectAll = new Button();
+			NudOverlap = new NumericUpDown();
+			chkShowDelegate = new CheckBox();
+			StudImage = new PictureBox();
+			tableLayoutPanel3 = new TableLayoutPanel();
+			tabControl2 = new TabControl();
+			tabPage4 = new TabPage();
+			button1 = new Button();
+			cmdSaveEmail = new Button();
+			txtEmailBody = new ExtendedTextBox.ExtTextBox();
+			tabPage5 = new TabPage();
+			txtEmailPreview = new TextBox();
+			button3 = new Button();
+			chkSendModerationNotice = new CheckBox();
+			txtEmailSubject = new TextBox();
+			label10 = new Label();
+			chkEmailDryRun = new CheckBox();
+			tabPage3 = new TabPage();
+			groupBox1 = new GroupBox();
+			ChkExclude0 = new CheckBox();
+			NudMarkOffset = new NumericUpDown();
+			label9 = new Label();
+			ChkRoundupX9 = new CheckBox();
+			ChkShowLabels = new CheckBox();
+			CmbGrouping = new ComboBox();
+			ChkIncludeNoMark = new CheckBox();
+			ChkOddRows = new CheckBox();
+			ChkEvenRows = new CheckBox();
+			button4 = new Button();
+			zedGraphControl1 = new LiveChartsCore.SkiaSharpView.WinForms.CartesianChart();
+			groupBox3 = new GroupBox();
+			txtToolReport = new TextBox();
+			tabControl3 = new TabControl();
+			tabPage6 = new TabPage();
+			txtElpCode = new TextBox();
+			label13 = new Label();
+			txtSourceTurnitin = new TextBox();
+			button8 = new Button();
+			btnCompleteData = new Button();
+			button7 = new Button();
+			tabPage7 = new TabPage();
+			txtSourceDataFile = new TextBox();
+			chkImportSubmissions = new CheckBox();
+			lblSourceData = new Label();
+			chkImportComponents = new CheckBox();
+			cmdSourceDataFile = new Button();
+			cmdGetData = new Button();
+			chkCommentLib = new CheckBox();
+			tabPage8 = new TabPage();
+			button10 = new Button();
+			button9 = new Button();
+			tabPage9 = new TabPage();
+			TxtExcelComponentSource = new TextBox();
+			BtnImportExcel = new Button();
+			BtnExportExcel = new Button();
+			tabPage10 = new TabPage();
+			label12 = new Label();
+			TxtScaleFactor = new TextBox();
+			TxtMergeReportFolder = new TextBox();
+			BtnMergeReport = new Button();
+			tableLayoutPanel4 = new TableLayoutPanel();
+			BtnOpenFolder = new Button();
+			((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+			splitContainer1.Panel1.SuspendLayout();
+			splitContainer1.Panel2.SuspendLayout();
+			splitContainer1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)splitContainer4).BeginInit();
+			splitContainer4.Panel1.SuspendLayout();
+			splitContainer4.Panel2.SuspendLayout();
+			splitContainer4.SuspendLayout();
+			panel2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
+			splitContainer2.Panel1.SuspendLayout();
+			splitContainer2.Panel2.SuspendLayout();
+			splitContainer2.SuspendLayout();
+			panel1.SuspendLayout();
+			groupBox2.SuspendLayout();
+			groupBox4.SuspendLayout();
+			tableLayoutPanel1.SuspendLayout();
+			tabControl1.SuspendLayout();
+			tabPage1.SuspendLayout();
+			tabPage2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)splitContainer3).BeginInit();
+			splitContainer3.Panel1.SuspendLayout();
+			splitContainer3.Panel2.SuspendLayout();
+			splitContainer3.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)splitContainer5).BeginInit();
+			splitContainer5.Panel1.SuspendLayout();
+			splitContainer5.Panel2.SuspendLayout();
+			splitContainer5.SuspendLayout();
+			tableLayoutPanel2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)NudOverlap).BeginInit();
+			((System.ComponentModel.ISupportInitialize)StudImage).BeginInit();
+			tableLayoutPanel3.SuspendLayout();
+			tabControl2.SuspendLayout();
+			tabPage4.SuspendLayout();
+			tabPage5.SuspendLayout();
+			tabPage3.SuspendLayout();
+			groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)NudMarkOffset).BeginInit();
+			groupBox3.SuspendLayout();
+			tabControl3.SuspendLayout();
+			tabPage6.SuspendLayout();
+			tabPage7.SuspendLayout();
+			tabPage8.SuspendLayout();
+			tabPage9.SuspendLayout();
+			tabPage10.SuspendLayout();
+			tableLayoutPanel4.SuspendLayout();
+			SuspendLayout();
 			// 
 			// txtStudentId
 			// 
-			this.txtStudentId.Dock = System.Windows.Forms.DockStyle.Top;
-			this.txtStudentId.Location = new System.Drawing.Point(0, 13);
-			this.txtStudentId.Name = "txtStudentId";
-			this.txtStudentId.Size = new System.Drawing.Size(350, 20);
-			this.txtStudentId.TabIndex = 0;
-			this.txtStudentId.TabStop = false;
-			this.txtStudentId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtStudentId_KeyDown);
+			txtStudentId.Dock = DockStyle.Top;
+			txtStudentId.Location = new System.Drawing.Point(0, 15);
+			txtStudentId.Margin = new Padding(4, 3, 4, 3);
+			txtStudentId.Name = "txtStudentId";
+			txtStudentId.Size = new System.Drawing.Size(408, 23);
+			txtStudentId.TabIndex = 0;
+			txtStudentId.TabStop = false;
+			txtStudentId.KeyDown += txtStudentId_KeyDown;
 			// 
 			// txtSearch
 			// 
-			this.txtSearch.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtSearch.Location = new System.Drawing.Point(0, 13);
-			this.txtSearch.Name = "txtSearch";
-			this.txtSearch.Size = new System.Drawing.Size(350, 29);
-			this.txtSearch.TabIndex = 3;
-			this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
+			txtSearch.Dock = DockStyle.Fill;
+			txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+			txtSearch.Location = new System.Drawing.Point(0, 15);
+			txtSearch.Margin = new Padding(4, 3, 4, 3);
+			txtSearch.Name = "txtSearch";
+			txtSearch.Size = new System.Drawing.Size(408, 29);
+			txtSearch.TabIndex = 3;
+			txtSearch.KeyDown += txtSearch_KeyDown;
 			// 
 			// cmdAdd
 			// 
-			this.cmdAdd.Location = new System.Drawing.Point(116, 584);
-			this.cmdAdd.Name = "cmdAdd";
-			this.cmdAdd.Size = new System.Drawing.Size(75, 23);
-			this.cmdAdd.TabIndex = 13;
-			this.cmdAdd.TabStop = false;
-			this.cmdAdd.Text = "Add";
-			this.cmdAdd.UseVisualStyleBackColor = true;
-			this.cmdAdd.Click += new System.EventHandler(this.cmdAdd_Click);
+			cmdAdd.Location = new System.Drawing.Point(136, 677);
+			cmdAdd.Margin = new Padding(4, 3, 4, 3);
+			cmdAdd.Name = "cmdAdd";
+			cmdAdd.Size = new System.Drawing.Size(88, 27);
+			cmdAdd.TabIndex = 13;
+			cmdAdd.TabStop = false;
+			cmdAdd.Text = "Add";
+			cmdAdd.UseVisualStyleBackColor = true;
+			cmdAdd.Click += cmdAdd_Click;
 			// 
 			// txtLibReport
 			// 
-			this.txtLibReport.BackColor = System.Drawing.Color.LightYellow;
-			this.txtLibReport.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtLibReport.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtLibReport.Location = new System.Drawing.Point(0, 40);
-			this.txtLibReport.Multiline = true;
-			this.txtLibReport.Name = "txtLibReport";
-			this.txtLibReport.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtLibReport.Size = new System.Drawing.Size(350, 463);
-			this.txtLibReport.TabIndex = 2;
-			this.txtLibReport.TabStop = false;
+			txtLibReport.BackColor = System.Drawing.Color.LightYellow;
+			txtLibReport.Dock = DockStyle.Fill;
+			txtLibReport.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+			txtLibReport.Location = new System.Drawing.Point(0, 46);
+			txtLibReport.Margin = new Padding(4, 3, 4, 3);
+			txtLibReport.Multiline = true;
+			txtLibReport.Name = "txtLibReport";
+			txtLibReport.ScrollBars = ScrollBars.Both;
+			txtLibReport.Size = new System.Drawing.Size(408, 538);
+			txtLibReport.TabIndex = 2;
+			txtLibReport.TabStop = false;
 			// 
 			// splitContainer1
 			// 
-			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-			this.splitContainer1.Location = new System.Drawing.Point(3, 3);
-			this.splitContainer1.Name = "splitContainer1";
+			splitContainer1.Dock = DockStyle.Fill;
+			splitContainer1.FixedPanel = FixedPanel.Panel1;
+			splitContainer1.Location = new System.Drawing.Point(4, 3);
+			splitContainer1.Margin = new Padding(4, 3, 4, 3);
+			splitContainer1.Name = "splitContainer1";
 			// 
 			// splitContainer1.Panel1
 			// 
-			this.splitContainer1.Panel1.Controls.Add(this.splitContainer4);
-			this.splitContainer1.Panel1.Controls.Add(this.panel2);
-			this.splitContainer1.Panel1.Controls.Add(this.txtStudentId);
-			this.splitContainer1.Panel1.Controls.Add(this.label6);
+			splitContainer1.Panel1.Controls.Add(splitContainer4);
+			splitContainer1.Panel1.Controls.Add(panel2);
+			splitContainer1.Panel1.Controls.Add(txtStudentId);
+			splitContainer1.Panel1.Controls.Add(label6);
 			// 
 			// splitContainer1.Panel2
 			// 
-			this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-			this.splitContainer1.Size = new System.Drawing.Size(1215, 623);
-			this.splitContainer1.SplitterDistance = 350;
-			this.splitContainer1.TabIndex = 8;
-			this.splitContainer1.TabStop = false;
+			splitContainer1.Panel2.Controls.Add(splitContainer2);
+			splitContainer1.Size = new System.Drawing.Size(1418, 722);
+			splitContainer1.SplitterDistance = 408;
+			splitContainer1.SplitterWidth = 5;
+			splitContainer1.TabIndex = 8;
+			splitContainer1.TabStop = false;
 			// 
 			// splitContainer4
 			// 
-			this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer4.Location = new System.Drawing.Point(0, 58);
-			this.splitContainer4.Margin = new System.Windows.Forms.Padding(2);
-			this.splitContainer4.Name = "splitContainer4";
-			this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			splitContainer4.Dock = DockStyle.Fill;
+			splitContainer4.Location = new System.Drawing.Point(0, 67);
+			splitContainer4.Margin = new Padding(2);
+			splitContainer4.Name = "splitContainer4";
+			splitContainer4.Orientation = Orientation.Horizontal;
 			// 
 			// splitContainer4.Panel1
 			// 
-			this.splitContainer4.Panel1.Controls.Add(this.txtStudentreport);
+			splitContainer4.Panel1.Controls.Add(txtStudentreport);
 			// 
 			// splitContainer4.Panel2
 			// 
-			this.splitContainer4.Panel2.Controls.Add(this.flComponents);
-			this.splitContainer4.Panel2.Controls.Add(this.LblMark);
-			this.splitContainer4.Panel2.Controls.Add(this.cmdSaveMarks);
-			this.splitContainer4.Size = new System.Drawing.Size(350, 565);
-			this.splitContainer4.SplitterDistance = 250;
-			this.splitContainer4.SplitterWidth = 3;
-			this.splitContainer4.TabIndex = 15;
+			splitContainer4.Panel2.Controls.Add(flComponents);
+			splitContainer4.Panel2.Controls.Add(LblMark);
+			splitContainer4.Panel2.Controls.Add(cmdSaveMarks);
+			splitContainer4.Size = new System.Drawing.Size(408, 655);
+			splitContainer4.SplitterDistance = 289;
+			splitContainer4.SplitterWidth = 3;
+			splitContainer4.TabIndex = 15;
 			// 
 			// txtStudentreport
 			// 
-			this.txtStudentreport.AcceptsReturn = true;
-			this.txtStudentreport.AcceptsTab = true;
-			this.txtStudentreport.ChangedColour = System.Drawing.Color.Empty;
-			this.txtStudentreport.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtStudentreport.Location = new System.Drawing.Point(0, 0);
-			this.txtStudentreport.Margin = new System.Windows.Forms.Padding(4);
-			this.txtStudentreport.MaxLength = 0;
-			this.txtStudentreport.Name = "txtStudentreport";
-			this.txtStudentreport.OriginalText = "";
-			this.txtStudentreport.Size = new System.Drawing.Size(350, 250);
-			this.txtStudentreport.SpellCheck = true;
-			this.txtStudentreport.TabIndex = 3;
-			this.txtStudentreport.TabStop = false;
-			this.txtStudentreport.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-			this.txtStudentreport.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-			this.txtStudentreport.Wrapping = true;
+			txtStudentreport.AcceptsReturn = true;
+			txtStudentreport.AcceptsTab = true;
+			txtStudentreport.ChangedColour = System.Drawing.Color.Empty;
+			txtStudentreport.Dock = DockStyle.Fill;
+			txtStudentreport.Location = new System.Drawing.Point(0, 0);
+			txtStudentreport.Margin = new Padding(5, 5, 5, 5);
+			txtStudentreport.MaxLength = 0;
+			txtStudentreport.Name = "txtStudentreport";
+			txtStudentreport.OriginalText = "";
+			txtStudentreport.Size = new System.Drawing.Size(408, 289);
+			txtStudentreport.SpellCheck = true;
+			txtStudentreport.TabIndex = 3;
+			txtStudentreport.TabStop = false;
+			txtStudentreport.TextCase = CharacterCasing.Normal;
+			txtStudentreport.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
+			txtStudentreport.Wrapping = true;
 			// 
 			// flComponents
 			// 
-			this.flComponents.AutoScroll = true;
-			this.flComponents.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flComponents.Location = new System.Drawing.Point(0, 47);
-			this.flComponents.Margin = new System.Windows.Forms.Padding(2);
-			this.flComponents.Name = "flComponents";
-			this.flComponents.Size = new System.Drawing.Size(350, 243);
-			this.flComponents.TabIndex = 13;
+			flComponents.AutoScroll = true;
+			flComponents.Dock = DockStyle.Fill;
+			flComponents.Location = new System.Drawing.Point(0, 54);
+			flComponents.Margin = new Padding(2);
+			flComponents.Name = "flComponents";
+			flComponents.Size = new System.Drawing.Size(408, 284);
+			flComponents.TabIndex = 13;
 			// 
 			// LblMark
 			// 
-			this.LblMark.Dock = System.Windows.Forms.DockStyle.Top;
-			this.LblMark.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LblMark.Location = new System.Drawing.Point(0, 0);
-			this.LblMark.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.LblMark.Name = "LblMark";
-			this.LblMark.Size = new System.Drawing.Size(350, 47);
-			this.LblMark.TabIndex = 0;
-			this.LblMark.Text = "-";
-			this.LblMark.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.LblMark.Click += new System.EventHandler(this.LblMark_Click);
+			LblMark.Dock = DockStyle.Top;
+			LblMark.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+			LblMark.Location = new System.Drawing.Point(0, 0);
+			LblMark.Margin = new Padding(2, 0, 2, 0);
+			LblMark.Name = "LblMark";
+			LblMark.Size = new System.Drawing.Size(408, 54);
+			LblMark.TabIndex = 0;
+			LblMark.Text = "-";
+			LblMark.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			LblMark.Click += LblMark_Click;
 			// 
 			// cmdSaveMarks
 			// 
-			this.cmdSaveMarks.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.cmdSaveMarks.Location = new System.Drawing.Point(0, 290);
-			this.cmdSaveMarks.Name = "cmdSaveMarks";
-			this.cmdSaveMarks.Size = new System.Drawing.Size(350, 22);
-			this.cmdSaveMarks.TabIndex = 6;
-			this.cmdSaveMarks.Text = "Ok";
-			this.cmdSaveMarks.UseVisualStyleBackColor = true;
-			this.cmdSaveMarks.Click += new System.EventHandler(this.CmdSaveMarks_Click);
+			cmdSaveMarks.Dock = DockStyle.Bottom;
+			cmdSaveMarks.Location = new System.Drawing.Point(0, 338);
+			cmdSaveMarks.Margin = new Padding(4, 3, 4, 3);
+			cmdSaveMarks.Name = "cmdSaveMarks";
+			cmdSaveMarks.Size = new System.Drawing.Size(408, 25);
+			cmdSaveMarks.TabIndex = 6;
+			cmdSaveMarks.Text = "Ok";
+			cmdSaveMarks.UseVisualStyleBackColor = true;
+			cmdSaveMarks.Click += CmdSaveMarks_Click;
 			// 
 			// panel2
 			// 
-			this.panel2.Controls.Add(this.chkUseSorting);
-			this.panel2.Controls.Add(this.LblOverlap);
-			this.panel2.Controls.Add(this.button12);
-			this.panel2.Controls.Add(this.button6);
-			this.panel2.Controls.Add(this.button5);
-			this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel2.Location = new System.Drawing.Point(0, 33);
-			this.panel2.Margin = new System.Windows.Forms.Padding(2);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(350, 25);
-			this.panel2.TabIndex = 17;
+			panel2.Controls.Add(chkUseSorting);
+			panel2.Controls.Add(LblOverlap);
+			panel2.Controls.Add(button12);
+			panel2.Controls.Add(button6);
+			panel2.Controls.Add(button5);
+			panel2.Dock = DockStyle.Top;
+			panel2.Location = new System.Drawing.Point(0, 38);
+			panel2.Margin = new Padding(2);
+			panel2.Name = "panel2";
+			panel2.Size = new System.Drawing.Size(408, 29);
+			panel2.TabIndex = 17;
 			// 
 			// chkUseSorting
 			// 
-			this.chkUseSorting.AutoSize = true;
-			this.chkUseSorting.Location = new System.Drawing.Point(145, 4);
-			this.chkUseSorting.Name = "chkUseSorting";
-			this.chkUseSorting.Size = new System.Drawing.Size(79, 17);
-			this.chkUseSorting.TabIndex = 4;
-			this.chkUseSorting.Text = "Use sorting";
-			this.chkUseSorting.UseVisualStyleBackColor = true;
-			this.chkUseSorting.CheckedChanged += new System.EventHandler(this.chkUseSorting_CheckedChanged);
+			chkUseSorting.AutoSize = true;
+			chkUseSorting.Location = new System.Drawing.Point(169, 5);
+			chkUseSorting.Margin = new Padding(4, 3, 4, 3);
+			chkUseSorting.Name = "chkUseSorting";
+			chkUseSorting.Size = new System.Drawing.Size(85, 19);
+			chkUseSorting.TabIndex = 4;
+			chkUseSorting.Text = "Use sorting";
+			chkUseSorting.UseVisualStyleBackColor = true;
+			chkUseSorting.CheckedChanged += chkUseSorting_CheckedChanged;
 			// 
 			// LblOverlap
 			// 
-			this.LblOverlap.AutoSize = true;
-			this.LblOverlap.Location = new System.Drawing.Point(65, 5);
-			this.LblOverlap.Name = "LblOverlap";
-			this.LblOverlap.Size = new System.Drawing.Size(10, 13);
-			this.LblOverlap.TabIndex = 3;
-			this.LblOverlap.Text = "-";
+			LblOverlap.AutoSize = true;
+			LblOverlap.Location = new System.Drawing.Point(76, 6);
+			LblOverlap.Margin = new Padding(4, 0, 4, 0);
+			LblOverlap.Name = "LblOverlap";
+			LblOverlap.Size = new System.Drawing.Size(12, 15);
+			LblOverlap.TabIndex = 3;
+			LblOverlap.Text = "-";
 			// 
 			// button12
 			// 
-			this.button12.Location = new System.Drawing.Point(4, 2);
-			this.button12.Margin = new System.Windows.Forms.Padding(2);
-			this.button12.Name = "button12";
-			this.button12.Size = new System.Drawing.Size(56, 19);
-			this.button12.TabIndex = 2;
-			this.button12.Text = "html";
-			this.button12.UseVisualStyleBackColor = true;
-			this.button12.Click += new System.EventHandler(this.button12_Click);
+			button12.Location = new System.Drawing.Point(5, 2);
+			button12.Margin = new Padding(2);
+			button12.Name = "button12";
+			button12.Size = new System.Drawing.Size(65, 22);
+			button12.TabIndex = 2;
+			button12.Text = "html";
+			button12.UseVisualStyleBackColor = true;
+			button12.Click += button12_Click;
 			// 
 			// button6
 			// 
-			this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button6.Location = new System.Drawing.Point(230, 2);
-			this.button6.Margin = new System.Windows.Forms.Padding(2);
-			this.button6.Name = "button6";
-			this.button6.Size = new System.Drawing.Size(56, 19);
-			this.button6.TabIndex = 0;
-			this.button6.Text = "-";
-			this.button6.UseVisualStyleBackColor = true;
-			this.button6.Click += new System.EventHandler(this.button6_Click);
+			button6.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			button6.Location = new System.Drawing.Point(268, 2);
+			button6.Margin = new Padding(2);
+			button6.Name = "button6";
+			button6.Size = new System.Drawing.Size(65, 22);
+			button6.TabIndex = 0;
+			button6.Text = "-";
+			button6.UseVisualStyleBackColor = true;
+			button6.Click += button6_Click;
 			// 
 			// button5
 			// 
-			this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button5.Location = new System.Drawing.Point(290, 2);
-			this.button5.Margin = new System.Windows.Forms.Padding(2);
-			this.button5.Name = "button5";
-			this.button5.Size = new System.Drawing.Size(56, 19);
-			this.button5.TabIndex = 1;
-			this.button5.Text = "+";
-			this.button5.UseVisualStyleBackColor = true;
-			this.button5.Click += new System.EventHandler(this.Next_Click);
+			button5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			button5.Location = new System.Drawing.Point(338, 2);
+			button5.Margin = new Padding(2);
+			button5.Name = "button5";
+			button5.Size = new System.Drawing.Size(65, 22);
+			button5.TabIndex = 1;
+			button5.Text = "+";
+			button5.UseVisualStyleBackColor = true;
+			button5.Click += Next_Click;
 			// 
 			// label6
 			// 
-			this.label6.AutoSize = true;
-			this.label6.Dock = System.Windows.Forms.DockStyle.Top;
-			this.label6.Location = new System.Drawing.Point(0, 0);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(47, 13);
-			this.label6.TabIndex = 12;
-			this.label6.Text = "Student:";
+			label6.AutoSize = true;
+			label6.Dock = DockStyle.Top;
+			label6.Location = new System.Drawing.Point(0, 0);
+			label6.Margin = new Padding(4, 0, 4, 0);
+			label6.Name = "label6";
+			label6.Size = new System.Drawing.Size(51, 15);
+			label6.TabIndex = 12;
+			label6.Text = "Student:";
 			// 
 			// splitContainer2
 			// 
-			this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer2.Name = "splitContainer2";
+			splitContainer2.Dock = DockStyle.Fill;
+			splitContainer2.FixedPanel = FixedPanel.Panel2;
+			splitContainer2.Location = new System.Drawing.Point(0, 0);
+			splitContainer2.Margin = new Padding(4, 3, 4, 3);
+			splitContainer2.Name = "splitContainer2";
 			// 
 			// splitContainer2.Panel1
 			// 
-			this.splitContainer2.Panel1.Controls.Add(this.txtLibReport);
-			this.splitContainer2.Panel1.Controls.Add(this.panel1);
-			this.splitContainer2.Panel1.Controls.Add(this.groupBox2);
+			splitContainer2.Panel1.Controls.Add(txtLibReport);
+			splitContainer2.Panel1.Controls.Add(panel1);
+			splitContainer2.Panel1.Controls.Add(groupBox2);
 			// 
 			// splitContainer2.Panel2
 			// 
-			this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel1);
-			this.splitContainer2.Panel2.Controls.Add(this.label7);
-			this.splitContainer2.Size = new System.Drawing.Size(861, 623);
-			this.splitContainer2.SplitterDistance = 350;
-			this.splitContainer2.TabIndex = 0;
-			this.splitContainer2.TabStop = false;
+			splitContainer2.Panel2.Controls.Add(tableLayoutPanel1);
+			splitContainer2.Panel2.Controls.Add(label7);
+			splitContainer2.Size = new System.Drawing.Size(1005, 722);
+			splitContainer2.SplitterDistance = 408;
+			splitContainer2.SplitterWidth = 5;
+			splitContainer2.TabIndex = 0;
+			splitContainer2.TabStop = false;
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.txtSearch);
-			this.panel1.Controls.Add(this.label8);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel1.Location = new System.Drawing.Point(0, 0);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(350, 40);
-			this.panel1.TabIndex = 16;
+			panel1.Controls.Add(txtSearch);
+			panel1.Controls.Add(label8);
+			panel1.Dock = DockStyle.Top;
+			panel1.Location = new System.Drawing.Point(0, 0);
+			panel1.Margin = new Padding(4, 3, 4, 3);
+			panel1.Name = "panel1";
+			panel1.Size = new System.Drawing.Size(408, 46);
+			panel1.TabIndex = 16;
 			// 
 			// label8
 			// 
-			this.label8.AutoSize = true;
-			this.label8.Dock = System.Windows.Forms.DockStyle.Top;
-			this.label8.Location = new System.Drawing.Point(0, 0);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(44, 13);
-			this.label8.TabIndex = 14;
-			this.label8.Text = "Search:";
+			label8.AutoSize = true;
+			label8.Dock = DockStyle.Top;
+			label8.Location = new System.Drawing.Point(0, 0);
+			label8.Margin = new Padding(4, 0, 4, 0);
+			label8.Name = "label8";
+			label8.Size = new System.Drawing.Size(45, 15);
+			label8.TabIndex = 14;
+			label8.Text = "Search:";
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.cmdSetFromDelegatedMarks);
-			this.groupBox2.Controls.Add(this.groupBox4);
-			this.groupBox2.Controls.Add(this.ChkCommNumber);
-			this.groupBox2.Controls.Add(this.cmdReportSizeDecrease);
-			this.groupBox2.Controls.Add(this.cmdReportSizeIncrease);
-			this.groupBox2.Controls.Add(this.cmdWrap);
-			this.groupBox2.Controls.Add(this.ChkAutoStat);
-			this.groupBox2.Controls.Add(this.BtnShowStudentStat);
-			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.groupBox2.Location = new System.Drawing.Point(0, 503);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(350, 120);
-			this.groupBox2.TabIndex = 15;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Documents downloaded";
+			groupBox2.Controls.Add(cmdSetFromDelegatedMarks);
+			groupBox2.Controls.Add(groupBox4);
+			groupBox2.Controls.Add(ChkCommNumber);
+			groupBox2.Controls.Add(cmdReportSizeDecrease);
+			groupBox2.Controls.Add(cmdReportSizeIncrease);
+			groupBox2.Controls.Add(cmdWrap);
+			groupBox2.Controls.Add(ChkAutoStat);
+			groupBox2.Controls.Add(BtnShowStudentStat);
+			groupBox2.Dock = DockStyle.Bottom;
+			groupBox2.Location = new System.Drawing.Point(0, 584);
+			groupBox2.Margin = new Padding(4, 3, 4, 3);
+			groupBox2.Name = "groupBox2";
+			groupBox2.Padding = new Padding(4, 3, 4, 3);
+			groupBox2.Size = new System.Drawing.Size(408, 138);
+			groupBox2.TabIndex = 15;
+			groupBox2.TabStop = false;
+			groupBox2.Text = "Documents downloaded";
 			// 
 			// cmdSetFromDelegatedMarks
 			// 
-			this.cmdSetFromDelegatedMarks.Location = new System.Drawing.Point(119, 34);
-			this.cmdSetFromDelegatedMarks.Name = "cmdSetFromDelegatedMarks";
-			this.cmdSetFromDelegatedMarks.Size = new System.Drawing.Size(179, 23);
-			this.cmdSetFromDelegatedMarks.TabIndex = 25;
-			this.cmdSetFromDelegatedMarks.Text = "Set components from delegates";
-			this.cmdSetFromDelegatedMarks.UseVisualStyleBackColor = true;
-			this.cmdSetFromDelegatedMarks.Click += new System.EventHandler(this.cmdSetFromDelegatedMarks_Click);
+			cmdSetFromDelegatedMarks.Location = new System.Drawing.Point(139, 39);
+			cmdSetFromDelegatedMarks.Margin = new Padding(4, 3, 4, 3);
+			cmdSetFromDelegatedMarks.Name = "cmdSetFromDelegatedMarks";
+			cmdSetFromDelegatedMarks.Size = new System.Drawing.Size(209, 27);
+			cmdSetFromDelegatedMarks.TabIndex = 25;
+			cmdSetFromDelegatedMarks.Text = "Set components from delegates";
+			cmdSetFromDelegatedMarks.UseVisualStyleBackColor = true;
+			cmdSetFromDelegatedMarks.Click += cmdSetFromDelegatedMarks_Click;
 			// 
 			// groupBox4
 			// 
-			this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox4.Controls.Add(this.button13);
-			this.groupBox4.Controls.Add(this.cmbDocuments);
-			this.groupBox4.Controls.Add(this.button2);
-			this.groupBox4.Location = new System.Drawing.Point(7, 67);
-			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(337, 47);
-			this.groupBox4.TabIndex = 5;
-			this.groupBox4.TabStop = false;
-			this.groupBox4.Text = "Documents downloaded";
+			groupBox4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			groupBox4.Controls.Add(button13);
+			groupBox4.Controls.Add(cmbDocuments);
+			groupBox4.Controls.Add(button2);
+			groupBox4.Location = new System.Drawing.Point(8, 77);
+			groupBox4.Margin = new Padding(4, 3, 4, 3);
+			groupBox4.Name = "groupBox4";
+			groupBox4.Padding = new Padding(4, 3, 4, 3);
+			groupBox4.Size = new System.Drawing.Size(393, 54);
+			groupBox4.TabIndex = 5;
+			groupBox4.TabStop = false;
+			groupBox4.Text = "Documents downloaded";
 			// 
 			// button13
 			// 
-			this.button13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button13.Location = new System.Drawing.Point(234, 19);
-			this.button13.Name = "button13";
-			this.button13.Size = new System.Drawing.Size(54, 23);
-			this.button13.TabIndex = 3;
-			this.button13.Text = "Content";
-			this.button13.UseVisualStyleBackColor = true;
-			this.button13.Click += new System.EventHandler(this.button13_Click);
+			button13.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			button13.Location = new System.Drawing.Point(273, 22);
+			button13.Margin = new Padding(4, 3, 4, 3);
+			button13.Name = "button13";
+			button13.Size = new System.Drawing.Size(63, 27);
+			button13.TabIndex = 3;
+			button13.Text = "Content";
+			button13.UseVisualStyleBackColor = true;
+			button13.Click += button13_Click;
 			// 
 			// cmbDocuments
 			// 
-			this.cmbDocuments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmbDocuments.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cmbDocuments.FormattingEnabled = true;
-			this.cmbDocuments.Location = new System.Drawing.Point(6, 19);
-			this.cmbDocuments.Name = "cmbDocuments";
-			this.cmbDocuments.Size = new System.Drawing.Size(222, 21);
-			this.cmbDocuments.TabIndex = 0;
-			this.cmbDocuments.TabStop = false;
+			cmbDocuments.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			cmbDocuments.DropDownStyle = ComboBoxStyle.DropDownList;
+			cmbDocuments.FormattingEnabled = true;
+			cmbDocuments.Location = new System.Drawing.Point(7, 22);
+			cmbDocuments.Margin = new Padding(4, 3, 4, 3);
+			cmbDocuments.Name = "cmbDocuments";
+			cmbDocuments.Size = new System.Drawing.Size(258, 23);
+			cmbDocuments.TabIndex = 0;
+			cmbDocuments.TabStop = false;
 			// 
 			// button2
 			// 
-			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(287, 19);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(44, 23);
-			this.button2.TabIndex = 2;
-			this.button2.Text = "Open";
-			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.Open_Click);
+			button2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			button2.Location = new System.Drawing.Point(335, 22);
+			button2.Margin = new Padding(4, 3, 4, 3);
+			button2.Name = "button2";
+			button2.Size = new System.Drawing.Size(51, 27);
+			button2.TabIndex = 2;
+			button2.Text = "Open";
+			button2.UseVisualStyleBackColor = true;
+			button2.Click += Open_Click;
 			// 
 			// ChkCommNumber
 			// 
-			this.ChkCommNumber.AutoSize = true;
-			this.ChkCommNumber.Location = new System.Drawing.Point(79, 16);
-			this.ChkCommNumber.Margin = new System.Windows.Forms.Padding(2);
-			this.ChkCommNumber.Name = "ChkCommNumber";
-			this.ChkCommNumber.Size = new System.Drawing.Size(117, 17);
-			this.ChkCommNumber.TabIndex = 4;
-			this.ChkCommNumber.Text = "Add Comm Number";
-			this.ChkCommNumber.UseVisualStyleBackColor = true;
+			ChkCommNumber.AutoSize = true;
+			ChkCommNumber.Location = new System.Drawing.Point(92, 18);
+			ChkCommNumber.Margin = new Padding(2);
+			ChkCommNumber.Name = "ChkCommNumber";
+			ChkCommNumber.Size = new System.Drawing.Size(135, 19);
+			ChkCommNumber.TabIndex = 4;
+			ChkCommNumber.Text = "Add Comm Number";
+			ChkCommNumber.UseVisualStyleBackColor = true;
 			// 
 			// cmdReportSizeDecrease
 			// 
-			this.cmdReportSizeDecrease.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdReportSizeDecrease.Location = new System.Drawing.Point(258, 12);
-			this.cmdReportSizeDecrease.Name = "cmdReportSizeDecrease";
-			this.cmdReportSizeDecrease.Size = new System.Drawing.Size(24, 21);
-			this.cmdReportSizeDecrease.TabIndex = 17;
-			this.cmdReportSizeDecrease.Text = "-";
-			this.cmdReportSizeDecrease.UseVisualStyleBackColor = true;
-			this.cmdReportSizeDecrease.Click += new System.EventHandler(this.cmdReportSizeDecrease_Click);
+			cmdReportSizeDecrease.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			cmdReportSizeDecrease.Location = new System.Drawing.Point(301, 14);
+			cmdReportSizeDecrease.Margin = new Padding(4, 3, 4, 3);
+			cmdReportSizeDecrease.Name = "cmdReportSizeDecrease";
+			cmdReportSizeDecrease.Size = new System.Drawing.Size(28, 24);
+			cmdReportSizeDecrease.TabIndex = 17;
+			cmdReportSizeDecrease.Text = "-";
+			cmdReportSizeDecrease.UseVisualStyleBackColor = true;
+			cmdReportSizeDecrease.Click += cmdReportSizeDecrease_Click;
 			// 
 			// cmdReportSizeIncrease
 			// 
-			this.cmdReportSizeIncrease.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdReportSizeIncrease.Location = new System.Drawing.Point(282, 12);
-			this.cmdReportSizeIncrease.Name = "cmdReportSizeIncrease";
-			this.cmdReportSizeIncrease.Size = new System.Drawing.Size(24, 21);
-			this.cmdReportSizeIncrease.TabIndex = 16;
-			this.cmdReportSizeIncrease.Text = "+";
-			this.cmdReportSizeIncrease.UseVisualStyleBackColor = true;
-			this.cmdReportSizeIncrease.Click += new System.EventHandler(this.cmdReportSizeIncrease_Click);
+			cmdReportSizeIncrease.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			cmdReportSizeIncrease.Location = new System.Drawing.Point(329, 14);
+			cmdReportSizeIncrease.Margin = new Padding(4, 3, 4, 3);
+			cmdReportSizeIncrease.Name = "cmdReportSizeIncrease";
+			cmdReportSizeIncrease.Size = new System.Drawing.Size(28, 24);
+			cmdReportSizeIncrease.TabIndex = 16;
+			cmdReportSizeIncrease.Text = "+";
+			cmdReportSizeIncrease.UseVisualStyleBackColor = true;
+			cmdReportSizeIncrease.Click += cmdReportSizeIncrease_Click;
 			// 
 			// cmdWrap
 			// 
-			this.cmdWrap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdWrap.Location = new System.Drawing.Point(304, 12);
-			this.cmdWrap.Name = "cmdWrap";
-			this.cmdWrap.Size = new System.Drawing.Size(40, 21);
-			this.cmdWrap.TabIndex = 15;
-			this.cmdWrap.Text = "wrap";
-			this.cmdWrap.UseVisualStyleBackColor = true;
-			this.cmdWrap.Click += new System.EventHandler(this.cmdWrap_Click);
+			cmdWrap.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			cmdWrap.Location = new System.Drawing.Point(355, 14);
+			cmdWrap.Margin = new Padding(4, 3, 4, 3);
+			cmdWrap.Name = "cmdWrap";
+			cmdWrap.Size = new System.Drawing.Size(47, 24);
+			cmdWrap.TabIndex = 15;
+			cmdWrap.Text = "wrap";
+			cmdWrap.UseVisualStyleBackColor = true;
+			cmdWrap.Click += cmdWrap_Click;
 			// 
 			// ChkAutoStat
 			// 
-			this.ChkAutoStat.AutoSize = true;
-			this.ChkAutoStat.Location = new System.Drawing.Point(7, 16);
-			this.ChkAutoStat.Margin = new System.Windows.Forms.Padding(2);
-			this.ChkAutoStat.Name = "ChkAutoStat";
-			this.ChkAutoStat.Size = new System.Drawing.Size(68, 17);
-			this.ChkAutoStat.TabIndex = 3;
-			this.ChkAutoStat.Text = "Auto stat";
-			this.ChkAutoStat.UseVisualStyleBackColor = true;
+			ChkAutoStat.AutoSize = true;
+			ChkAutoStat.Location = new System.Drawing.Point(8, 18);
+			ChkAutoStat.Margin = new Padding(2);
+			ChkAutoStat.Name = "ChkAutoStat";
+			ChkAutoStat.Size = new System.Drawing.Size(74, 19);
+			ChkAutoStat.TabIndex = 3;
+			ChkAutoStat.Text = "Auto stat";
+			ChkAutoStat.UseVisualStyleBackColor = true;
 			// 
 			// BtnShowStudentStat
 			// 
-			this.BtnShowStudentStat.Location = new System.Drawing.Point(5, 34);
-			this.BtnShowStudentStat.Name = "BtnShowStudentStat";
-			this.BtnShowStudentStat.Size = new System.Drawing.Size(108, 23);
-			this.BtnShowStudentStat.TabIndex = 24;
-			this.BtnShowStudentStat.Text = "Show student stats";
-			this.BtnShowStudentStat.UseVisualStyleBackColor = true;
-			this.BtnShowStudentStat.Click += new System.EventHandler(this.BtnShowStudentStat_Click);
+			BtnShowStudentStat.Location = new System.Drawing.Point(6, 39);
+			BtnShowStudentStat.Margin = new Padding(4, 3, 4, 3);
+			BtnShowStudentStat.Name = "BtnShowStudentStat";
+			BtnShowStudentStat.Size = new System.Drawing.Size(126, 27);
+			BtnShowStudentStat.TabIndex = 24;
+			BtnShowStudentStat.Text = "Show student stats";
+			BtnShowStudentStat.UseVisualStyleBackColor = true;
+			BtnShowStudentStat.Click += BtnShowStudentStat_Click;
 			// 
 			// tableLayoutPanel1
 			// 
-			this.tableLayoutPanel1.ColumnCount = 2;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.45509F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 77.54491F));
-			this.tableLayoutPanel1.Controls.Add(this.label4, 0, 4);
-			this.tableLayoutPanel1.Controls.Add(this.label2, 0, 3);
-			this.tableLayoutPanel1.Controls.Add(this.txtTextOrPointer, 1, 2);
-			this.tableLayoutPanel1.Controls.Add(this.txtAdditionalNote, 1, 3);
-			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
-			this.tableLayoutPanel1.Controls.Add(this.txtArea, 1, 4);
-			this.tableLayoutPanel1.Controls.Add(this.label11, 0, 5);
-			this.tableLayoutPanel1.Controls.Add(this.cmdAdd, 1, 6);
-			this.tableLayoutPanel1.Controls.Add(this.cmbComponentComment, 1, 5);
-			this.tableLayoutPanel1.Controls.Add(this.txtSection, 1, 0);
-			this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.button11, 1, 1);
-			this.tableLayoutPanel1.Controls.Add(this.BtnEditLast, 0, 1);
-			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 13);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 7;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(507, 610);
-			this.tableLayoutPanel1.TabIndex = 8;
+			tableLayoutPanel1.ColumnCount = 2;
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.45509F));
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 77.54491F));
+			tableLayoutPanel1.Controls.Add(label4, 0, 4);
+			tableLayoutPanel1.Controls.Add(label2, 0, 3);
+			tableLayoutPanel1.Controls.Add(txtTextOrPointer, 1, 2);
+			tableLayoutPanel1.Controls.Add(txtAdditionalNote, 1, 3);
+			tableLayoutPanel1.Controls.Add(label1, 0, 2);
+			tableLayoutPanel1.Controls.Add(txtArea, 1, 4);
+			tableLayoutPanel1.Controls.Add(label11, 0, 5);
+			tableLayoutPanel1.Controls.Add(cmdAdd, 1, 6);
+			tableLayoutPanel1.Controls.Add(cmbComponentComment, 1, 5);
+			tableLayoutPanel1.Controls.Add(txtSection, 1, 0);
+			tableLayoutPanel1.Controls.Add(label3, 0, 0);
+			tableLayoutPanel1.Controls.Add(button11, 1, 1);
+			tableLayoutPanel1.Controls.Add(BtnEditLast, 0, 1);
+			tableLayoutPanel1.Dock = DockStyle.Fill;
+			tableLayoutPanel1.Location = new System.Drawing.Point(0, 15);
+			tableLayoutPanel1.Margin = new Padding(4, 3, 4, 3);
+			tableLayoutPanel1.Name = "tableLayoutPanel1";
+			tableLayoutPanel1.RowCount = 7;
+			tableLayoutPanel1.RowStyles.Add(new RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 29F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new RowStyle());
+			tableLayoutPanel1.Size = new System.Drawing.Size(592, 707);
+			tableLayoutPanel1.TabIndex = 8;
 			// 
 			// label4
 			// 
-			this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(3, 534);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(29, 13);
-			this.label4.TabIndex = 19;
-			this.label4.Text = "Area";
+			label4.Anchor = AnchorStyles.Left;
+			label4.AutoSize = true;
+			label4.Location = new System.Drawing.Point(4, 623);
+			label4.Margin = new Padding(4, 0, 4, 0);
+			label4.Name = "label4";
+			label4.Size = new System.Drawing.Size(31, 15);
+			label4.TabIndex = 19;
+			label4.Text = "Area";
 			// 
 			// label2
 			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(6, 296);
-			this.label2.Margin = new System.Windows.Forms.Padding(6);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(89, 13);
-			this.label2.TabIndex = 17;
-			this.label2.Text = "specific comment";
-			this.label2.Click += new System.EventHandler(this.label2_Click);
+			label2.AutoSize = true;
+			label2.Location = new System.Drawing.Point(7, 344);
+			label2.Margin = new Padding(7, 7, 7, 7);
+			label2.Name = "label2";
+			label2.Size = new System.Drawing.Size(102, 15);
+			label2.TabIndex = 17;
+			label2.Text = "specific comment";
+			label2.Click += label2_Click;
 			// 
 			// txtTextOrPointer
 			// 
-			this.txtTextOrPointer.AcceptsReturn = true;
-			this.txtTextOrPointer.AcceptsTab = false;
-			this.txtTextOrPointer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtTextOrPointer.ChangedColour = System.Drawing.Color.Empty;
-			this.txtTextOrPointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtTextOrPointer.Location = new System.Drawing.Point(118, 57);
-			this.txtTextOrPointer.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-			this.txtTextOrPointer.MaxLength = 0;
-			this.txtTextOrPointer.Name = "txtTextOrPointer";
-			this.txtTextOrPointer.OriginalText = "";
-			this.txtTextOrPointer.Size = new System.Drawing.Size(384, 228);
-			this.txtTextOrPointer.SpellCheck = true;
-			this.txtTextOrPointer.TabIndex = 4;
-			this.txtTextOrPointer.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-			this.txtTextOrPointer.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-			this.txtTextOrPointer.Wrapping = true;
-			this.txtTextOrPointer.OnCtrlEnter += new ExtendedTextBox.ExtTextBox.CtrlKeyPressed(this.DoAdd);
-			this.txtTextOrPointer.OnCtrlTab += new ExtendedTextBox.ExtTextBox.CtrlKeyPressed(this.txtTextOrPointer_OnCtrlTab);
-			this.txtTextOrPointer.OnCtrlKey += new ExtendedTextBox.ExtTextBox.CtrlKeyboardPressed(this.txtTextOrPointer_OnCtrlKey);
-			this.txtTextOrPointer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
+			txtTextOrPointer.AcceptsReturn = true;
+			txtTextOrPointer.AcceptsTab = false;
+			txtTextOrPointer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			txtTextOrPointer.ChangedColour = System.Drawing.Color.Empty;
+			txtTextOrPointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+			txtTextOrPointer.Location = new System.Drawing.Point(138, 64);
+			txtTextOrPointer.Margin = new Padding(6, 6, 6, 6);
+			txtTextOrPointer.MaxLength = 0;
+			txtTextOrPointer.Name = "txtTextOrPointer";
+			txtTextOrPointer.OriginalText = "";
+			txtTextOrPointer.Size = new System.Drawing.Size(448, 267);
+			txtTextOrPointer.SpellCheck = true;
+			txtTextOrPointer.TabIndex = 4;
+			txtTextOrPointer.TextCase = CharacterCasing.Normal;
+			txtTextOrPointer.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
+			txtTextOrPointer.Wrapping = true;
+			txtTextOrPointer.OnCtrlEnter += DoAdd;
+			txtTextOrPointer.OnCtrlTab += txtTextOrPointer_OnCtrlTab;
+			txtTextOrPointer.OnCtrlKey += txtTextOrPointer_OnCtrlKey;
+			txtTextOrPointer.KeyDown += txtTextOrPointer_KeyUp;
 			// 
 			// txtAdditionalNote
 			// 
-			this.txtAdditionalNote.AcceptsReturn = true;
-			this.txtAdditionalNote.AcceptsTab = true;
-			this.txtAdditionalNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtAdditionalNote.ChangedColour = System.Drawing.Color.Empty;
-			this.txtAdditionalNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtAdditionalNote.Location = new System.Drawing.Point(118, 295);
-			this.txtAdditionalNote.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-			this.txtAdditionalNote.MaxLength = 0;
-			this.txtAdditionalNote.Name = "txtAdditionalNote";
-			this.txtAdditionalNote.OriginalText = "";
-			this.txtAdditionalNote.Size = new System.Drawing.Size(384, 228);
-			this.txtAdditionalNote.SpellCheck = true;
-			this.txtAdditionalNote.TabIndex = 5;
-			this.txtAdditionalNote.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-			this.txtAdditionalNote.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-			this.txtAdditionalNote.Wrapping = true;
-			this.txtAdditionalNote.OnCtrlEnter += new ExtendedTextBox.ExtTextBox.CtrlKeyPressed(this.DoAdd);
-			this.txtAdditionalNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTextOrPointer_KeyUp);
+			txtAdditionalNote.AcceptsReturn = true;
+			txtAdditionalNote.AcceptsTab = true;
+			txtAdditionalNote.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			txtAdditionalNote.ChangedColour = System.Drawing.Color.Empty;
+			txtAdditionalNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+			txtAdditionalNote.Location = new System.Drawing.Point(138, 343);
+			txtAdditionalNote.Margin = new Padding(6, 6, 6, 6);
+			txtAdditionalNote.MaxLength = 0;
+			txtAdditionalNote.Name = "txtAdditionalNote";
+			txtAdditionalNote.OriginalText = "";
+			txtAdditionalNote.Size = new System.Drawing.Size(448, 267);
+			txtAdditionalNote.SpellCheck = true;
+			txtAdditionalNote.TabIndex = 5;
+			txtAdditionalNote.TextCase = CharacterCasing.Normal;
+			txtAdditionalNote.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
+			txtAdditionalNote.Wrapping = true;
+			txtAdditionalNote.OnCtrlEnter += DoAdd;
+			txtAdditionalNote.KeyDown += txtTextOrPointer_KeyUp;
 			// 
 			// label1
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 58);
-			this.label1.Margin = new System.Windows.Forms.Padding(6);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(41, 13);
-			this.label1.TabIndex = 10;
-			this.label1.Text = "ptr/text";
-			this.label1.Click += new System.EventHandler(this.label1_Click);
+			label1.AutoSize = true;
+			label1.Location = new System.Drawing.Point(7, 65);
+			label1.Margin = new Padding(7, 7, 7, 7);
+			label1.Name = "label1";
+			label1.Size = new System.Drawing.Size(47, 15);
+			label1.TabIndex = 10;
+			label1.Text = "ptr/text";
+			label1.Click += label1_Click;
 			// 
 			// txtArea
 			// 
-			this.txtArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtArea.Location = new System.Drawing.Point(116, 531);
-			this.txtArea.Name = "txtArea";
-			this.txtArea.Size = new System.Drawing.Size(388, 20);
-			this.txtArea.TabIndex = 12;
-			this.txtArea.TabStop = false;
+			txtArea.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			txtArea.Location = new System.Drawing.Point(136, 619);
+			txtArea.Margin = new Padding(4, 3, 4, 3);
+			txtArea.Name = "txtArea";
+			txtArea.Size = new System.Drawing.Size(452, 23);
+			txtArea.TabIndex = 12;
+			txtArea.TabStop = false;
 			// 
 			// label11
 			// 
-			this.label11.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(3, 561);
-			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(61, 13);
-			this.label11.TabIndex = 20;
-			this.label11.Text = "Component";
+			label11.Anchor = AnchorStyles.Left;
+			label11.AutoSize = true;
+			label11.Location = new System.Drawing.Point(4, 652);
+			label11.Margin = new Padding(4, 0, 4, 0);
+			label11.Name = "label11";
+			label11.Size = new System.Drawing.Size(71, 15);
+			label11.TabIndex = 20;
+			label11.Text = "Component";
 			// 
 			// cmbComponentComment
 			// 
-			this.cmbComponentComment.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmbComponentComment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cmbComponentComment.FormattingEnabled = true;
-			this.cmbComponentComment.Location = new System.Drawing.Point(116, 557);
-			this.cmbComponentComment.Name = "cmbComponentComment";
-			this.cmbComponentComment.Size = new System.Drawing.Size(388, 21);
-			this.cmbComponentComment.TabIndex = 21;
-			this.cmbComponentComment.TabStop = false;
+			cmbComponentComment.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			cmbComponentComment.DropDownStyle = ComboBoxStyle.DropDownList;
+			cmbComponentComment.FormattingEnabled = true;
+			cmbComponentComment.Location = new System.Drawing.Point(136, 648);
+			cmbComponentComment.Margin = new Padding(4, 3, 4, 3);
+			cmbComponentComment.Name = "cmbComponentComment";
+			cmbComponentComment.Size = new System.Drawing.Size(452, 23);
+			cmbComponentComment.TabIndex = 21;
+			cmbComponentComment.TabStop = false;
 			// 
 			// txtSection
 			// 
-			this.txtSection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtSection.Location = new System.Drawing.Point(116, 3);
-			this.txtSection.Name = "txtSection";
-			this.txtSection.Size = new System.Drawing.Size(388, 21);
-			this.txtSection.TabIndex = 11;
-			this.txtSection.TabStop = false;
+			txtSection.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			txtSection.Location = new System.Drawing.Point(136, 3);
+			txtSection.Margin = new Padding(4, 3, 4, 3);
+			txtSection.Name = "txtSection";
+			txtSection.Size = new System.Drawing.Size(452, 23);
+			txtSection.TabIndex = 11;
+			txtSection.TabStop = false;
 			// 
 			// label3
 			// 
-			this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(3, 7);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(43, 13);
-			this.label3.TabIndex = 18;
-			this.label3.Text = "Section";
+			label3.Anchor = AnchorStyles.Left;
+			label3.AutoSize = true;
+			label3.Location = new System.Drawing.Point(4, 7);
+			label3.Margin = new Padding(4, 0, 4, 0);
+			label3.Name = "label3";
+			label3.Size = new System.Drawing.Size(46, 15);
+			label3.TabIndex = 18;
+			label3.Text = "Section";
 			// 
 			// button11
 			// 
-			this.button11.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.button11.Location = new System.Drawing.Point(116, 30);
-			this.button11.Name = "button11";
-			this.button11.Size = new System.Drawing.Size(388, 19);
-			this.button11.TabIndex = 22;
-			this.button11.Text = "Section rotation";
-			this.button11.UseVisualStyleBackColor = true;
-			this.button11.Click += new System.EventHandler(this.button11_Click);
+			button11.Dock = DockStyle.Fill;
+			button11.Location = new System.Drawing.Point(136, 32);
+			button11.Margin = new Padding(4, 3, 4, 3);
+			button11.Name = "button11";
+			button11.Size = new System.Drawing.Size(452, 23);
+			button11.TabIndex = 22;
+			button11.Text = "Section rotation";
+			button11.UseVisualStyleBackColor = true;
+			button11.Click += button11_Click;
 			// 
 			// BtnEditLast
 			// 
-			this.BtnEditLast.Location = new System.Drawing.Point(3, 30);
-			this.BtnEditLast.Name = "BtnEditLast";
-			this.BtnEditLast.Size = new System.Drawing.Size(69, 19);
-			this.BtnEditLast.TabIndex = 23;
-			this.BtnEditLast.Text = "Edit last";
-			this.BtnEditLast.UseVisualStyleBackColor = true;
-			this.BtnEditLast.Click += new System.EventHandler(this.BtnEditLast_Click);
+			BtnEditLast.Location = new System.Drawing.Point(4, 32);
+			BtnEditLast.Margin = new Padding(4, 3, 4, 3);
+			BtnEditLast.Name = "BtnEditLast";
+			BtnEditLast.Size = new System.Drawing.Size(80, 22);
+			BtnEditLast.TabIndex = 23;
+			BtnEditLast.Text = "Edit last";
+			BtnEditLast.UseVisualStyleBackColor = true;
+			BtnEditLast.Click += BtnEditLast_Click;
 			// 
 			// label7
 			// 
-			this.label7.AutoSize = true;
-			this.label7.Dock = System.Windows.Forms.DockStyle.Top;
-			this.label7.Location = new System.Drawing.Point(0, 0);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(51, 13);
-			this.label7.TabIndex = 13;
-			this.label7.Text = "Comment";
+			label7.AutoSize = true;
+			label7.Dock = DockStyle.Top;
+			label7.Location = new System.Drawing.Point(0, 0);
+			label7.Margin = new Padding(4, 0, 4, 0);
+			label7.Name = "label7";
+			label7.Size = new System.Drawing.Size(61, 15);
+			label7.TabIndex = 13;
+			label7.Text = "Comment";
 			// 
 			// cmdSelectFile
 			// 
-			this.cmdSelectFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdSelectFile.Location = new System.Drawing.Point(1142, 5);
-			this.cmdSelectFile.Name = "cmdSelectFile";
-			this.cmdSelectFile.Size = new System.Drawing.Size(24, 22);
-			this.cmdSelectFile.TabIndex = 10;
-			this.cmdSelectFile.TabStop = false;
-			this.cmdSelectFile.Text = "...";
-			this.cmdSelectFile.UseVisualStyleBackColor = true;
-			this.cmdSelectFile.Click += new System.EventHandler(this.cmdSelectFile_Click);
+			cmdSelectFile.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			cmdSelectFile.Location = new System.Drawing.Point(1333, 6);
+			cmdSelectFile.Margin = new Padding(4, 3, 4, 3);
+			cmdSelectFile.Name = "cmdSelectFile";
+			cmdSelectFile.Size = new System.Drawing.Size(27, 25);
+			cmdSelectFile.TabIndex = 10;
+			cmdSelectFile.TabStop = false;
+			cmdSelectFile.Text = "...";
+			cmdSelectFile.UseVisualStyleBackColor = true;
+			cmdSelectFile.Click += cmdSelectFile_Click;
 			// 
 			// txtExcelFileName
 			// 
-			this.txtExcelFileName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtExcelFileName.Location = new System.Drawing.Point(63, 5);
-			this.txtExcelFileName.Multiline = true;
-			this.txtExcelFileName.Name = "txtExcelFileName";
-			this.txtExcelFileName.Size = new System.Drawing.Size(1073, 22);
-			this.txtExcelFileName.TabIndex = 9;
-			this.txtExcelFileName.TabStop = false;
-			this.txtExcelFileName.TextChanged += new System.EventHandler(this.txtExcelFileName_TextChanged);
+			txtExcelFileName.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			txtExcelFileName.Location = new System.Drawing.Point(74, 6);
+			txtExcelFileName.Margin = new Padding(4, 3, 4, 3);
+			txtExcelFileName.Multiline = true;
+			txtExcelFileName.Name = "txtExcelFileName";
+			txtExcelFileName.Size = new System.Drawing.Size(1251, 25);
+			txtExcelFileName.TabIndex = 9;
+			txtExcelFileName.TabStop = false;
+			txtExcelFileName.TextChanged += txtExcelFileName_TextChanged;
 			// 
 			// cmdReload
 			// 
-			this.cmdReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdReload.Location = new System.Drawing.Point(1172, 5);
-			this.cmdReload.Name = "cmdReload";
-			this.cmdReload.Size = new System.Drawing.Size(24, 22);
-			this.cmdReload.TabIndex = 12;
-			this.cmdReload.TabStop = false;
-			this.cmdReload.Text = "R";
-			this.cmdReload.UseVisualStyleBackColor = true;
-			this.cmdReload.Click += new System.EventHandler(this.cmdReload_Click);
+			cmdReload.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			cmdReload.Location = new System.Drawing.Point(1368, 6);
+			cmdReload.Margin = new Padding(4, 3, 4, 3);
+			cmdReload.Name = "cmdReload";
+			cmdReload.Size = new System.Drawing.Size(27, 25);
+			cmdReload.TabIndex = 12;
+			cmdReload.TabStop = false;
+			cmdReload.Text = "R";
+			cmdReload.UseVisualStyleBackColor = true;
+			cmdReload.Click += cmdReload_Click;
 			// 
 			// label5
 			// 
-			this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(3, 9);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(42, 13);
-			this.label5.TabIndex = 11;
-			this.label5.Text = "SQLite ";
+			label5.Anchor = AnchorStyles.Left;
+			label5.AutoSize = true;
+			label5.Location = new System.Drawing.Point(4, 11);
+			label5.Margin = new Padding(4, 0, 4, 0);
+			label5.Name = "label5";
+			label5.Size = new System.Drawing.Size(44, 15);
+			label5.TabIndex = 11;
+			label5.Text = "SQLite ";
 			// 
 			// openFileDialog1
 			// 
-			this.openFileDialog1.FileName = "openFileDialog1";
+			openFileDialog1.FileName = "openFileDialog1";
 			// 
 			// tabControl1
 			// 
-			this.tabControl1.Controls.Add(this.tabPage1);
-			this.tabControl1.Controls.Add(this.tabPage2);
-			this.tabControl1.Controls.Add(this.tabPage3);
-			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl1.Location = new System.Drawing.Point(0, 32);
-			this.tabControl1.Name = "tabControl1";
-			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(1229, 655);
-			this.tabControl1.TabIndex = 12;
+			tabControl1.Controls.Add(tabPage1);
+			tabControl1.Controls.Add(tabPage2);
+			tabControl1.Controls.Add(tabPage3);
+			tabControl1.Dock = DockStyle.Fill;
+			tabControl1.Location = new System.Drawing.Point(0, 37);
+			tabControl1.Margin = new Padding(4, 3, 4, 3);
+			tabControl1.Name = "tabControl1";
+			tabControl1.SelectedIndex = 0;
+			tabControl1.Size = new System.Drawing.Size(1434, 756);
+			tabControl1.TabIndex = 12;
 			// 
 			// tabPage1
 			// 
-			this.tabPage1.Controls.Add(this.splitContainer1);
-			this.tabPage1.Location = new System.Drawing.Point(4, 22);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(1221, 629);
-			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "Marking";
-			this.tabPage1.UseVisualStyleBackColor = true;
+			tabPage1.Controls.Add(splitContainer1);
+			tabPage1.Location = new System.Drawing.Point(4, 24);
+			tabPage1.Margin = new Padding(4, 3, 4, 3);
+			tabPage1.Name = "tabPage1";
+			tabPage1.Padding = new Padding(4, 3, 4, 3);
+			tabPage1.Size = new System.Drawing.Size(1426, 728);
+			tabPage1.TabIndex = 0;
+			tabPage1.Text = "Marking";
+			tabPage1.UseVisualStyleBackColor = true;
 			// 
 			// tabPage2
 			// 
-			this.tabPage2.Controls.Add(this.splitContainer3);
-			this.tabPage2.Location = new System.Drawing.Point(4, 22);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(1221, 629);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "Emailing";
-			this.tabPage2.UseVisualStyleBackColor = true;
+			tabPage2.Controls.Add(splitContainer3);
+			tabPage2.Location = new System.Drawing.Point(4, 24);
+			tabPage2.Margin = new Padding(4, 3, 4, 3);
+			tabPage2.Name = "tabPage2";
+			tabPage2.Padding = new Padding(4, 3, 4, 3);
+			tabPage2.Size = new System.Drawing.Size(1426, 728);
+			tabPage2.TabIndex = 1;
+			tabPage2.Text = "Emailing";
+			tabPage2.UseVisualStyleBackColor = true;
 			// 
 			// splitContainer3
 			// 
-			this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer3.Location = new System.Drawing.Point(3, 3);
-			this.splitContainer3.Name = "splitContainer3";
+			splitContainer3.Dock = DockStyle.Fill;
+			splitContainer3.Location = new System.Drawing.Point(4, 3);
+			splitContainer3.Margin = new Padding(4, 3, 4, 3);
+			splitContainer3.Name = "splitContainer3";
 			// 
 			// splitContainer3.Panel1
 			// 
-			this.splitContainer3.Panel1.Controls.Add(this.splitContainer5);
+			splitContainer3.Panel1.Controls.Add(splitContainer5);
 			// 
 			// splitContainer3.Panel2
 			// 
-			this.splitContainer3.Panel2.Controls.Add(this.tableLayoutPanel3);
-			this.splitContainer3.Size = new System.Drawing.Size(1215, 623);
-			this.splitContainer3.SplitterDistance = 480;
-			this.splitContainer3.TabIndex = 3;
+			splitContainer3.Panel2.Controls.Add(tableLayoutPanel3);
+			splitContainer3.Size = new System.Drawing.Size(1418, 722);
+			splitContainer3.SplitterDistance = 560;
+			splitContainer3.SplitterWidth = 5;
+			splitContainer3.TabIndex = 3;
 			// 
 			// splitContainer5
 			// 
-			this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer5.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer5.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer5.Margin = new System.Windows.Forms.Padding(2);
-			this.splitContainer5.Name = "splitContainer5";
-			this.splitContainer5.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			splitContainer5.Dock = DockStyle.Fill;
+			splitContainer5.FixedPanel = FixedPanel.Panel2;
+			splitContainer5.Location = new System.Drawing.Point(0, 0);
+			splitContainer5.Margin = new Padding(2);
+			splitContainer5.Name = "splitContainer5";
+			splitContainer5.Orientation = Orientation.Horizontal;
 			// 
 			// splitContainer5.Panel1
 			// 
-			this.splitContainer5.Panel1.Controls.Add(this.lstEmailSendSelection);
-			this.splitContainer5.Panel1.Controls.Add(this.tableLayoutPanel2);
+			splitContainer5.Panel1.Controls.Add(lstEmailSendSelection);
+			splitContainer5.Panel1.Controls.Add(tableLayoutPanel2);
 			// 
 			// splitContainer5.Panel2
 			// 
-			this.splitContainer5.Panel2.Controls.Add(this.StudImage);
-			this.splitContainer5.Size = new System.Drawing.Size(480, 623);
-			this.splitContainer5.SplitterDistance = 404;
-			this.splitContainer5.SplitterWidth = 3;
-			this.splitContainer5.TabIndex = 14;
+			splitContainer5.Panel2.Controls.Add(StudImage);
+			splitContainer5.Size = new System.Drawing.Size(560, 722);
+			splitContainer5.SplitterDistance = 471;
+			splitContainer5.SplitterWidth = 3;
+			splitContainer5.TabIndex = 14;
 			// 
 			// lstEmailSendSelection
 			// 
-			this.lstEmailSendSelection.CheckBoxes = true;
-			this.lstEmailSendSelection.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colName,
-            this.colNumMarks,
-            this.colMark,
-            this.colLastUpdate,
-            this.colNumComments,
-            this.colSimilarity});
-			this.lstEmailSendSelection.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lstEmailSendSelection.FullRowSelect = true;
-			this.lstEmailSendSelection.GridLines = true;
-			this.lstEmailSendSelection.HideSelection = false;
-			this.lstEmailSendSelection.Location = new System.Drawing.Point(0, 30);
-			this.lstEmailSendSelection.Name = "lstEmailSendSelection";
-			this.lstEmailSendSelection.Size = new System.Drawing.Size(480, 374);
-			this.lstEmailSendSelection.TabIndex = 3;
-			this.lstEmailSendSelection.UseCompatibleStateImageBehavior = false;
-			this.lstEmailSendSelection.View = System.Windows.Forms.View.Details;
-			this.lstEmailSendSelection.SelectedIndexChanged += new System.EventHandler(this.lstEmailSendSelection_SelectedIndexChanged);
+			lstEmailSendSelection.CheckBoxes = true;
+			lstEmailSendSelection.Columns.AddRange(new ColumnHeader[] { colName, colNumMarks, colMark, colLastUpdate, colNumComments, colSimilarity });
+			lstEmailSendSelection.Dock = DockStyle.Fill;
+			lstEmailSendSelection.FullRowSelect = true;
+			lstEmailSendSelection.GridLines = true;
+			lstEmailSendSelection.Location = new System.Drawing.Point(0, 35);
+			lstEmailSendSelection.Margin = new Padding(4, 3, 4, 3);
+			lstEmailSendSelection.Name = "lstEmailSendSelection";
+			lstEmailSendSelection.Size = new System.Drawing.Size(560, 436);
+			lstEmailSendSelection.TabIndex = 3;
+			lstEmailSendSelection.UseCompatibleStateImageBehavior = false;
+			lstEmailSendSelection.View = View.Details;
+			lstEmailSendSelection.SelectedIndexChanged += lstEmailSendSelection_SelectedIndexChanged;
 			// 
 			// colName
 			// 
-			this.colName.Text = "Name";
-			this.colName.Width = 146;
+			colName.Text = "Name";
+			colName.Width = 146;
 			// 
 			// colNumMarks
 			// 
-			this.colNumMarks.Text = "# Marks";
-			this.colNumMarks.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			colNumMarks.Text = "# Marks";
+			colNumMarks.TextAlign = HorizontalAlignment.Right;
 			// 
 			// colMark
 			// 
-			this.colMark.Text = "Mark";
-			this.colMark.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			colMark.Text = "Mark";
+			colMark.TextAlign = HorizontalAlignment.Right;
 			// 
 			// colLastUpdate
 			// 
-			this.colLastUpdate.Text = "Last update";
-			this.colLastUpdate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			colLastUpdate.Text = "Last update";
+			colLastUpdate.TextAlign = HorizontalAlignment.Center;
 			// 
 			// colNumComments
 			// 
-			this.colNumComments.Text = "NumComments";
-			this.colNumComments.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			colNumComments.Text = "NumComments";
+			colNumComments.TextAlign = HorizontalAlignment.Right;
 			// 
 			// colSimilarity
 			// 
-			this.colSimilarity.Text = "Similarity";
-			this.colSimilarity.Width = 300;
+			colSimilarity.Text = "Similarity";
+			colSimilarity.Width = 300;
 			// 
 			// tableLayoutPanel2
 			// 
-			this.tableLayoutPanel2.ColumnCount = 4;
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.99999F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.00001F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
-			this.tableLayoutPanel2.Controls.Add(this.cmdEmailRefreshStudents, 0, 0);
-			this.tableLayoutPanel2.Controls.Add(this.cmdSelectAll, 1, 0);
-			this.tableLayoutPanel2.Controls.Add(this.NudOverlap, 2, 0);
-			this.tableLayoutPanel2.Controls.Add(this.chkShowDelegate, 3, 0);
-			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
-			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-			this.tableLayoutPanel2.RowCount = 1;
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(480, 30);
-			this.tableLayoutPanel2.TabIndex = 0;
+			tableLayoutPanel2.ColumnCount = 4;
+			tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 49.99999F));
+			tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50.00001F));
+			tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 117F));
+			tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 140F));
+			tableLayoutPanel2.Controls.Add(cmdEmailRefreshStudents, 0, 0);
+			tableLayoutPanel2.Controls.Add(cmdSelectAll, 1, 0);
+			tableLayoutPanel2.Controls.Add(NudOverlap, 2, 0);
+			tableLayoutPanel2.Controls.Add(chkShowDelegate, 3, 0);
+			tableLayoutPanel2.Dock = DockStyle.Top;
+			tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+			tableLayoutPanel2.Margin = new Padding(2);
+			tableLayoutPanel2.Name = "tableLayoutPanel2";
+			tableLayoutPanel2.RowCount = 1;
+			tableLayoutPanel2.RowStyles.Add(new RowStyle());
+			tableLayoutPanel2.Size = new System.Drawing.Size(560, 35);
+			tableLayoutPanel2.TabIndex = 0;
 			// 
 			// cmdEmailRefreshStudents
 			// 
-			this.cmdEmailRefreshStudents.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdEmailRefreshStudents.Location = new System.Drawing.Point(3, 3);
-			this.cmdEmailRefreshStudents.Name = "cmdEmailRefreshStudents";
-			this.cmdEmailRefreshStudents.Size = new System.Drawing.Size(124, 23);
-			this.cmdEmailRefreshStudents.TabIndex = 2;
-			this.cmdEmailRefreshStudents.Text = "Refresh";
-			this.cmdEmailRefreshStudents.UseVisualStyleBackColor = true;
-			this.cmdEmailRefreshStudents.Click += new System.EventHandler(this.cmdEmailRefreshStudents_Click);
+			cmdEmailRefreshStudents.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			cmdEmailRefreshStudents.Location = new System.Drawing.Point(4, 3);
+			cmdEmailRefreshStudents.Margin = new Padding(4, 3, 4, 3);
+			cmdEmailRefreshStudents.Name = "cmdEmailRefreshStudents";
+			cmdEmailRefreshStudents.Size = new System.Drawing.Size(143, 27);
+			cmdEmailRefreshStudents.TabIndex = 2;
+			cmdEmailRefreshStudents.Text = "Refresh";
+			cmdEmailRefreshStudents.UseVisualStyleBackColor = true;
+			cmdEmailRefreshStudents.Click += cmdEmailRefreshStudents_Click;
 			// 
 			// cmdSelectAll
 			// 
-			this.cmdSelectAll.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdSelectAll.Location = new System.Drawing.Point(133, 3);
-			this.cmdSelectAll.Name = "cmdSelectAll";
-			this.cmdSelectAll.Size = new System.Drawing.Size(124, 23);
-			this.cmdSelectAll.TabIndex = 4;
-			this.cmdSelectAll.Text = "All";
-			this.cmdSelectAll.UseVisualStyleBackColor = true;
-			this.cmdSelectAll.Click += new System.EventHandler(this.cmdSelectAll_Click);
+			cmdSelectAll.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			cmdSelectAll.Location = new System.Drawing.Point(155, 3);
+			cmdSelectAll.Margin = new Padding(4, 3, 4, 3);
+			cmdSelectAll.Name = "cmdSelectAll";
+			cmdSelectAll.Size = new System.Drawing.Size(143, 27);
+			cmdSelectAll.TabIndex = 4;
+			cmdSelectAll.Text = "All";
+			cmdSelectAll.UseVisualStyleBackColor = true;
+			cmdSelectAll.Click += cmdSelectAll_Click;
 			// 
 			// NudOverlap
 			// 
-			this.NudOverlap.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.NudOverlap.Location = new System.Drawing.Point(280, 5);
-			this.NudOverlap.Name = "NudOverlap";
-			this.NudOverlap.Size = new System.Drawing.Size(60, 20);
-			this.NudOverlap.TabIndex = 5;
-			this.NudOverlap.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.NudOverlap.Value = new decimal(new int[] {
-            25,
-            0,
-            0,
-            0});
+			NudOverlap.Anchor = AnchorStyles.None;
+			NudOverlap.Location = new System.Drawing.Point(325, 6);
+			NudOverlap.Margin = new Padding(4, 3, 4, 3);
+			NudOverlap.Name = "NudOverlap";
+			NudOverlap.Size = new System.Drawing.Size(70, 23);
+			NudOverlap.TabIndex = 5;
+			NudOverlap.TextAlign = HorizontalAlignment.Center;
+			NudOverlap.Value = new decimal(new int[] { 25, 0, 0, 0 });
 			// 
 			// chkShowDelegate
 			// 
-			this.chkShowDelegate.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.chkShowDelegate.AutoSize = true;
-			this.chkShowDelegate.Location = new System.Drawing.Point(385, 6);
-			this.chkShowDelegate.Name = "chkShowDelegate";
-			this.chkShowDelegate.Size = new System.Drawing.Size(69, 17);
-			this.chkShowDelegate.TabIndex = 6;
-			this.chkShowDelegate.Text = "Delegate";
-			this.chkShowDelegate.UseVisualStyleBackColor = true;
-			this.chkShowDelegate.CheckedChanged += new System.EventHandler(this.chkShowDelegate_CheckedChanged);
+			chkShowDelegate.Anchor = AnchorStyles.None;
+			chkShowDelegate.AutoSize = true;
+			chkShowDelegate.Location = new System.Drawing.Point(453, 8);
+			chkShowDelegate.Margin = new Padding(4, 3, 4, 3);
+			chkShowDelegate.Name = "chkShowDelegate";
+			chkShowDelegate.Size = new System.Drawing.Size(72, 19);
+			chkShowDelegate.TabIndex = 6;
+			chkShowDelegate.Text = "Delegate";
+			chkShowDelegate.UseVisualStyleBackColor = true;
+			chkShowDelegate.CheckedChanged += chkShowDelegate_CheckedChanged;
 			// 
 			// StudImage
 			// 
-			this.StudImage.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.StudImage.Location = new System.Drawing.Point(0, 0);
-			this.StudImage.Margin = new System.Windows.Forms.Padding(2);
-			this.StudImage.Name = "StudImage";
-			this.StudImage.Size = new System.Drawing.Size(480, 216);
-			this.StudImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.StudImage.TabIndex = 13;
-			this.StudImage.TabStop = false;
+			StudImage.Dock = DockStyle.Fill;
+			StudImage.Location = new System.Drawing.Point(0, 0);
+			StudImage.Margin = new Padding(2);
+			StudImage.Name = "StudImage";
+			StudImage.Size = new System.Drawing.Size(560, 248);
+			StudImage.SizeMode = PictureBoxSizeMode.Zoom;
+			StudImage.TabIndex = 13;
+			StudImage.TabStop = false;
 			// 
 			// tableLayoutPanel3
 			// 
-			this.tableLayoutPanel3.ColumnCount = 2;
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel3.Controls.Add(this.tabControl2, 0, 3);
-			this.tableLayoutPanel3.Controls.Add(this.button3, 1, 2);
-			this.tableLayoutPanel3.Controls.Add(this.chkSendModerationNotice, 0, 2);
-			this.tableLayoutPanel3.Controls.Add(this.txtEmailSubject, 1, 0);
-			this.tableLayoutPanel3.Controls.Add(this.label10, 0, 0);
-			this.tableLayoutPanel3.Controls.Add(this.chkEmailDryRun, 0, 1);
-			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
-			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-			this.tableLayoutPanel3.RowCount = 4;
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(731, 623);
-			this.tableLayoutPanel3.TabIndex = 8;
+			tableLayoutPanel3.ColumnCount = 2;
+			tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle());
+			tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+			tableLayoutPanel3.Controls.Add(tabControl2, 0, 3);
+			tableLayoutPanel3.Controls.Add(button3, 1, 2);
+			tableLayoutPanel3.Controls.Add(chkSendModerationNotice, 0, 2);
+			tableLayoutPanel3.Controls.Add(txtEmailSubject, 1, 0);
+			tableLayoutPanel3.Controls.Add(label10, 0, 0);
+			tableLayoutPanel3.Controls.Add(chkEmailDryRun, 0, 1);
+			tableLayoutPanel3.Dock = DockStyle.Fill;
+			tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
+			tableLayoutPanel3.Margin = new Padding(2);
+			tableLayoutPanel3.Name = "tableLayoutPanel3";
+			tableLayoutPanel3.RowCount = 4;
+			tableLayoutPanel3.RowStyles.Add(new RowStyle());
+			tableLayoutPanel3.RowStyles.Add(new RowStyle());
+			tableLayoutPanel3.RowStyles.Add(new RowStyle());
+			tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+			tableLayoutPanel3.Size = new System.Drawing.Size(853, 722);
+			tableLayoutPanel3.TabIndex = 8;
 			// 
 			// tabControl2
 			// 
-			this.tabControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel3.SetColumnSpan(this.tabControl2, 2);
-			this.tabControl2.Controls.Add(this.tabPage4);
-			this.tabControl2.Controls.Add(this.tabPage5);
-			this.tabControl2.Location = new System.Drawing.Point(2, 77);
-			this.tabControl2.Margin = new System.Windows.Forms.Padding(2);
-			this.tabControl2.Name = "tabControl2";
-			this.tabControl2.SelectedIndex = 0;
-			this.tabControl2.Size = new System.Drawing.Size(727, 544);
-			this.tabControl2.TabIndex = 7;
+			tabControl2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			tableLayoutPanel3.SetColumnSpan(tabControl2, 2);
+			tabControl2.Controls.Add(tabPage4);
+			tabControl2.Controls.Add(tabPage5);
+			tabControl2.Location = new System.Drawing.Point(2, 85);
+			tabControl2.Margin = new Padding(2);
+			tabControl2.Name = "tabControl2";
+			tabControl2.SelectedIndex = 0;
+			tabControl2.Size = new System.Drawing.Size(849, 635);
+			tabControl2.TabIndex = 7;
 			// 
 			// tabPage4
 			// 
-			this.tabPage4.Controls.Add(this.button1);
-			this.tabPage4.Controls.Add(this.cmdSaveEmail);
-			this.tabPage4.Controls.Add(this.txtEmailBody);
-			this.tabPage4.Location = new System.Drawing.Point(4, 22);
-			this.tabPage4.Margin = new System.Windows.Forms.Padding(2);
-			this.tabPage4.Name = "tabPage4";
-			this.tabPage4.Padding = new System.Windows.Forms.Padding(2);
-			this.tabPage4.Size = new System.Drawing.Size(719, 518);
-			this.tabPage4.TabIndex = 0;
-			this.tabPage4.Text = "Template";
-			this.tabPage4.UseVisualStyleBackColor = true;
+			tabPage4.Controls.Add(button1);
+			tabPage4.Controls.Add(cmdSaveEmail);
+			tabPage4.Controls.Add(txtEmailBody);
+			tabPage4.Location = new System.Drawing.Point(4, 24);
+			tabPage4.Margin = new Padding(2);
+			tabPage4.Name = "tabPage4";
+			tabPage4.Padding = new Padding(2);
+			tabPage4.Size = new System.Drawing.Size(841, 607);
+			tabPage4.TabIndex = 0;
+			tabPage4.Text = "Template";
+			tabPage4.UseVisualStyleBackColor = true;
 			// 
 			// button1
 			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button1.Location = new System.Drawing.Point(5, 489);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(129, 23);
-			this.button1.TabIndex = 9;
-			this.button1.Text = "Default";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+			button1.Location = new System.Drawing.Point(6, 569);
+			button1.Margin = new Padding(4, 3, 4, 3);
+			button1.Name = "button1";
+			button1.Size = new System.Drawing.Size(150, 27);
+			button1.TabIndex = 9;
+			button1.Text = "Default";
+			button1.UseVisualStyleBackColor = true;
+			button1.Click += button1_Click;
 			// 
 			// cmdSaveEmail
 			// 
-			this.cmdSaveEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.cmdSaveEmail.Location = new System.Drawing.Point(140, 489);
-			this.cmdSaveEmail.Name = "cmdSaveEmail";
-			this.cmdSaveEmail.Size = new System.Drawing.Size(129, 23);
-			this.cmdSaveEmail.TabIndex = 8;
-			this.cmdSaveEmail.Text = "Save";
-			this.cmdSaveEmail.UseVisualStyleBackColor = true;
-			this.cmdSaveEmail.Click += new System.EventHandler(this.cmdSaveEmail_Click);
+			cmdSaveEmail.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+			cmdSaveEmail.Location = new System.Drawing.Point(163, 569);
+			cmdSaveEmail.Margin = new Padding(4, 3, 4, 3);
+			cmdSaveEmail.Name = "cmdSaveEmail";
+			cmdSaveEmail.Size = new System.Drawing.Size(150, 27);
+			cmdSaveEmail.TabIndex = 8;
+			cmdSaveEmail.Text = "Save";
+			cmdSaveEmail.UseVisualStyleBackColor = true;
+			cmdSaveEmail.Click += cmdSaveEmail_Click;
 			// 
 			// txtEmailBody
 			// 
-			this.txtEmailBody.AcceptsReturn = true;
-			this.txtEmailBody.AcceptsTab = true;
-			this.txtEmailBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtEmailBody.ChangedColour = System.Drawing.Color.Empty;
-			this.txtEmailBody.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtEmailBody.Location = new System.Drawing.Point(4, 7);
-			this.txtEmailBody.Margin = new System.Windows.Forms.Padding(6);
-			this.txtEmailBody.MaxLength = 0;
-			this.txtEmailBody.Name = "txtEmailBody";
-			this.txtEmailBody.OriginalText = "";
-			this.txtEmailBody.Size = new System.Drawing.Size(711, 473);
-			this.txtEmailBody.SpellCheck = true;
-			this.txtEmailBody.TabIndex = 6;
-			this.txtEmailBody.TabStop = false;
-			this.txtEmailBody.TextCase = System.Windows.Forms.CharacterCasing.Normal;
-			this.txtEmailBody.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
-			this.txtEmailBody.Wrapping = true;
+			txtEmailBody.AcceptsReturn = true;
+			txtEmailBody.AcceptsTab = true;
+			txtEmailBody.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			txtEmailBody.ChangedColour = System.Drawing.Color.Empty;
+			txtEmailBody.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+			txtEmailBody.Location = new System.Drawing.Point(5, 8);
+			txtEmailBody.Margin = new Padding(7, 7, 7, 7);
+			txtEmailBody.MaxLength = 0;
+			txtEmailBody.Name = "txtEmailBody";
+			txtEmailBody.OriginalText = "";
+			txtEmailBody.Size = new System.Drawing.Size(831, 551);
+			txtEmailBody.SpellCheck = true;
+			txtEmailBody.TabIndex = 6;
+			txtEmailBody.TabStop = false;
+			txtEmailBody.TextCase = CharacterCasing.Normal;
+			txtEmailBody.TextType = ExtendedTextBox.ExtTextBox.TextTypes.String;
+			txtEmailBody.Wrapping = true;
 			// 
 			// tabPage5
 			// 
-			this.tabPage5.Controls.Add(this.txtEmailPreview);
-			this.tabPage5.Location = new System.Drawing.Point(4, 22);
-			this.tabPage5.Margin = new System.Windows.Forms.Padding(2);
-			this.tabPage5.Name = "tabPage5";
-			this.tabPage5.Padding = new System.Windows.Forms.Padding(2);
-			this.tabPage5.Size = new System.Drawing.Size(719, 518);
-			this.tabPage5.TabIndex = 1;
-			this.tabPage5.Text = "Output";
-			this.tabPage5.UseVisualStyleBackColor = true;
+			tabPage5.Controls.Add(txtEmailPreview);
+			tabPage5.Location = new System.Drawing.Point(4, 24);
+			tabPage5.Margin = new Padding(2);
+			tabPage5.Name = "tabPage5";
+			tabPage5.Padding = new Padding(2);
+			tabPage5.Size = new System.Drawing.Size(840, 594);
+			tabPage5.TabIndex = 1;
+			tabPage5.Text = "Output";
+			tabPage5.UseVisualStyleBackColor = true;
 			// 
 			// txtEmailPreview
 			// 
-			this.txtEmailPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtEmailPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtEmailPreview.Location = new System.Drawing.Point(5, 6);
-			this.txtEmailPreview.Multiline = true;
-			this.txtEmailPreview.Name = "txtEmailPreview";
-			this.txtEmailPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtEmailPreview.Size = new System.Drawing.Size(710, 502);
-			this.txtEmailPreview.TabIndex = 7;
-			this.txtEmailPreview.TabStop = false;
-			this.txtEmailPreview.Text = "Dear {SUB_FirstName}, \r\nThe marking and moderation process for BE1178 has been co" +
-    "mpleted a few days ago. \r\nPlease find your feedback after my signature.\r\nBest re" +
-    "gards, \r\nClaudio \r\n\r\n{MarkReport}";
+			txtEmailPreview.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			txtEmailPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+			txtEmailPreview.Location = new System.Drawing.Point(6, 7);
+			txtEmailPreview.Margin = new Padding(4, 3, 4, 3);
+			txtEmailPreview.Multiline = true;
+			txtEmailPreview.Name = "txtEmailPreview";
+			txtEmailPreview.ScrollBars = ScrollBars.Vertical;
+			txtEmailPreview.Size = new System.Drawing.Size(828, 571);
+			txtEmailPreview.TabIndex = 7;
+			txtEmailPreview.TabStop = false;
+			txtEmailPreview.Text = "Dear {SUB_FirstName}, \r\nThe marking and moderation process for BE1178 has been completed a few days ago. \r\nPlease find your feedback after my signature.\r\nBest regards, \r\nClaudio \r\n\r\n{MarkReport}";
 			// 
 			// button3
 			// 
-			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(144, 52);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(584, 20);
-			this.button3.TabIndex = 0;
-			this.button3.Text = "Send";
-			this.button3.UseVisualStyleBackColor = true;
-			this.button3.Click += new System.EventHandler(this.button3_Click);
+			button3.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			button3.Location = new System.Drawing.Point(163, 57);
+			button3.Margin = new Padding(4, 3, 4, 3);
+			button3.Name = "button3";
+			button3.Size = new System.Drawing.Size(686, 23);
+			button3.TabIndex = 0;
+			button3.Text = "Send";
+			button3.UseVisualStyleBackColor = true;
+			button3.Click += button3_Click;
 			// 
 			// chkSendModerationNotice
 			// 
-			this.chkSendModerationNotice.AutoSize = true;
-			this.chkSendModerationNotice.Location = new System.Drawing.Point(3, 52);
-			this.chkSendModerationNotice.Name = "chkSendModerationNotice";
-			this.chkSendModerationNotice.Size = new System.Drawing.Size(135, 17);
-			this.chkSendModerationNotice.TabIndex = 5;
-			this.chkSendModerationNotice.Text = "Add Moderation Notice";
-			this.chkSendModerationNotice.UseVisualStyleBackColor = true;
+			chkSendModerationNotice.AutoSize = true;
+			chkSendModerationNotice.Location = new System.Drawing.Point(4, 57);
+			chkSendModerationNotice.Margin = new Padding(4, 3, 4, 3);
+			chkSendModerationNotice.Name = "chkSendModerationNotice";
+			chkSendModerationNotice.Size = new System.Drawing.Size(151, 19);
+			chkSendModerationNotice.TabIndex = 5;
+			chkSendModerationNotice.Text = "Add Moderation Notice";
+			chkSendModerationNotice.UseVisualStyleBackColor = true;
 			// 
 			// txtEmailSubject
 			// 
-			this.txtEmailSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtEmailSubject.Location = new System.Drawing.Point(144, 3);
-			this.txtEmailSubject.Name = "txtEmailSubject";
-			this.txtEmailSubject.Size = new System.Drawing.Size(584, 20);
-			this.txtEmailSubject.TabIndex = 3;
+			txtEmailSubject.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			txtEmailSubject.Location = new System.Drawing.Point(163, 3);
+			txtEmailSubject.Margin = new Padding(4, 3, 4, 3);
+			txtEmailSubject.Name = "txtEmailSubject";
+			txtEmailSubject.Size = new System.Drawing.Size(686, 23);
+			txtEmailSubject.TabIndex = 3;
 			// 
 			// label10
 			// 
-			this.label10.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(3, 6);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(43, 13);
-			this.label10.TabIndex = 2;
-			this.label10.Text = "Subject";
+			label10.Anchor = AnchorStyles.Left;
+			label10.AutoSize = true;
+			label10.Location = new System.Drawing.Point(4, 7);
+			label10.Margin = new Padding(4, 0, 4, 0);
+			label10.Name = "label10";
+			label10.Size = new System.Drawing.Size(46, 15);
+			label10.TabIndex = 2;
+			label10.Text = "Subject";
 			// 
 			// chkEmailDryRun
 			// 
-			this.chkEmailDryRun.AutoSize = true;
-			this.chkEmailDryRun.Checked = true;
-			this.chkEmailDryRun.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkEmailDryRun.Location = new System.Drawing.Point(3, 29);
-			this.chkEmailDryRun.Name = "chkEmailDryRun";
-			this.chkEmailDryRun.Size = new System.Drawing.Size(65, 17);
-			this.chkEmailDryRun.TabIndex = 4;
-			this.chkEmailDryRun.Text = "Dry Run";
-			this.chkEmailDryRun.UseVisualStyleBackColor = true;
+			chkEmailDryRun.AutoSize = true;
+			chkEmailDryRun.Checked = true;
+			chkEmailDryRun.CheckState = CheckState.Checked;
+			chkEmailDryRun.Location = new System.Drawing.Point(4, 32);
+			chkEmailDryRun.Margin = new Padding(4, 3, 4, 3);
+			chkEmailDryRun.Name = "chkEmailDryRun";
+			chkEmailDryRun.Size = new System.Drawing.Size(68, 19);
+			chkEmailDryRun.TabIndex = 4;
+			chkEmailDryRun.Text = "Dry Run";
+			chkEmailDryRun.UseVisualStyleBackColor = true;
 			// 
 			// tabPage3
 			// 
-			this.tabPage3.Controls.Add(this.groupBox1);
-			this.tabPage3.Controls.Add(this.ChkShowLabels);
-			this.tabPage3.Controls.Add(this.CmbGrouping);
-			this.tabPage3.Controls.Add(this.ChkIncludeNoMark);
-			this.tabPage3.Controls.Add(this.ChkOddRows);
-			this.tabPage3.Controls.Add(this.ChkEvenRows);
-			this.tabPage3.Controls.Add(this.button4);
-			this.tabPage3.Controls.Add(this.zedGraphControl1);
-			this.tabPage3.Controls.Add(this.groupBox3);
-			this.tabPage3.Location = new System.Drawing.Point(4, 22);
-			this.tabPage3.Margin = new System.Windows.Forms.Padding(2);
-			this.tabPage3.Name = "tabPage3";
-			this.tabPage3.Padding = new System.Windows.Forms.Padding(2);
-			this.tabPage3.Size = new System.Drawing.Size(1221, 629);
-			this.tabPage3.TabIndex = 2;
-			this.tabPage3.Text = "Tools";
-			this.tabPage3.UseVisualStyleBackColor = true;
+			tabPage3.Controls.Add(groupBox1);
+			tabPage3.Controls.Add(ChkShowLabels);
+			tabPage3.Controls.Add(CmbGrouping);
+			tabPage3.Controls.Add(ChkIncludeNoMark);
+			tabPage3.Controls.Add(ChkOddRows);
+			tabPage3.Controls.Add(ChkEvenRows);
+			tabPage3.Controls.Add(button4);
+			tabPage3.Controls.Add(zedGraphControl1);
+			tabPage3.Controls.Add(groupBox3);
+			tabPage3.Location = new System.Drawing.Point(4, 24);
+			tabPage3.Margin = new Padding(2);
+			tabPage3.Name = "tabPage3";
+			tabPage3.Padding = new Padding(2);
+			tabPage3.Size = new System.Drawing.Size(1426, 728);
+			tabPage3.TabIndex = 2;
+			tabPage3.Text = "Tools";
+			tabPage3.UseVisualStyleBackColor = true;
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.ChkExclude0);
-			this.groupBox1.Controls.Add(this.NudMarkOffset);
-			this.groupBox1.Controls.Add(this.label9);
-			this.groupBox1.Controls.Add(this.ChkRoundupX9);
-			this.groupBox1.Location = new System.Drawing.Point(11, 390);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(113, 94);
-			this.groupBox1.TabIndex = 29;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Mark tweak";
+			groupBox1.Controls.Add(ChkExclude0);
+			groupBox1.Controls.Add(NudMarkOffset);
+			groupBox1.Controls.Add(label9);
+			groupBox1.Controls.Add(ChkRoundupX9);
+			groupBox1.Location = new System.Drawing.Point(13, 450);
+			groupBox1.Margin = new Padding(4, 3, 4, 3);
+			groupBox1.Name = "groupBox1";
+			groupBox1.Padding = new Padding(4, 3, 4, 3);
+			groupBox1.Size = new System.Drawing.Size(132, 108);
+			groupBox1.TabIndex = 29;
+			groupBox1.TabStop = false;
+			groupBox1.Text = "Mark tweak";
 			// 
 			// ChkExclude0
 			// 
-			this.ChkExclude0.AutoSize = true;
-			this.ChkExclude0.Checked = true;
-			this.ChkExclude0.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ChkExclude0.Location = new System.Drawing.Point(9, 68);
-			this.ChkExclude0.Name = "ChkExclude0";
-			this.ChkExclude0.Size = new System.Drawing.Size(78, 17);
-			this.ChkExclude0.TabIndex = 28;
-			this.ChkExclude0.Text = "Exclude 0s";
-			this.ChkExclude0.UseVisualStyleBackColor = true;
+			ChkExclude0.AutoSize = true;
+			ChkExclude0.Checked = true;
+			ChkExclude0.CheckState = CheckState.Checked;
+			ChkExclude0.Location = new System.Drawing.Point(10, 78);
+			ChkExclude0.Margin = new Padding(4, 3, 4, 3);
+			ChkExclude0.Name = "ChkExclude0";
+			ChkExclude0.Size = new System.Drawing.Size(81, 19);
+			ChkExclude0.TabIndex = 28;
+			ChkExclude0.Text = "Exclude 0s";
+			ChkExclude0.UseVisualStyleBackColor = true;
 			// 
 			// NudMarkOffset
 			// 
-			this.NudMarkOffset.Location = new System.Drawing.Point(64, 19);
-			this.NudMarkOffset.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-			this.NudMarkOffset.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            -2147483648});
-			this.NudMarkOffset.Name = "NudMarkOffset";
-			this.NudMarkOffset.Size = new System.Drawing.Size(43, 20);
-			this.NudMarkOffset.TabIndex = 24;
-			this.NudMarkOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			NudMarkOffset.Location = new System.Drawing.Point(75, 22);
+			NudMarkOffset.Margin = new Padding(4, 3, 4, 3);
+			NudMarkOffset.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
+			NudMarkOffset.Minimum = new decimal(new int[] { 10, 0, 0, int.MinValue });
+			NudMarkOffset.Name = "NudMarkOffset";
+			NudMarkOffset.Size = new System.Drawing.Size(50, 23);
+			NudMarkOffset.TabIndex = 24;
+			NudMarkOffset.TextAlign = HorizontalAlignment.Center;
 			// 
 			// label9
 			// 
-			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(6, 21);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(35, 13);
-			this.label9.TabIndex = 25;
-			this.label9.Text = "Offset";
+			label9.AutoSize = true;
+			label9.Location = new System.Drawing.Point(7, 24);
+			label9.Margin = new Padding(4, 0, 4, 0);
+			label9.Name = "label9";
+			label9.Size = new System.Drawing.Size(39, 15);
+			label9.TabIndex = 25;
+			label9.Text = "Offset";
 			// 
 			// ChkRoundupX9
 			// 
-			this.ChkRoundupX9.AutoSize = true;
-			this.ChkRoundupX9.Checked = true;
-			this.ChkRoundupX9.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ChkRoundupX9.Location = new System.Drawing.Point(9, 45);
-			this.ChkRoundupX9.Name = "ChkRoundupX9";
-			this.ChkRoundupX9.Size = new System.Drawing.Size(83, 17);
-			this.ChkRoundupX9.TabIndex = 27;
-			this.ChkRoundupX9.Text = "Roundup *9";
-			this.ChkRoundupX9.UseVisualStyleBackColor = true;
+			ChkRoundupX9.AutoSize = true;
+			ChkRoundupX9.Checked = true;
+			ChkRoundupX9.CheckState = CheckState.Checked;
+			ChkRoundupX9.Location = new System.Drawing.Point(10, 52);
+			ChkRoundupX9.Margin = new Padding(4, 3, 4, 3);
+			ChkRoundupX9.Name = "ChkRoundupX9";
+			ChkRoundupX9.Size = new System.Drawing.Size(89, 19);
+			ChkRoundupX9.TabIndex = 27;
+			ChkRoundupX9.Text = "Roundup *9";
+			ChkRoundupX9.UseVisualStyleBackColor = true;
 			// 
 			// ChkShowLabels
 			// 
-			this.ChkShowLabels.AutoSize = true;
-			this.ChkShowLabels.Location = new System.Drawing.Point(11, 520);
-			this.ChkShowLabels.Name = "ChkShowLabels";
-			this.ChkShowLabels.Size = new System.Drawing.Size(83, 17);
-			this.ChkShowLabels.TabIndex = 28;
-			this.ChkShowLabels.Text = "Show labels";
-			this.ChkShowLabels.UseVisualStyleBackColor = true;
+			ChkShowLabels.AutoSize = true;
+			ChkShowLabels.Location = new System.Drawing.Point(13, 600);
+			ChkShowLabels.Margin = new Padding(4, 3, 4, 3);
+			ChkShowLabels.Name = "ChkShowLabels";
+			ChkShowLabels.Size = new System.Drawing.Size(88, 19);
+			ChkShowLabels.TabIndex = 28;
+			ChkShowLabels.Text = "Show labels";
+			ChkShowLabels.UseVisualStyleBackColor = true;
 			// 
 			// CmbGrouping
 			// 
-			this.CmbGrouping.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.CmbGrouping.FormattingEnabled = true;
-			this.CmbGrouping.Location = new System.Drawing.Point(11, 363);
-			this.CmbGrouping.Name = "CmbGrouping";
-			this.CmbGrouping.Size = new System.Drawing.Size(113, 21);
-			this.CmbGrouping.TabIndex = 26;
+			CmbGrouping.DropDownStyle = ComboBoxStyle.DropDownList;
+			CmbGrouping.FormattingEnabled = true;
+			CmbGrouping.Location = new System.Drawing.Point(13, 419);
+			CmbGrouping.Margin = new Padding(4, 3, 4, 3);
+			CmbGrouping.Name = "CmbGrouping";
+			CmbGrouping.Size = new System.Drawing.Size(131, 23);
+			CmbGrouping.TabIndex = 26;
 			// 
 			// ChkIncludeNoMark
 			// 
-			this.ChkIncludeNoMark.AutoSize = true;
-			this.ChkIncludeNoMark.Checked = true;
-			this.ChkIncludeNoMark.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ChkIncludeNoMark.Location = new System.Drawing.Point(11, 497);
-			this.ChkIncludeNoMark.Name = "ChkIncludeNoMark";
-			this.ChkIncludeNoMark.Size = new System.Drawing.Size(116, 17);
-			this.ChkIncludeNoMark.TabIndex = 23;
-			this.ChkIncludeNoMark.Text = "Show missing mark";
-			this.ChkIncludeNoMark.UseVisualStyleBackColor = true;
+			ChkIncludeNoMark.AutoSize = true;
+			ChkIncludeNoMark.Checked = true;
+			ChkIncludeNoMark.CheckState = CheckState.Checked;
+			ChkIncludeNoMark.Location = new System.Drawing.Point(13, 573);
+			ChkIncludeNoMark.Margin = new Padding(4, 3, 4, 3);
+			ChkIncludeNoMark.Name = "ChkIncludeNoMark";
+			ChkIncludeNoMark.Size = new System.Drawing.Size(129, 19);
+			ChkIncludeNoMark.TabIndex = 23;
+			ChkIncludeNoMark.Text = "Show missing mark";
+			ChkIncludeNoMark.UseVisualStyleBackColor = true;
 			// 
 			// ChkOddRows
 			// 
-			this.ChkOddRows.AutoSize = true;
-			this.ChkOddRows.Checked = true;
-			this.ChkOddRows.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ChkOddRows.Location = new System.Drawing.Point(11, 321);
-			this.ChkOddRows.Name = "ChkOddRows";
-			this.ChkOddRows.Size = new System.Drawing.Size(63, 17);
-			this.ChkOddRows.TabIndex = 21;
-			this.ChkOddRows.Text = "Odd Ids";
-			this.ChkOddRows.UseVisualStyleBackColor = true;
+			ChkOddRows.AutoSize = true;
+			ChkOddRows.Checked = true;
+			ChkOddRows.CheckState = CheckState.Checked;
+			ChkOddRows.Location = new System.Drawing.Point(13, 370);
+			ChkOddRows.Margin = new Padding(4, 3, 4, 3);
+			ChkOddRows.Name = "ChkOddRows";
+			ChkOddRows.Size = new System.Drawing.Size(67, 19);
+			ChkOddRows.TabIndex = 21;
+			ChkOddRows.Text = "Odd Ids";
+			ChkOddRows.UseVisualStyleBackColor = true;
 			// 
 			// ChkEvenRows
 			// 
-			this.ChkEvenRows.AutoSize = true;
-			this.ChkEvenRows.Checked = true;
-			this.ChkEvenRows.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ChkEvenRows.Location = new System.Drawing.Point(11, 344);
-			this.ChkEvenRows.Name = "ChkEvenRows";
-			this.ChkEvenRows.Size = new System.Drawing.Size(68, 17);
-			this.ChkEvenRows.TabIndex = 20;
-			this.ChkEvenRows.Text = "Even Ids";
-			this.ChkEvenRows.UseVisualStyleBackColor = true;
+			ChkEvenRows.AutoSize = true;
+			ChkEvenRows.Checked = true;
+			ChkEvenRows.CheckState = CheckState.Checked;
+			ChkEvenRows.Location = new System.Drawing.Point(13, 397);
+			ChkEvenRows.Margin = new Padding(4, 3, 4, 3);
+			ChkEvenRows.Name = "ChkEvenRows";
+			ChkEvenRows.Size = new System.Drawing.Size(69, 19);
+			ChkEvenRows.TabIndex = 20;
+			ChkEvenRows.Text = "Even Ids";
+			ChkEvenRows.UseVisualStyleBackColor = true;
 			// 
 			// button4
 			// 
-			this.button4.Location = new System.Drawing.Point(6, 260);
-			this.button4.Margin = new System.Windows.Forms.Padding(2);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(119, 56);
-			this.button4.TabIndex = 19;
-			this.button4.Text = "Marks chart";
-			this.button4.UseVisualStyleBackColor = true;
-			this.button4.Click += new System.EventHandler(this.button4_Click);
+			button4.Location = new System.Drawing.Point(7, 300);
+			button4.Margin = new Padding(2);
+			button4.Name = "button4";
+			button4.Size = new System.Drawing.Size(139, 65);
+			button4.TabIndex = 19;
+			button4.Text = "Marks chart";
+			button4.UseVisualStyleBackColor = true;
+			button4.Click += button4_Click;
 			// 
 			// zedGraphControl1
 			// 
-			this.zedGraphControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.zedGraphControl1.Location = new System.Drawing.Point(131, 260);
-			this.zedGraphControl1.Margin = new System.Windows.Forms.Padding(4);
-			this.zedGraphControl1.Name = "zedGraphControl1";
-			this.zedGraphControl1.ScrollGrace = 0D;
-			this.zedGraphControl1.ScrollMaxX = 0D;
-			this.zedGraphControl1.ScrollMaxY = 0D;
-			this.zedGraphControl1.ScrollMaxY2 = 0D;
-			this.zedGraphControl1.ScrollMinX = 0D;
-			this.zedGraphControl1.ScrollMinY = 0D;
-			this.zedGraphControl1.ScrollMinY2 = 0D;
-			this.zedGraphControl1.Size = new System.Drawing.Size(672, 276);
-			this.zedGraphControl1.TabIndex = 18;
-			this.zedGraphControl1.UseExtendedPrintDialog = true;
+			zedGraphControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			zedGraphControl1.Location = new System.Drawing.Point(153, 300);
+			zedGraphControl1.Margin = new Padding(5, 5, 5, 5);
+			zedGraphControl1.MatchAxesScreenDataRatio = false;
+			zedGraphControl1.Name = "zedGraphControl1";
+			zedGraphControl1.Size = new System.Drawing.Size(784, 318);
+			zedGraphControl1.TabIndex = 18;
 			// 
 			// groupBox3
 			// 
-			this.groupBox3.Controls.Add(this.txtToolReport);
-			this.groupBox3.Controls.Add(this.tabControl3);
-			this.groupBox3.Location = new System.Drawing.Point(6, 12);
-			this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
-			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-			this.groupBox3.Size = new System.Drawing.Size(796, 230);
-			this.groupBox3.TabIndex = 17;
-			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Import data";
+			groupBox3.Controls.Add(txtToolReport);
+			groupBox3.Controls.Add(tabControl3);
+			groupBox3.Location = new System.Drawing.Point(7, 14);
+			groupBox3.Margin = new Padding(2);
+			groupBox3.Name = "groupBox3";
+			groupBox3.Padding = new Padding(2);
+			groupBox3.Size = new System.Drawing.Size(929, 265);
+			groupBox3.TabIndex = 17;
+			groupBox3.TabStop = false;
+			groupBox3.Text = "Import data";
 			// 
 			// txtToolReport
 			// 
-			this.txtToolReport.Location = new System.Drawing.Point(444, 40);
-			this.txtToolReport.Multiline = true;
-			this.txtToolReport.Name = "txtToolReport";
-			this.txtToolReport.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtToolReport.Size = new System.Drawing.Size(347, 181);
-			this.txtToolReport.TabIndex = 26;
+			txtToolReport.Location = new System.Drawing.Point(518, 46);
+			txtToolReport.Margin = new Padding(4, 3, 4, 3);
+			txtToolReport.Multiline = true;
+			txtToolReport.Name = "txtToolReport";
+			txtToolReport.ScrollBars = ScrollBars.Vertical;
+			txtToolReport.Size = new System.Drawing.Size(404, 208);
+			txtToolReport.TabIndex = 26;
 			// 
 			// tabControl3
 			// 
-			this.tabControl3.Controls.Add(this.tabPage6);
-			this.tabControl3.Controls.Add(this.tabPage7);
-			this.tabControl3.Controls.Add(this.tabPage8);
-			this.tabControl3.Controls.Add(this.tabPage9);
-			this.tabControl3.Controls.Add(this.tabPage10);
-			this.tabControl3.Location = new System.Drawing.Point(5, 18);
-			this.tabControl3.Name = "tabControl3";
-			this.tabControl3.SelectedIndex = 0;
-			this.tabControl3.Size = new System.Drawing.Size(433, 207);
-			this.tabControl3.TabIndex = 26;
+			tabControl3.Controls.Add(tabPage6);
+			tabControl3.Controls.Add(tabPage7);
+			tabControl3.Controls.Add(tabPage8);
+			tabControl3.Controls.Add(tabPage9);
+			tabControl3.Controls.Add(tabPage10);
+			tabControl3.Location = new System.Drawing.Point(6, 21);
+			tabControl3.Margin = new Padding(4, 3, 4, 3);
+			tabControl3.Name = "tabControl3";
+			tabControl3.SelectedIndex = 0;
+			tabControl3.Size = new System.Drawing.Size(505, 239);
+			tabControl3.TabIndex = 26;
 			// 
 			// tabPage6
 			// 
-			this.tabPage6.Controls.Add(this.txtElpCode);
-			this.tabPage6.Controls.Add(this.label13);
-			this.tabPage6.Controls.Add(this.txtSourceTurnitin);
-			this.tabPage6.Controls.Add(this.button8);
-			this.tabPage6.Controls.Add(this.btnCompleteData);
-			this.tabPage6.Controls.Add(this.button7);
-			this.tabPage6.Location = new System.Drawing.Point(4, 22);
-			this.tabPage6.Name = "tabPage6";
-			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage6.Size = new System.Drawing.Size(425, 181);
-			this.tabPage6.TabIndex = 0;
-			this.tabPage6.Text = "Gradebook";
-			this.tabPage6.UseVisualStyleBackColor = true;
+			tabPage6.Controls.Add(txtElpCode);
+			tabPage6.Controls.Add(label13);
+			tabPage6.Controls.Add(txtSourceTurnitin);
+			tabPage6.Controls.Add(button8);
+			tabPage6.Controls.Add(btnCompleteData);
+			tabPage6.Controls.Add(button7);
+			tabPage6.Location = new System.Drawing.Point(4, 24);
+			tabPage6.Margin = new Padding(4, 3, 4, 3);
+			tabPage6.Name = "tabPage6";
+			tabPage6.Padding = new Padding(4, 3, 4, 3);
+			tabPage6.Size = new System.Drawing.Size(497, 211);
+			tabPage6.TabIndex = 0;
+			tabPage6.Text = "Gradebook";
+			tabPage6.UseVisualStyleBackColor = true;
 			// 
 			// txtElpCode
 			// 
-			this.txtElpCode.Location = new System.Drawing.Point(156, 68);
-			this.txtElpCode.Name = "txtElpCode";
-			this.txtElpCode.Size = new System.Drawing.Size(230, 20);
-			this.txtElpCode.TabIndex = 27;
+			txtElpCode.Location = new System.Drawing.Point(182, 78);
+			txtElpCode.Margin = new Padding(4, 3, 4, 3);
+			txtElpCode.Name = "txtElpCode";
+			txtElpCode.Size = new System.Drawing.Size(268, 23);
+			txtElpCode.TabIndex = 27;
 			// 
 			// label13
 			// 
-			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(23, 71);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(48, 13);
-			this.label13.TabIndex = 26;
-			this.label13.Text = "elp code";
+			label13.AutoSize = true;
+			label13.Location = new System.Drawing.Point(27, 82);
+			label13.Margin = new Padding(4, 0, 4, 0);
+			label13.Name = "label13";
+			label13.Size = new System.Drawing.Size(52, 15);
+			label13.TabIndex = 26;
+			label13.Text = "elp code";
 			// 
 			// txtSourceTurnitin
 			// 
-			this.txtSourceTurnitin.Location = new System.Drawing.Point(23, 6);
-			this.txtSourceTurnitin.Multiline = true;
-			this.txtSourceTurnitin.Name = "txtSourceTurnitin";
-			this.txtSourceTurnitin.Size = new System.Drawing.Size(337, 56);
-			this.txtSourceTurnitin.TabIndex = 24;
+			txtSourceTurnitin.Location = new System.Drawing.Point(27, 7);
+			txtSourceTurnitin.Margin = new Padding(4, 3, 4, 3);
+			txtSourceTurnitin.Multiline = true;
+			txtSourceTurnitin.Name = "txtSourceTurnitin";
+			txtSourceTurnitin.Size = new System.Drawing.Size(392, 64);
+			txtSourceTurnitin.TabIndex = 24;
 			// 
 			// button8
 			// 
-			this.button8.Location = new System.Drawing.Point(366, 40);
-			this.button8.Name = "button8";
-			this.button8.Size = new System.Drawing.Size(25, 22);
-			this.button8.TabIndex = 25;
-			this.button8.Text = "...";
-			this.button8.UseVisualStyleBackColor = true;
-			this.button8.Click += new System.EventHandler(this.button8_Click);
+			button8.Location = new System.Drawing.Point(427, 46);
+			button8.Margin = new Padding(4, 3, 4, 3);
+			button8.Name = "button8";
+			button8.Size = new System.Drawing.Size(29, 25);
+			button8.TabIndex = 25;
+			button8.Text = "...";
+			button8.UseVisualStyleBackColor = true;
+			button8.Click += button8_Click;
 			// 
 			// btnCompleteData
 			// 
-			this.btnCompleteData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCompleteData.Location = new System.Drawing.Point(23, 150);
-			this.btnCompleteData.Margin = new System.Windows.Forms.Padding(2);
-			this.btnCompleteData.Name = "btnCompleteData";
-			this.btnCompleteData.Size = new System.Drawing.Size(365, 26);
-			this.btnCompleteData.TabIndex = 18;
-			this.btnCompleteData.Text = "Update database from elp Learning Analytics";
-			this.btnCompleteData.UseVisualStyleBackColor = true;
-			this.btnCompleteData.Click += new System.EventHandler(this.BtnCompleteData_Click);
+			btnCompleteData.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			btnCompleteData.Location = new System.Drawing.Point(27, 173);
+			btnCompleteData.Margin = new Padding(2);
+			btnCompleteData.Name = "btnCompleteData";
+			btnCompleteData.Size = new System.Drawing.Size(426, 30);
+			btnCompleteData.TabIndex = 18;
+			btnCompleteData.Text = "Update database from elp Learning Analytics";
+			btnCompleteData.UseVisualStyleBackColor = true;
+			btnCompleteData.Click += BtnCompleteData_Click;
 			// 
 			// button7
 			// 
-			this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.button7.Location = new System.Drawing.Point(23, 93);
-			this.button7.Margin = new System.Windows.Forms.Padding(2);
-			this.button7.Name = "button7";
-			this.button7.Size = new System.Drawing.Size(365, 53);
-			this.button7.TabIndex = 19;
-			this.button7.Text = "Initialize database from elp Learning Analytics  (link on top of submission list)" +
-    "";
-			this.button7.UseVisualStyleBackColor = true;
-			this.button7.Click += new System.EventHandler(this.Button7_Click);
+			button7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			button7.Location = new System.Drawing.Point(27, 107);
+			button7.Margin = new Padding(2);
+			button7.Name = "button7";
+			button7.Size = new System.Drawing.Size(426, 61);
+			button7.TabIndex = 19;
+			button7.Text = "Initialize database from elp Learning Analytics  (link on top of submission list)";
+			button7.UseVisualStyleBackColor = true;
+			button7.Click += Button7_Click;
 			// 
 			// tabPage7
 			// 
-			this.tabPage7.Controls.Add(this.txtSourceDataFile);
-			this.tabPage7.Controls.Add(this.chkImportSubmissions);
-			this.tabPage7.Controls.Add(this.lblSourceData);
-			this.tabPage7.Controls.Add(this.chkImportComponents);
-			this.tabPage7.Controls.Add(this.cmdSourceDataFile);
-			this.tabPage7.Controls.Add(this.cmdGetData);
-			this.tabPage7.Controls.Add(this.chkCommentLib);
-			this.tabPage7.Location = new System.Drawing.Point(4, 22);
-			this.tabPage7.Name = "tabPage7";
-			this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage7.Size = new System.Drawing.Size(425, 181);
-			this.tabPage7.TabIndex = 1;
-			this.tabPage7.Text = "Other AMM database";
-			this.tabPage7.UseVisualStyleBackColor = true;
+			tabPage7.Controls.Add(txtSourceDataFile);
+			tabPage7.Controls.Add(chkImportSubmissions);
+			tabPage7.Controls.Add(lblSourceData);
+			tabPage7.Controls.Add(chkImportComponents);
+			tabPage7.Controls.Add(cmdSourceDataFile);
+			tabPage7.Controls.Add(cmdGetData);
+			tabPage7.Controls.Add(chkCommentLib);
+			tabPage7.Location = new System.Drawing.Point(4, 24);
+			tabPage7.Margin = new Padding(4, 3, 4, 3);
+			tabPage7.Name = "tabPage7";
+			tabPage7.Padding = new Padding(4, 3, 4, 3);
+			tabPage7.Size = new System.Drawing.Size(497, 211);
+			tabPage7.TabIndex = 1;
+			tabPage7.Text = "Other AMM database";
+			tabPage7.UseVisualStyleBackColor = true;
 			// 
 			// txtSourceDataFile
 			// 
-			this.txtSourceDataFile.Location = new System.Drawing.Point(100, 17);
-			this.txtSourceDataFile.Multiline = true;
-			this.txtSourceDataFile.Name = "txtSourceDataFile";
-			this.txtSourceDataFile.Size = new System.Drawing.Size(283, 55);
-			this.txtSourceDataFile.TabIndex = 12;
+			txtSourceDataFile.Location = new System.Drawing.Point(117, 20);
+			txtSourceDataFile.Margin = new Padding(4, 3, 4, 3);
+			txtSourceDataFile.Multiline = true;
+			txtSourceDataFile.Name = "txtSourceDataFile";
+			txtSourceDataFile.Size = new System.Drawing.Size(330, 63);
+			txtSourceDataFile.TabIndex = 12;
 			// 
 			// chkImportSubmissions
 			// 
-			this.chkImportSubmissions.AutoSize = true;
-			this.chkImportSubmissions.Location = new System.Drawing.Point(100, 120);
-			this.chkImportSubmissions.Margin = new System.Windows.Forms.Padding(2);
-			this.chkImportSubmissions.Name = "chkImportSubmissions";
-			this.chkImportSubmissions.Size = new System.Drawing.Size(114, 17);
-			this.chkImportSubmissions.TabIndex = 23;
-			this.chkImportSubmissions.Text = "Import submissions";
-			this.chkImportSubmissions.UseVisualStyleBackColor = true;
+			chkImportSubmissions.AutoSize = true;
+			chkImportSubmissions.Location = new System.Drawing.Point(117, 138);
+			chkImportSubmissions.Margin = new Padding(2);
+			chkImportSubmissions.Name = "chkImportSubmissions";
+			chkImportSubmissions.Size = new System.Drawing.Size(130, 19);
+			chkImportSubmissions.TabIndex = 23;
+			chkImportSubmissions.Text = "Import submissions";
+			chkImportSubmissions.UseVisualStyleBackColor = true;
 			// 
 			// lblSourceData
 			// 
-			this.lblSourceData.AutoSize = true;
-			this.lblSourceData.Location = new System.Drawing.Point(11, 19);
-			this.lblSourceData.Name = "lblSourceData";
-			this.lblSourceData.Size = new System.Drawing.Size(69, 13);
-			this.lblSourceData.TabIndex = 14;
-			this.lblSourceData.Text = "sqlite source:";
+			lblSourceData.AutoSize = true;
+			lblSourceData.Location = new System.Drawing.Point(13, 22);
+			lblSourceData.Margin = new Padding(4, 0, 4, 0);
+			lblSourceData.Name = "lblSourceData";
+			lblSourceData.Size = new System.Drawing.Size(76, 15);
+			lblSourceData.TabIndex = 14;
+			lblSourceData.Text = "sqlite source:";
 			// 
 			// chkImportComponents
 			// 
-			this.chkImportComponents.AutoSize = true;
-			this.chkImportComponents.Location = new System.Drawing.Point(100, 99);
-			this.chkImportComponents.Margin = new System.Windows.Forms.Padding(2);
-			this.chkImportComponents.Name = "chkImportComponents";
-			this.chkImportComponents.Size = new System.Drawing.Size(142, 17);
-			this.chkImportComponents.TabIndex = 17;
-			this.chkImportComponents.Text = "Import mark components";
-			this.chkImportComponents.UseVisualStyleBackColor = true;
+			chkImportComponents.AutoSize = true;
+			chkImportComponents.Location = new System.Drawing.Point(117, 114);
+			chkImportComponents.Margin = new Padding(2);
+			chkImportComponents.Name = "chkImportComponents";
+			chkImportComponents.Size = new System.Drawing.Size(162, 19);
+			chkImportComponents.TabIndex = 17;
+			chkImportComponents.Text = "Import mark components";
+			chkImportComponents.UseVisualStyleBackColor = true;
 			// 
 			// cmdSourceDataFile
 			// 
-			this.cmdSourceDataFile.Location = new System.Drawing.Point(357, 78);
-			this.cmdSourceDataFile.Name = "cmdSourceDataFile";
-			this.cmdSourceDataFile.Size = new System.Drawing.Size(25, 22);
-			this.cmdSourceDataFile.TabIndex = 13;
-			this.cmdSourceDataFile.Text = "...";
-			this.cmdSourceDataFile.UseVisualStyleBackColor = true;
-			this.cmdSourceDataFile.Click += new System.EventHandler(this.cmdSourceDataFile_Click);
+			cmdSourceDataFile.Location = new System.Drawing.Point(416, 90);
+			cmdSourceDataFile.Margin = new Padding(4, 3, 4, 3);
+			cmdSourceDataFile.Name = "cmdSourceDataFile";
+			cmdSourceDataFile.Size = new System.Drawing.Size(29, 25);
+			cmdSourceDataFile.TabIndex = 13;
+			cmdSourceDataFile.Text = "...";
+			cmdSourceDataFile.UseVisualStyleBackColor = true;
+			cmdSourceDataFile.Click += cmdSourceDataFile_Click;
 			// 
 			// cmdGetData
 			// 
-			this.cmdGetData.Location = new System.Drawing.Point(101, 150);
-			this.cmdGetData.Margin = new System.Windows.Forms.Padding(2);
-			this.cmdGetData.Name = "cmdGetData";
-			this.cmdGetData.Size = new System.Drawing.Size(282, 26);
-			this.cmdGetData.TabIndex = 15;
-			this.cmdGetData.Text = "Get Data";
-			this.cmdGetData.UseVisualStyleBackColor = true;
-			this.cmdGetData.Click += new System.EventHandler(this.cmdGetData_Click);
+			cmdGetData.Location = new System.Drawing.Point(118, 173);
+			cmdGetData.Margin = new Padding(2);
+			cmdGetData.Name = "cmdGetData";
+			cmdGetData.Size = new System.Drawing.Size(329, 30);
+			cmdGetData.TabIndex = 15;
+			cmdGetData.Text = "Get Data";
+			cmdGetData.UseVisualStyleBackColor = true;
+			cmdGetData.Click += cmdGetData_Click;
 			// 
 			// chkCommentLib
 			// 
-			this.chkCommentLib.AutoSize = true;
-			this.chkCommentLib.Location = new System.Drawing.Point(100, 77);
-			this.chkCommentLib.Margin = new System.Windows.Forms.Padding(2);
-			this.chkCommentLib.Name = "chkCommentLib";
-			this.chkCommentLib.Size = new System.Drawing.Size(136, 17);
-			this.chkCommentLib.TabIndex = 16;
-			this.chkCommentLib.Text = "Import Comment Library";
-			this.chkCommentLib.UseVisualStyleBackColor = true;
+			chkCommentLib.AutoSize = true;
+			chkCommentLib.Location = new System.Drawing.Point(117, 89);
+			chkCommentLib.Margin = new Padding(2);
+			chkCommentLib.Name = "chkCommentLib";
+			chkCommentLib.Size = new System.Drawing.Size(158, 19);
+			chkCommentLib.TabIndex = 16;
+			chkCommentLib.Text = "Import Comment Library";
+			chkCommentLib.UseVisualStyleBackColor = true;
 			// 
 			// tabPage8
 			// 
-			this.tabPage8.Controls.Add(this.button10);
-			this.tabPage8.Controls.Add(this.button9);
-			this.tabPage8.Location = new System.Drawing.Point(4, 22);
-			this.tabPage8.Name = "tabPage8";
-			this.tabPage8.Size = new System.Drawing.Size(425, 181);
-			this.tabPage8.TabIndex = 2;
-			this.tabPage8.Text = "DocumentArchive";
-			this.tabPage8.UseVisualStyleBackColor = true;
+			tabPage8.Controls.Add(button10);
+			tabPage8.Controls.Add(button9);
+			tabPage8.Location = new System.Drawing.Point(4, 24);
+			tabPage8.Margin = new Padding(4, 3, 4, 3);
+			tabPage8.Name = "tabPage8";
+			tabPage8.Size = new System.Drawing.Size(497, 211);
+			tabPage8.TabIndex = 2;
+			tabPage8.Text = "DocumentArchive";
+			tabPage8.UseVisualStyleBackColor = true;
 			// 
 			// button10
 			// 
-			this.button10.Location = new System.Drawing.Point(18, 42);
-			this.button10.Name = "button10";
-			this.button10.Size = new System.Drawing.Size(362, 23);
-			this.button10.TabIndex = 1;
-			this.button10.Text = "Get manifest information";
-			this.button10.UseVisualStyleBackColor = true;
-			this.button10.Click += new System.EventHandler(this.Button10_Click);
+			button10.Location = new System.Drawing.Point(21, 48);
+			button10.Margin = new Padding(4, 3, 4, 3);
+			button10.Name = "button10";
+			button10.Size = new System.Drawing.Size(422, 27);
+			button10.TabIndex = 1;
+			button10.Text = "Get manifest information";
+			button10.UseVisualStyleBackColor = true;
+			button10.Click += Button10_Click;
 			// 
 			// button9
 			// 
-			this.button9.Location = new System.Drawing.Point(18, 13);
-			this.button9.Name = "button9";
-			this.button9.Size = new System.Drawing.Size(362, 23);
-			this.button9.TabIndex = 0;
-			this.button9.Text = "Expand";
-			this.button9.UseVisualStyleBackColor = true;
-			this.button9.Click += new System.EventHandler(this.button9_Click);
+			button9.Location = new System.Drawing.Point(21, 15);
+			button9.Margin = new Padding(4, 3, 4, 3);
+			button9.Name = "button9";
+			button9.Size = new System.Drawing.Size(422, 27);
+			button9.TabIndex = 0;
+			button9.Text = "Expand";
+			button9.UseVisualStyleBackColor = true;
+			button9.Click += button9_Click;
 			// 
 			// tabPage9
 			// 
-			this.tabPage9.Controls.Add(this.TxtExcelComponentSource);
-			this.tabPage9.Controls.Add(this.BtnImportExcel);
-			this.tabPage9.Controls.Add(this.BtnExportExcel);
-			this.tabPage9.Location = new System.Drawing.Point(4, 22);
-			this.tabPage9.Name = "tabPage9";
-			this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage9.Size = new System.Drawing.Size(425, 181);
-			this.tabPage9.TabIndex = 3;
-			this.tabPage9.Text = "Excel";
-			this.tabPage9.UseVisualStyleBackColor = true;
+			tabPage9.Controls.Add(TxtExcelComponentSource);
+			tabPage9.Controls.Add(BtnImportExcel);
+			tabPage9.Controls.Add(BtnExportExcel);
+			tabPage9.Location = new System.Drawing.Point(4, 24);
+			tabPage9.Margin = new Padding(4, 3, 4, 3);
+			tabPage9.Name = "tabPage9";
+			tabPage9.Padding = new Padding(4, 3, 4, 3);
+			tabPage9.Size = new System.Drawing.Size(497, 211);
+			tabPage9.TabIndex = 3;
+			tabPage9.Text = "Excel";
+			tabPage9.UseVisualStyleBackColor = true;
 			// 
 			// TxtExcelComponentSource
 			// 
-			this.TxtExcelComponentSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.TxtExcelComponentSource.Location = new System.Drawing.Point(6, 106);
-			this.TxtExcelComponentSource.Multiline = true;
-			this.TxtExcelComponentSource.Name = "TxtExcelComponentSource";
-			this.TxtExcelComponentSource.Size = new System.Drawing.Size(413, 22);
-			this.TxtExcelComponentSource.TabIndex = 10;
-			this.TxtExcelComponentSource.TabStop = false;
+			TxtExcelComponentSource.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			TxtExcelComponentSource.Location = new System.Drawing.Point(7, 121);
+			TxtExcelComponentSource.Margin = new Padding(4, 3, 4, 3);
+			TxtExcelComponentSource.Multiline = true;
+			TxtExcelComponentSource.Name = "TxtExcelComponentSource";
+			TxtExcelComponentSource.Size = new System.Drawing.Size(481, 25);
+			TxtExcelComponentSource.TabIndex = 10;
+			TxtExcelComponentSource.TabStop = false;
 			// 
 			// BtnImportExcel
 			// 
-			this.BtnImportExcel.Location = new System.Drawing.Point(6, 54);
-			this.BtnImportExcel.Name = "BtnImportExcel";
-			this.BtnImportExcel.Size = new System.Drawing.Size(190, 42);
-			this.BtnImportExcel.TabIndex = 1;
-			this.BtnImportExcel.Text = "Import Excel Components";
-			this.BtnImportExcel.UseVisualStyleBackColor = true;
-			this.BtnImportExcel.Click += new System.EventHandler(this.BtnImportExcel_Click);
+			BtnImportExcel.Location = new System.Drawing.Point(7, 62);
+			BtnImportExcel.Margin = new Padding(4, 3, 4, 3);
+			BtnImportExcel.Name = "BtnImportExcel";
+			BtnImportExcel.Size = new System.Drawing.Size(222, 48);
+			BtnImportExcel.TabIndex = 1;
+			BtnImportExcel.Text = "Import Excel Components";
+			BtnImportExcel.UseVisualStyleBackColor = true;
+			BtnImportExcel.Click += BtnImportExcel_Click;
 			// 
 			// BtnExportExcel
 			// 
-			this.BtnExportExcel.Location = new System.Drawing.Point(6, 6);
-			this.BtnExportExcel.Name = "BtnExportExcel";
-			this.BtnExportExcel.Size = new System.Drawing.Size(190, 42);
-			this.BtnExportExcel.TabIndex = 0;
-			this.BtnExportExcel.Text = "Export excel";
-			this.BtnExportExcel.UseVisualStyleBackColor = true;
-			this.BtnExportExcel.Click += new System.EventHandler(this.BtnExportExcel_Click);
+			BtnExportExcel.Location = new System.Drawing.Point(7, 7);
+			BtnExportExcel.Margin = new Padding(4, 3, 4, 3);
+			BtnExportExcel.Name = "BtnExportExcel";
+			BtnExportExcel.Size = new System.Drawing.Size(222, 48);
+			BtnExportExcel.TabIndex = 0;
+			BtnExportExcel.Text = "Export excel";
+			BtnExportExcel.UseVisualStyleBackColor = true;
+			BtnExportExcel.Click += BtnExportExcel_Click;
 			// 
 			// tabPage10
 			// 
-			this.tabPage10.Controls.Add(this.label12);
-			this.tabPage10.Controls.Add(this.TxtScaleFactor);
-			this.tabPage10.Controls.Add(this.TxtMergeReportFolder);
-			this.tabPage10.Controls.Add(this.BtnMergeReport);
-			this.tabPage10.Location = new System.Drawing.Point(4, 22);
-			this.tabPage10.Name = "tabPage10";
-			this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage10.Size = new System.Drawing.Size(425, 181);
-			this.tabPage10.TabIndex = 4;
-			this.tabPage10.Text = "PlagiarismReport";
-			this.tabPage10.UseVisualStyleBackColor = true;
+			tabPage10.Controls.Add(label12);
+			tabPage10.Controls.Add(TxtScaleFactor);
+			tabPage10.Controls.Add(TxtMergeReportFolder);
+			tabPage10.Controls.Add(BtnMergeReport);
+			tabPage10.Location = new System.Drawing.Point(4, 24);
+			tabPage10.Margin = new Padding(4, 3, 4, 3);
+			tabPage10.Name = "tabPage10";
+			tabPage10.Padding = new Padding(4, 3, 4, 3);
+			tabPage10.Size = new System.Drawing.Size(497, 211);
+			tabPage10.TabIndex = 4;
+			tabPage10.Text = "PlagiarismReport";
+			tabPage10.UseVisualStyleBackColor = true;
 			// 
 			// label12
 			// 
-			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(12, 87);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(34, 13);
-			this.label12.TabIndex = 14;
-			this.label12.Text = "Scale";
+			label12.AutoSize = true;
+			label12.Location = new System.Drawing.Point(14, 100);
+			label12.Margin = new Padding(4, 0, 4, 0);
+			label12.Name = "label12";
+			label12.Size = new System.Drawing.Size(34, 15);
+			label12.TabIndex = 14;
+			label12.Text = "Scale";
 			// 
 			// TxtScaleFactor
 			// 
-			this.TxtScaleFactor.Location = new System.Drawing.Point(52, 84);
-			this.TxtScaleFactor.Name = "TxtScaleFactor";
-			this.TxtScaleFactor.Size = new System.Drawing.Size(132, 20);
-			this.TxtScaleFactor.TabIndex = 13;
-			this.TxtScaleFactor.Text = "1.0";
-			this.TxtScaleFactor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			TxtScaleFactor.Location = new System.Drawing.Point(61, 97);
+			TxtScaleFactor.Margin = new Padding(4, 3, 4, 3);
+			TxtScaleFactor.Name = "TxtScaleFactor";
+			TxtScaleFactor.Size = new System.Drawing.Size(153, 23);
+			TxtScaleFactor.TabIndex = 13;
+			TxtScaleFactor.Text = "1.0";
+			TxtScaleFactor.TextAlign = HorizontalAlignment.Right;
 			// 
 			// TxtMergeReportFolder
 			// 
-			this.TxtMergeReportFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.TxtMergeReportFolder.Location = new System.Drawing.Point(15, 116);
-			this.TxtMergeReportFolder.Multiline = true;
-			this.TxtMergeReportFolder.Name = "TxtMergeReportFolder";
-			this.TxtMergeReportFolder.Size = new System.Drawing.Size(392, 22);
-			this.TxtMergeReportFolder.TabIndex = 12;
-			this.TxtMergeReportFolder.TabStop = false;
+			TxtMergeReportFolder.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			TxtMergeReportFolder.Location = new System.Drawing.Point(18, 133);
+			TxtMergeReportFolder.Margin = new Padding(4, 3, 4, 3);
+			TxtMergeReportFolder.Multiline = true;
+			TxtMergeReportFolder.Name = "TxtMergeReportFolder";
+			TxtMergeReportFolder.Size = new System.Drawing.Size(457, 25);
+			TxtMergeReportFolder.TabIndex = 12;
+			TxtMergeReportFolder.TabStop = false;
 			// 
 			// BtnMergeReport
 			// 
-			this.BtnMergeReport.Location = new System.Drawing.Point(15, 16);
-			this.BtnMergeReport.Name = "BtnMergeReport";
-			this.BtnMergeReport.Size = new System.Drawing.Size(169, 42);
-			this.BtnMergeReport.TabIndex = 11;
-			this.BtnMergeReport.Text = "Merge reports";
-			this.BtnMergeReport.UseVisualStyleBackColor = true;
-			this.BtnMergeReport.Click += new System.EventHandler(this.BtnMergeReport_Click);
+			BtnMergeReport.Location = new System.Drawing.Point(18, 18);
+			BtnMergeReport.Margin = new Padding(4, 3, 4, 3);
+			BtnMergeReport.Name = "BtnMergeReport";
+			BtnMergeReport.Size = new System.Drawing.Size(197, 48);
+			BtnMergeReport.TabIndex = 11;
+			BtnMergeReport.Text = "Merge reports";
+			BtnMergeReport.UseVisualStyleBackColor = true;
+			BtnMergeReport.Click += BtnMergeReport_Click;
 			// 
 			// tableLayoutPanel4
 			// 
-			this.tableLayoutPanel4.ColumnCount = 5;
-			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-			this.tableLayoutPanel4.Controls.Add(this.cmdReload, 3, 0);
-			this.tableLayoutPanel4.Controls.Add(this.label5, 0, 0);
-			this.tableLayoutPanel4.Controls.Add(this.cmdSelectFile, 2, 0);
-			this.tableLayoutPanel4.Controls.Add(this.txtExcelFileName, 1, 0);
-			this.tableLayoutPanel4.Controls.Add(this.BtnOpenFolder, 4, 0);
-			this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2);
-			this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-			this.tableLayoutPanel4.RowCount = 1;
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel4.Size = new System.Drawing.Size(1229, 32);
-			this.tableLayoutPanel4.TabIndex = 13;
+			tableLayoutPanel4.ColumnCount = 5;
+			tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 70F));
+			tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+			tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
+			tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
+			tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
+			tableLayoutPanel4.Controls.Add(cmdReload, 3, 0);
+			tableLayoutPanel4.Controls.Add(label5, 0, 0);
+			tableLayoutPanel4.Controls.Add(cmdSelectFile, 2, 0);
+			tableLayoutPanel4.Controls.Add(txtExcelFileName, 1, 0);
+			tableLayoutPanel4.Controls.Add(BtnOpenFolder, 4, 0);
+			tableLayoutPanel4.Dock = DockStyle.Top;
+			tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
+			tableLayoutPanel4.Margin = new Padding(2);
+			tableLayoutPanel4.Name = "tableLayoutPanel4";
+			tableLayoutPanel4.RowCount = 1;
+			tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+			tableLayoutPanel4.Size = new System.Drawing.Size(1434, 37);
+			tableLayoutPanel4.TabIndex = 13;
 			// 
 			// BtnOpenFolder
 			// 
-			this.BtnOpenFolder.Image = global::UnnItBooster.Properties.Resources.folder;
-			this.BtnOpenFolder.Location = new System.Drawing.Point(1202, 3);
-			this.BtnOpenFolder.Name = "BtnOpenFolder";
-			this.BtnOpenFolder.Size = new System.Drawing.Size(23, 23);
-			this.BtnOpenFolder.TabIndex = 13;
-			this.BtnOpenFolder.UseVisualStyleBackColor = true;
-			this.BtnOpenFolder.Click += new System.EventHandler(this.BtnOpenFolder_Click);
+			BtnOpenFolder.Image = UnnItBooster.Properties.Resources.folder;
+			BtnOpenFolder.Location = new System.Drawing.Point(1403, 3);
+			BtnOpenFolder.Margin = new Padding(4, 3, 4, 3);
+			BtnOpenFolder.Name = "BtnOpenFolder";
+			BtnOpenFolder.Size = new System.Drawing.Size(27, 27);
+			BtnOpenFolder.TabIndex = 13;
+			BtnOpenFolder.UseVisualStyleBackColor = true;
+			BtnOpenFolder.Click += BtnOpenFolder_Click;
 			// 
 			// FrmMarkingMachine
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1229, 687);
-			this.Controls.Add(this.tabControl1);
-			this.Controls.Add(this.tableLayoutPanel4);
-			this.Name = "FrmMarkingMachine";
-			this.Text = "Marking Machine";
-			this.splitContainer1.Panel1.ResumeLayout(false);
-			this.splitContainer1.Panel1.PerformLayout();
-			this.splitContainer1.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-			this.splitContainer1.ResumeLayout(false);
-			this.splitContainer4.Panel1.ResumeLayout(false);
-			this.splitContainer4.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
-			this.splitContainer4.ResumeLayout(false);
-			this.panel2.ResumeLayout(false);
-			this.panel2.PerformLayout();
-			this.splitContainer2.Panel1.ResumeLayout(false);
-			this.splitContainer2.Panel1.PerformLayout();
-			this.splitContainer2.Panel2.ResumeLayout(false);
-			this.splitContainer2.Panel2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-			this.splitContainer2.ResumeLayout(false);
-			this.panel1.ResumeLayout(false);
-			this.panel1.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
-			this.groupBox2.PerformLayout();
-			this.groupBox4.ResumeLayout(false);
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
-			this.tabControl1.ResumeLayout(false);
-			this.tabPage1.ResumeLayout(false);
-			this.tabPage2.ResumeLayout(false);
-			this.splitContainer3.Panel1.ResumeLayout(false);
-			this.splitContainer3.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
-			this.splitContainer3.ResumeLayout(false);
-			this.splitContainer5.Panel1.ResumeLayout(false);
-			this.splitContainer5.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
-			this.splitContainer5.ResumeLayout(false);
-			this.tableLayoutPanel2.ResumeLayout(false);
-			this.tableLayoutPanel2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.NudOverlap)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.StudImage)).EndInit();
-			this.tableLayoutPanel3.ResumeLayout(false);
-			this.tableLayoutPanel3.PerformLayout();
-			this.tabControl2.ResumeLayout(false);
-			this.tabPage4.ResumeLayout(false);
-			this.tabPage5.ResumeLayout(false);
-			this.tabPage5.PerformLayout();
-			this.tabPage3.ResumeLayout(false);
-			this.tabPage3.PerformLayout();
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.NudMarkOffset)).EndInit();
-			this.groupBox3.ResumeLayout(false);
-			this.groupBox3.PerformLayout();
-			this.tabControl3.ResumeLayout(false);
-			this.tabPage6.ResumeLayout(false);
-			this.tabPage6.PerformLayout();
-			this.tabPage7.ResumeLayout(false);
-			this.tabPage7.PerformLayout();
-			this.tabPage8.ResumeLayout(false);
-			this.tabPage9.ResumeLayout(false);
-			this.tabPage9.PerformLayout();
-			this.tabPage10.ResumeLayout(false);
-			this.tabPage10.PerformLayout();
-			this.tableLayoutPanel4.ResumeLayout(false);
-			this.tableLayoutPanel4.PerformLayout();
-			this.ResumeLayout(false);
+			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+			AutoScaleMode = AutoScaleMode.Font;
+			ClientSize = new System.Drawing.Size(1434, 793);
+			Controls.Add(tabControl1);
+			Controls.Add(tableLayoutPanel4);
+			Margin = new Padding(4, 3, 4, 3);
+			Name = "FrmMarkingMachine";
+			Text = "Marking Machine";
+			splitContainer1.Panel1.ResumeLayout(false);
+			splitContainer1.Panel1.PerformLayout();
+			splitContainer1.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+			splitContainer1.ResumeLayout(false);
+			splitContainer4.Panel1.ResumeLayout(false);
+			splitContainer4.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)splitContainer4).EndInit();
+			splitContainer4.ResumeLayout(false);
+			panel2.ResumeLayout(false);
+			panel2.PerformLayout();
+			splitContainer2.Panel1.ResumeLayout(false);
+			splitContainer2.Panel1.PerformLayout();
+			splitContainer2.Panel2.ResumeLayout(false);
+			splitContainer2.Panel2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
+			splitContainer2.ResumeLayout(false);
+			panel1.ResumeLayout(false);
+			panel1.PerformLayout();
+			groupBox2.ResumeLayout(false);
+			groupBox2.PerformLayout();
+			groupBox4.ResumeLayout(false);
+			tableLayoutPanel1.ResumeLayout(false);
+			tableLayoutPanel1.PerformLayout();
+			tabControl1.ResumeLayout(false);
+			tabPage1.ResumeLayout(false);
+			tabPage2.ResumeLayout(false);
+			splitContainer3.Panel1.ResumeLayout(false);
+			splitContainer3.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)splitContainer3).EndInit();
+			splitContainer3.ResumeLayout(false);
+			splitContainer5.Panel1.ResumeLayout(false);
+			splitContainer5.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)splitContainer5).EndInit();
+			splitContainer5.ResumeLayout(false);
+			tableLayoutPanel2.ResumeLayout(false);
+			tableLayoutPanel2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)NudOverlap).EndInit();
+			((System.ComponentModel.ISupportInitialize)StudImage).EndInit();
+			tableLayoutPanel3.ResumeLayout(false);
+			tableLayoutPanel3.PerformLayout();
+			tabControl2.ResumeLayout(false);
+			tabPage4.ResumeLayout(false);
+			tabPage5.ResumeLayout(false);
+			tabPage5.PerformLayout();
+			tabPage3.ResumeLayout(false);
+			tabPage3.PerformLayout();
+			groupBox1.ResumeLayout(false);
+			groupBox1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)NudMarkOffset).EndInit();
+			groupBox3.ResumeLayout(false);
+			groupBox3.PerformLayout();
+			tabControl3.ResumeLayout(false);
+			tabPage6.ResumeLayout(false);
+			tabPage6.PerformLayout();
+			tabPage7.ResumeLayout(false);
+			tabPage7.PerformLayout();
+			tabPage8.ResumeLayout(false);
+			tabPage9.ResumeLayout(false);
+			tabPage9.PerformLayout();
+			tabPage10.ResumeLayout(false);
+			tabPage10.PerformLayout();
+			tableLayoutPanel4.ResumeLayout(false);
+			tableLayoutPanel4.PerformLayout();
+			ResumeLayout(false);
+		}
 
-        }
-				
 
 		#endregion
 
@@ -1895,8 +1938,8 @@ namespace StudentsFetcher.StudentMarking
         private System.Windows.Forms.Button cmdReload;
         private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.Button button4;
-        private ZedGraph.ZedGraphControl zedGraphControl1;
-        private System.Windows.Forms.Panel panel2;
+		private LiveChartsCore.SkiaSharpView.WinForms.CartesianChart zedGraphControl1;
+		private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button cmdSelectAll;

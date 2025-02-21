@@ -16,7 +16,7 @@ namespace UnnFunctions.Models
 	public class WordFile
 	{
 		private FileInfo file;
-		public WordFile(FileInfo f) 
+		public WordFile(FileInfo f)
 		{
 			file = f;
 		}
@@ -64,12 +64,12 @@ namespace UnnFunctions.Models
 				{
 					if (!keepCapture.IsMatch(item))
 					{
-						yield break; 
+						yield break;
 					}
 					yield return item;
 				}
 
-				
+
 			}
 			yield break;
 		}
@@ -182,7 +182,7 @@ namespace UnnFunctions.Models
 				if (bodyElement is not XWPFTable table)
 				{
 					var tb = bodyElement.GetType();
-					var typeName =  tb.FullName;
+					var typeName = tb.FullName;
 					if (ignoredTypes.TryGetValue(typeName, out var found))
 						found.HitCount++;
 					else
@@ -214,7 +214,8 @@ namespace UnnFunctions.Models
 
 		public bool Exists
 		{
-			get { 
+			get
+			{
 				if (!file.Exists)
 					return false;
 				return file.Extension.ToLower() == ".docx";
@@ -284,11 +285,11 @@ namespace UnnFunctions.Models
 			foreach (var referenceString in refs)
 			{
 				var m = r.Match(referenceString);
-                if (m.Success)
-                {
-                    
-                }
-                // if (.IsMatch(referenceString))
+				if (m.Success)
+				{
+
+				}
+				// if (.IsMatch(referenceString))
 			}
 		}
 	}

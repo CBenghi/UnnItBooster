@@ -20,7 +20,7 @@ namespace StudentsFetcher
 
 			if (args.Length > 1 && args[0] == "-mm" && File.Exists(args[1]))
 			{
-				FrmMarkingMachine machine  = new FrmMarkingMachine();
+				FrmMarkingMachine machine = new FrmMarkingMachine();
 				machine.SetSqlFile(args[1]);
 				if (args.Contains("-max"))
 					machine.WindowState = FormWindowState.Maximized;
@@ -36,7 +36,7 @@ namespace StudentsFetcher
 			}
 			else
 				Application.Run(new frmMenu());
-		
+
 		}
 	}
 }

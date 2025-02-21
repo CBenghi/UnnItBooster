@@ -18,12 +18,12 @@ namespace UnnFunctions.Models
 		public string Report()
 		{
 			var validMarks = entries.Where(x => x.Totmark > 0).Count();
-			StringBuilder sb = new StringBuilder();	
+			StringBuilder sb = new StringBuilder();
 			var req = Math.Ceiling(Math.Sqrt(entries.Count));
 			req = Math.Max(req, 6);
 			req = Math.Min(req, validMarks);
-			var each = (validMarks-1) / (req - 1);
-			
+			var each = (validMarks - 1) / (req - 1);
+
 			sb.AppendLine($"Total submissions: {entries.Count}, Sample size: {req}, Submissions with a mark: {validMarks}.");
 			// sb.AppendLine($"Selecting one in {each} submissions."); 
 			sb.AppendLine();
@@ -32,7 +32,7 @@ namespace UnnFunctions.Models
 			int progInt = 0;
 			double progDbl = 0;
 			int nextHit = 0;
-			foreach (var entry in entries.OrderBy(x=>x.Totmark))
+			foreach (var entry in entries.OrderBy(x => x.Totmark))
 			{
 				var selected = "";
 				if (entry.Totmark > 0)
@@ -49,7 +49,7 @@ namespace UnnFunctions.Models
 						{
 
 						}
-						
+
 					}
 				}
 				var selectedId = (selected == "yes") ? entry.Sub.InternalShortId.ToString() : "";

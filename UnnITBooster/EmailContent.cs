@@ -41,10 +41,10 @@ public class EmailContent
 
 	public static EmailContent? FromFile(DirectoryInfo d, string name)
 	{
-		if (!d.Exists) 
+		if (!d.Exists)
 			return null;
 		name = $"{name}.{EmailExtension}";
-		var path = Path.Combine(d.FullName, name);	
+		var path = Path.Combine(d.FullName, name);
 		if (!File.Exists(path))
 			return null;
 		var content = File.ReadAllText(path);
@@ -87,7 +87,7 @@ public class EmailContent
 		none,
 		MCRF_ID
 	}
-		
+
 	internal static string[] GetOptions()
 	{
 		var options = new string[] {
