@@ -322,10 +322,12 @@ namespace StudentMarking
 					{
 						case "resultshort":
 						case "resultlong":
+						case "shortresult":
+						case "longresult":
 							{
 								if (ModuleResult.TryGetResultDescription(repvalue, out var shortVal, out var longVal))
 								{
-									if (dataFun == "resultshort")
+									if (dataFun == "resultshort" || dataFun == "shortresult")
 										repvalue = shortVal;
 									else
 										repvalue = longVal;
@@ -460,13 +462,20 @@ namespace StudentMarking
 			if (lstEmailSendSelection.SelectedItems.Count == 0)
 				return;
 
-
-
+			var emailColumn = cmbEmailField.Text;
+			
 			var row = lstEmailSendSelection.SelectedItems[0].Tag as DataRow;
 			if (row == null)
 				return;
+
+			if (string.IsNullOrWhiteSpace(emailColumn) || !row.Table.Columns.Contains(emailColumn))
+			{
+				txtEmailPreview.Text = $"Error: Invalid email column '{emailColumn}'";
+				return;
+			}
+
 			var replacements = GetReplacementList(txtEmailBody.Text);
-			var destEmail = EmailContent.ResolveEmail(row[cmbEmailField.Text].ToString(), cmbEmailTransformationRule.Text);
+			var destEmail = EmailContent.ResolveEmail(row[emailColumn].ToString(), cmbEmailTransformationRule.Text);
 			lblSelectedEmail.Text = destEmail;
 			try
 			{
@@ -492,7 +501,9 @@ namespace StudentMarking
 			{
 				EmailBody = txtEmailBody.Text,
 				EmailCC = txtEmailCC.Text,
-				EmailSubject = cmbEmailSubject.Text
+				EmailSubject = cmbEmailSubject.Text,
+				EmailIdentificationField = cmbEmailField.Text,
+				EmailIdentificationTransform = cmbEmailTransformationRule.Text,
 			};
 			email.Save(studentsRepo.ConfigurationFolder);
 		}
@@ -555,6 +566,8 @@ namespace StudentMarking
 			// cmbEmailSubject.Text = email.EmailSubject;
 			txtEmailCC.Text = email.EmailCC;
 			txtEmailBody.Text = email.EmailBody;
+			cmbEmailField.Text = email.EmailIdentificationField;
+			cmbEmailTransformationRule.Text = email.EmailIdentificationTransform;
 		}
 	}
 }

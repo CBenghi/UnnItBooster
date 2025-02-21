@@ -13,6 +13,8 @@ public class EmailContent
 	public string EmailSubject { get; set; } = string.Empty;
 	public string EmailBody { get; set; } = string.Empty;
 	public string EmailCC { get; set; } = string.Empty;
+	public string EmailIdentificationField { get; set; } = string.Empty;
+	public string EmailIdentificationTransform { get; set; } = string.Empty;
 
 	const string EmailExtension = "emailtemplate";
 
@@ -30,7 +32,8 @@ public class EmailContent
 		if (string.IsNullOrWhiteSpace(EmailSubject))
 			return false;
 		var file = new FileInfo(Path.Combine(configurationFolder.FullName, $"{EmailSubject}.{EmailExtension}"));
-		var ser = JsonSerializer.Serialize(this);
+		JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true };
+		var ser = JsonSerializer.Serialize(this, options);
 		using var destFile = file.CreateText();
 		destFile.Write(ser);
 		return true;
