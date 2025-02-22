@@ -220,7 +220,7 @@ namespace UnnFunctions.Models
 			return $"Mean: {series.Mean:0.##}, Minimum: {series.Minimum}, Maximum: {series.Maximum}, StDev: {series.StandardDeviation:0.##}, Range: {series.Maximum - series.Minimum}";
 		}
 
-		internal string GetResultCodesDescription()
+		internal string GetResultCodesShortDescription()
 		{
 			var ResultCodes = new List<string>() {
 				ActualResult,

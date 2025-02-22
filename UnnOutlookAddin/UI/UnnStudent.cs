@@ -86,7 +86,15 @@ namespace UnnOutlookAddin.UI
 				stringBuilder.AppendLine($"Last: {stud.Surname}");
 				stringBuilder.AppendLine($"Full: {stud.FullName}");
 				stringBuilder.AppendLine();
-				stringBuilder.Append(stud.ReportTranscript());
+				if (stud.TranscriptResults.Any())
+				{
+					var transcriptLines = stud.ReportTranscript(false).Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+					foreach (var line in transcriptLines)
+					{
+						stringBuilder.AppendLine($"  {line}");
+					}
+					stringBuilder.AppendLine();
+				}
 			}
 			return stringBuilder.ToString();
 		}
@@ -253,10 +261,11 @@ namespace UnnOutlookAddin.UI
 			switch (item.ActionType)
 			{
 				case ComboAction.Tp.Search:
-					// todo: restore
-					//var t = new StudentListForm();
-					//t.SetSearch((string)item.Tag);
-					//t.Show();
+					{
+						var t = new StudentListForm();
+						t.SetSearch((string)item.Tag);
+						t.Show();
+					}
 					break;
 				case ComboAction.Tp.ShowImage:
 					if (!Repository.HasImage((string)item.Tag, out var image))

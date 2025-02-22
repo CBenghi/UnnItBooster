@@ -11,12 +11,11 @@ using UnnItBooster.Models;
 
 namespace StudentsFetcher.StudentMarking
 {
-	[AmmFormAttributes("Student list", 2)]
 	public partial class StudentListForm : Form
 	{
 		private StudentsRepository studentsRepo => UnnToolsConfiguration.Settings.StudentsRepository;
 
-		Student? displayedStudent = null;
+		Student displayedStudent = null;
 
 		public StudentListForm()
 		{

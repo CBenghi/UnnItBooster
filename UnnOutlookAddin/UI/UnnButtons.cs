@@ -80,12 +80,11 @@ namespace UnnOutlookAddin.UI
 		{
 			try
 			{
-				// todo: restore
-				//var uid = GetUserIds(e, true).FirstOrDefault();
-				//var t = new StudentListForm();
-				//if (!string.IsNullOrEmpty(uid))
-				//	t.SetSearch(uid);
-				//t.Show();
+				var uid = GetUserIds(e, true).FirstOrDefault();
+				var t = new StudentListForm();
+				if (!string.IsNullOrEmpty(uid))
+					t.SetSearch(uid);
+				t.Show();
 			}
 			catch (Exception ex)
 			{

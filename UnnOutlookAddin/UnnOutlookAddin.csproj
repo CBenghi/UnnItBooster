@@ -219,6 +219,12 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UI\StudentListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\StudentListForm.Designer.cs">
+      <DependentUpon>StudentListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\UnnButtons.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -245,6 +251,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UI\StudentListForm.resx">
+      <DependentUpon>StudentListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\UnnButtons.resx">
       <DependentUpon>UnnButtons.cs</DependentUpon>
     </EmbeddedResource>
