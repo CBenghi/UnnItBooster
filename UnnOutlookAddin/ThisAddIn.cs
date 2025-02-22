@@ -6,6 +6,7 @@ using System.Linq;
 using UnnItBooster.Models;
 using Microsoft.Office.Interop.Outlook;
 using System.Collections.Generic;
+using UnnFunctions.Models;
 
 namespace UnnOutlookAddin
 {
@@ -31,16 +32,14 @@ namespace UnnOutlookAddin
 			_currentExplorer = Application.ActiveExplorer();
 			_currentExplorer.SelectionChange += CurrentExplorer_Event;
 
-
 			// display the Students pane
 			//
-			StudentsRepository = new StudentsRepository(Properties.Settings.Default.StudentsFolder);
 			myStudentComponent = new UI.UnnStudent(StudentsRepository);
 			var myCustomTaskPane = CustomTaskPanes.Add(myStudentComponent, "UnnStudentPane");
 			myCustomTaskPane.Visible = true;
 		}
 
-		internal static StudentsRepository StudentsRepository;
+		internal static StudentsRepository StudentsRepository => UnnToolsConfiguration.Settings.StudentsRepository;
 
 		UI.UnnStudent myStudentComponent = null;
 

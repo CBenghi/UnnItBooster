@@ -9,7 +9,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using LateBindingTest;
-using StudentsFetcher.Properties;
 using UnnFunctions.MCRF;
 using UnnItBooster.Models;
 using UnnItBooster.ModelConversions;
@@ -23,6 +22,7 @@ using System.Runtime.InteropServices;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.Defaults;
+using UnnItBooster;
 
 namespace StudentsFetcher.StudentMarking;
 
@@ -40,15 +40,16 @@ public partial class FrmMarkingMachine : Form
 	}
 
 	private MarkingConfig _config;
-	readonly StudentsRepository studentRepository;
+	StudentsRepository _studentRepository => UnnToolsConfiguration.Settings.StudentsRepository;
 
 	public FrmMarkingMachine()
 	{
 		InitializeComponent();
 		LoadSettings();
-		studentRepository = new StudentsRepository(Settings.Default.StudentsFolder);
 		SetTabWidth(txtLibReport, 10);
 		ChkAutoStat.Checked = true;
+		var names = EmailContent.GetTemplateNames(_studentRepository.ConfigurationFolder);
+		cmbEmailSubject.Items.AddRange(names.ToArray());
 	}
 
 	void txtStudentId_KeyDown(object sender, KeyEventArgs e)
@@ -171,7 +172,7 @@ public partial class FrmMarkingMachine : Form
 			if (dt.Rows.Count == 1)
 			{
 				var numericUserId = dt.Rows[0][0].ToString();
-				ShowUserImage(numericUserId);
+				ShowUserImage(numericUserId ?? "");
 			}
 		}
 		else
@@ -933,7 +934,7 @@ public partial class FrmMarkingMachine : Form
 			txtStudentreport.Text = "Specify name of student collection to determine route.";
 			return;
 		}
-		var studcoll = studentRepository.GetPersonCollections().FirstOrDefault(x => x.Name.Contains(name));
+		var studcoll = _studentRepository.GetPersonCollections().FirstOrDefault(x => x.Name.Contains(name));
 
 		var sb = new StringBuilder();
 		if (studcoll == null)
@@ -946,7 +947,7 @@ public partial class FrmMarkingMachine : Form
 		{
 			//var stud = studentRepository.GetStudentById(sub.NumericUserId);
 			var grp = "Not found";
-			var stud = studentRepository.GetStudentById(sub.NumericUserId, studcoll);
+			var stud = _studentRepository.GetStudentById(sub.NumericUserId, studcoll);
 			if (stud is not null)
 			{
 				grp = $"{stud.CourseYear} {stud.Occurrence}";
@@ -1132,7 +1133,7 @@ public partial class FrmMarkingMachine : Form
 			studentFound = null;
 			return "Need selected student record";
 		}
-		studentFound = studentRepository.GetStudentById(t.NumericUserId);
+		studentFound = _studentRepository.GetStudentById(t.NumericUserId);
 		if (studentFound is null)
 		{
 			return "No student found in repository";
@@ -1515,11 +1516,9 @@ public partial class FrmMarkingMachine : Form
 		{
 			txtExcelFileName.Text = openFileDialog1.FileName;
 			var f = new FileInfo(openFileDialog1.FileName);
-			var g = f.Directory.GetFiles(TurnItIn.GradebookStandardName).FirstOrDefault();
+			var g = f.Directory?.GetFiles(TurnItIn.GradebookStandardName).FirstOrDefault();
 			if (g != null)
 				txtSourceTurnitin.Text = g.FullName;
-
-
 		}
 	}
 
@@ -1665,7 +1664,7 @@ public partial class FrmMarkingMachine : Form
 
 	private void button3_Click(object sender, EventArgs e)
 	{
-		if (txtEmailSubject.Text == "")
+		if (cmbEmailSubject.Text == "")
 		{
 			MessageBox.Show("Subject is empty.");
 			return;
@@ -1685,7 +1684,7 @@ public partial class FrmMarkingMachine : Form
 			{
 				var DestEmail = row["SUB_email"].ToString();
 				if (!chkEmailDryRun.Checked)
-					app.SendOutlookEmail(DestEmail, txtEmailSubject.Text, emailtext);
+					app.SendOutlookEmail(DestEmail, cmbEmailSubject.Text, emailtext);
 				else
 					Debug.WriteLine(emailtext);
 			}
@@ -1790,7 +1789,7 @@ public partial class FrmMarkingMachine : Form
 				{
 					var numComments = "";
 					var markComments = "";
-					var student = studentRepository.GetStudentById(numUID);
+					var student = _studentRepository.GetStudentById(numUID);
 					if (student != null && student.TranscriptResults is not null)
 					{
 						var mark = ModuleResult.WeightedAverage(student.TranscriptResults, out var maturedCredits, out _, out var compensatedCode);
@@ -1879,7 +1878,7 @@ public partial class FrmMarkingMachine : Form
 	private void button4_Click(object sender, EventArgs e)
 	{
 		var tag = ((ComboTag)CmbGrouping.SelectedItem).Tag;
-		var mode = (MarksCollection.grouping)tag;
+		var mode = (MarksCollection.Grouping)tag;
 		var coll = MarksCollection.Initialize(mode);
 		if (ChkExclude0.Checked)
 			coll.RemoveZeros();
@@ -2025,8 +2024,8 @@ public partial class FrmMarkingMachine : Form
 
 	private void ShowUserImage(string numeriCuserID)
 	{
-		var student = studentRepository.GetStudentById(numeriCuserID);
-		if (student is not null && studentRepository.HasImage(student, out var imagePath))
+		var student = _studentRepository.GetStudentById(numeriCuserID);
+		if (student is not null && _studentRepository.HasImage(student, out var imagePath))
 			StudImage.Load(imagePath);
 		else
 			StudImage.Image = null;
@@ -2034,21 +2033,19 @@ public partial class FrmMarkingMachine : Form
 
 	private void cmdSaveEmail_Click(object sender, EventArgs e)
 	{
-		SaveSettings();
+		var email = new EmailContent()
+		{
+			EmailBody = txtEmailBody.Text,			
+			EmailSubject = cmbEmailSubject.Text,
+		};
+		email.Save(_studentRepository.ConfigurationFolder);
 	}
 
-	private void SaveSettings()
-	{
-		Settings.Default.emailBodyMarking = txtEmailBody.Text;
-		Settings.Default.emailSubject = txtEmailSubject.Text;
-		Settings.Default.Save();
-	}
+
 
 	private void LoadSettings()
 	{
-		txtEmailBody.Text = Settings.Default.emailBodyMarking;
-		txtEmailSubject.Text = Settings.Default.emailSubject;
-		var values = Enum.GetValues(typeof(MarksCollection.grouping)).OfType<MarksCollection.grouping>().Select(x => new ComboTag(x.ToString(), x));
+		var values = Enum.GetValues(typeof(MarksCollection.Grouping)).OfType<MarksCollection.Grouping>().Select(x => new ComboTag(x.ToString(), x));
 		CmbGrouping.Items.AddRange(values.ToArray());
 		CmbGrouping.SelectedIndex = 0;
 	}
@@ -2078,8 +2075,7 @@ public partial class FrmMarkingMachine : Form
 		if (!f.Exists)
 			return;
 		var destFile = Path.ChangeExtension(f.FullName, "sqlite");
-		var repository = new StudentsRepository(Settings.Default.StudentsFolder);
-		var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f, repository).ToList();
+		var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f, _studentRepository).ToList();
 		TurnItIn.PopulateDatabase(destFile, submissions, txtElpCode.Text);
 		txtExcelFileName.Text = destFile;
 		Reload();
@@ -2092,8 +2088,7 @@ public partial class FrmMarkingMachine : Form
 		var f = new FileInfo(txtSourceTurnitin.Text);
 		if (!f.Exists)
 			return;
-		var repository = new StudentsRepository(Settings.Default.StudentsFolder);
-		var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f, repository).ToList();
+		var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f, _studentRepository).ToList();
 		txtToolReport.Text = TurnItIn.UpdateDatabase(txtExcelFileName.Text, submissions, txtElpCode.Text);
 		Reload();
 	}
@@ -2485,5 +2480,17 @@ public partial class FrmMarkingMachine : Form
 				txtLibReport.Text = sb.ToString();
 			}
 		}
+	}
+
+	private void txtEmailSubject_SelectedValueChanged(object sender, EventArgs e)
+	{
+		var email = EmailContent.FromFile(
+				UnnToolsConfiguration.Settings.StudentsRepository.ConfigurationFolder,
+				cmbEmailSubject.Text
+				);
+		if (email is null)
+			return;
+		// cmbEmailSubject.Text = email.EmailSubject;
+		txtEmailBody.Text = email.EmailBody;
 	}
 }

@@ -13,9 +13,9 @@ public class StudentsRepository
 {
 	private List<IStudentCollection> collections = new();
 
-	public StudentsRepository(string dataFolder)
+	internal StudentsRepository(string dataFolder)
 	{
-		this.dataFolder = dataFolder ?? string.Empty;
+		_dataFolder = dataFolder ?? string.Empty;
 		Reload();
 	}
 
@@ -79,7 +79,7 @@ public class StudentsRepository
 		return sb.ToString();
 	}
 
-	private string dataFolder { get; set; }
+	private string _dataFolder { get; set; }
 
 	public IEnumerable<IStudentCollection> GetPersonCollections()
 	{
@@ -89,13 +89,25 @@ public class StudentsRepository
 		}
 	}
 
-
-
 	public IEnumerable<Student> Students
 	{
 		get
 		{
 			return collections.SelectMany(item => item.Students);
+		}
+	}
+
+	public IEnumerable<(Student student,string collectionName)> StudentsAndCollection
+	{
+		get
+		{
+			foreach (var coll in collections)
+			{
+				foreach (var stud in coll.Students)
+				{
+					yield return (stud, coll.Name);	
+				}
+			}
 		}
 	}
 
@@ -106,11 +118,11 @@ public class StudentsRepository
 			DirectoryInfo? di;
 			try
 			{
-				di = new DirectoryInfo(dataFolder);
+				di = new DirectoryInfo(_dataFolder);
 			}
 			catch (Exception)
 			{
-				di = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+				di = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
 			}
 			if (!di.Exists)
 			{
@@ -124,7 +136,7 @@ public class StudentsRepository
 
 	public string GetDefaultImageName(string number, string moduleCode)
 	{
-		var d = new DirectoryInfo(dataFolder);
+		var d = new DirectoryInfo(_dataFolder);
 		var pho = Path.Combine(d.FullName, PhotoFolder);
 		d = new DirectoryInfo(pho);
 		if (!d.Exists)
@@ -148,7 +160,7 @@ public class StudentsRepository
 	public bool HasImage(string numericStudentId, out string imagePath)
 	{
 		imagePath = "";
-		var d = new DirectoryInfo(dataFolder);
+		var d = new DirectoryInfo(_dataFolder);
 		var fl = d.GetFiles($"{numericStudentId}.jpg", SearchOption.AllDirectories).FirstOrDefault();
 		if (fl is null)
 			return false;
@@ -306,10 +318,18 @@ public class StudentsRepository
 	}
 
 	private static Regex reNumericUserId = new Regex("^\\d{8}$");
+	private static Regex reTryNumericUserId = new Regex(@"\b(?<numericId>\d{8})\b");
 
 	public static bool IsNumericUserId(string candidate)
 	{
 		return reNumericUserId.IsMatch(candidate);
+	}
+
+	public static bool TryGetNumericUserId(string candidate, out string found)
+	{
+		var m = reTryNumericUserId.Match(candidate);
+		found = m.Success ? m.Groups["numericId"].Value : string.Empty;
+		return m.Success;
 	}
 
 	public static string GetImageUrl(string numericUserId)
@@ -338,5 +358,11 @@ public class StudentsRepository
 			foreach (var student in studs)
 				yield return (collection, student);
 		}
+	}
+
+	internal void SetConfigurationFolder(string studentRepositoryFolder)
+	{
+		_dataFolder = studentRepositoryFolder;
+		Reload();
 	}
 }

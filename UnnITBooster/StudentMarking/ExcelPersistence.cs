@@ -124,7 +124,7 @@ internal class ExcelPersistence
 		FileInfo f = new FileInfo(config.DbName);
 		if (f.Exists)
 		{
-			return Path.Combine(f.Directory.FullName, MarksFileName);
+			return Path.Combine(f.Directory!.FullName, MarksFileName);
 		}
 		return string.Empty;
 	}

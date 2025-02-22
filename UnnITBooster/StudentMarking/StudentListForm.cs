@@ -14,14 +14,13 @@ namespace StudentsFetcher.StudentMarking
 	[AmmFormAttributes("Student list", 2)]
 	public partial class StudentListForm : Form
 	{
-		private StudentsRepository studentsRepo;
+		private StudentsRepository studentsRepo => UnnToolsConfiguration.Settings.StudentsRepository;
 
-		Student? displayedStudent = null;
+		Student displayedStudent = null;
 
 		public StudentListForm()
 		{
 			InitializeComponent();
-			studentsRepo = new StudentsRepository(Properties.Settings.Default.StudentsFolder);
 			txtFolder.Text = studentsRepo.ConfigurationFolder.FullName;
 			UpdateStudentList();
 			RefreshModulesList();
@@ -29,9 +28,9 @@ namespace StudentsFetcher.StudentMarking
 
 		private void SaveSettings()
 		{
-			Properties.Settings.Default.StudentsFolder = txtFolder.Text;
-			Properties.Settings.Default.Save();
-			studentsRepo = new StudentsRepository(Properties.Settings.Default.StudentsFolder);
+			var set = UnnToolsConfiguration.Settings;
+			set.StudentRepositoryFolder = txtFolder.Text;
+			set.Save();		
 		}
 
 		public void SetSearch(string uid)
@@ -56,24 +55,44 @@ namespace StudentsFetcher.StudentMarking
 			if (string.IsNullOrEmpty(flt))
 			{
 				// list all students
-				foreach (var student in studentsRepo.Students)
+				foreach (var studentColl in studentsRepo.StudentsAndCollection)
 				{
-					AddStudent(student);
+					AddStudent(studentColl);
 				}
 			}
 			else
 			{
 				// list matches only
-				foreach (var student in studentsRepo.Students.Where(student => student.Matches(flt)))
+				foreach (var studentAndColl in studentsRepo.StudentsAndCollection.Where(pair => pair.student.Matches(flt)))
 				{
-					AddStudent(student);
+					AddStudent(studentAndColl);
 				}
 			}
 			// if there is no student but a valid id, we offer to download a photo
 			BtnDisplayWebPhoto.Visible = lstStudents.Items.Count == 0 && StudentsRepository.IsNumericUserId(txtSearch.Text);
 		}
 
+		private void AddStudent((Student student, string collectionName) studentAndCollection)
+		{
+			ListViewItem li = StudentToListItem(studentAndCollection.student);
+
+			var extra = studentAndCollection.collectionName;
+			if (studentAndCollection.student.TranscriptResults.Any())
+			{
+				extra += $" Transcript: {studentAndCollection.student.TranscriptResults.Count}";
+			}
+
+			li.SubItems.Add(extra);
+			lstStudents.Items.Add(li);
+		}
+
 		private void AddStudent(Student student)
+		{
+			ListViewItem li = StudentToListItem(student);
+			lstStudents.Items.Add(li);
+		}
+
+		private static ListViewItem StudentToListItem(Student student)
 		{
 			var li = new ListViewItem
 			{
@@ -85,7 +104,7 @@ namespace StudentsFetcher.StudentMarking
 			li.SubItems.Add(student.Email);
 			li.SubItems.Add($"{student.Module} {student.Occurrence}");
 			li.SubItems.Add(student.DSSR ? "DSSR" : "");
-			lstStudents.Items.Add(li);
+			return li;
 		}
 
 		private void lstStudents_SelectedIndexChanged(object sender, EventArgs e)
@@ -194,13 +213,15 @@ namespace StudentsFetcher.StudentMarking
 
 		private void cmdSelectSource_Click(object sender, EventArgs e)
 		{
-			using var openFileDialog = new OpenFileDialog();
-			openFileDialog.Filter = "All files (*.*)|*.*";
-			openFileDialog.FilterIndex = 2;
-			openFileDialog.RestoreDirectory = true;
-			if (openFileDialog.ShowDialog() == DialogResult.OK)
+			using (var openFileDialog = new OpenFileDialog())
 			{
-				txtInputSource.Text = openFileDialog.FileName;
+				openFileDialog.Filter = "All files (*.*)|*.*";
+				openFileDialog.FilterIndex = 2;
+				openFileDialog.RestoreDirectory = true;
+				if (openFileDialog.ShowDialog() == DialogResult.OK)
+				{
+					txtInputSource.Text = openFileDialog.FileName;
+				}
 			}
 		}
 

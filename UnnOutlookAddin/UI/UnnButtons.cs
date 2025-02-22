@@ -80,8 +80,8 @@ namespace UnnOutlookAddin.UI
 		{
 			try
 			{
-				var uid = GetUserIds(e, true).FirstOrDefault();
-				MessageBox.Show("Function disabled, needs to be re-implemented.");
+				// todo: restore
+				//var uid = GetUserIds(e, true).FirstOrDefault();
 				//var t = new StudentListForm();
 				//if (!string.IsNullOrEmpty(uid))
 				//	t.SetSearch(uid);

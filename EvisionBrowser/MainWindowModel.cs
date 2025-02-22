@@ -23,7 +23,7 @@ namespace EvisionBrowser;
 [ObservableObject]
 public partial class MainWindow
 {
-	private StudentsRepository studentsRepo = new StudentsRepository(@"C:\Users\Claudio\OneDrive - Northumbria University - Production Azure AD\2024\Students");
+	private StudentsRepository studentsRepo => UnnToolsConfiguration.Settings.StudentsRepository;
 
 	DispatcherTimer dispatcherTimer;
 
@@ -234,21 +234,21 @@ public partial class MainWindow
 	{
 		var student = eVision.GetStudentTranscript(src, context);
 		if (student is not null)
-			studentsRepo.UpdateStudentInfo(student, context.Collection);
+			studentsRepo.UpdateStudentInfo(student, context.DestinationCollection);
 	}
 
 	private void ProcessStudentDetails(string src, QueueAction context)
 	{
 		var student = eVision.GetStudentFromIndividualSource(src, context);
 		if (student is not null)
-			studentsRepo.UpdateStudentInfo(student, context.Collection);
+			studentsRepo.UpdateStudentInfo(student, context.DestinationCollection);
 		if (context.DataRequired.HasFlag(ActionRequiredData.studentTranscript))
 		{
 			var actions = eVision.GetTranscriptPageFromIndividualSource(src, context);
 			QueueActions(actions);
 		}
 	}
-	private void ProcessStudentList(string src, QueueAction context, HashSet<string>? interestingIds)
+	private void ProcessStudentList(string studentListPage, QueueAction context, HashSet<string>? interestingIds)
 	{
 		if (
 			context.DataRequired.HasFlag(ActionRequiredData.studentEmail) ||
@@ -257,15 +257,14 @@ public partial class MainWindow
 			context.DataRequired.HasFlag(ActionRequiredData.studentTranscript)
 			)
 		{
-			var actions = eVision.GetStudentIndividualSource(src, context).ToList();
+			var actions = eVision.GetStudentIndividualSource(studentListPage, context).ToList();
 			if (interestingIds != null)
 				actions.RemoveAll(x => x.StudentId == null || !interestingIds.Contains(x.StudentId));
 			QueueActions(actions);
 		}
-		// photos can also be downloaded from individual page, so if we go above we don't go below
-		else if (context.DataRequired.HasFlag(ActionRequiredData.photos))
+		else if (context.DataRequired.HasFlag(ActionRequiredData.photos)) // photos can also be downloaded from individual page, so if we go above we don't go below
 		{
-			var actions = eVision.GetStudentPicurePage(src, context).ToList();
+			var actions = eVision.GetStudentPicurePage(studentListPage, context).ToList();
 			QueueActions(actions);
 		}
 	}
@@ -273,7 +272,11 @@ public partial class MainWindow
 	private void QueueActions(IEnumerable<QueueAction> actions)
 	{
 		foreach (var action in actions)
+		{
+			if (queuedActions.Contains(action))
+				continue;
 			queuedActions.Enqueue(action);
+		}
 		OnPropertyChanged(nameof(QueueDisplayText));
 	}
 

@@ -23,7 +23,7 @@ public class MarksCollection
 		return true;
 	}
 
-	public enum grouping
+	public enum Grouping
 	{
 		Classification,
 		HalfClassification,
@@ -31,12 +31,12 @@ public class MarksCollection
 		Individual
 	}
 
-	public static MarksCollection Initialize(grouping type)
+	public static MarksCollection Initialize(Grouping type)
 	{
 		var ret = new MarksCollection();
 		switch (type)
 		{
-			case grouping.Detailed:
+			case Grouping.Detailed:
 
 				ret.Ranges.Add(new MarkRange(0, 0));
 				ret.Ranges.Add(new MarkRange(1, 29));
@@ -50,7 +50,7 @@ public class MarksCollection
 				ret.Ranges.Add(new MarkRange(90, 100));
 				break;
 
-			case grouping.HalfClassification:
+			case Grouping.HalfClassification:
 
 				ret.Ranges.Add(new MarkRange(0, 0));
 				ret.Ranges.Add(new MarkRange(1, 29));
@@ -63,7 +63,7 @@ public class MarksCollection
 				ret.Ranges.Add(new MarkRange(90, 100));
 				break;
 
-			case grouping.Individual:
+			case Grouping.Individual:
 				for (int i = 0; i < 100; i++)
 				{
 					ret.Ranges.Add(new MarkRange(i, i));

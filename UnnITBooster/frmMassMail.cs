@@ -6,14 +6,12 @@ using System.Data.OleDb;
 using System.IO;
 using System.Text.RegularExpressions;
 using LateBindingTest;
-using System.Threading;
 using StudentsFetcher;
 using System.Net;
 using UnnItBooster.Models;
 using StudentsFetcher.StudentMarking;
 using System.Linq;
 using System.Globalization;
-using System.Text.Json;
 using UnnItBooster;
 using UnnFunctions.Models;
 
@@ -22,15 +20,13 @@ namespace StudentMarking
 	[AmmFormAttributes("Mass mailing", 3)]
 	public partial class frmMassMail : Form
 	{
-		private StudentsRepository studentsRepo;
+		private StudentsRepository studentsRepo => UnnToolsConfiguration.Settings.StudentsRepository;
 
 		public frmMassMail()
 		{
 			InitializeComponent();
-			txtEmailBody.Text = StudentsFetcher.Properties.Settings.Default.emailBody;
-			cmbEmailSubject.Text = StudentsFetcher.Properties.Settings.Default.emailSubject;
-			txtEmailCC.Text = StudentsFetcher.Properties.Settings.Default.emailCC;
-			studentsRepo = new StudentsRepository(StudentsFetcher.Properties.Settings.Default.StudentsFolder);
+			
+			
 			cmbSelectedModule.Items.Clear();
 			studentsRepo.Reload();
 			foreach (var coll in studentsRepo.GetPersonCollections())
@@ -115,7 +111,7 @@ namespace StudentMarking
 			// Add the sheet name to the string array.
 			foreach (DataRow row in dt.Rows)
 			{
-				excelSheets[i] = row["TABLE_NAME"].ToString();
+				excelSheets[i] = row["TABLE_NAME"].ToString() ?? "";
 				i++;
 			}
 			con.Close();
@@ -151,6 +147,7 @@ namespace StudentMarking
 		{
 			var curr = cmbEmailField.Text;
 			cmbEmailField.Items.Clear();
+			cmbIdField.Items.Clear();
 			lstEmailSendSelection.Columns.Clear();
 			lstEmailSendSelection.Columns.Add("FirstCol");
 			if (currentTable is not null)
@@ -165,6 +162,7 @@ namespace StudentMarking
 						}
 					}
 					cmbEmailField.Items.Add(clm.ColumnName.ToString());
+					cmbIdField.Items.Add(clm.ColumnName.ToString());
 					lstEmailSendSelection.Columns.Add(clm.ColumnName.ToString());
 				}
 			}
@@ -190,13 +188,13 @@ namespace StudentMarking
 			{
 				if (!string.IsNullOrEmpty(cmbEmailField.Text))
 				{
-					if (!emaiRegex.IsMatch(row[cmbEmailField.Text].ToString()))
+					if (!emaiRegex.IsMatch(row[cmbEmailField.Text].ToString() ?? ""))
 						continue;
 				}
 				var lvi = new ListViewItem { Text = row[0].ToString(), Tag = row };
 				foreach (var subitem in row.ItemArray)
 				{
-					lvi.SubItems.Add(subitem.ToString());
+					lvi.SubItems.Add(subitem?.ToString() ?? "");
 				}
 				lstEmailSendSelection.Items.Add(lvi);
 			}
@@ -242,12 +240,14 @@ namespace StudentMarking
 				if (!studentId.Checked)
 					continue;
 
-				var row = (DataRow)studentId.Tag;
+				var row = studentId.Tag as DataRow;
+				if (row is null)
+					continue;
 				try
 				{
 					string emailtext = GetMailBody(replacements, row);
 					var emailSubject = replaceFields(cmbEmailSubject.Text, replacements, row);
-					var destEmail = EmailContent.ResolveEmail(row[cmbEmailField.Text].ToString(), cmbEmailTransformationRule.Text);
+					var destEmail = EmailContent.ResolveEmail(row[cmbEmailField.Text].ToString() ?? "", cmbEmailTransformationRule.Text);
 					if (string.IsNullOrWhiteSpace(destEmail))
 						continue;
 					if (chkEmailDryRun.Checked)
@@ -275,8 +275,10 @@ namespace StudentMarking
 			return ret;
 		}
 
-		private string replaceFile(string ret, DirectoryInfo directory)
+		private string replaceFile(string ret, DirectoryInfo? directory)
 		{
+			if (directory == null)
+				return ret;
 			var r = new Regex("FILE<<(.*)>>");
 			foreach (Match m in r.Matches(ret))
 			{
@@ -357,7 +359,14 @@ namespace StudentMarking
 							break;
 						case "mcrfname": // case is checked lowered
 							{
-								var tmp = repvalue.Split(new char[] { ' ', '\t', ',' }, StringSplitOptions.RemoveEmptyEntries);
+								// structure is SURNAME, FIRST NAME 
+								var tmp = repvalue.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+								if (tmp.Length > 1)
+								{
+									repvalue = tmp[1];
+								}
+
+								tmp = repvalue.Split(new char[] { ' ', '\t', ',' }, StringSplitOptions.RemoveEmptyEntries);
 								if (tmp.Length == 0)
 								{
 									repvalue = "";
@@ -430,16 +439,14 @@ namespace StudentMarking
 		{
 			var req = new WebClient();
 			string url = string.Format(@"http://nuweb2.northumbria.ac.uk/photoids/{0}.jpg", sid);
-
-
 			string destfilename = sid + ".jpg";
 
-			if (!System.IO.Directory.Exists(destfolder))
-				System.IO.Directory.CreateDirectory(destfolder);
-			destfilename = System.IO.Path.Combine(destfolder, destfilename);
+			if (!Directory.Exists(destfolder))
+				Directory.CreateDirectory(destfolder);
+			destfilename = Path.Combine(destfolder, destfilename);
 			try
 			{
-				if (!System.IO.File.Exists(destfilename))
+				if (!File.Exists(destfilename))
 				{
 					req.DownloadFile(url, destfilename);
 				}
@@ -461,17 +468,27 @@ namespace StudentMarking
 			if (lstEmailSendSelection.SelectedItems.Count == 0)
 				return;
 
-			var emailColumn = cmbEmailField.Text;
 
+
+			var emailColumn = cmbEmailField.Text;
 			var row = lstEmailSendSelection.SelectedItems[0].Tag as DataRow;
 			if (row == null)
 				return;
+
+			if (!string.IsNullOrEmpty(cmbIdField.Text))
+			{
+				var id = row[cmbIdField.Text].ToString() ?? "";
+				if (StudentsRepository.TryGetNumericUserId(id, out var idString))
+					StudImage.LoadAsync(StudentsRepository.GetImageUrl(idString));
+			}
 
 			if (string.IsNullOrWhiteSpace(emailColumn) || !row.Table.Columns.Contains(emailColumn))
 			{
 				txtEmailPreview.Text = $"Error: Invalid email column '{emailColumn}'";
 				return;
 			}
+
+			
 
 			var replacements = GetReplacementList(txtEmailBody.Text);
 			var destEmail = EmailContent.ResolveEmail(row[emailColumn].ToString(), cmbEmailTransformationRule.Text);
@@ -487,15 +504,8 @@ namespace StudentMarking
 			}
 		}
 
-
-
 		private void SaveSettings()
 		{
-			StudentsFetcher.Properties.Settings.Default.emailBody = txtEmailBody.Text;
-			StudentsFetcher.Properties.Settings.Default.emailSubject = cmbEmailSubject.Text;
-			StudentsFetcher.Properties.Settings.Default.emailCC = txtEmailCC.Text;
-			StudentsFetcher.Properties.Settings.Default.Save();
-
 			var email = new EmailContent()
 			{
 				EmailBody = txtEmailBody.Text,

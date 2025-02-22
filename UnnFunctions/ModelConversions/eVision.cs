@@ -113,17 +113,17 @@ namespace UnnItBooster.ModelConversions
 				{
 					string rel = m.Groups["link"].Value;
 					var uri = context.GetReltiveUri(rel);
-					yield return new QueueAction(uri, context.DataRequired, QueueAction.ActionSource.studentTranscript, context.Collection);
+					yield return new QueueAction(uri, context.DataRequired, QueueAction.ActionSource.studentTranscript, context.DestinationCollection);
 				}
 			}
 		}
 
-		public static IEnumerable<QueueAction> GetStudentIndividualSource(string htmlSource, QueueAction context)
+		public static IEnumerable<QueueAction> GetStudentIndividualSource(string studentListPage, QueueAction context)
 		{
 			// document.location.href='../run/SIW_YGSL.start_url?
 			var t1 = new Regex("(?<studentId>\\d{8})/\\d</td>.+?document\\.location\\.href='(?<link>\\.\\./run/SIW_YGSL\\.start_url\\?([^']+))';");
 			var t = new Regex("document\\.location\\.href='(?<link>\\.\\./run/SIW_YGSL\\.start_url\\?([^']+))';");
-			var ms = t1.Matches(htmlSource);
+			var ms = t1.Matches(studentListPage);
 			foreach (Match m in ms)
 			{
 				if (m.Success)
@@ -131,7 +131,7 @@ namespace UnnItBooster.ModelConversions
 					string rel = m.Groups["link"].Value;
 					string stud = m.Groups["studentId"].Value;
 					var uri = context.GetReltiveUri(rel);
-					yield return new QueueAction(uri, context.DataRequired, QueueAction.ActionSource.studentDetails, context.Collection, stud);
+					yield return new QueueAction(uri, context.DataRequired, QueueAction.ActionSource.studentDetails, context.DestinationCollection, stud);
 				}
 			}
 		}
@@ -145,7 +145,7 @@ namespace UnnItBooster.ModelConversions
 			{
 				string rel = m.Groups["link"].Value;
 				var uri = context.GetReltiveUri(rel);
-				yield return new QueueAction(uri, context.DataRequired, QueueAction.ActionSource.studentsListWithPictures, context.Collection);
+				yield return new QueueAction(uri, context.DataRequired, QueueAction.ActionSource.studentsListWithPictures, context.DestinationCollection);
 			}
 		}
 
@@ -263,7 +263,7 @@ namespace UnnItBooster.ModelConversions
 			doc.LoadHtml(htmlSource);
 			// get the table header for the student number
 			//
-			var head = doc.DocumentNode.SelectNodes("//table[@id='tabhead7a']").FirstOrDefault();
+			var head = doc?.DocumentNode?.SelectNodes("//table[@id='tabhead7a']").FirstOrDefault();
 			if (head == null)
 				return null;
 			var r = new Regex(

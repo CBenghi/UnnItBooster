@@ -66,14 +66,15 @@ namespace StudentsFetcher
 		}
 
 
-		void AddButton_Click(object sender, EventArgs e)
+		void AddButton_Click(object? sender, EventArgs e)
 		{
+			if (sender is null)
+				return;
 			var t = ((Button)sender).Tag as Type;
 			if (t == null)
 				return;
 			var instance = Activator.CreateInstance(t);
 			var f = instance as Form;
-
 			f?.Show();
 		}
 	}

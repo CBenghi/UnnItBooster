@@ -4,10 +4,10 @@
       "commandName": "Project",
       "commandLineArgs": "-mm \"C:\\Users\\Claudio\\OneDrive - Northumbria University - Production Azure AD\\2024\\KA7068 - Research project\\SEM1 - marking\\2025 01 - Marks.sqlite\" -max"
     },
-    "bare debug": {
+    "debug": {
       "commandName": "Project"
     },
-    "mailer": {
+    "mailer debug": {
       "commandName": "Project",
       "commandLineArgs": "-mail \"C:\\Users\\Claudio\\OneDrive - Northumbria University - Production Azure AD\\2024\\KA7058 - Research methods\\MCRF KA7058.xlsx\""
     }

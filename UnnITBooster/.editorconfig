@@ -1,0 +1,6 @@
+# Remove the line below if you want to inherit .editorconfig settings from higher directories
+
+# C# files
+[*.cs]
+
+dotnet_diagnostic.CA1416.severity = none

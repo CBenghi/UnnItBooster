@@ -253,7 +253,7 @@ namespace UnnOutlookAddin.UI
 			switch (item.ActionType)
 			{
 				case ComboAction.Tp.Search:
-					MessageBox.Show("Search is disabled, needs to be re-implemented.");
+					// todo: restore
 					//var t = new StudentListForm();
 					//t.SetSearch((string)item.Tag);
 					//t.Show();

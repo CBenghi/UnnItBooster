@@ -10,10 +10,8 @@ namespace LateBindingTest
 
 		public OutlookLateBindingEmailer()
 		{
-			Type outlook_app_type;
-			//Get the excel object
-			outlook_app_type = Type.GetTypeFromProgID("Outlook.Application");
-			if (outlook_app_type == null)
+			Type? outlook_app_type = Type.GetTypeFromProgID("Outlook.Application");
+			if (outlook_app_type is null)
 				return;
 			oApp = Activator.CreateInstance(outlook_app_type);
 			if (oApp is null)
@@ -21,7 +19,8 @@ namespace LateBindingTest
 
 			object[] parameter = new object[] { "MAPI" };
 			var oNameSpace = outlook_app_type.InvokeMember("GetNamespace", BindingFlags.InvokeMethod, null, oApp, parameter);
-
+			if (oNameSpace is null)
+				return;
 			var Logon_parameter = new object?[4] { null, null, true, true };
 			oNameSpace.GetType().InvokeMember("Logon", BindingFlags.InvokeMethod, null, oNameSpace, Logon_parameter);
 
@@ -33,11 +32,14 @@ namespace LateBindingTest
 		{
 			if (oApp is null)
 				return;
+			var oAppType = oApp.GetType();
+			if (oAppType is null)
+				return;
 			var CreateItem_parameter = new object[1] { 0 };
-			object oMailItem = oApp.GetType()
-				.InvokeMember("CreateItem", BindingFlags.InvokeMethod, null, oApp, CreateItem_parameter);
-
-			var mail_item_type = oMailItem.GetType();
+			var oMailItem = oAppType.InvokeMember("CreateItem", BindingFlags.InvokeMethod, null, oApp, CreateItem_parameter);
+			if (oMailItem is null) 
+				return;
+            var mail_item_type = oMailItem.GetType();
 			mail_item_type.InvokeMember("To", BindingFlags.SetProperty, null, oMailItem, new object[] { toValue });
 			mail_item_type.InvokeMember("Subject", BindingFlags.SetProperty, null, oMailItem,
 				new object[] { subjectValue });
