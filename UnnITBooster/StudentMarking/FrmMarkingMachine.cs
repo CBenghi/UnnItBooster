@@ -1646,7 +1646,10 @@ public partial class FrmMarkingMachine : Form
 				_config.GetFolderName(),
 				cmbDocuments.Text);
 			if (File.Exists(fullname))
-				Process.Start(fullname);
+			{
+				var t = new Process() { StartInfo = new ProcessStartInfo(fullname) { UseShellExecute = true } };
+				t.Start();
+			}
 		}
 	}
 

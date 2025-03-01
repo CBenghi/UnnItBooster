@@ -33,8 +33,12 @@ namespace UnnFunctions.Models
 
 		public IEnumerable<string> GetInlinReferences()
 		{
-			foreach (var item in GetParagraphs())
+			var parags = GetParagraphs();
+			var reflist = GetReferenceList(parags);
+			foreach (var item in parags)
 			{
+				if (reflist.Contains(item)) // we want to exclude elements from the reference list
+					continue;
 				foreach (var reference in GetReferencesFrom(item))
 				{
 					yield return reference;
@@ -42,31 +46,33 @@ namespace UnnFunctions.Models
 			}
 		}
 
-		public IEnumerable<string> GetReferenceList()
+		public IEnumerable<string> GetReferenceList(IEnumerable<string>? paragraphs = null)
 		{
-			Regex refHeader = new Regex("^Reference[s]?$", RegexOptions.IgnoreCase);
+			Regex refHeader = new Regex(@"^(?<ParNumber>[\d\.\s]*)Reference[s]?$", RegexOptions.IgnoreCase);
 			Regex keepCapture = new Regex(@".+[\( \.,]\d{4}[a-z]?[\) \.,].+", RegexOptions.IgnoreCase);
 			bool isCapturing = false;
-			foreach (var item in GetParagraphs())
+			if (paragraphs == null)
+				paragraphs = GetParagraphs();
+			foreach (var paragraph in paragraphs)
 			{
 				if (!isCapturing)
 				{
-					if (item.Contains("References"))
-					{
-
+					if (paragraph.Contains("REFERENCE"))
+					{ // this is used when debugging, the match should be resolved in the regex
+						// isCapturing = true;
 					}
-					if (refHeader.IsMatch(item))
+					if (refHeader.IsMatch(paragraph))
 					{
 						isCapturing = true;
 					}
 				}
 				else if (isCapturing)
 				{
-					if (!keepCapture.IsMatch(item))
+					if (!keepCapture.IsMatch(paragraph)) // no more capture
 					{
 						yield break;
 					}
-					yield return item;
+					yield return paragraph;
 				}
 
 
