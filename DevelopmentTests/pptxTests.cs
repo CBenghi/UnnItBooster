@@ -48,31 +48,47 @@ namespace DevelopmentTests
 		}
 
 		[Fact]
+		public void CanRemoveFontsInSingleFile()
+		{
+			var file = new FileInfo(@"C:\Users\Claudio\OneDrive - Northumbria University - Production Azure AD\2024\KA4033 - Built asset management\Materials\07 - Energy.pptx");
+			CanRemoveFontsInFile(file);
+		}
+
+		[Fact]
 		public void CanRemoveFonts()
 		{
-			return;
-			string[] unwanted = ["g_d0_f4", "Geneva", "g_d0_f5", "g_d0_f1", "Google Sans", "azo-sans-web", "g_d0_f3", "Bliss Light"];
-
-			var dire = new DirectoryInfo(@"C:\Users\Claudio\OneDrive - Northumbria University - Production Azure AD\2024\KA7065 - Feasibility and Economics\Materials");
+			var dire = new DirectoryInfo(@"C:\Users\Claudio\OneDrive - Northumbria University - Production Azure AD\2024");
 			foreach (var f in dire.GetFiles("*.pptx", SearchOption.AllDirectories))
 			{
-				var replacements = Enumerable.Empty<FontWork.ReplaceXml>();
-				var thisFile = FontWork.FromFile(f.FullName);
-				foreach (var item in thisFile.GetFonts(@"ppt/slides").GroupBy(x => x.FontName))
-				{
-					if (!unwanted.Contains(item.Key))
-						continue;
-					var fls = item.Select(x => x.EntryFullName).Distinct().ToList();
-					var files = string.Join(", ", fls);
-					logger.LogInformation("{typeface}, {count}: {files}", item.Key, fls.Count, files);
-
-					var xmls = item.Select(x => x.Element.ToString()).Distinct().ToList();
-					var elems = string.Join(", ", xmls);
-					logger.LogInformation("{typeface}, {count}: {files}", item.Key, xmls.Count, elems);
-				}
-				replacements = thisFile.RemoveFonts(unwanted, @"ppt/slides", logger);
-				thisFile.Replace(replacements, logger);
+				CanRemoveFontsInFile(f);
 			}
+		}
+
+		private void CanRemoveFontsInFile(FileInfo f)
+		{
+			string[] unwanted = ["g_d0_f4", "Geneva", "g_d0_f5", "g_d0_f1", "Google Sans", "azo-sans-web", "g_d0_f3", "Bliss Light", "Lucida Grande"];
+			var replacements = Enumerable.Empty<FontWork.ReplaceXml>();
+			var thisFile = FontWork.FromFile(f.FullName);
+			Assert.NotNull(thisFile);
+			foreach (var item in thisFile.GetFonts(@"ppt/slides").GroupBy(x => x.FontName))
+			{
+				if (!unwanted.Contains(item.Key))
+					continue;
+				var fls = item.Select(x => x.EntryFullName).Distinct().ToList();
+				var files = string.Join(", ", fls);
+				logger.LogInformation("{typeface}, {count}: {files}", item.Key, fls.Count, files);
+
+				var xmls = item.Select(x => x.Element.ToString()).Distinct().ToList();
+				var elems = string.Join(", ", xmls);
+				logger.LogInformation("{typeface}, {count}: {files}", item.Key, xmls.Count, elems);
+			}
+			//replacements = thisFile.RemoveFonts(unwanted, @"ppt/slides", logger).ToList();
+			//logger.LogInformation("{count} slide replacements found", replacements.Count());
+			//thisFile.Replace(replacements, logger);
+
+			replacements = thisFile.RemoveFonts(unwanted, @"ppt/slideLayouts", logger).ToList();
+			logger.LogInformation("{count} layout replacements found", replacements.Count());
+			thisFile.Replace(replacements, logger);
 		}
 	}
 }

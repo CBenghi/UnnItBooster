@@ -10,26 +10,40 @@ using UnnOutlookAddin.Actions;
 using StudentsFetcher.StudentMarking;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using UnnFunctions.ModelConversions;
+using Microsoft.Office.Interop.Outlook;
+using System.Diagnostics;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 
 namespace UnnOutlookAddin.UI
 {
-	public partial class UnnStudent : UserControl
+	public partial class UnnSideBar : UserControl
 	{
-		public UnnStudent(StudentsRepository repository)
+		public Outlook.Application Application { get; }
+
+		public UnnSideBar(StudentsRepository repository, Outlook.Application application) 
 		{
 			InitializeComponent();
 			_repository = repository;
 			SystemReport();
+			Application = application;
 		}
 
 		private void SystemReport()
 		{
+			cmbRepository.Items.Clear();
 			var stringBuilder = new StringBuilder();
 			stringBuilder.AppendLine($"Students folder: {Repository.ConfigurationFolder.FullName}");
 			stringBuilder.AppendLine();
 			stringBuilder.AppendLine($"Collections:");
 			foreach (var coll in Repository.GetPersonCollections())
 			{
+				if (!string.IsNullOrWhiteSpace(coll.OutlookFolder))
+				{
+					ComboRepository c = new ComboRepository(coll.Name, coll.OutlookFolder);
+					cmbRepository.Items.Add(c);
+				}
 				stringBuilder.AppendLine($"- {coll.Name} ({coll.Students.Count})");
 			}
 			stringBuilder.AppendLine();
@@ -51,7 +65,9 @@ namespace UnnOutlookAddin.UI
 					}
 				}
 			}
+			// dtTo.Value = DateTime.Now.AddMonths(-3);
 			txtSystemInfo.Text = stringBuilder.ToString();
+			
 		}
 
 		private StudentsRepository _repository = null;
@@ -69,7 +85,7 @@ namespace UnnOutlookAddin.UI
 			SetPicture(false);
 
 			var students = Repository.StudentsByCollection(x => x.HasEmail(email)).ToList();
-			StringBuilder stringBuilder = new StringBuilder();
+			var stringBuilder = new StringBuilder();
 			stringBuilder.AppendLine($"Found: {students.Count} student records.");
 			stringBuilder.AppendLine();
 			foreach (var pair in students)
@@ -168,7 +184,7 @@ namespace UnnOutlookAddin.UI
 							}
 						}
 					}
-					catch (Exception)
+					catch (System.Exception ex)
 					{
 
 					}
@@ -200,7 +216,7 @@ namespace UnnOutlookAddin.UI
 		private void ButtonThread_Click(object sender, EventArgs e)
 		{
 			txtInformation.Text += PopulateComboActions().ToString();
-			MessageBox.Show("Any IDs found have been listed in the information tab.");
+			// MessageBox.Show("Any IDs found have been listed in the information tab.");
 		}
 
 		private StringBuilder PopulateComboActions()
@@ -298,7 +314,7 @@ namespace UnnOutlookAddin.UI
 
 			foreach (var folder in distFolders)
 			{
-				ComboAction act = ComboAction.From(folder);
+				ComboAction act = ComboAction.CreateMoveToFolder(folder);
 				if (folder.Name != "Inbox" && folder.Name != "Sent Items")
 				{
 					CmbFolder.Items.Add(act);
@@ -310,11 +326,11 @@ namespace UnnOutlookAddin.UI
 			{
 				if (string.IsNullOrEmpty(container.OutlookFolder))
 					continue;
-				var f = Globals.ThisAddIn.GetFolder(container.OutlookFolder);
-				if (f != null)
+				var destinationFolder = Globals.ThisAddIn.GetFolder(container.OutlookFolder);
+				if (destinationFolder != null)
 				{
 					CmbFolder.Items.Add(
-						ComboAction.From(f)
+						ComboAction.CreateMoveToFolder(destinationFolder)
 						);
 				}
 				else
@@ -340,37 +356,49 @@ namespace UnnOutlookAddin.UI
 			StringBuilder sb = new StringBuilder();
 			var attemptedEmail = new List<string>();
 			var attemptedStudents = new List<Student>();
-			foreach (var unnamedStudent in ThisAddIn.StudentsRepository.Students)
+			foreach (var unnamedStudentC in ThisAddIn.StudentsRepository.StudentsAndCollection)
 			{
-				if (!string.IsNullOrEmpty(unnamedStudent.Forename))
+				var unnamedStudent = unnamedStudentC.student;
+				var required = new List<string>();
+
+				if (string.IsNullOrEmpty(unnamedStudent.Forename))
+					required.Add("Forename");
+				if (string.IsNullOrEmpty(unnamedStudent.OutlookAddress))
+					required.Add("OutlookAddress");
+
+				if (!required.Any())
 					continue;
+				
 				if (string.IsNullOrEmpty(unnamedStudent.Email))
 					continue;
 				if (attemptedEmail.Contains(unnamedStudent.Email))
 					continue;
-				sb.Append($"Item to attempt: {unnamedStudent.Email}");
+				sb.AppendLine($"Item to attempt: {unnamedStudent.Email} - {unnamedStudentC.collectionName} ({string.Join(",", required)})");
 				attemptedEmail.Add(unnamedStudent.Email);
 
-				var user = Globals.ThisAddIn.GetUser(unnamedStudent.Email);
-				if (user == null)
+				var exchangeUser = Globals.ThisAddIn.GetUser(unnamedStudent.Email);
+				if (exchangeUser is null)
+					exchangeUser = Globals.ThisAddIn.GetUser(unnamedStudent.EmailByStudentID);
+				if (exchangeUser == null)
 					continue;
 				var studentWithName = new Student()
 				{
-					Forename = user.FirstName,
-					Surname = user.LastName,
+					Forename = exchangeUser.FirstName,
+					Surname = exchangeUser.LastName,
 					Email = unnamedStudent.Email,
+					OutlookAddress = exchangeUser.Address,
 					NumericStudentId = unnamedStudent.NumericStudentId,
 				};
 				if (string.IsNullOrEmpty(unnamedStudent.Route))
 				{
-					studentWithName.Route = user.JobTitle;
+					studentWithName.Route = exchangeUser.JobTitle;
 				}
 				attemptedStudents.Add(studentWithName);
 			}
 			foreach (var stud in attemptedStudents)
 			{
 				var cnt = ThisAddIn.StudentsRepository.UpdateStudentInfo(stud);
-				sb.AppendLine($"Updating: {stud.Email} (<{stud.Forename}> <{stud.Surname}>) updatedrecords: {cnt}");
+				sb.AppendLine($"Updating: {stud.Email} (<{stud.Forename}> <{stud.Surname}> - {stud.OutlookAddress}) updatedrecords: {cnt}");
 			}
 			txtSystemInfo.Text = sb.ToString();
 		}
@@ -397,6 +425,71 @@ namespace UnnOutlookAddin.UI
 			}
 			var distinctStudents = GetDistinctThreadStudents();
 			txtSystemInfo.Text = Repository.ConsiderNewStudents(distinctStudents, txtCollection.Text);
+		}
+
+		private void button3_Click(object sender, EventArgs e)
+		{
+			SystemReport();
+		}
+
+		private void cmdMoveMail_Click(object sender, EventArgs e)
+		{
+			var exp = Application.ActiveExplorer();
+			var coll = Repository.GetPersonCollections().FirstOrDefault(x => x.Name == cmbRepository.Text);
+			if (coll is null)
+				return;
+			var destinationFolder = Globals.ThisAddIn.GetFolder(coll.OutlookFolder);
+			if (destinationFolder is null)
+				return;
+			
+			var loweredEmails = coll.Students.SelectMany(x => x.OutlookSenders().Select(m => m.ToLowerInvariant())).ToList();
+			
+
+			var filter = string.Join(" OR ", loweredEmails.Select(x => $"[SenderEmailAddress] = '{x}'"));
+			// filter = $"[ReceivedTime] >= '{dtTo.Value.ToShortDateString()}'";
+
+			Outlook.Selection selection = exp.Selection;
+			if (selection.Count <= 0)
+				return;
+			if (!(selection[1] is Outlook.MailItem selectedItem))
+				return;
+			Outlook.MAPIFolder folder = selectedItem.Parent as Outlook.MAPIFolder;
+
+			var items = folder?.Items;
+			var doIt = true;
+			if (doIt)
+			{
+				items = folder?.Items.Restrict(filter);
+			}
+			if (items is null)
+				return;
+
+			// Find the current item's position in the collection
+			var cnt = items.Count;
+			if (cnt == 0)
+			{
+				MessageBox.Show($"No matches found.", "Not found", MessageBoxButtons.OK);
+				return;
+			}
+			var confirm = MessageBox.Show($"Move {cnt} items to {coll.OutlookFolder}?", "Confirm", MessageBoxButtons.YesNoCancel);
+			if (confirm != DialogResult.Yes)
+				return;
+
+			var toMove = new List<MailItem>();
+			foreach (var item in items)
+			{
+				var emailItem = item as Outlook.MailItem;
+				if (emailItem is null)
+				{
+					continue;
+				}
+				toMove.Add(emailItem);
+				
+			}
+			foreach (var item in toMove)
+			{
+				var ret = item.Move(destinationFolder);
+			}
 		}
 	}
 }

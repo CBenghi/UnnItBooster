@@ -46,6 +46,8 @@ public static class StudentListExtensions
 			destinationStudent.Forename = sourceStudent.Forename;
 		if (!string.IsNullOrEmpty(sourceStudent.Phone) && destinationStudent.Phone != sourceStudent.Phone)
 			destinationStudent.Phone = sourceStudent.Phone;
+		if (!string.IsNullOrEmpty(sourceStudent.OutlookAddress) && destinationStudent.OutlookAddress != sourceStudent.OutlookAddress)
+			destinationStudent.OutlookAddress = sourceStudent.OutlookAddress;
 		if (sourceStudent.AlternativeEmails is not null)
 		{
 			foreach (var altEmail in sourceStudent.AlternativeEmails)

@@ -34,14 +34,14 @@ namespace UnnOutlookAddin
 
 			// display the Students pane
 			//
-			myStudentComponent = new UI.UnnStudent(StudentsRepository);
+			myStudentComponent = new UI.UnnSideBar(StudentsRepository, Application);
 			var myCustomTaskPane = CustomTaskPanes.Add(myStudentComponent, "UnnStudentPane");
 			myCustomTaskPane.Visible = true;
 		}
 
 		internal static StudentsRepository StudentsRepository => UnnToolsConfiguration.Settings.StudentsRepository;
 
-		UI.UnnStudent myStudentComponent = null;
+		UI.UnnSideBar myStudentComponent = null;
 
 		private void AutomaticClassificationHandler(object Item)
 		{
@@ -63,7 +63,10 @@ namespace UnnOutlookAddin
 			rec.Resolve();
 			var ae = rec.AddressEntry;
 			if (ae != null)
-				return ae.GetExchangeUser();
+			{
+				var t = ae.GetExchangeUser();
+				return t;
+			}
 			return null;
 		}
 

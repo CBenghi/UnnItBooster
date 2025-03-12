@@ -82,6 +82,7 @@ namespace UnnItBooster.Models
 		public string? Occurrence { get; set; } = string.Empty;
 		public string? Module { get; set; } = string.Empty;
 		public string? Email { get; set; } = string.Empty;
+		public string OutlookAddress { get; set; } = string.Empty;
 		public string? EmailByStudentID => string.IsNullOrWhiteSpace(NumericStudentId) ? null : $"w{NumericStudentId}@northumbria.ac.uk";
 
 		public List<string>? AlternativeEmails { get; set; } = null;
@@ -134,6 +135,22 @@ namespace UnnItBooster.Models
 		}
 
 		public List<ModuleResult> TranscriptResults { get; set; } = new();
+
+
+		public IEnumerable<string> AllEmails()
+		{
+			if (!string.IsNullOrEmpty(Email))
+				yield return Email!;
+			if (!string.IsNullOrEmpty(EmailByStudentID))
+				yield return EmailByStudentID!;
+			if (AlternativeEmails is null)
+				yield break;
+			foreach (var alt in AlternativeEmails)
+			{
+				if (!string.IsNullOrEmpty(alt))
+					yield return alt!;
+			}
+		}
 
 		public bool HasEmail(string? seekEmail)
 		{
@@ -303,6 +320,17 @@ namespace UnnItBooster.Models
 			}
 		}
 
-
+		public IEnumerable<string> OutlookSenders()
+		{
+			if (!string.IsNullOrEmpty(OutlookAddress))
+				yield return OutlookAddress;
+			if (AlternativeEmails is not null)
+			{
+				foreach (var altEm in AlternativeEmails)
+				{
+					yield return altEm;
+				}
+			}
+		}
 	}
 }

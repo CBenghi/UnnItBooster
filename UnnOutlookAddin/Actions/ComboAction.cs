@@ -24,8 +24,8 @@ namespace UnnOutlookAddin.Actions
 				Text = $"Display: {Name} ({st.NumericStudentId})",
 				Tag = st.NumericStudentId,
 			};
-
 		}
+
 		public static IEnumerable<ComboAction> From(MailItem mail)
 		{
 			if (MessageClassificationExtensions.SenderHasStudentId(mail, out var studentId))
@@ -64,7 +64,7 @@ namespace UnnOutlookAddin.Actions
 			return Text;
 		}
 
-		internal static ComboAction From(Folder folder)
+		internal static ComboAction CreateMoveToFolder(Folder folder)
 		{
 			ComboAction ret = new ComboAction
 			{
