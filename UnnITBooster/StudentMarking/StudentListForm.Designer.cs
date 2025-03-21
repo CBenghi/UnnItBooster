@@ -34,16 +34,22 @@
 			label2 = new System.Windows.Forms.Label();
 			txtFolder = new System.Windows.Forms.TextBox();
 			tabControl3 = new System.Windows.Forms.TabControl();
-			tabPage7 = new System.Windows.Forms.TabPage();
+			tbAnalytics = new System.Windows.Forms.TabPage();
+			elpAnalyticsSource = new System.Windows.Forms.TextBox();
+			label15 = new System.Windows.Forms.Label();
+			label16 = new System.Windows.Forms.Label();
+			button12 = new System.Windows.Forms.Button();
+			button13 = new System.Windows.Forms.Button();
+			tbOutlook = new System.Windows.Forms.TabPage();
 			textBox1 = new System.Windows.Forms.TextBox();
 			button7 = new System.Windows.Forms.Button();
-			tabPage6 = new System.Windows.Forms.TabPage();
+			tbEvision = new System.Windows.Forms.TabPage();
 			button2 = new System.Windows.Forms.Button();
 			label5 = new System.Windows.Forms.Label();
 			label6 = new System.Windows.Forms.Label();
 			label7 = new System.Windows.Forms.Label();
 			label8 = new System.Windows.Forms.Label();
-			tabPage8 = new System.Windows.Forms.TabPage();
+			tbGradebook = new System.Windows.Forms.TabPage();
 			txtInputSource = new System.Windows.Forms.TextBox();
 			label10 = new System.Windows.Forms.Label();
 			label4 = new System.Windows.Forms.Label();
@@ -98,9 +104,10 @@
 			button4 = new System.Windows.Forms.Button();
 			lstModules = new System.Windows.Forms.CheckedListBox();
 			tabControl3.SuspendLayout();
-			tabPage7.SuspendLayout();
-			tabPage6.SuspendLayout();
-			tabPage8.SuspendLayout();
+			tbAnalytics.SuspendLayout();
+			tbOutlook.SuspendLayout();
+			tbEvision.SuspendLayout();
+			tbGradebook.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)StudImage).BeginInit();
 			tabControl1.SuspendLayout();
 			tabPage1.SuspendLayout();
@@ -162,9 +169,10 @@
 			// tabControl3
 			// 
 			tabControl3.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			tabControl3.Controls.Add(tabPage7);
-			tabControl3.Controls.Add(tabPage6);
-			tabControl3.Controls.Add(tabPage8);
+			tabControl3.Controls.Add(tbAnalytics);
+			tabControl3.Controls.Add(tbOutlook);
+			tabControl3.Controls.Add(tbEvision);
+			tabControl3.Controls.Add(tbGradebook);
 			tabControl3.Location = new System.Drawing.Point(33, 52);
 			tabControl3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			tabControl3.Name = "tabControl3";
@@ -172,18 +180,86 @@
 			tabControl3.Size = new System.Drawing.Size(887, 210);
 			tabControl3.TabIndex = 25;
 			// 
-			// tabPage7
+			// tbAnalytics
 			// 
-			tabPage7.Controls.Add(textBox1);
-			tabPage7.Controls.Add(button7);
-			tabPage7.Location = new System.Drawing.Point(4, 24);
-			tabPage7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			tabPage7.Name = "tabPage7";
-			tabPage7.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			tabPage7.Size = new System.Drawing.Size(879, 182);
-			tabPage7.TabIndex = 1;
-			tabPage7.Text = "Outlook plugin";
-			tabPage7.UseVisualStyleBackColor = true;
+			tbAnalytics.Controls.Add(elpAnalyticsSource);
+			tbAnalytics.Controls.Add(label15);
+			tbAnalytics.Controls.Add(label16);
+			tbAnalytics.Controls.Add(button12);
+			tbAnalytics.Controls.Add(button13);
+			tbAnalytics.Location = new System.Drawing.Point(4, 24);
+			tbAnalytics.Name = "tbAnalytics";
+			tbAnalytics.Size = new System.Drawing.Size(879, 182);
+			tbAnalytics.TabIndex = 3;
+			tbAnalytics.Text = "elp Analytics";
+			tbAnalytics.UseVisualStyleBackColor = true;
+			// 
+			// elpAnalyticsSource
+			// 
+			elpAnalyticsSource.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			elpAnalyticsSource.Location = new System.Drawing.Point(113, 45);
+			elpAnalyticsSource.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			elpAnalyticsSource.Multiline = true;
+			elpAnalyticsSource.Name = "elpAnalyticsSource";
+			elpAnalyticsSource.Size = new System.Drawing.Size(652, 101);
+			elpAnalyticsSource.TabIndex = 26;
+			// 
+			// label15
+			// 
+			label15.AutoSize = true;
+			label15.Location = new System.Drawing.Point(13, 15);
+			label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label15.Name = "label15";
+			label15.Size = new System.Drawing.Size(724, 15);
+			label15.TabIndex = 29;
+			label15.Text = "Gets a file from the Analytics/Course activity/Download feature in elp, either place the text with headers or a file name in the source  box";
+			// 
+			// label16
+			// 
+			label16.AutoSize = true;
+			label16.Location = new System.Drawing.Point(13, 45);
+			label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label16.Name = "label16";
+			label16.Size = new System.Drawing.Size(43, 15);
+			label16.TabIndex = 27;
+			label16.Text = "Source";
+			// 
+			// button12
+			// 
+			button12.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+			button12.Location = new System.Drawing.Point(775, 119);
+			button12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			button12.Name = "button12";
+			button12.Size = new System.Drawing.Size(88, 27);
+			button12.TabIndex = 28;
+			button12.Text = "Select";
+			button12.UseVisualStyleBackColor = true;
+			button12.Click += button12_Click;
+			// 
+			// button13
+			// 
+			button13.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			button13.Location = new System.Drawing.Point(13, 152);
+			button13.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			button13.Name = "button13";
+			button13.Size = new System.Drawing.Size(850, 27);
+			button13.TabIndex = 25;
+			button13.Text = "elp Analytics";
+			button13.UseVisualStyleBackColor = true;
+			button13.Click += button13_Click;
+			// 
+			// tbOutlook
+			// 
+			tbOutlook.Controls.Add(textBox1);
+			tbOutlook.Controls.Add(button7);
+			tbOutlook.Location = new System.Drawing.Point(4, 24);
+			tbOutlook.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tbOutlook.Name = "tbOutlook";
+			tbOutlook.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tbOutlook.Size = new System.Drawing.Size(879, 182);
+			tbOutlook.TabIndex = 1;
+			tbOutlook.Text = "Outlook plugin";
+			tbOutlook.UseVisualStyleBackColor = true;
 			// 
 			// textBox1
 			// 
@@ -207,21 +283,21 @@
 			button7.UseVisualStyleBackColor = true;
 			button7.Click += button7_Click;
 			// 
-			// tabPage6
+			// tbEvision
 			// 
-			tabPage6.Controls.Add(button2);
-			tabPage6.Controls.Add(label5);
-			tabPage6.Controls.Add(label6);
-			tabPage6.Controls.Add(label7);
-			tabPage6.Controls.Add(label8);
-			tabPage6.Location = new System.Drawing.Point(4, 24);
-			tabPage6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			tabPage6.Name = "tabPage6";
-			tabPage6.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			tabPage6.Size = new System.Drawing.Size(879, 182);
-			tabPage6.TabIndex = 0;
-			tabPage6.Text = "e-vision";
-			tabPage6.UseVisualStyleBackColor = true;
+			tbEvision.Controls.Add(button2);
+			tbEvision.Controls.Add(label5);
+			tbEvision.Controls.Add(label6);
+			tbEvision.Controls.Add(label7);
+			tbEvision.Controls.Add(label8);
+			tbEvision.Location = new System.Drawing.Point(4, 24);
+			tbEvision.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tbEvision.Name = "tbEvision";
+			tbEvision.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tbEvision.Size = new System.Drawing.Size(879, 182);
+			tbEvision.TabIndex = 0;
+			tbEvision.Text = "e-vision";
+			tbEvision.UseVisualStyleBackColor = true;
 			// 
 			// button2
 			// 
@@ -275,35 +351,36 @@
 			label8.TabIndex = 21;
 			label8.Text = "save pictures with chrome tool";
 			// 
-			// tabPage8
+			// tbGradebook
 			// 
-			tabPage8.Controls.Add(txtInputSource);
-			tabPage8.Controls.Add(label10);
-			tabPage8.Controls.Add(label4);
-			tabPage8.Controls.Add(cmdSelectSource);
-			tabPage8.Controls.Add(button1);
-			tabPage8.Location = new System.Drawing.Point(4, 24);
-			tabPage8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			tabPage8.Name = "tabPage8";
-			tabPage8.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			tabPage8.Size = new System.Drawing.Size(879, 182);
-			tabPage8.TabIndex = 2;
-			tabPage8.Text = "Gradebook";
-			tabPage8.UseVisualStyleBackColor = true;
+			tbGradebook.Controls.Add(txtInputSource);
+			tbGradebook.Controls.Add(label10);
+			tbGradebook.Controls.Add(label4);
+			tbGradebook.Controls.Add(cmdSelectSource);
+			tbGradebook.Controls.Add(button1);
+			tbGradebook.Location = new System.Drawing.Point(4, 24);
+			tbGradebook.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tbGradebook.Name = "tbGradebook";
+			tbGradebook.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tbGradebook.Size = new System.Drawing.Size(879, 182);
+			tbGradebook.TabIndex = 2;
+			tbGradebook.Text = "Gradebook";
+			tbGradebook.UseVisualStyleBackColor = true;
 			// 
 			// txtInputSource
 			// 
-			txtInputSource.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			txtInputSource.Location = new System.Drawing.Point(121, 18);
+			txtInputSource.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			txtInputSource.Location = new System.Drawing.Point(121, 42);
 			txtInputSource.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			txtInputSource.Multiline = true;
 			txtInputSource.Name = "txtInputSource";
-			txtInputSource.Size = new System.Drawing.Size(750, 23);
+			txtInputSource.Size = new System.Drawing.Size(750, 68);
 			txtInputSource.TabIndex = 15;
 			// 
 			// label10
 			// 
 			label10.AutoSize = true;
-			label10.Location = new System.Drawing.Point(18, 112);
+			label10.Location = new System.Drawing.Point(21, 14);
 			label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			label10.Name = "label10";
 			label10.Size = new System.Drawing.Size(460, 15);
@@ -313,7 +390,7 @@
 			// label4
 			// 
 			label4.AutoSize = true;
-			label4.Location = new System.Drawing.Point(18, 22);
+			label4.Location = new System.Drawing.Point(21, 42);
 			label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			label4.Name = "label4";
 			label4.Size = new System.Drawing.Size(43, 15);
@@ -322,8 +399,8 @@
 			// 
 			// cmdSelectSource
 			// 
-			cmdSelectSource.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-			cmdSelectSource.Location = new System.Drawing.Point(783, 49);
+			cmdSelectSource.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+			cmdSelectSource.Location = new System.Drawing.Point(783, 116);
 			cmdSelectSource.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			cmdSelectSource.Name = "cmdSelectSource";
 			cmdSelectSource.Size = new System.Drawing.Size(88, 27);
@@ -334,8 +411,8 @@
 			// 
 			// button1
 			// 
-			button1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			button1.Location = new System.Drawing.Point(21, 82);
+			button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			button1.Location = new System.Drawing.Point(21, 149);
 			button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			button1.Name = "button1";
 			button1.Size = new System.Drawing.Size(850, 27);
@@ -887,12 +964,14 @@
 			Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			Name = "StudentListForm";
 			tabControl3.ResumeLayout(false);
-			tabPage7.ResumeLayout(false);
-			tabPage7.PerformLayout();
-			tabPage6.ResumeLayout(false);
-			tabPage6.PerformLayout();
-			tabPage8.ResumeLayout(false);
-			tabPage8.PerformLayout();
+			tbAnalytics.ResumeLayout(false);
+			tbAnalytics.PerformLayout();
+			tbOutlook.ResumeLayout(false);
+			tbOutlook.PerformLayout();
+			tbEvision.ResumeLayout(false);
+			tbEvision.PerformLayout();
+			tbGradebook.ResumeLayout(false);
+			tbGradebook.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)StudImage).EndInit();
 			tabControl1.ResumeLayout(false);
 			tabPage1.ResumeLayout(false);
@@ -963,20 +1042,20 @@
 		private System.Windows.Forms.TextBox txtAlternativeEmail;
 		private System.Windows.Forms.Button btnAddEmail;
 		private System.Windows.Forms.TabControl tabControl3;
-		private System.Windows.Forms.TabPage tabPage6;
+		private System.Windows.Forms.TabPage tbEvision;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.TabPage tabPage7;
+		private System.Windows.Forms.TabPage tbOutlook;
 		private System.Windows.Forms.Button button7;
 		private System.Windows.Forms.Button button8;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.TextBox txtContainerName;
 		private System.Windows.Forms.GroupBox GroupDownloadImage;
 		private System.Windows.Forms.Button BtnGetSelectedStudents;
-		private System.Windows.Forms.TabPage tabPage8;
+		private System.Windows.Forms.TabPage tbGradebook;
 		private System.Windows.Forms.TabControl tabControl4;
 		private System.Windows.Forms.TabPage tabPage9;
 		private System.Windows.Forms.TabPage tabPage10;
@@ -992,5 +1071,11 @@
 		private System.Windows.Forms.TextBox textBox2;
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.Panel button11;
+		private System.Windows.Forms.TabPage tbAnalytics;
+		private System.Windows.Forms.TextBox elpAnalyticsSource;
+		private System.Windows.Forms.Label label15;
+		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.Button button12;
+		private System.Windows.Forms.Button button13;
 	}
 }

@@ -41,6 +41,7 @@ public class StudentsRepository
 
 	/// <summary>
 	/// Initializes or updates a student collection by name (by merging students based on id)
+	/// If the collection name is not found it gets created.
 	/// </summary>
 	public string ConsiderNewStudents(IEnumerable<Student> students, string collectionName)
 	{

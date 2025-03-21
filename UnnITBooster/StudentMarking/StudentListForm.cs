@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,7 @@ namespace StudentsFetcher.StudentMarking
 		{
 			var set = UnnToolsConfiguration.Settings;
 			set.StudentRepositoryFolder = txtFolder.Text;
-			set.Save();		
+			set.Save();
 		}
 
 		public void SetSearch(string uid)
@@ -209,20 +210,22 @@ namespace StudentsFetcher.StudentMarking
 			RefreshModulesList();
 		}
 
-
-
 		private void cmdSelectSource_Click(object sender, EventArgs e)
 		{
-			using (var openFileDialog = new OpenFileDialog())
+			txtInputSource.Text = GetFile();
+		}
+
+		private string GetFile()
+		{
+			using var openFileDialog = new OpenFileDialog();
+			openFileDialog.Filter = "All files (*.*)|*.*";
+			openFileDialog.FilterIndex = 2;
+			openFileDialog.RestoreDirectory = true;
+			if (openFileDialog.ShowDialog() == DialogResult.OK)
 			{
-				openFileDialog.Filter = "All files (*.*)|*.*";
-				openFileDialog.FilterIndex = 2;
-				openFileDialog.RestoreDirectory = true;
-				if (openFileDialog.ShowDialog() == DialogResult.OK)
-				{
-					txtInputSource.Text = openFileDialog.FileName;
-				}
+				return openFileDialog.FileName;
 			}
+			return "";
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -369,6 +372,25 @@ namespace StudentsFetcher.StudentMarking
 		{
 			var collNames = GetSelectedCollectionNames().ToList();
 			return studentsRepo.GetPersonCollections().Where(x => collNames.Contains(x.Name)).ToList();
+		}
+
+		private void button12_Click(object sender, EventArgs e)
+		{
+			elpAnalyticsSource.Text = GetFile();
+		}
+
+		private void button13_Click(object sender, EventArgs e)
+		{
+			var f = new FileInfo(elpAnalyticsSource.Text);
+			IEnumerable<Student>? students = null;
+			if (f.Exists)
+				students = UnnItBooster.ModelConversions.Elp.GetStudentsFromAnalyticsFile(f.FullName);
+			else if (elpAnalyticsSource.Text.StartsWith("Surname,First Name,Username"))
+				students = UnnItBooster.ModelConversions.Elp.GetStudentsFromAnalyticsContent(elpAnalyticsSource.Text);
+			if (students is null)
+				return;
+			txtReport.Text = studentsRepo.ConsiderNewStudents(students, txtModuleCode.Text);
+			RefreshModulesList();
 		}
 	}
 }
