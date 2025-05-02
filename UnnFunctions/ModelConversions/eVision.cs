@@ -257,13 +257,11 @@ namespace UnnItBooster.ModelConversions
 			//   h3, where we get the year
 			//   div for the content of the year
 
-			var doc = new HtmlAgilityPack.HtmlDocument();
-			if (doc is null)
-				return null;
+			var doc = new HtmlDocument();
 			doc.LoadHtml(htmlSource);
 			// get the table header for the student number
 			//
-			var head = doc?.DocumentNode?.SelectNodes("//table[@id='tabhead7a']").FirstOrDefault();
+			var head = doc.DocumentNode.SelectNodes("//table[@id='tabhead7a']").FirstOrDefault();
 			if (head == null)
 				return null;
 			var r = new Regex(

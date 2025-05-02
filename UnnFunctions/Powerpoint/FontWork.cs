@@ -80,7 +80,7 @@ namespace UnnFunctions.Powerpoint
 		}
 
 
-		public List<ReplaceXml> RemoveFonts(IEnumerable<string> fonts, string? path = null, Microsoft.Extensions.Logging.ILogger logger = null)
+		public List<ReplaceXml> RemoveFonts(IEnumerable<string> fonts, string? path = null, ILogger? logger = null)
 		{
 			var ret = new List<ReplaceXml>();
 			string[] removeNames = ["latin", "cs", "ea"];
@@ -100,7 +100,7 @@ namespace UnnFunctions.Powerpoint
 				List<XElement> nodes = GetRemoveNodes(fonts, removeNames, xmlDoc);
 				if (!nodes.Any())
 					continue;			
-				logger.LogDebug("Found {nodes} nodes in {name}", nodes.Count, entryFullName);
+				logger?.LogDebug("Found {nodes} nodes in {name}", nodes.Count, entryFullName);
 				nodes.Remove();
 				ret.Add(new ReplaceXml(entryFullName, xmlDoc));
 			}
@@ -109,13 +109,17 @@ namespace UnnFunctions.Powerpoint
 
 		private static List<XElement> GetRemoveNodes(IEnumerable<string> fonts, string[] removeNodeTypes, XDocument? xmlDoc)
 		{
+			if (xmlDoc is null)
+			{
+				return new List<XElement>();
+			}
 			return xmlDoc.Descendants().Where(e =>
-								removeNodeTypes.Contains(e.Name.LocalName)
-								&&
-								e.Attributes().Any(x =>
-									x.Name.LocalName == "typeface"
-									&& fonts.Contains(x.Value)
-								)).ToList();
+				removeNodeTypes.Contains(e.Name.LocalName)
+				&&
+				e.Attributes().Any(x =>
+					x.Name.LocalName == "typeface"
+					&& fonts.Contains(x.Value)
+				)).ToList();
 		}
 
 		public void Replace(IEnumerable<ReplaceXml> replacements, ILogger? logger)

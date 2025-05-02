@@ -126,15 +126,17 @@ namespace StudentsFetcher.StudentMarking
 			}
 			var tin = TurnitInSubmission.FromRow(stud);
 			sb.AppendLine($"# {tin.FirstName} {tin.LastName} {tin.NumericUserId}");
+			sb.AppendLine();
 			if (includeCommentNumber)
 				sb.AppendLine($"- delegate marking tab: {tin.ElpSite}\t{tin.NumericUserId}\t{tin.PaperId}");
-			sb.AppendLine();
 			sb.AppendLine($"- email: {tin.Email} (#{id})");
-			sb.AppendLine($"- Submission ID: {tin.PaperId}");
-			sb.AppendLine($"- Submission Title: {tin.Title}");
+			if (!string.IsNullOrWhiteSpace(tin.PaperId))
+				sb.AppendLine($"- Submission ID: {tin.PaperId}");
+			if (!string.IsNullOrWhiteSpace(tin.Title))
+				sb.AppendLine($"- Submission Title: {tin.Title}");
 			if (!string.IsNullOrWhiteSpace(tin.ElpSite))
 				sb.AppendLine($"- Elp: {tin.ElpSite}");
-			sb.AppendLine();
+			// sb.AppendLine();
 			GetStudentFeedback(id, sendModerationNotice, sb, tin, includeCommentNumber);
 			var s = sb.ToString();
 			return s;
@@ -143,10 +145,19 @@ namespace StudentsFetcher.StudentMarking
 		public void GetStudentFeedback(int shortId, bool sendModerationNotice, StringBuilder sb, TurnitInSubmission? stud, bool includeCommentNumber = false)
 		{
 			var componentComments = "";
-			sb.AppendLine("## Marking components:");
-			sb.AppendLine("");
-
-			var dt = GetDataTable("select * from (tb_submissions inner join tb_marks on mark_ptr_submission = sub_id) left join tb_components on mark_ptr_component = cpnt_id where MARK_Ptr_Submission = " + shortId + " order by cpnt_order");
+			string sql = 
+				$"""
+				select * from (tb_submissions inner join tb_marks on mark_ptr_submission = sub_id) 
+				left join tb_components on mark_ptr_component = cpnt_id 
+				where MARK_Ptr_Submission = {shortId} and MARK_ptr_Component != -1
+				order by cpnt_order
+				""";
+			var dt = GetDataTable(sql);
+			if (dt.Rows.Count > 0)
+			{
+				sb.AppendLine("## Marking components:");
+				sb.AppendLine("");
+			}
 			foreach (DataRow item in dt.Rows)
 			{
 				if (item["cpnt_order"] != DBNull.Value)
@@ -175,7 +186,7 @@ namespace StudentsFetcher.StudentMarking
 				{
 					if (item["MARK_ptr_Component"].ToString() == "-1")
 						continue;
-					sb.AppendFormat("- Component {0}: {1}\r\n", item["MARK_ptr_Component"], item["MARK_Value"]);
+					sb.AppendFormat($"- Component {item["MARK_ptr_Component"]}: {item["MARK_Value"]}\r\n");
 				}
 			}
 			var totmark = GetMarkCalculator().GetFinalMark(shortId, this, true);

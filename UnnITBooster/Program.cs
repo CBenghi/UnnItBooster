@@ -15,8 +15,9 @@ namespace StudentsFetcher
 		[STAThread]
 		static void Main(string[] args)
 		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
+			//Application.EnableVisualStyles();
+			//Application.SetCompatibleTextRenderingDefault(false);
+			Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
 
 			if (args.Length > 1 && args[0] == "-mm" && File.Exists(args[1]))
 			{

@@ -50,6 +50,17 @@ public partial class FrmMarkingMachine : Form
 		ChkAutoStat.Checked = true;
 		var names = EmailContent.GetTemplateNames(_studentRepository.ConfigurationFolder);
 		cmbEmailSubject.Items.AddRange(names.ToArray());
+		InitializeImportCollection();
+	}
+
+	private void InitializeImportCollection()
+	{
+		cmbImportCollection.Items.Clear();
+		var collection = _studentRepository.GetPersonCollections();
+		foreach (var item in collection)
+		{
+			cmbImportCollection.Items.Add(item.Name);
+		}
 	}
 
 	void txtStudentId_KeyDown(object sender, KeyEventArgs e)
@@ -165,7 +176,8 @@ public partial class FrmMarkingMachine : Form
 					LblOverlap.ForeColor = Color.Red;
 			}
 
-			txtStudentreport.Text = _config.GetStudentReport(GetStudentIndex(), chkSendModerationNotice.Checked, ChkCommNumber.Checked);
+			var rep = _config.GetStudentReport(GetStudentIndex(), chkSendModerationNotice.Checked, ChkCommNumber.Checked);
+			txtStudentreport.Text = rep;
 			UpdateDocumentsList(submission);
 			// show student picure.
 			var dt = _config.GetDataTable("SELECT SUB_NumericUserId from tb_submissions where SUB_Id = " + GetStudentIndex());
@@ -258,7 +270,10 @@ public partial class FrmMarkingMachine : Form
 			return -1;
 		try
 		{
-			var i = Convert.ToInt32(txtStudentId.Text);
+			var t = txtStudentId.Text;
+			if (string.IsNullOrWhiteSpace(t))
+				return -1;
+			var i = Convert.ToInt32(t);
 			if (i > 999)
 				return -1;
 			return i;
@@ -1410,7 +1425,7 @@ public partial class FrmMarkingMachine : Form
 
 		string sql;
 		var isNumber = int.TryParse(txtTextOrPointer.Text, out int reference);
-		string line1 = txtTextOrPointer.Text.Split(new[] { '\r', '\n' }).FirstOrDefault();
+		string line1 = txtTextOrPointer.Text.Split(['\r', '\n']).FirstOrDefault() ?? "";
 		var isFirstLineNumber = int.TryParse(line1, out var firstLineNumber);
 
 		if (isFirstLineNumber && !isNumber)
@@ -1656,7 +1671,6 @@ public partial class FrmMarkingMachine : Form
 	List<string> GetReplacementList(string emailbody)
 	{
 		var ret = new List<string>();
-
 		var mts = Regex.Matches(emailbody, "{([^}]*)}");
 		foreach (Match match in mts)
 		{
@@ -1665,7 +1679,7 @@ public partial class FrmMarkingMachine : Form
 		return ret;
 	}
 
-	private void button3_Click(object sender, EventArgs e)
+	private void send_Click(object sender, EventArgs e)
 	{
 		if (cmbEmailSubject.Text == "")
 		{
@@ -1703,6 +1717,8 @@ public partial class FrmMarkingMachine : Form
 		return emailtext;
 	}
 
+	string[] extraReplacements = ["MarkReport", "FinalMark", "AllMarks"];
+
 	private string Emailtext(IEnumerable<string> replacements, int iStudentId, MarksCalculator mcalc, out DataRow? row)
 	{
 		var emailtext = txtEmailBody.Text;
@@ -1711,16 +1727,17 @@ public partial class FrmMarkingMachine : Form
 			return emailtext;
 		foreach (var item in replacements)
 		{
+			var replacementIndex = Array.IndexOf(extraReplacements, item);  
 			var repvalue = "";
-			switch (item)
+			switch (replacementIndex)
 			{
-				case "MarkReport":
+				case 0: // "MarkReport":
 					repvalue = _config.GetStudentReport(iStudentId, chkSendModerationNotice.Checked);
 					break;
-				case "FinalMark":
+				case 1: // "FinalMark":
 					repvalue = mcalc.GetFinalMark(iStudentId, _config, true).ToString();
 					break;
-				case "AllMarks":
+				case 2: // "AllMarks":
 					break;
 				default:
 					try
@@ -1878,7 +1895,7 @@ public partial class FrmMarkingMachine : Form
 		Reload();
 	}
 
-	private void button4_Click(object sender, EventArgs e)
+	private void marksChart_Click(object sender, EventArgs e)
 	{
 		var tag = ((ComboTag)CmbGrouping.SelectedItem).Tag;
 		var mode = (MarksCollection.Grouping)tag;
@@ -2038,7 +2055,7 @@ public partial class FrmMarkingMachine : Form
 	{
 		var email = new EmailContent()
 		{
-			EmailBody = txtEmailBody.Text,			
+			EmailBody = txtEmailBody.Text,
 			EmailSubject = cmbEmailSubject.Text,
 		};
 		email.Save(_studentRepository.ConfigurationFolder);
@@ -2495,5 +2512,45 @@ public partial class FrmMarkingMachine : Form
 			return;
 		// cmbEmailSubject.Text = email.EmailSubject;
 		txtEmailBody.Text = email.EmailBody;
+	}
+
+	private void button14_Click(object sender, EventArgs e)
+	{
+		if (string.IsNullOrEmpty(cmbImportCollection.Text))
+		{
+			txtToolReport.Text = "select a collection first";
+			return;
+		}
+		var coll = _studentRepository.GetPersonCollections().FirstOrDefault(x => x.Name == cmbImportCollection.Text);
+		if (coll is null)
+		{
+			txtToolReport.Text = "Could not find collection";
+			return;
+		}
+		var submissions = TurnItIn.GetSubmissionsFromCollection(coll).ToList();
+		txtToolReport.Text = TurnItIn.UpdateDatabase(txtExcelFileName.Text, submissions, txtElpCode.Text);
+		Reload();
+	}
+
+	private void cmdListVariables_Click(object sender, EventArgs e)
+	{
+		var modified = GetValidReplacementFields().Select(x => $"{{{x}}}");
+		txtEmailBody.Text += $"\r\n\r\n{string.Join("\r\n", modified)}";
+	}
+
+	private IEnumerable<string> GetValidReplacementFields()
+	{
+		var iStudentId = GetStudentIndex();
+		if (iStudentId == -1)
+			return Enumerable.Empty<string>();
+		var row = _config.GetStudentRow(iStudentId);
+		if (row is null)
+			return Enumerable.Empty<string>();
+		var values = extraReplacements.ToList();
+		foreach (DataColumn item in row.Table.Columns)
+		{
+			values.Add(item.ColumnName);
+		}
+		return values;
 	}
 }

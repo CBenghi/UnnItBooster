@@ -240,11 +240,13 @@ namespace UnnFunctions.Models
 						$"{Guid.NewGuid()}{Path.GetExtension(entry.Name)}"
 						);
 				entry.ExtractToFile(tempName);
-				using (var img = Image.FromFile(tempName))
-				{
-					var t = new ImageFile(entry.FullName, img);
-					yield return t;
-				}
+				yield return new ImageFile(entry.FullName);
+				
+				//using (var img = SixLabors.Fonts.im Image.FromFile(tempName))
+				//{
+				//	var t = new ImageFile(entry.FullName, img);
+				//	yield return t;
+				//}
 				File.Delete(tempName);
 			}
 		}

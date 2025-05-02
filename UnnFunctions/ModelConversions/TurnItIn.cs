@@ -1,5 +1,6 @@
 ﻿using LumenWorks.Framework.IO.Csv;
-using OfficeOpenXml;
+using NPOI.SS.Formula.Functions;
+using NPOI.SS.UserModel;
 using StudentsFetcher.StudentMarking;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
+using UnnFunctions.Formats;
 using UnnItBooster.Models;
 
 namespace UnnItBooster.ModelConversions;
@@ -228,7 +230,9 @@ public partial class TurnItIn
 
 	public static IEnumerable<TurnitInSubmission> GetSubmissionsFromLearningAnalytics(FileInfo learningAnalytics, StudentsRepository repo)
 	{
-		using var package = new ExcelPackage(learningAnalytics);
+		using var package = Excel.OpenWorkbook(learningAnalytics);
+		if (package is null)
+			return Enumerable.Empty<TurnitInSubmission>();
 		// prepare question dictionary
 		var lst = new List<TurnitInSubmission>();
 		UpdateStudentInfo(ref lst, package, repo);
@@ -236,22 +240,22 @@ public partial class TurnItIn
 		return lst;
 	}
 
-	private static void UpdateStudentSubmissionId(ref List<TurnitInSubmission> lst, ExcelPackage package, StudentsRepository repo)
+	private static void UpdateStudentSubmissionId(ref List<TurnitInSubmission> lst, IWorkbook package, StudentsRepository repo)
 	{
 		// Rubric Form - Qualitative
-		var table = package.Workbook.Worksheets.FirstOrDefault(x => x.Name == "Rubric Form - Qualitative");
+		var table = package.GetSheetByName("Rubric Form - Qualitative");
 		if (table is null)
 			return;
 
-		if (table.Cells[$"B1"].Text != "Email")
+		if (table.GetCellText("B1") != "Email")
 			return;
-		if (table.Cells[$"C1"].Text != "Paper id")
+		if (table.GetCellText("C1") != "Paper id")
 			return;
 
 		int i = 2;
 		while (true)
 		{
-			var email = table.Cells[$"B{i}"].Text;
+			var email = table.GetCellText($"B{i}");
 			if (string.IsNullOrEmpty(email))
 				return;
 			var seek = lst.FirstOrDefault(x => x.Email == email);
@@ -261,45 +265,52 @@ public partial class TurnItIn
 				lst.Add(seek);
 			}
 
-			seek.Email = table.Cells[$"B{i}"].Text;
-			seek.PaperId = table.Cells[$"C{i}"].Text;
-			SyncStudentProperties(repo, seek);
+			seek.Email = table.GetCellText($"B{i}");
+			seek.PaperId = table.GetCellText($"C{i}");
+			SyncSubmissionProperties(seek, repo);
 			i++;
 		}
 	}
 
-	private static void SyncStudentProperties(StudentsRepository repo, TurnitInSubmission seek)
+	private static void SyncSubmissionProperties(TurnitInSubmission submissionTuUpdate, StudentsRepository sourceRepository)
 	{
-		var stude = repo.Students.FirstOrDefault(x => x.HasEmail(seek.Email));
+		var stude = sourceRepository.Students.FirstOrDefault(x => x.HasEmail(submissionTuUpdate.Email));
 		if (stude is null)
 		{
-			stude = repo.Students.FirstOrDefault(x => x.FullName is not null && x.FullName.Equals(seek.FullName, System.StringComparison.OrdinalIgnoreCase));
+			stude = sourceRepository.Students.FirstOrDefault(x => x.FullName is not null && x.FullName.Equals(submissionTuUpdate.FullName, System.StringComparison.OrdinalIgnoreCase));
 			if (stude != null)
-				repo.AddAlternativeEmail(stude, seek.Email);
+				sourceRepository.AddAlternativeEmail(stude, submissionTuUpdate.Email);
 		}
 		if (stude is not null)
 		{
-			if (!string.IsNullOrEmpty(stude.Forename))
-				seek.FirstName = stude.Forename!;
-			if (!string.IsNullOrEmpty(stude.Surname))
-				seek.LastName = stude.Surname!;
-			if (!string.IsNullOrEmpty(stude.NumericStudentId))
-			{
-				seek.UserId = stude.NumericStudentId;
-				seek.NumericUserId = stude.NumericStudentId;
-			}
+			SyncSubmissionProperties(submissionTuUpdate, stude);
 		}
 	}
 
-	private static void UpdateStudentInfo(ref List<TurnitInSubmission> lst, ExcelPackage package, StudentsRepository repo)
+	private static void SyncSubmissionProperties(TurnitInSubmission submissionTuUpdate, Student sourceStudent)
 	{
-		var table = package.Workbook.Worksheets.FirstOrDefault(x => x.Name == "Submissions");
+		if (!string.IsNullOrEmpty(sourceStudent.Forename))
+			submissionTuUpdate.FirstName = sourceStudent.Forename!;
+		if (string.IsNullOrEmpty(submissionTuUpdate.Email) && !string.IsNullOrEmpty(sourceStudent.Email))
+			submissionTuUpdate.Email = sourceStudent.Email!;
+		if (!string.IsNullOrEmpty(sourceStudent.Surname))
+			submissionTuUpdate.LastName = sourceStudent.Surname!;
+		if (!string.IsNullOrEmpty(sourceStudent.NumericStudentId))
+		{
+			submissionTuUpdate.UserId = sourceStudent.NumericStudentId;
+			submissionTuUpdate.NumericUserId = sourceStudent.NumericStudentId;
+		}
+	}
+
+	private static void UpdateStudentInfo(ref List<TurnitInSubmission> lst, IWorkbook package, StudentsRepository repo)
+	{
+		var table = package.GetSheetByName("Submissions");
 		if (table is null)
 			return;
 		int i = 1;
 		do
 		{
-			var magicNumber = table.Cells[$"A{i}"].Text;
+			var magicNumber = table.GetCellText($"A{i}");
 			if (magicNumber == "Student submissions")
 				break;
 			i++;
@@ -311,7 +322,7 @@ public partial class TurnItIn
 
 		while (true)
 		{
-			var email = table.Cells[$"B{i}"].Text;
+			var email = table.GetCellText($"B{i}");
 			if (string.IsNullOrEmpty(email))
 				return;
 			var seek = lst.FirstOrDefault(x => x.Email == email);
@@ -320,15 +331,15 @@ public partial class TurnItIn
 				seek = new TurnitInSubmission();
 				lst.Add(seek);
 			}
-			seek.FullName = table.Cells[$"A{i}"].Text;
-			seek.Email = table.Cells[$"B{i}"].Text;
-			seek.DateUploaded = table.Cells[$"C{i}"].Text;
-			seek.Overlap = table.Cells[$"D{i}"].Text;
-			seek.InternetOverlap = table.Cells[$"E{i}"].Text;
-			seek.PublicationsOverlap = table.Cells[$"F{i}"].Text;
-			seek.StudentPapersOverlap = table.Cells[$"G{i}"].Text;
+			seek.FullName = table.GetCellText($"A{i}");
+			seek.Email = table.GetCellText($"B{i}");
+			seek.DateUploaded = table.GetCellText($"C{i}");
+			seek.Overlap = table.GetCellText($"D{i}");
+			seek.InternetOverlap = table.GetCellText($"E{i}");
+			seek.PublicationsOverlap = table.GetCellText($"F{i}");
+			seek.StudentPapersOverlap = table.GetCellText($"G{i}");
 
-			SyncStudentProperties(repo, seek);
+			SyncSubmissionProperties(seek, repo);
 			i++;
 		}
 	}
@@ -453,5 +464,17 @@ public partial class TurnItIn
 			else if (line == "Files")
 				processFiles = true;
 		}
+	}
+
+	public static IEnumerable<TurnitInSubmission> GetSubmissionsFromCollection(IStudentCollection coll)
+	{
+		var lst = new List<TurnitInSubmission>();
+		foreach (var student in coll.Students)
+		{
+			TurnitInSubmission t = new TurnitInSubmission();
+			lst.Add(t);
+			SyncSubmissionProperties(t, student);
+		}
+		return lst;
 	}
 }

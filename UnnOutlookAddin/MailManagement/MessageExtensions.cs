@@ -17,7 +17,7 @@ namespace UnnOutlookAddin.MailManagement
 		/// <summary>
 		/// simple student email pattern
 		/// </summary>
-		static readonly Regex regexSimpleEmailPattern = new Regex(@"([a-zA-Z]\d{4,})@", RegexOptions.Compiled);
+		static readonly Regex regexSimpleEmailPattern = new Regex(@"^([a-zA-Z]\d{4,})@", RegexOptions.Compiled);
 
 		internal static bool SenderHasStudentId(this Outlook.MailItem mail, out string id)
 		{
