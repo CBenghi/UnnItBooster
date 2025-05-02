@@ -329,7 +329,7 @@ namespace ExtendedTextBox
 			}
 
 			var d = keyData.ToString();
-			if (d == "Return, Control" && OnCtrlEnter != null)
+			if (d == "Enter, Control" && OnCtrlEnter != null)
 			{
 				OnCtrlEnter();
 				Handled = true;
@@ -342,19 +342,17 @@ namespace ExtendedTextBox
 			else if (OnCtrlKey != null)
 			{
 				Handled = OnCtrlKey(d);
-			}
-
-			Debug.WriteLine(keyData);
+			}		
 			if ((keyData & Keys.Enter) == Keys.Enter)
 			{
 
 			}
-
 			if (!Handled)
 			{
+				Debug.WriteLine($"Unhandled in ProcessCmdKey: `{keyData}`");
 				return base.ProcessCmdKey(ref msg, keyData);
 			}
-
+			
 			return Handled;
 		}
 
