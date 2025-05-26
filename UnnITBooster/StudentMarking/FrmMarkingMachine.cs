@@ -325,6 +325,7 @@ public partial class FrmMarkingMachine : Form
 			var selectModerationMatch = Regex.Match(txtSearch.Text, @"SelectModeration *(?<name>.*)$", RegexOptions.IgnoreCase);
 			var associateMarkerMatch = Regex.Match(txtSearch.Text, @"^Associate ?Marker[s]?$", RegexOptions.IgnoreCase);
 			var reportMarkerMatch = Regex.Match(txtSearch.Text, @"^Report ?Marker[s]?(\s+(?<options>-missing|-marks|-missingexcel)?)?$", RegexOptions.IgnoreCase);
+			var markersRandomise = Regex.Match(txtSearch.Text, @"^Markers Randomise*(?<role>.*)$", RegexOptions.IgnoreCase);
 			var importMarksMatch = Regex.Match(txtSearch.Text, @"^Import ?Marker[s]?(\s+(?<filter>.+?)?)$", RegexOptions.IgnoreCase);
 			var markingExcelsMatch = Regex.Match(txtSearch.Text, @"^Create ?MarkingFiles(\s+(?<filter>.+?))? +(?<excelFileName>.*)$", RegexOptions.IgnoreCase);
 			var moduleCreditsMatch = Regex.Match(txtSearch.Text, @"^ModuleCredits (?<credits>\d+)$", RegexOptions.IgnoreCase);
@@ -376,7 +377,7 @@ public partial class FrmMarkingMachine : Form
 				if (notUpdated.Any())
 				{
 					ManageCommandQueue("Associate markers");
-					sb.AppendLine("You may add exra markers with the command: `Associate markers` with the following list");
+					sb.AppendLine("You may add extra markers with the command: `Associate markers` with the following list");
 					foreach (var item in notUpdated)
 					{
 						sb.AppendLine($"{item.StudentId} {item.MarkerEmail} 3rd <MarkerName>");
@@ -428,7 +429,7 @@ public partial class FrmMarkingMachine : Form
 							txtLibReport.Text += "# List imported";
 							txtLibReport.Text += "\r\n";
 							txtLibReport.Text += DelegatedMarkResponse.Report(marks);
-							var assignments = _config.GetMarkingAssignments();
+							var assignments = _config.GetMarkingAssignmentsPerMarker();
 							txtLibReport.Text += "\r\n";
 							txtLibReport.Text += "# List imported";
 							txtLibReport.Text += "\r\n";
@@ -437,7 +438,7 @@ public partial class FrmMarkingMachine : Form
 						break;
 					case "-missing":
 						{
-							var assignments = _config.GetMarkingAssignments();
+							var assignments = _config.GetMarkingAssignmentsPerMarker();
 							var marks = _config.GetDelegatedMarks();
 							txtLibReport.Text = ReportMarkersAvailability(assignments, marks);
 						}
@@ -457,6 +458,30 @@ public partial class FrmMarkingMachine : Form
 				var count = AssociateMarkers();
 				sb.AppendLine($"{count} new delegate markers associated");
 				sb.AppendLine(_config.ReportMarkers());
+				txtLibReport.Text = sb.ToString();
+			}
+			else if (markersRandomise.Success)
+			{
+				Random r = new Random();
+				var role = markersRandomise.Groups["role"].Value;
+				if (string.IsNullOrEmpty(role))
+					role = "Second";
+				var sb = new StringBuilder();
+				var markers = _config.GetMarkingAssignmentsPerMarker().ToList();
+				var markerNames = markers.ToDictionary(x => x.MarkerEmail, x => x.MarkerName);
+				var assignments = markers.SelectMany(x=>x.Details).ToList();
+				var pool = assignments.ToList();
+				foreach (var item in assignments)
+				{
+					var thisPool = pool.Where(x => x.MarkerEmail != item.MarkerEmail).ToList();
+					if (thisPool.Count == 0)
+						thisPool = pool.ToList();
+					var idx = r.Next(0, thisPool.Count);
+					var t = thisPool[idx];
+					pool.Remove(t);
+					markerNames.TryGetValue(t.MarkerEmail, out var markerName);
+					sb.AppendLine($"{item.StudentId} {t.MarkerEmail} {role} {markerName}");
+				}
 				txtLibReport.Text = sb.ToString();
 			}
 			else if (editMatch.Success)
@@ -601,6 +626,11 @@ public partial class FrmMarkingMachine : Form
                         Report Markers -missing
                             what excels and returned marks are missing (use import)
                         Report Markers -marks
+
+                    Markers Randomise <Role>
+                        Produces a text that predisposes the associationn of a second marker
+                        e.g.
+                        Markers Randomise Second
 
                     Create MarkingFiles <excelFileName>
                         creates a file ready to receive individual marker feedback
@@ -923,7 +953,7 @@ public partial class FrmMarkingMachine : Form
 		if (string.IsNullOrWhiteSpace(txtLibReport.Text))
 			return 0;
 		var assignments = txtLibReport.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-		var r = new Regex(@"^(?<studId>\d+)\s+(?<email>[^ ]+)\s+(?<role>[^ ]+)\s+(?<name>.+)");
+		var r = new Regex(@"^(?<studId>\d+)\s+(?<email>[^\s]+)\s+(?<role>[^\s]+)\s+(?<name>.+)");
 		int tally = 0;
 		foreach (var assignment in assignments)
 		{
@@ -2528,6 +2558,18 @@ public partial class FrmMarkingMachine : Form
 			return;
 		}
 		var submissions = TurnItIn.GetSubmissionsFromCollection(coll).ToList();
+		if (!string.IsNullOrEmpty(txtImprotFromRepoFilter.Text))
+		{
+			var filtered = new List<TurnitInSubmission>();
+			foreach (var item in submissions)
+			{
+				if (txtImprotFromRepoFilter.Text.Contains(item.NumericUserId))
+				{
+					filtered.Add(item);
+				}
+			}
+			submissions = filtered;
+		}
 		txtToolReport.Text = TurnItIn.UpdateDatabase(txtExcelFileName.Text, submissions, txtElpCode.Text);
 		Reload();
 	}

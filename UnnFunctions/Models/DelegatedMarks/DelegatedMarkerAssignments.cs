@@ -80,7 +80,7 @@ public class DelegatedMarkerAssignments
 				thiscell.SetBlank();
 			}
 		}
-		sheet.ProtectSheet(""); // locks all cells except the unlocked
+		//sheet.ProtectSheet(""); // locks all cells except the unlocked
 		dest.Delete();
 		using var file = new FileStream(dest.FullName, FileMode.Create, FileAccess.Write);
 		workbook.Write(file, false);

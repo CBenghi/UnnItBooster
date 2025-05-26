@@ -524,7 +524,7 @@ namespace StudentsFetcher.StudentMarking
 		public string ReportMarkers()
 		{
 			var sb = new StringBuilder();
-			var ass = GetMarkingAssignments();
+			var ass = GetMarkingAssignmentsPerMarker();
 
 			sb.AppendLine("# Report by marker");
 			sb.AppendLine();
@@ -534,7 +534,7 @@ namespace StudentsFetcher.StudentMarking
 
 				foreach (var item in assignment.Details)
 				{
-					sb.AppendLine($"\t{item.MarkingRole}\tw{item.StudentId}\t{item.SubmissionId}\t{item.StudentEmail}");
+					sb.AppendLine($"\t{item.MarkingRole}\tw{item.StudentId}\tsub{item.SubmissionId}\t{item.StudentEmail}");
 				}
 			}
 			sb.AppendLine();
@@ -568,7 +568,8 @@ namespace StudentsFetcher.StudentMarking
 			// missing:
 			sql =
 				$"""
-				select MRKR_ptr_SubmissionUserID, SUB_UserID, MRKR_MarkerEmail from
+				select MRKR_ptr_SubmissionUserID, SUB_UserID, MRKR_MarkerEmail, SUB_email, SUB_PaperID 
+				from
 				TB_Submissions FULL OUTER JOIN TB_Markers
 				on MRKR_ptr_SubmissionUserID = SUB_UserID
 				where MRKR_ptr_SubmissionUserID is null 
@@ -582,7 +583,7 @@ namespace StudentsFetcher.StudentMarking
 			foreach (DataRow row in dt.Rows)
 			{
 				if (row["MRKR_ptr_SubmissionUserID"] is DBNull)
-					sb.AppendLine($"Missing marker assignment for submission of student\t{row["SUB_UserID"]}");
+					sb.AppendLine($"Missing marker assignment for submission of student\t{row["SUB_UserID"]}\t{row["SUB_email"]}\tpaperId: {row["SUB_PaperID"]}");
 				else
 					sb.AppendLine($"Missing submission for assignment code\t{row["MRKR_ptr_SubmissionUserID"]}, {row["MRKR_MarkerEmail"]}");
 			}
@@ -599,6 +600,8 @@ namespace StudentsFetcher.StudentMarking
 			var fld = GetFolderName();
 			if (fld == null)
 				return null;
+			var subdir = "marking collection";
+			fld = Path.Combine(fld, subdir);
 			var t = new FileInfo(Path.Combine(fld, f));
 			return t;
 		}
@@ -621,7 +624,7 @@ namespace StudentsFetcher.StudentMarking
 			}
 		}
 
-		public IEnumerable<DelegatedMarkerAssignments> GetMarkingAssignments()
+		public IEnumerable<DelegatedMarkerAssignments> GetMarkingAssignmentsPerMarker()
 		{
 			var sql =
 				$"""
@@ -746,7 +749,7 @@ namespace StudentsFetcher.StudentMarking
 		public string CreateExcelMarkingFilesFrom(FileInfo fl, string filter)
 		{
 			var sb = new StringBuilder();
-			var assignments = GetMarkingAssignments();
+			var assignments = GetMarkingAssignmentsPerMarker();
 			foreach (var assignment in assignments)
 			{
 				if (!string.IsNullOrWhiteSpace(filter) && !assignment.MarkerEmail.Contains(filter))
@@ -773,7 +776,7 @@ namespace StudentsFetcher.StudentMarking
 
 		public IEnumerable<(string StudentId, string MarkerEmail, string MarkerRole)> GetMarkingAssignmentsByStudents()
 		{
-			var ass = GetMarkingAssignments();
+			var ass = GetMarkingAssignmentsPerMarker();
 			foreach (var assItem in ass)
 			{
 				foreach (var item in assItem.Details)
