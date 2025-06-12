@@ -362,8 +362,7 @@ public partial class MainWindow
 	[RelayCommand]
 	private async Task<bool> SetMcrf()
 	{
-		Dictionary<string, string> studentMarks = eVisionMarkEntry.FromTabSeparated(McrfMarks);
-
+		var studentMarks = eVisionMarkEntry.FromTabSeparated(McrfMarks);
 		var source = await GetPageSource();
 		var entries = eVisionMarkEntry.GetEntries(source).ToList();
 		if (entries is null)
@@ -371,7 +370,6 @@ public partial class MainWindow
 			Report = "No entries found";
 			return false;
 		}
-
 		var sb = new StringBuilder();
 		sb.AppendLine($"{entries.Count()} student fields");
 		foreach (var f in entries)
@@ -387,15 +385,12 @@ public partial class MainWindow
 				sb.AppendLine($"Student {f.StudentId} was already {mark}.");
 				continue;
 			}
-
 			var script = $"document.getElementById(\"{f.MarkTextId}\").value='{mark}';";
 			string v = await wbSample.ExecuteScriptAsync(script);
 			sb.AppendLine($"Student {f.StudentId} set to {mark}.");
-
 			script = $"document.getElementById(\"{f.GradeTextId}\").value='a';";
 			v = await wbSample.ExecuteScriptAsync(script);
 		}
-
 		Report = sb.ToString();
 		return true;
 	}

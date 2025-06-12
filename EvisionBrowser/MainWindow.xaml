@@ -100,6 +100,7 @@
                     </TabItem>
                     <TabItem Header="MCRF">
                         <StackPanel>
+                            <TextBlock TextWrapping="Wrap">Add a student per row with ID and mark separated by a tab; the marks command in AMM produces it</TextBlock>
                             <TextBox Height="200" Text="{Binding McrfMarks}" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
                             <Button Height="23" Content="Fill" Command="{Binding SetMcrfCommand}" />
                         </StackPanel>
