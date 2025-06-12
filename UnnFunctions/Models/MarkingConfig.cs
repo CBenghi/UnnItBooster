@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Org.BouncyCastle.Bcpg;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
@@ -9,6 +10,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using UnnFunctions.Models;
 using UnnFunctions.Models.DelegatedMarks;
+using UnnFunctions.Models.SubmissionContent;
 using UnnItBooster.ModelConversions;
 using UnnItBooster.Models;
 using static Org.BouncyCastle.Math.EC.ECCurve;
@@ -142,7 +144,25 @@ namespace StudentsFetcher.StudentMarking
 			return s;
 		}
 
+		[Flags]
+		public enum FeedBackReportConfig
+		{
+			None = 0,
+			SendModerationNotice = 1,
+			IncludeCommentNumber = 2,
+			JustComponentMarks = 4,
+		}
 		public void GetStudentFeedback(int shortId, bool sendModerationNotice, StringBuilder sb, TurnitInSubmission? stud, bool includeCommentNumber = false)
+		{
+			var t = FeedBackReportConfig.None;
+			if (sendModerationNotice)
+				t |= FeedBackReportConfig.SendModerationNotice;
+			if (includeCommentNumber)
+				t |= FeedBackReportConfig.IncludeCommentNumber;
+			GetStudentFeedback(shortId, sb, stud, t);
+		}
+
+		public void GetStudentFeedback(int shortId, StringBuilder sb, TurnitInSubmission? stud, FeedBackReportConfig config)
 		{
 			var componentComments = "";
 			string sql = 
@@ -193,8 +213,10 @@ namespace StudentsFetcher.StudentMarking
 			if (totmark != -1)
 				sb.AppendFormat("\r\nOverall mark: {0}%\r\n\r\n", totmark);
 
-			var tmp = componentComments.Replace("\r\n", "").Trim();
+			if (config.HasFlag(FeedBackReportConfig.JustComponentMarks))
+				return;
 
+			var tmp = componentComments.Replace("\r\n", "").Trim();
 			if (tmp != string.Empty)
 			{
 				sb.AppendFormat("## Comments:\r\n\r\n");
@@ -253,14 +275,14 @@ namespace StudentsFetcher.StudentMarking
 				{
 					thisComment = $" - {basecomment}{lastchar}";
 				}
-				if (includeCommentNumber)
+				if (config.HasFlag(FeedBackReportConfig.IncludeCommentNumber))
 				{
 					thisComment += $" (Comm: {item["SCOM_ptr_Comment"]})";
 				}
 				sb.AppendLine(thisComment);
 			}
 
-			if (sendModerationNotice)
+			if (config.HasFlag(FeedBackReportConfig.SendModerationNotice))
 			{
 				sb.AppendLine("---------------");
 				sb.AppendLine();
@@ -425,7 +447,7 @@ namespace StudentsFetcher.StudentMarking
 		public string ReportImageMatch(string relativeFileName)
 		{
 			FileInfo f = new FileInfo(Path.Combine(GetFolderName(), relativeFileName));
-			WordFile w = new WordFile(f);
+			SubmissionFile w = new SubmissionFile(f);
 			if (!w.Exists)
 				return "No word file";
 
@@ -444,7 +466,7 @@ namespace StudentsFetcher.StudentMarking
 				if (doc == relativeFileName)
 					continue;
 				FileInfo of = new FileInfo(Path.Combine(GetFolderName(), doc));
-				WordFile ow = new WordFile(of);
+				SubmissionFile ow = new SubmissionFile(of);
 				if (!ow.Exists)
 					continue;
 
@@ -688,7 +710,7 @@ namespace StudentsFetcher.StudentMarking
 		{
 			var sb = new StringBuilder();
 			var folderName = GetFolderName()!;
-			var d = new DirectoryInfo(Path.Combine(folderName, "ReceivedMarks"));
+			var d = new DirectoryInfo(Path.Combine(folderName, "marking collection"));
 			var excelFiles = d.GetFiles("*.xlsx");
 			var retmarks = new List<DelegatedMarkResponse>();
 			foreach (var excelFile in excelFiles)

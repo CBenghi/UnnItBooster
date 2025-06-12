@@ -22,5 +22,6 @@
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
     <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
     <PackageReference Include="System.IO.Hashing" Version="9.0.2" />
+    <PackageReference Include="PdfPig" Version="0.1.10" />
   </ItemGroup>
 </Project>

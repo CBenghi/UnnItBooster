@@ -1,5 +1,4 @@
-﻿using NPOI.OpenXmlFormats;
-using NPOI.XWPF.UserModel;
+﻿using NPOI.XWPF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,16 +8,21 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 
-namespace UnnFunctions.Models
+namespace UnnFunctions.Models.SubmissionContent
 {
-
-	public class WordFile
+	public class SubmissionFile
 	{
 		private FileInfo file;
-		public WordFile(FileInfo f)
+		private IContentProvider? contentProvider = null;
+		public SubmissionFile(FileInfo f)
 		{
 			file = f;
+			if (file.Extension.ToLower() == ".docx")
+				contentProvider = new WordContent(file);
+			else if (file.Extension.ToLower() == ".pdf")
+				contentProvider = new PdfContent(file);
 		}
 
 		public string GetText()
@@ -137,94 +141,20 @@ namespace UnnFunctions.Models
 
 		public IEnumerable<string> GetParagraphs()
 		{
-			try
-			{
-				if (parags is null)
-				{
-					using var fileStream = File.OpenRead(file.FullName);
-					using var doc = new XWPFDocument(fileStream);
-					parags = GetComponentsText(doc).ToList();
-				}
-				return parags ?? Enumerable.Empty<string>();
-			}
-			catch (Exception ex)
-			{
-				return [$"Error: {ex.Message}"];
-			}
+			if (parags != null)
+				return parags;
+			if (contentProvider is not null)
+				parags = contentProvider.GetParagraphs().ToList();
+			return parags ?? Enumerable.Empty<string>();			
 		}
-
-		private class HitStat
-		{
-			public HitStat(int initialHitCount)
-			{
-				HitCount = initialHitCount;
-			}
-
-			public int HitCount { get; set; } = 0;
-		}
-
-		private static IEnumerable<string> GetComponentsText(XWPFDocument doc)
-		{
-			Dictionary<string, HitStat> ignoredTypes = [];
-			var result = new List<string>();
-			foreach (var bodyElement in doc.BodyElements)
-			{
-				if (bodyElement is XWPFParagraph paragraph)
-				{
-					result.Add(paragraph.Text);
-					continue;
-				}
-				if (bodyElement is XWPFSDT unknown)
-				{
-					var cont = unknown.Content.Text;
-					var lines = cont.Split(['\n', '\r'], StringSplitOptions.RemoveEmptyEntries);
-					foreach (var line in lines)
-					{
-						result.Add(line);
-					}
-					continue;
-				}
-				// what types are not managed by the code
-				if (bodyElement is not XWPFTable table)
-				{
-					var tb = bodyElement.GetType();
-					var typeName = tb.FullName;
-					if (ignoredTypes.TryGetValue(typeName, out var found))
-						found.HitCount++;
-					else
-						ignoredTypes.Add(typeName, new HitStat(1));
-					continue;
-				}
-
-				foreach (var row in table.Rows)
-				{
-					var tableLine = new StringBuilder();
-					foreach (var cell in row.GetTableCells())
-					{
-						foreach (var cellParagraph in cell.Paragraphs)
-						{
-							tableLine.Append(cellParagraph.Text);
-							tableLine.Append("| ");
-						}
-					}
-					result.Add(tableLine.ToString());
-				}
-			}
-			foreach (var ignoredType in ignoredTypes)
-			{
-				result.Add($"Ignored {ignoredType.Value.HitCount}: {ignoredType.Key}");
-			}
-			return result;
-		}
-
 
 		public bool Exists
 		{
 			get
 			{
-				if (!file.Exists)
-					return false;
-				return file.Extension.ToLower() == ".docx";
+				if (contentProvider is not null)
+					return contentProvider.Exists;
+				return false;
 			}
 		}
 

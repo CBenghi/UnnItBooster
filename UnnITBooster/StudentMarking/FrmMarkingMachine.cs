@@ -23,6 +23,9 @@ using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.Defaults;
 using UnnItBooster;
+using UnnFunctions.Models.SubmissionContent;
+using static StudentsFetcher.StudentMarking.MarkingConfig;
+using OpenTK.Graphics.ES20;
 
 namespace StudentsFetcher.StudentMarking;
 
@@ -326,7 +329,7 @@ public partial class FrmMarkingMachine : Form
 			var associateMarkerMatch = Regex.Match(txtSearch.Text, @"^Associate ?Marker[s]?$", RegexOptions.IgnoreCase);
 			var reportMarkerMatch = Regex.Match(txtSearch.Text, @"^Report ?Marker[s]?(\s+(?<options>-missing|-marks|-missingexcel)?)?$", RegexOptions.IgnoreCase);
 			var markersRandomise = Regex.Match(txtSearch.Text, @"^Markers Randomise*(?<role>.*)$", RegexOptions.IgnoreCase);
-			var importMarksMatch = Regex.Match(txtSearch.Text, @"^Import ?Marker[s]?(\s+(?<filter>.+?)?)$", RegexOptions.IgnoreCase);
+			var importMarksMatch = Regex.Match(txtSearch.Text, @"^Import ?Marker[s]?(\s+(?<filter>.+?)?)?$", RegexOptions.IgnoreCase);
 			var markingExcelsMatch = Regex.Match(txtSearch.Text, @"^Create ?MarkingFiles(\s+(?<filter>.+?))? +(?<excelFileName>.*)$", RegexOptions.IgnoreCase);
 			var moduleCreditsMatch = Regex.Match(txtSearch.Text, @"^ModuleCredits (?<credits>\d+)$", RegexOptions.IgnoreCase);
 			var customSortMatcher = Regex.Match(txtSearch.Text, @"(sort|find|search)\s+(?<mode>turnitin|marker|comment|unmarked)\s*(?<param>.*)$", RegexOptions.IgnoreCase);
@@ -583,6 +586,7 @@ public partial class FrmMarkingMachine : Form
                         - sort marker claudio.benghi
                         - sort comment misconduct
                         - sort comment 33
+                        - sort unmarked
 
                     Remove <commentId>
                        removes the comment from the current student by the ID of the comment
@@ -691,7 +695,7 @@ public partial class FrmMarkingMachine : Form
 
 		var fullname = Path.Combine(_config.GetFolderName(), cmbDocuments.Text);
 		var f = new FileInfo(fullname);
-		var wf = new WordFile(f);
+		var wf = new SubmissionFile(f);
 		if (wf.Exists)
 		{
 			// preparing content
@@ -921,7 +925,7 @@ public partial class FrmMarkingMachine : Form
 				{
 					if (!marked.Any(x => x.StudentId == singleStudent.StudentId))
 					{
-						sb.AppendLine($"Missing mark for: {assignment.MarkerEmail}, {singleStudent.StudentId}, {singleStudent.SubmissionId}");
+						sb.AppendLine($"Missing mark for: {assignment.MarkerEmail}, w{singleStudent.StudentId}, submission id:{singleStudent.SubmissionId}, student: {singleStudent.StudentEmail}" );
 					}
 				}
 			}
@@ -2161,10 +2165,16 @@ public partial class FrmMarkingMachine : Form
 		var folder = new DirectoryInfo(folderName);
 		int shortened = 0;
 
+		var r = new Regex(@"^\d+\.zip$", RegexOptions.IgnoreCase);
 		foreach (var zipPath in folder.GetFiles("*.zip"))
 		{
 			if (zipPath == null)
 				return;
+			if (!r.IsMatch(zipPath.Name))
+			{
+				sb.AppendLine($"Skipping {zipPath.Name} as it does not match the numeric name pattern");
+				continue;
+			}
 			var extractPath = zipPath.FullName.ToLowerInvariant().Replace(".zip", "");
 			var outDir = new DirectoryInfo(extractPath);
 			outDir.Create();
@@ -2272,6 +2282,18 @@ public partial class FrmMarkingMachine : Form
 		}
 	}
 
+	private FeedBackReportConfig GetReportConfig()
+	{
+		var ret = FeedBackReportConfig.None;
+		if (chkSendModerationNotice.Checked)
+			ret |= FeedBackReportConfig.SendModerationNotice;
+		if (ChkCommNumber.Checked)
+			ret |= FeedBackReportConfig.IncludeCommentNumber;
+		if (chkJustComponents.Checked)
+			ret |= FeedBackReportConfig.JustComponentMarks;
+		return ret;
+	}
+
 	private void button12_Click(object sender, EventArgs e)
 	{
 		var htmlContent =
@@ -2302,11 +2324,11 @@ public partial class FrmMarkingMachine : Form
             <p style="box-sizing: border-box; margin: 0px; padding: 0px; font-weight: 300; font-style: normal;">[CONT]</p>
             """;
 
-		var sb = new StringBuilder();
 		var sub = GetCurrentSubmission();
 		if (sub == null)
 			return;
-		_config.GetStudentFeedback(GetStudentIndex(), chkSendModerationNotice.Checked, sb, sub);
+		var sb = new StringBuilder();
+		_config.GetStudentFeedback(GetStudentIndex(), sb, sub, GetReportConfig());
 		var report = sb.ToString();
 		var lines = report.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
@@ -2515,7 +2537,7 @@ public partial class FrmMarkingMachine : Form
 				_config.GetFolderName(),
 				cmbDocuments.Text);
 			FileInfo f = new FileInfo(fullname);
-			WordFile wf = new WordFile(f);
+			SubmissionFile wf = new SubmissionFile(f);
 			if (wf.Exists)
 			{
 				var sb = new StringBuilder();
@@ -2527,6 +2549,9 @@ public partial class FrmMarkingMachine : Form
 				{
 					sb.AppendLine($"- {item.Key}, ({item.Count()})");
 				}
+
+				RepetitionAnalyzer.Report(refs, sb);
+
 				txtLibReport.Text = sb.ToString();
 			}
 		}

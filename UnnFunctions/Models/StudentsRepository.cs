@@ -171,12 +171,13 @@ public class StudentsRepository
 
 	public Student? GetStudentById(string numericStudentId, IStudentCollection? studcoll = null)
 	{
+		var selection = new List<Student>();
 		if (studcoll is not null)
 		{
 			foreach (var item in studcoll.Students)
 			{
 				if (item.NumericStudentId == numericStudentId)
-					return item;
+					selection.Add(item);
 			}
 		}
 		else
@@ -184,10 +185,11 @@ public class StudentsRepository
 			foreach (var item in Students)
 			{
 				if (item.NumericStudentId == numericStudentId)
-					return item;
+					selection.Add(item);
 			}
 		}
-		return null;
+		var sort = selection.OrderByDescending(x => x.TranscriptResults.Count());
+		return sort.FirstOrDefault();
 	}
 
 	public bool IsValidNewCollectionName(string shortName, out string containerFullName)
