@@ -25,7 +25,8 @@ using LiveChartsCore.Defaults;
 using UnnItBooster;
 using UnnFunctions.Models.SubmissionContent;
 using static StudentsFetcher.StudentMarking.MarkingConfig;
-using OpenTK.Graphics.ES20;
+using OpenTK.Platform.Windows;
+using MathNet.Numerics.Distributions;
 
 namespace StudentsFetcher.StudentMarking;
 
@@ -89,11 +90,9 @@ public partial class FrmMarkingMachine : Form
 			if (student is not null)
 			{
 				txt += Student.ReportTranscriptClassificationChart(student.TranscriptResults);
-
 				var delegMarks = _config.GetDelegatedMarks().Where(x => x.StudentId == student.NumericStudentId).ToList();
 				txt += DelegatedMarkResponse.Report(delegMarks, true, GetComponentShortNames());
 				var missing = _config.GetMissingDelegateMarkingResponses().Where(x => x.StudentId == student.NumericStudentId).ToArray();
-
 				if (missing.Any())
 				{
 					txt += $"Missing marks:\r\n";
@@ -248,7 +247,7 @@ public partial class FrmMarkingMachine : Form
 	private void UpdateDocumentsList(TurnitInSubmission submission)
 	{
 		cmbDocuments.Items.Clear();
-		var list = _config.GetDocuementFiles(submission.PaperId).ToList();
+		var list = _config.GetDocumentFiles(submission.PaperId).ToList();
 		if (!string.IsNullOrEmpty(submission.Title))
 			list.Add(submission.Title);
 		cmbDocuments.Items.AddRange(list.Distinct().ToArray());
@@ -365,7 +364,8 @@ public partial class FrmMarkingMachine : Form
 				var filter = importMarksMatch.Groups["filter"].Value;
 
 				var sb = new StringBuilder();
-				var readingReport = _config.GetDelegatedMarksFromExcel(filter, out var marks); // from import
+				
+				var readingReport = _config.GetDelegatedMarksFromExcel(_config.GetMarkCalculator().Marks.Count, filter, out var marks); // from import
 				if (!string.IsNullOrEmpty(readingReport))
 				{
 					sb.AppendLine("Excel errors report:");
@@ -426,7 +426,9 @@ public partial class FrmMarkingMachine : Form
 						{
 							txtLibReport.Text = "# Import errors from Excel";
 							txtLibReport.Text += "\r\n";
-							var import = _config.GetDelegatedMarksFromExcel(string.Empty, out var marks);
+							var import = _config.GetDelegatedMarksFromExcel(
+								_config.GetMarkCalculator().Marks.Count,
+								string.Empty, out var marks);
 							txtLibReport.Text += import;
 							txtLibReport.Text += "\r\n";
 							txtLibReport.Text += "# List imported";
@@ -553,9 +555,11 @@ public partial class FrmMarkingMachine : Form
 			{
 				txtLibReport.Text = _config?.ReportImageMatch(cmbDocuments.Text);
 			}
-			else if (txtSearch.Text.Equals("PrepareModeration", StringComparison.OrdinalIgnoreCase))
+			else if (txtSearch.Text.StartsWith("PrepareModeration", StringComparison.OrdinalIgnoreCase))
 			{
-				PrepareModeration();
+				PrepareModeration(
+					txtSearch.Text.EndsWith("-markers", StringComparison.OrdinalIgnoreCase)
+					);
 			}
 			else if (txtSearch.Text == "help")
 			{
@@ -617,12 +621,14 @@ public partial class FrmMarkingMachine : Form
                         prepares the list of students to perform moderation
                         e.g. selectModeration KA7065
 
-                    prepareModeration
+                    prepareModeration [-markers]
                         prepares the moderation information for the student ShortIDs listed in the central part of the UI
+                        Creates a zip file with the sample.
+                        if -markers it provides the assigned markers summary
 
                     Associate Markers
                         adds markers depending on the data below the command with the following structure:
-                        <studentId> <markerEmail> <MarkerRole> <MarkerName>
+                        <studentId|submissionId> <markerEmail> <MarkerRole> <MarkerName>
                         22049588 ala.suliman@northumbria.ac.uk Supervisor Ala Suliman
 
                     Report Markers
@@ -980,7 +986,12 @@ public partial class FrmMarkingMachine : Form
 	{
 		if (name == string.Empty)
 		{
-			txtStudentreport.Text = "Specify name of student collection to determine route.";
+			txtStudentreport.Text = "Specify name of student collection to determine route.\r\n";
+			foreach (var item in _studentRepository.GetPersonCollections())
+			{
+				txtStudentreport.Text += $"- {item.Name}\r\n";
+			}
+			
 			return;
 		}
 		var studcoll = _studentRepository.GetPersonCollections().FirstOrDefault(x => x.Name.Contains(name));
@@ -1025,16 +1036,41 @@ public partial class FrmMarkingMachine : Form
 		txtStudentreport.Text = sb.ToString();
 	}
 
-	private void PrepareModeration()
+	public static void CreateZipFromFiles(IEnumerable<FileInfo> files, string zipFilePath)
+	{
+		using (FileStream zipToOpen = new FileStream(zipFilePath, FileMode.Create))
+		using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Create))
+		{
+			foreach (var file in files)
+			{
+				if (!file.Exists)
+					continue; // or throw exception / log
+
+				// Add entry with just the file name (no directory structure)
+				ZipArchiveEntry entry = archive.CreateEntry(file.Name);
+
+				// Copy file content into the entry stream
+				using (var entryStream = entry.Open())
+				using (var fileStream = file.OpenRead())
+				{
+					fileStream.CopyTo(entryStream);
+				}
+			}
+		}
+	}
+
+	private void PrepareModeration(bool assignedMarkers)
 	{
 		if (_config == null)
 			return;
 		StringBuilder errBuilder = new StringBuilder();
 		StringBuilder sb = new StringBuilder();
+		var zipName = Path.Combine(_config.GetFolderName(), $"sample_{DateTime.Now.ToString("yyyyMMdd_HHmm")}.zip");
+		var filelist = new List<FileInfo>();
 		var ids = GetSimpleIds(txtLibReport.Text).ToList();
 		errBuilder.AppendLine($"{ids.Count} to process.");
-		errBuilder.AppendLine();
-
+		sb.AppendLine($"Compressed archive at: {zipName}");
+		sb.AppendLine();
 		sb.AppendLine("# Selected sample");
 
 		var mc = _config.GetMarkCalculator();
@@ -1045,7 +1081,10 @@ public partial class FrmMarkingMachine : Form
 			var totmark = mc.GetFinalMark(item, _config, true);
 			var sub = _config.GetStudentSubmission(item);
 			if (sub is not null)
+			{
 				sb.AppendLine($"| {sub.NumericUserId} | {sub.FirstName}| {sub.LastName}  | {sub.PaperId} | {totmark}% |");
+				filelist.AddRange(_config.GetDocumentFileInfos(sub.PaperId));
+			}
 			else
 				sb.AppendLine($"Error: {item}");
 		}
@@ -1053,31 +1092,49 @@ public partial class FrmMarkingMachine : Form
 
 		foreach (int item in ids)
 		{
-			var success = PrepareModeration(sb, item);
+			var success = PrepareModeration(sb, item, assignedMarkers);
 			if (!success)
 				errBuilder.AppendLine($"Error on: {item}");
 
 		}
 		errBuilder.AppendLine(sb.ToString());
+
+		if (filelist.Count == 0)
+		{
+			sb.AppendLine("No files found for the selected students.");
+		}
+		else
+		{
+			sb.AppendLine($"Preparing zip with {filelist.Count} samples:");
+			foreach (var item in filelist)
+			{
+				sb.AppendLine($"- {item.Name}");
+			}
+			CreateZipFromFiles(filelist, zipName);
+		}
 		txtStudentreport.Text = errBuilder.ToString();
 	}
 
-	private bool PrepareModeration(StringBuilder sb, int shortId)
+	private bool PrepareModeration(StringBuilder sb, int shortId, bool assignedMarkers)
 	{
 		// prepares the text, 
-		sb.AppendLine(_config.GetStudentReport(shortId, false, false));
-		// and copies the file to a custom folder
-		var stud = _config.GetStudentSubmission(shortId);
-		if (stud is null)
-			return false;
-		FileInfo f = new FileInfo(Path.Combine(_config.GetFolderName(), stud.Title));
-		if (!f.Exists)
-			return false;
-		var destName = Path.Combine(_config.GetFolderName(), "ModF");
-		if (!Directory.Exists(destName))
-			Directory.CreateDirectory(destName);
-		destName = Path.Combine(destName, f.Name);
-		f.CopyTo(destName, true);
+		if (!assignedMarkers)
+			sb.AppendLine(_config.GetStudentReport(shortId, false, false));
+		else
+		{
+			var submission = _config.GetSubmission(shortId);
+			if (submission is null)
+			{
+				sb.AppendLine($"Error: submission {shortId} not found.");
+				return false;
+			}
+			GetSubmissionHeader(shortId, sb, submission);
+			// sb.AppendLine();
+			_config.GetStudentFeedback(shortId, sb, submission, FeedBackReportConfig.JustComponentMarks);
+			var delegMarks = _config.GetDelegatedMarks().Where(x => x.StudentId == submission.NumericUserId).ToList();
+			sb.AppendLine(DelegatedMarkResponse.Report(delegMarks, true, GetComponentShortNames()));
+		}
+			
 		return true;
 	}
 
@@ -2133,6 +2190,15 @@ public partial class FrmMarkingMachine : Form
 		TurnItIn.PopulateDatabase(destFile, submissions, txtElpCode.Text);
 		txtExcelFileName.Text = destFile;
 		Reload();
+		txtToolReport.Text = ReportMissingID();
+	}
+
+	private string ReportMissingID()
+	{
+		return _config.ReportMissingIds();
+		//_studentRepository
+		//TurnItIn.GetEmptyReport();
+		
 	}
 
 	private void BtnCompleteData_Click(object sender, EventArgs e)
@@ -2145,6 +2211,7 @@ public partial class FrmMarkingMachine : Form
 		var submissions = TurnItIn.GetSubmissionsFromLearningAnalytics(f, _studentRepository).ToList();
 		txtToolReport.Text = TurnItIn.UpdateDatabase(txtExcelFileName.Text, submissions, txtElpCode.Text);
 		Reload();
+		txtToolReport.Text += _config.ReportMissingIds();
 	}
 
 	private void button8_Click(object sender, EventArgs e)

@@ -26,7 +26,7 @@ public class DelegatedMarkerAssignments
 		Details.Add(markingAssignmentDetail);
 	}
 
-	internal string FixFile(FileInfo dest)
+	internal string FixFile(FileInfo dest, int componentCount)
 	{
 		var sb = new StringBuilder();
 		sb.AppendLine($"Preparing {dest.Name}.");
@@ -47,23 +47,24 @@ public class DelegatedMarkerAssignments
 			row = sheet.GetRow(iRow++);
 			row.GetCell(1).SetCellValue(det.ElpId);
 			row.GetCell(2).SetCellValue($"w{det.StudentId}");
-			row.GetCell(3).SetCellValue(det.SubmissionId);
+			row.GetCell(3).SetCellValue(det.StudentEmail);
+			row.GetCell(4).SetCellValue(det.SubmissionId);
 
 			// the marking cells need to be unlocked
 			//
-			for (int i = 4; i < 10; i++)
+			for (int i = 0; i < componentCount; i++)
 			{
-				var thiscell = row.GetCell(i);
+				var thiscell = row.GetCell(5 + i);
 				if (thiscell != null)
 					thiscell.CellStyle = unlockedCellStyle;
 				else
-					sb.AppendLine($"problem with null cell at row: {iRow - 1} col: {i}");
+					sb.AppendLine($"problem with null cell at row: {iRow - 1} col: {5+i}");
 			}
 
 			// get the cell style of the comment and make it unlocked
 			//
 
-			var commentCell = row.GetCell(10);
+			var commentCell = row.GetCell(5 + componentCount);
 			var newCellStyle = workbook.CreateCellStyle();
 			newCellStyle.CloneStyleFrom(commentCell.CellStyle);
 			newCellStyle.IsLocked = false;
@@ -74,9 +75,9 @@ public class DelegatedMarkerAssignments
 		{
 			row = sheet.GetRow(iRow++);
 			// 11 includes the comment
-			for (int i = 11; i < 18; i++)
+			for (int i = 0; i < 7; i++)
 			{
-				var thiscell = row.GetCell(i);
+				var thiscell = row.GetCell(5 + componentCount + i);
 				thiscell.SetBlank();
 			}
 		}

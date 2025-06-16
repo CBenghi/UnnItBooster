@@ -62,8 +62,10 @@ public class EmailContent
 
 	static Regex IsNumericStudentId = new Regex(@"^(\d{8})$");
 
-	internal static string ResolveEmail(string startingContent, string mode)
+	internal static string ResolveEmail(string? startingContent, string mode)
 	{
+		if (startingContent is null)
+			return string.Empty;
 		switch (mode)
 		{
 			case "MCRF_ID":
@@ -74,7 +76,7 @@ public class EmailContent
 					{
 						return $"w{pot}@northumbria.ac.uk";
 					}
-					return "";
+					return string.Empty;
 				}
 			default:
 				return startingContent;

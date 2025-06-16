@@ -36,19 +36,26 @@ namespace StudentMarking
 			panel1 = new System.Windows.Forms.Panel();
 			tabControl2 = new System.Windows.Forms.TabControl();
 			tabPage1 = new System.Windows.Forms.TabPage();
+			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			label5 = new System.Windows.Forms.Label();
 			button2 = new System.Windows.Forms.Button();
 			cmbTableNames = new System.Windows.Forms.ComboBox();
 			label3 = new System.Windows.Forms.Label();
 			cmdReload = new System.Windows.Forms.Button();
 			tabPage4 = new System.Windows.Forms.TabPage();
-			cmdSetModule = new System.Windows.Forms.Button();
+			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			cmbSelectedModule = new System.Windows.Forms.ComboBox();
 			label4 = new System.Windows.Forms.Label();
+			cmdSetModule = new System.Windows.Forms.Button();
 			openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			tabControl1 = new System.Windows.Forms.TabControl();
 			tabPage2 = new System.Windows.Forms.TabPage();
 			splitContainer3 = new System.Windows.Forms.SplitContainer();
+			lstEmailSendSelection = new System.Windows.Forms.ListView();
+			columnHeader1 = new System.Windows.Forms.ColumnHeader();
+			columnHeader2 = new System.Windows.Forms.ColumnHeader();
+			columnHeader3 = new System.Windows.Forms.ColumnHeader();
+			columnHeader4 = new System.Windows.Forms.ColumnHeader();
 			label7 = new System.Windows.Forms.Label();
 			cmbIdField = new System.Windows.Forms.ComboBox();
 			label6 = new System.Windows.Forms.Label();
@@ -56,30 +63,28 @@ namespace StudentMarking
 			label1 = new System.Windows.Forms.Label();
 			cmbEmailField = new System.Windows.Forms.ComboBox();
 			cmdSelectAll = new System.Windows.Forms.Button();
-			lstEmailSendSelection = new System.Windows.Forms.ListView();
-			columnHeader1 = new System.Windows.Forms.ColumnHeader();
-			columnHeader2 = new System.Windows.Forms.ColumnHeader();
-			columnHeader3 = new System.Windows.Forms.ColumnHeader();
-			columnHeader4 = new System.Windows.Forms.ColumnHeader();
 			cmdEmailRefreshStudents = new System.Windows.Forms.Button();
 			splitContainer1 = new System.Windows.Forms.SplitContainer();
-			lblSelectedEmail = new System.Windows.Forms.Label();
 			txtEmailBody = new ExtTextBox();
+			lblSelectedEmail = new System.Windows.Forms.Label();
 			button1 = new System.Windows.Forms.Button();
 			splitContainer2 = new System.Windows.Forms.SplitContainer();
 			txtEmailPreview = new System.Windows.Forms.TextBox();
 			StudImage = new System.Windows.Forms.PictureBox();
-			txtEmailCC = new System.Windows.Forms.TextBox();
-			label2 = new System.Windows.Forms.Label();
+			tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+			cmdSend = new System.Windows.Forms.Button();
 			chkEmailDryRun = new System.Windows.Forms.CheckBox();
 			cmbEmailSubject = new System.Windows.Forms.ComboBox();
+			txtEmailCC = new System.Windows.Forms.TextBox();
 			label10 = new System.Windows.Forms.Label();
-			button3 = new System.Windows.Forms.Button();
+			lblCC = new System.Windows.Forms.Label();
 			tabPage3 = new System.Windows.Forms.TabPage();
 			panel1.SuspendLayout();
 			tabControl2.SuspendLayout();
 			tabPage1.SuspendLayout();
+			tableLayoutPanel1.SuspendLayout();
 			tabPage4.SuspendLayout();
+			tableLayoutPanel2.SuspendLayout();
 			tabControl1.SuspendLayout();
 			tabPage2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)splitContainer3).BeginInit();
@@ -95,12 +100,13 @@ namespace StudentMarking
 			splitContainer2.Panel2.SuspendLayout();
 			splitContainer2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)StudImage).BeginInit();
+			tableLayoutPanel3.SuspendLayout();
 			SuspendLayout();
 			// 
 			// cmdSelectFile
 			// 
-			cmdSelectFile.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-			cmdSelectFile.Location = new System.Drawing.Point(850, 6);
+			cmdSelectFile.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			cmdSelectFile.Location = new System.Drawing.Point(847, 5);
 			cmdSelectFile.Name = "cmdSelectFile";
 			cmdSelectFile.Size = new System.Drawing.Size(41, 26);
 			cmdSelectFile.TabIndex = 10;
@@ -111,10 +117,10 @@ namespace StudentMarking
 			// 
 			// txtExcelFileName
 			// 
-			txtExcelFileName.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			txtExcelFileName.Location = new System.Drawing.Point(96, 6);
+			txtExcelFileName.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			txtExcelFileName.Location = new System.Drawing.Point(92, 5);
 			txtExcelFileName.Name = "txtExcelFileName";
-			txtExcelFileName.Size = new System.Drawing.Size(748, 26);
+			txtExcelFileName.Size = new System.Drawing.Size(749, 26);
 			txtExcelFileName.TabIndex = 9;
 			txtExcelFileName.TabStop = false;
 			txtExcelFileName.WordWrap = false;
@@ -141,13 +147,7 @@ namespace StudentMarking
 			// 
 			// tabPage1
 			// 
-			tabPage1.Controls.Add(label5);
-			tabPage1.Controls.Add(button2);
-			tabPage1.Controls.Add(txtExcelFileName);
-			tabPage1.Controls.Add(cmbTableNames);
-			tabPage1.Controls.Add(cmdSelectFile);
-			tabPage1.Controls.Add(label3);
-			tabPage1.Controls.Add(cmdReload);
+			tabPage1.Controls.Add(tableLayoutPanel1);
 			tabPage1.Location = new System.Drawing.Point(4, 29);
 			tabPage1.Name = "tabPage1";
 			tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -156,10 +156,34 @@ namespace StudentMarking
 			tabPage1.Text = "Database";
 			tabPage1.UseVisualStyleBackColor = true;
 			// 
+			// tableLayoutPanel1
+			// 
+			tableLayoutPanel1.ColumnCount = 4;
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel1.Controls.Add(label5, 0, 0);
+			tableLayoutPanel1.Controls.Add(button2, 2, 1);
+			tableLayoutPanel1.Controls.Add(txtExcelFileName, 1, 0);
+			tableLayoutPanel1.Controls.Add(cmbTableNames, 1, 1);
+			tableLayoutPanel1.Controls.Add(cmdSelectFile, 2, 0);
+			tableLayoutPanel1.Controls.Add(label3, 0, 1);
+			tableLayoutPanel1.Controls.Add(cmdReload, 3, 0);
+			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+			tableLayoutPanel1.Name = "tableLayoutPanel1";
+			tableLayoutPanel1.RowCount = 2;
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			tableLayoutPanel1.Size = new System.Drawing.Size(995, 74);
+			tableLayoutPanel1.TabIndex = 17;
+			// 
 			// label5
 			// 
+			label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			label5.AutoSize = true;
-			label5.Location = new System.Drawing.Point(6, 9);
+			label5.Location = new System.Drawing.Point(3, 8);
 			label5.Name = "label5";
 			label5.Size = new System.Drawing.Size(83, 20);
 			label5.TabIndex = 11;
@@ -167,8 +191,9 @@ namespace StudentMarking
 			// 
 			// button2
 			// 
-			button2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-			button2.Location = new System.Drawing.Point(850, 35);
+			button2.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			tableLayoutPanel1.SetColumnSpan(button2, 2);
+			button2.Location = new System.Drawing.Point(847, 42);
 			button2.Name = "button2";
 			button2.Size = new System.Drawing.Size(145, 27);
 			button2.TabIndex = 15;
@@ -179,18 +204,19 @@ namespace StudentMarking
 			// 
 			// cmbTableNames
 			// 
-			cmbTableNames.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			cmbTableNames.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			cmbTableNames.FormattingEnabled = true;
-			cmbTableNames.Location = new System.Drawing.Point(96, 34);
+			cmbTableNames.Location = new System.Drawing.Point(91, 41);
 			cmbTableNames.Margin = new System.Windows.Forms.Padding(2);
 			cmbTableNames.Name = "cmbTableNames";
-			cmbTableNames.Size = new System.Drawing.Size(748, 28);
+			cmbTableNames.Size = new System.Drawing.Size(751, 28);
 			cmbTableNames.TabIndex = 14;
 			// 
 			// label3
 			// 
+			label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			label3.AutoSize = true;
-			label3.Location = new System.Drawing.Point(6, 36);
+			label3.Location = new System.Drawing.Point(3, 45);
 			label3.Name = "label3";
 			label3.Size = new System.Drawing.Size(52, 20);
 			label3.TabIndex = 13;
@@ -198,8 +224,8 @@ namespace StudentMarking
 			// 
 			// cmdReload
 			// 
-			cmdReload.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-			cmdReload.Location = new System.Drawing.Point(897, 6);
+			cmdReload.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			cmdReload.Location = new System.Drawing.Point(894, 5);
 			cmdReload.Name = "cmdReload";
 			cmdReload.Size = new System.Drawing.Size(98, 26);
 			cmdReload.TabIndex = 12;
@@ -210,9 +236,7 @@ namespace StudentMarking
 			// 
 			// tabPage4
 			// 
-			tabPage4.Controls.Add(cmdSetModule);
-			tabPage4.Controls.Add(cmbSelectedModule);
-			tabPage4.Controls.Add(label4);
+			tabPage4.Controls.Add(tableLayoutPanel2);
 			tabPage4.Location = new System.Drawing.Point(4, 24);
 			tabPage4.Name = "tabPage4";
 			tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -221,10 +245,47 @@ namespace StudentMarking
 			tabPage4.Text = "Student repo";
 			tabPage4.UseVisualStyleBackColor = true;
 			// 
+			// tableLayoutPanel2
+			// 
+			tableLayoutPanel2.ColumnCount = 3;
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel2.Controls.Add(cmbSelectedModule, 1, 0);
+			tableLayoutPanel2.Controls.Add(label4, 0, 0);
+			tableLayoutPanel2.Controls.Add(cmdSetModule, 2, 0);
+			tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+			tableLayoutPanel2.Name = "tableLayoutPanel2";
+			tableLayoutPanel2.RowCount = 1;
+			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel2.Size = new System.Drawing.Size(995, 79);
+			tableLayoutPanel2.TabIndex = 18;
+			// 
+			// cmbSelectedModule
+			// 
+			cmbSelectedModule.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			cmbSelectedModule.FormattingEnabled = true;
+			cmbSelectedModule.Location = new System.Drawing.Point(69, 25);
+			cmbSelectedModule.Margin = new System.Windows.Forms.Padding(2);
+			cmbSelectedModule.Name = "cmbSelectedModule";
+			cmbSelectedModule.Size = new System.Drawing.Size(773, 28);
+			cmbSelectedModule.TabIndex = 16;
+			// 
+			// label4
+			// 
+			label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label4.AutoSize = true;
+			label4.Location = new System.Drawing.Point(3, 29);
+			label4.Name = "label4";
+			label4.Size = new System.Drawing.Size(61, 20);
+			label4.TabIndex = 15;
+			label4.Text = "Module";
+			// 
 			// cmdSetModule
 			// 
-			cmdSetModule.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-			cmdSetModule.Location = new System.Drawing.Point(761, 6);
+			cmdSetModule.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			cmdSetModule.Location = new System.Drawing.Point(847, 26);
 			cmdSetModule.Name = "cmdSetModule";
 			cmdSetModule.Size = new System.Drawing.Size(145, 27);
 			cmdSetModule.TabIndex = 17;
@@ -232,24 +293,6 @@ namespace StudentMarking
 			cmdSetModule.Text = "Set";
 			cmdSetModule.UseVisualStyleBackColor = true;
 			cmdSetModule.Click += cmdSetModule_Click;
-			// 
-			// cmbSelectedModule
-			// 
-			cmbSelectedModule.FormattingEnabled = true;
-			cmbSelectedModule.Location = new System.Drawing.Point(103, 5);
-			cmbSelectedModule.Margin = new System.Windows.Forms.Padding(2);
-			cmbSelectedModule.Name = "cmbSelectedModule";
-			cmbSelectedModule.Size = new System.Drawing.Size(653, 28);
-			cmbSelectedModule.TabIndex = 16;
-			// 
-			// label4
-			// 
-			label4.AutoSize = true;
-			label4.Location = new System.Drawing.Point(13, 7);
-			label4.Name = "label4";
-			label4.Size = new System.Drawing.Size(61, 20);
-			label4.TabIndex = 15;
-			label4.Text = "Module";
 			// 
 			// openFileDialog1
 			// 
@@ -285,6 +328,7 @@ namespace StudentMarking
 			// 
 			// splitContainer3.Panel1
 			// 
+			splitContainer3.Panel1.Controls.Add(lstEmailSendSelection);
 			splitContainer3.Panel1.Controls.Add(label7);
 			splitContainer3.Panel1.Controls.Add(cmbIdField);
 			splitContainer3.Panel1.Controls.Add(label6);
@@ -292,108 +336,26 @@ namespace StudentMarking
 			splitContainer3.Panel1.Controls.Add(label1);
 			splitContainer3.Panel1.Controls.Add(cmbEmailField);
 			splitContainer3.Panel1.Controls.Add(cmdSelectAll);
-			splitContainer3.Panel1.Controls.Add(lstEmailSendSelection);
 			splitContainer3.Panel1.Controls.Add(cmdEmailRefreshStudents);
 			// 
 			// splitContainer3.Panel2
 			// 
 			splitContainer3.Panel2.Controls.Add(splitContainer1);
-			splitContainer3.Panel2.Controls.Add(txtEmailCC);
-			splitContainer3.Panel2.Controls.Add(label2);
-			splitContainer3.Panel2.Controls.Add(chkEmailDryRun);
-			splitContainer3.Panel2.Controls.Add(cmbEmailSubject);
-			splitContainer3.Panel2.Controls.Add(label10);
-			splitContainer3.Panel2.Controls.Add(button3);
+			splitContainer3.Panel2.Controls.Add(tableLayoutPanel3);
 			splitContainer3.Size = new System.Drawing.Size(1012, 594);
 			splitContainer3.SplitterDistance = 319;
 			splitContainer3.TabIndex = 3;
 			// 
-			// label7
-			// 
-			label7.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-			label7.AutoSize = true;
-			label7.Location = new System.Drawing.Point(8, 558);
-			label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			label7.Name = "label7";
-			label7.Size = new System.Drawing.Size(105, 20);
-			label7.TabIndex = 10;
-			label7.Text = "ID Foto Field:";
-			// 
-			// cmbIdField
-			// 
-			cmbIdField.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-			cmbIdField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			cmbIdField.FormattingEnabled = true;
-			cmbIdField.Location = new System.Drawing.Point(132, 555);
-			cmbIdField.Margin = new System.Windows.Forms.Padding(2);
-			cmbIdField.Name = "cmbIdField";
-			cmbIdField.Size = new System.Drawing.Size(174, 28);
-			cmbIdField.TabIndex = 9;
-			// 
-			// label6
-			// 
-			label6.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-			label6.AutoSize = true;
-			label6.Location = new System.Drawing.Point(8, 526);
-			label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			label6.Name = "label6";
-			label6.Size = new System.Drawing.Size(124, 20);
-			label6.TabIndex = 8;
-			label6.Text = "Email transform:";
-			// 
-			// cmbEmailTransformationRule
-			// 
-			cmbEmailTransformationRule.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-			cmbEmailTransformationRule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			cmbEmailTransformationRule.FormattingEnabled = true;
-			cmbEmailTransformationRule.Location = new System.Drawing.Point(132, 523);
-			cmbEmailTransformationRule.Margin = new System.Windows.Forms.Padding(2);
-			cmbEmailTransformationRule.Name = "cmbEmailTransformationRule";
-			cmbEmailTransformationRule.Size = new System.Drawing.Size(174, 28);
-			cmbEmailTransformationRule.TabIndex = 7;
-			// 
-			// label1
-			// 
-			label1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-			label1.AutoSize = true;
-			label1.Location = new System.Drawing.Point(8, 494);
-			label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			label1.Name = "label1";
-			label1.Size = new System.Drawing.Size(85, 20);
-			label1.TabIndex = 6;
-			label1.Text = "Email field:";
-			// 
-			// cmbEmailField
-			// 
-			cmbEmailField.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-			cmbEmailField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			cmbEmailField.FormattingEnabled = true;
-			cmbEmailField.Location = new System.Drawing.Point(132, 491);
-			cmbEmailField.Margin = new System.Windows.Forms.Padding(2);
-			cmbEmailField.Name = "cmbEmailField";
-			cmbEmailField.Size = new System.Drawing.Size(174, 28);
-			cmbEmailField.TabIndex = 5;
-			// 
-			// cmdSelectAll
-			// 
-			cmdSelectAll.Location = new System.Drawing.Point(142, 3);
-			cmdSelectAll.Name = "cmdSelectAll";
-			cmdSelectAll.Size = new System.Drawing.Size(117, 32);
-			cmdSelectAll.TabIndex = 4;
-			cmdSelectAll.Text = "All";
-			cmdSelectAll.UseVisualStyleBackColor = true;
-			cmdSelectAll.Click += cmdSelectAll_Click;
-			// 
 			// lstEmailSendSelection
 			// 
-			lstEmailSendSelection.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			lstEmailSendSelection.CheckBoxes = true;
 			lstEmailSendSelection.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
+			lstEmailSendSelection.Dock = System.Windows.Forms.DockStyle.Fill;
 			lstEmailSendSelection.FullRowSelect = true;
 			lstEmailSendSelection.GridLines = true;
-			lstEmailSendSelection.Location = new System.Drawing.Point(3, 41);
+			lstEmailSendSelection.Location = new System.Drawing.Point(0, 64);
 			lstEmailSendSelection.Name = "lstEmailSendSelection";
-			lstEmailSendSelection.Size = new System.Drawing.Size(314, 445);
+			lstEmailSendSelection.Size = new System.Drawing.Size(319, 386);
 			lstEmailSendSelection.TabIndex = 3;
 			lstEmailSendSelection.UseCompatibleStateImageBehavior = false;
 			lstEmailSendSelection.View = System.Windows.Forms.View.Details;
@@ -418,11 +380,89 @@ namespace StudentMarking
 			// 
 			columnHeader4.Text = "InternalID";
 			// 
+			// label7
+			// 
+			label7.AutoSize = true;
+			label7.Dock = System.Windows.Forms.DockStyle.Bottom;
+			label7.Location = new System.Drawing.Point(0, 450);
+			label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label7.Name = "label7";
+			label7.Size = new System.Drawing.Size(105, 20);
+			label7.TabIndex = 10;
+			label7.Text = "ID Foto Field:";
+			// 
+			// cmbIdField
+			// 
+			cmbIdField.Dock = System.Windows.Forms.DockStyle.Bottom;
+			cmbIdField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			cmbIdField.FormattingEnabled = true;
+			cmbIdField.Location = new System.Drawing.Point(0, 470);
+			cmbIdField.Margin = new System.Windows.Forms.Padding(2);
+			cmbIdField.Name = "cmbIdField";
+			cmbIdField.Size = new System.Drawing.Size(319, 28);
+			cmbIdField.TabIndex = 9;
+			// 
+			// label6
+			// 
+			label6.AutoSize = true;
+			label6.Dock = System.Windows.Forms.DockStyle.Bottom;
+			label6.Location = new System.Drawing.Point(0, 498);
+			label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label6.Name = "label6";
+			label6.Size = new System.Drawing.Size(124, 20);
+			label6.TabIndex = 8;
+			label6.Text = "Email transform:";
+			// 
+			// cmbEmailTransformationRule
+			// 
+			cmbEmailTransformationRule.Dock = System.Windows.Forms.DockStyle.Bottom;
+			cmbEmailTransformationRule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			cmbEmailTransformationRule.FormattingEnabled = true;
+			cmbEmailTransformationRule.Location = new System.Drawing.Point(0, 518);
+			cmbEmailTransformationRule.Margin = new System.Windows.Forms.Padding(2);
+			cmbEmailTransformationRule.Name = "cmbEmailTransformationRule";
+			cmbEmailTransformationRule.Size = new System.Drawing.Size(319, 28);
+			cmbEmailTransformationRule.TabIndex = 7;
+			// 
+			// label1
+			// 
+			label1.AutoSize = true;
+			label1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			label1.Location = new System.Drawing.Point(0, 546);
+			label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label1.Name = "label1";
+			label1.Size = new System.Drawing.Size(85, 20);
+			label1.TabIndex = 6;
+			label1.Text = "Email field:";
+			// 
+			// cmbEmailField
+			// 
+			cmbEmailField.Dock = System.Windows.Forms.DockStyle.Bottom;
+			cmbEmailField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			cmbEmailField.FormattingEnabled = true;
+			cmbEmailField.Location = new System.Drawing.Point(0, 566);
+			cmbEmailField.Margin = new System.Windows.Forms.Padding(2);
+			cmbEmailField.Name = "cmbEmailField";
+			cmbEmailField.Size = new System.Drawing.Size(319, 28);
+			cmbEmailField.TabIndex = 5;
+			// 
+			// cmdSelectAll
+			// 
+			cmdSelectAll.Dock = System.Windows.Forms.DockStyle.Top;
+			cmdSelectAll.Location = new System.Drawing.Point(0, 32);
+			cmdSelectAll.Name = "cmdSelectAll";
+			cmdSelectAll.Size = new System.Drawing.Size(319, 32);
+			cmdSelectAll.TabIndex = 4;
+			cmdSelectAll.Text = "All";
+			cmdSelectAll.UseVisualStyleBackColor = true;
+			cmdSelectAll.Click += cmdSelectAll_Click;
+			// 
 			// cmdEmailRefreshStudents
 			// 
-			cmdEmailRefreshStudents.Location = new System.Drawing.Point(3, 3);
+			cmdEmailRefreshStudents.Dock = System.Windows.Forms.DockStyle.Top;
+			cmdEmailRefreshStudents.Location = new System.Drawing.Point(0, 0);
 			cmdEmailRefreshStudents.Name = "cmdEmailRefreshStudents";
-			cmdEmailRefreshStudents.Size = new System.Drawing.Size(135, 32);
+			cmdEmailRefreshStudents.Size = new System.Drawing.Size(319, 32);
 			cmdEmailRefreshStudents.TabIndex = 2;
 			cmdEmailRefreshStudents.Text = "Refresh";
 			cmdEmailRefreshStudents.UseVisualStyleBackColor = true;
@@ -430,50 +470,39 @@ namespace StudentMarking
 			// 
 			// splitContainer1
 			// 
-			splitContainer1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			splitContainer1.Location = new System.Drawing.Point(6, 96);
+			splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+			splitContainer1.Location = new System.Drawing.Point(0, 114);
 			splitContainer1.Margin = new System.Windows.Forms.Padding(2);
 			splitContainer1.Name = "splitContainer1";
 			splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitContainer1.Panel1
 			// 
-			splitContainer1.Panel1.Controls.Add(lblSelectedEmail);
 			splitContainer1.Panel1.Controls.Add(txtEmailBody);
+			splitContainer1.Panel1.Controls.Add(lblSelectedEmail);
 			splitContainer1.Panel1.Controls.Add(button1);
 			// 
 			// splitContainer1.Panel2
 			// 
 			splitContainer1.Panel2.Controls.Add(splitContainer2);
-			splitContainer1.Size = new System.Drawing.Size(679, 493);
-			splitContainer1.SplitterDistance = 243;
+			splitContainer1.Size = new System.Drawing.Size(689, 480);
+			splitContainer1.SplitterDistance = 235;
 			splitContainer1.SplitterWidth = 2;
 			splitContainer1.TabIndex = 11;
-			// 
-			// lblSelectedEmail
-			// 
-			lblSelectedEmail.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-			lblSelectedEmail.AutoSize = true;
-			lblSelectedEmail.Location = new System.Drawing.Point(2, 215);
-			lblSelectedEmail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			lblSelectedEmail.Name = "lblSelectedEmail";
-			lblSelectedEmail.Size = new System.Drawing.Size(128, 20);
-			lblSelectedEmail.TabIndex = 11;
-			lblSelectedEmail.Text = "<selected email>";
 			// 
 			// txtEmailBody
 			// 
 			txtEmailBody.AcceptsReturn = true;
 			txtEmailBody.AcceptsTab = true;
-			txtEmailBody.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			txtEmailBody.ChangedColour = System.Drawing.Color.Empty;
+			txtEmailBody.Dock = System.Windows.Forms.DockStyle.Fill;
 			txtEmailBody.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-			txtEmailBody.Location = new System.Drawing.Point(3, 4);
+			txtEmailBody.Location = new System.Drawing.Point(0, 0);
 			txtEmailBody.Margin = new System.Windows.Forms.Padding(6);
 			txtEmailBody.MaxLength = 0;
 			txtEmailBody.Name = "txtEmailBody";
 			txtEmailBody.OriginalText = "";
-			txtEmailBody.Size = new System.Drawing.Size(670, 199);
+			txtEmailBody.Size = new System.Drawing.Size(689, 174);
 			txtEmailBody.SpellCheck = true;
 			txtEmailBody.TabIndex = 6;
 			txtEmailBody.TabStop = false;
@@ -481,12 +510,23 @@ namespace StudentMarking
 			txtEmailBody.TextType = ExtTextBox.TextTypes.String;
 			txtEmailBody.Wrapping = true;
 			// 
+			// lblSelectedEmail
+			// 
+			lblSelectedEmail.AutoSize = true;
+			lblSelectedEmail.Dock = System.Windows.Forms.DockStyle.Bottom;
+			lblSelectedEmail.Location = new System.Drawing.Point(0, 174);
+			lblSelectedEmail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			lblSelectedEmail.Name = "lblSelectedEmail";
+			lblSelectedEmail.Size = new System.Drawing.Size(128, 20);
+			lblSelectedEmail.TabIndex = 11;
+			lblSelectedEmail.Text = "<selected email>";
+			// 
 			// button1
 			// 
-			button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-			button1.Location = new System.Drawing.Point(538, 210);
+			button1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			button1.Location = new System.Drawing.Point(0, 194);
 			button1.Name = "button1";
-			button1.Size = new System.Drawing.Size(135, 30);
+			button1.Size = new System.Drawing.Size(689, 41);
 			button1.TabIndex = 10;
 			button1.Text = "Save";
 			button1.UseVisualStyleBackColor = true;
@@ -506,8 +546,8 @@ namespace StudentMarking
 			// splitContainer2.Panel2
 			// 
 			splitContainer2.Panel2.Controls.Add(StudImage);
-			splitContainer2.Size = new System.Drawing.Size(679, 248);
-			splitContainer2.SplitterDistance = 430;
+			splitContainer2.Size = new System.Drawing.Size(689, 243);
+			splitContainer2.SplitterDistance = 436;
 			splitContainer2.SplitterWidth = 2;
 			splitContainer2.TabIndex = 12;
 			// 
@@ -519,7 +559,7 @@ namespace StudentMarking
 			txtEmailPreview.Multiline = true;
 			txtEmailPreview.Name = "txtEmailPreview";
 			txtEmailPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			txtEmailPreview.Size = new System.Drawing.Size(430, 248);
+			txtEmailPreview.Size = new System.Drawing.Size(436, 243);
 			txtEmailPreview.TabIndex = 7;
 			txtEmailPreview.TabStop = false;
 			// 
@@ -530,35 +570,52 @@ namespace StudentMarking
 			StudImage.Location = new System.Drawing.Point(0, 0);
 			StudImage.Margin = new System.Windows.Forms.Padding(2);
 			StudImage.Name = "StudImage";
-			StudImage.Size = new System.Drawing.Size(247, 248);
+			StudImage.Size = new System.Drawing.Size(251, 243);
 			StudImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			StudImage.TabIndex = 20;
 			StudImage.TabStop = false;
 			// 
-			// txtEmailCC
+			// tableLayoutPanel3
 			// 
-			txtEmailCC.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			txtEmailCC.Location = new System.Drawing.Point(74, 69);
-			txtEmailCC.Name = "txtEmailCC";
-			txtEmailCC.Size = new System.Drawing.Size(607, 26);
-			txtEmailCC.TabIndex = 9;
+			tableLayoutPanel3.ColumnCount = 2;
+			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel3.Controls.Add(cmdSend, 1, 0);
+			tableLayoutPanel3.Controls.Add(chkEmailDryRun, 0, 0);
+			tableLayoutPanel3.Controls.Add(cmbEmailSubject, 1, 1);
+			tableLayoutPanel3.Controls.Add(txtEmailCC, 1, 2);
+			tableLayoutPanel3.Controls.Add(label10, 0, 1);
+			tableLayoutPanel3.Controls.Add(lblCC, 0, 2);
+			tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top;
+			tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
+			tableLayoutPanel3.Name = "tableLayoutPanel3";
+			tableLayoutPanel3.RowCount = 3;
+			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.3333321F));
+			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.3333321F));
+			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.3333321F));
+			tableLayoutPanel3.Size = new System.Drawing.Size(689, 114);
+			tableLayoutPanel3.TabIndex = 12;
 			// 
-			// label2
+			// cmdSend
 			// 
-			label2.AutoSize = true;
-			label2.Location = new System.Drawing.Point(3, 72);
-			label2.Name = "label2";
-			label2.Size = new System.Drawing.Size(25, 20);
-			label2.TabIndex = 8;
-			label2.Text = "cc";
+			cmdSend.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			cmdSend.Location = new System.Drawing.Point(95, 4);
+			cmdSend.Name = "cmdSend";
+			cmdSend.Size = new System.Drawing.Size(591, 29);
+			cmdSend.TabIndex = 0;
+			cmdSend.Text = "Send";
+			cmdSend.UseVisualStyleBackColor = true;
+			cmdSend.Click += send_Click;
 			// 
 			// chkEmailDryRun
 			// 
+			chkEmailDryRun.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			chkEmailDryRun.AutoSize = true;
 			chkEmailDryRun.Checked = true;
 			chkEmailDryRun.CheckState = System.Windows.Forms.CheckState.Checked;
-			chkEmailDryRun.Location = new System.Drawing.Point(74, 11);
+			chkEmailDryRun.Location = new System.Drawing.Point(3, 10);
 			chkEmailDryRun.Name = "chkEmailDryRun";
+			chkEmailDryRun.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
 			chkEmailDryRun.Size = new System.Drawing.Size(86, 24);
 			chkEmailDryRun.TabIndex = 4;
 			chkEmailDryRun.Text = "Dry Run";
@@ -566,15 +623,24 @@ namespace StudentMarking
 			// 
 			// cmbEmailSubject
 			// 
-			cmbEmailSubject.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			cmbEmailSubject.Location = new System.Drawing.Point(74, 41);
+			cmbEmailSubject.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			cmbEmailSubject.Location = new System.Drawing.Point(95, 41);
 			cmbEmailSubject.Name = "cmbEmailSubject";
-			cmbEmailSubject.Size = new System.Drawing.Size(607, 28);
+			cmbEmailSubject.Size = new System.Drawing.Size(591, 28);
 			cmbEmailSubject.TabIndex = 3;
 			cmbEmailSubject.SelectedValueChanged += cmbEmailSubject_SelectedValueChanged;
 			// 
+			// txtEmailCC
+			// 
+			txtEmailCC.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			txtEmailCC.Location = new System.Drawing.Point(95, 81);
+			txtEmailCC.Name = "txtEmailCC";
+			txtEmailCC.Size = new System.Drawing.Size(591, 26);
+			txtEmailCC.TabIndex = 9;
+			// 
 			// label10
 			// 
+			label10.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			label10.AutoSize = true;
 			label10.Location = new System.Drawing.Point(3, 45);
 			label10.Name = "label10";
@@ -582,16 +648,15 @@ namespace StudentMarking
 			label10.TabIndex = 2;
 			label10.Text = "Subject";
 			// 
-			// button3
+			// lblCC
 			// 
-			button3.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-			button3.Location = new System.Drawing.Point(544, 6);
-			button3.Name = "button3";
-			button3.Size = new System.Drawing.Size(135, 29);
-			button3.TabIndex = 0;
-			button3.Text = "Send";
-			button3.UseVisualStyleBackColor = true;
-			button3.Click += button3_Click;
+			lblCC.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			lblCC.AutoSize = true;
+			lblCC.Location = new System.Drawing.Point(3, 84);
+			lblCC.Name = "lblCC";
+			lblCC.Size = new System.Drawing.Size(31, 20);
+			lblCC.TabIndex = 8;
+			lblCC.Text = "CC";
 			// 
 			// tabPage3
 			// 
@@ -619,15 +684,16 @@ namespace StudentMarking
 			panel1.ResumeLayout(false);
 			tabControl2.ResumeLayout(false);
 			tabPage1.ResumeLayout(false);
-			tabPage1.PerformLayout();
+			tableLayoutPanel1.ResumeLayout(false);
+			tableLayoutPanel1.PerformLayout();
 			tabPage4.ResumeLayout(false);
-			tabPage4.PerformLayout();
+			tableLayoutPanel2.ResumeLayout(false);
+			tableLayoutPanel2.PerformLayout();
 			tabControl1.ResumeLayout(false);
 			tabPage2.ResumeLayout(false);
 			splitContainer3.Panel1.ResumeLayout(false);
 			splitContainer3.Panel1.PerformLayout();
 			splitContainer3.Panel2.ResumeLayout(false);
-			splitContainer3.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)splitContainer3).EndInit();
 			splitContainer3.ResumeLayout(false);
 			splitContainer1.Panel1.ResumeLayout(false);
@@ -641,6 +707,8 @@ namespace StudentMarking
 			((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
 			splitContainer2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)StudImage).EndInit();
+			tableLayoutPanel3.ResumeLayout(false);
+			tableLayoutPanel3.PerformLayout();
 			ResumeLayout(false);
 		}
 
@@ -655,7 +723,7 @@ namespace StudentMarking
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button cmdSend;
         private System.Windows.Forms.Button cmdEmailRefreshStudents;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.ListView lstEmailSendSelection;
@@ -674,7 +742,7 @@ namespace StudentMarking
         private System.Windows.Forms.ComboBox cmbEmailField;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtEmailCC;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblCC;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ComboBox cmbTableNames;
@@ -693,6 +761,9 @@ namespace StudentMarking
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.ComboBox cmbIdField;
 		private System.Windows.Forms.PictureBox StudImage;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
 	}
 }
 

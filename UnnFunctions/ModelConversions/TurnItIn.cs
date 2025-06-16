@@ -230,13 +230,13 @@ public partial class TurnItIn
 
 	public static IEnumerable<TurnitInSubmission> GetSubmissionsFromLearningAnalytics(FileInfo learningAnalytics, StudentsRepository repo)
 	{
-		using var package = Excel.OpenWorkbook(learningAnalytics);
-		if (package is null)
+		using var learningAnalyticsPackage = Excel.OpenWorkbook(learningAnalytics);
+		if (learningAnalyticsPackage is null)
 			return Enumerable.Empty<TurnitInSubmission>();
 		// prepare question dictionary
 		var lst = new List<TurnitInSubmission>();
-		UpdateStudentInfo(ref lst, package, repo);
-		UpdateStudentSubmissionId(ref lst, package, repo);
+		UpdateStudentInfo(ref lst, learningAnalyticsPackage, repo);
+		UpdateStudentSubmissionId(ref lst, learningAnalyticsPackage, repo);
 		return lst;
 	}
 
@@ -277,9 +277,12 @@ public partial class TurnItIn
 		var stude = sourceRepository.Students.FirstOrDefault(x => x.HasEmail(submissionTuUpdate.Email));
 		if (stude is null)
 		{
-			stude = sourceRepository.Students.FirstOrDefault(x => x.FullName is not null && x.FullName.Equals(submissionTuUpdate.FullName, System.StringComparison.OrdinalIgnoreCase));
-			if (stude != null)
-				sourceRepository.AddAlternativeEmail(stude, submissionTuUpdate.Email);
+			var studes = sourceRepository.Students.Where(x => x.FullName is not null && x.FullName.Equals(submissionTuUpdate.FullName, System.StringComparison.OrdinalIgnoreCase));
+			foreach (var student in studes)
+			{
+				sourceRepository.AddAlternativeEmail(student, submissionTuUpdate.Email);
+			}
+			stude = studes.FirstOrDefault();
 		}
 		if (stude is not null)
 		{
@@ -302,6 +305,9 @@ public partial class TurnItIn
 		}
 	}
 
+	/// <summary>
+	/// Gets full name and paper information
+	/// </summary>
 	private static void UpdateStudentInfo(ref List<TurnitInSubmission> lst, IWorkbook package, StudentsRepository repo)
 	{
 		var table = package.GetSheetByName("Submissions");

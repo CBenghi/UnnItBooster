@@ -118,19 +118,26 @@ namespace StudentsFetcher.StudentMarking
 				{"9", "exceptional"}
 			};
 
-		public string GetStudentReport(int id, bool sendModerationNotice, bool includeCommentNumber = false)
+		public string GetStudentReport(int shortId, bool sendModerationNotice, bool includeCommentNumber = false)
 		{
 			var sb = new StringBuilder();
-			var stud = GetStudentRow(id);
+			var stud = GetStudentRow(shortId);
 			if (stud == null)
 			{
 				return "";
 			}
 			var tin = TurnitInSubmission.FromRow(stud);
+			GetSubmissionHeader(shortId, sb, tin);
+			// sb.AppendLine();
+			GetStudentFeedback(shortId, sendModerationNotice, sb, tin, includeCommentNumber);
+			var s = sb.ToString();
+			return s;
+		}
+
+		public static void GetSubmissionHeader(int id, StringBuilder sb, TurnitInSubmission tin)
+		{
 			sb.AppendLine($"# {tin.FirstName} {tin.LastName} {tin.NumericUserId}");
 			sb.AppendLine();
-			if (includeCommentNumber)
-				sb.AppendLine($"- delegate marking tab: {tin.ElpSite}\t{tin.NumericUserId}\t{tin.PaperId}");
 			sb.AppendLine($"- email: {tin.Email} (#{id})");
 			if (!string.IsNullOrWhiteSpace(tin.PaperId))
 				sb.AppendLine($"- Submission ID: {tin.PaperId}");
@@ -138,10 +145,6 @@ namespace StudentsFetcher.StudentMarking
 				sb.AppendLine($"- Submission Title: {tin.Title}");
 			if (!string.IsNullOrWhiteSpace(tin.ElpSite))
 				sb.AppendLine($"- Elp: {tin.ElpSite}");
-			// sb.AppendLine();
-			GetStudentFeedback(id, sendModerationNotice, sb, tin, includeCommentNumber);
-			var s = sb.ToString();
-			return s;
 		}
 
 		[Flags]
@@ -151,8 +154,9 @@ namespace StudentsFetcher.StudentMarking
 			SendModerationNotice = 1,
 			IncludeCommentNumber = 2,
 			JustComponentMarks = 4,
+			IncludeHeader = 8,
 		}
-		public void GetStudentFeedback(int shortId, bool sendModerationNotice, StringBuilder sb, TurnitInSubmission? stud, bool includeCommentNumber = false)
+		public void GetStudentFeedback(int shortId, bool sendModerationNotice, StringBuilder sb, TurnitInSubmission stud, bool includeCommentNumber = false)
 		{
 			var t = FeedBackReportConfig.None;
 			if (sendModerationNotice)
@@ -162,8 +166,13 @@ namespace StudentsFetcher.StudentMarking
 			GetStudentFeedback(shortId, sb, stud, t);
 		}
 
-		public void GetStudentFeedback(int shortId, StringBuilder sb, TurnitInSubmission? stud, FeedBackReportConfig config)
+		public void GetStudentFeedback(int shortId, StringBuilder sb, TurnitInSubmission stud, FeedBackReportConfig config)
 		{
+			if (config.HasFlag(FeedBackReportConfig.IncludeHeader))
+			{
+				GetSubmissionHeader(shortId, sb, stud);
+			}
+
 			var componentComments = "";
 			string sql = 
 				$"""
@@ -175,7 +184,8 @@ namespace StudentsFetcher.StudentMarking
 			var dt = GetDataTable(sql);
 			if (dt.Rows.Count > 0)
 			{
-				sb.AppendLine("## Marking components:");
+				sb.AppendLine("");
+				sb.AppendLine("## Marking components");
 				sb.AppendLine("");
 			}
 			foreach (DataRow item in dt.Rows)
@@ -233,7 +243,6 @@ namespace StudentsFetcher.StudentMarking
 				thisSection += string.IsNullOrEmpty(thisSection)
 					? sec
 					: $" / {sec}";
-
 
 				if (prevSection != thisSection)
 				{
@@ -520,12 +529,19 @@ namespace StudentsFetcher.StudentMarking
 			return numeric;
 		}
 
-		public int EnsureMarker(string studId, string mrkrEmail, string mrkrName, string role)
+		public int EnsureMarker(string studentOrSubmissionId, string mrkrEmail, string mrkrName, string role)
 		{
+			// search for studentID
+			var sqlId = $"select SUB_UserID from TB_Submissions where SUB_PaperID = '{studentOrSubmissionId}'";
+			var t = GetVector(sqlId);
+			if (t.Count == 1)
+			{
+				studentOrSubmissionId = t[0];
+			}
 			var sql =
 				$"""
 				select * from TB_Markers where 
-				MRKR_ptr_SubmissionUserID = '{studId}' and
+				MRKR_ptr_SubmissionUserID = '{studentOrSubmissionId}' and
 				MRKR_MarkerEmail = '{mrkrEmail}' and
 				MRKR_MarkerName = '{mrkrName}' and
 				MRKR_MarkerRole = '{role}'
@@ -538,7 +554,7 @@ namespace StudentsFetcher.StudentMarking
 				insert into TB_Markers 
 				(MRKR_ptr_SubmissionUserID, MRKR_MarkerEmail, MRKR_MarkerName, MRKR_MarkerRole)
 				values 
-				('{studId}', '{mrkrEmail}', '{mrkrName}', '{role}')
+				('{studentOrSubmissionId}', '{mrkrEmail}', '{mrkrName}', '{role}')
 				""";
 			return Execute(sql);
 		}
@@ -706,7 +722,7 @@ namespace StudentsFetcher.StudentMarking
 			}
 		}
 
-		public string GetDelegatedMarksFromExcel(string filter, out IEnumerable<DelegatedMarkResponse> marks)
+		public string GetDelegatedMarksFromExcel(int componentCount, string filter, out IEnumerable<DelegatedMarkResponse> marks)
 		{
 			var sb = new StringBuilder();
 			var folderName = GetFolderName()!;
@@ -726,7 +742,7 @@ namespace StudentsFetcher.StudentMarking
 					sb.AppendLine(report);
 					continue;
 				}
-				retmarks.AddRange(DelegatedMarkResponse.GetMarks(workbook, out var getMarksReport));
+				retmarks.AddRange(DelegatedMarkResponse.GetMarks(componentCount, workbook, out var getMarksReport));
 
 			}
 			marks = retmarks;
@@ -772,16 +788,18 @@ namespace StudentsFetcher.StudentMarking
 		{
 			var sb = new StringBuilder();
 			var assignments = GetMarkingAssignmentsPerMarker();
+			var cnt = GetMarkCalculator().Marks.Count;
+
 			foreach (var assignment in assignments)
 			{
 				if (!string.IsNullOrWhiteSpace(filter) && !assignment.MarkerEmail.Contains(filter))
 					continue; // skip if does not contain filter				
-				sb.AppendLine(CreateExcelMarking(fl, assignment));
+				sb.AppendLine(CreateExcelMarking(fl, assignment, cnt));
 			}
 			return sb.ToString();
 		}
 
-		private string CreateExcelMarking(FileInfo fl, DelegatedMarkerAssignments assItem)
+		private string CreateExcelMarking(FileInfo fl, DelegatedMarkerAssignments assItem, int componentCount)
 		{
 			var dest = GetLocalizedPathFrom($"{assItem.MarkerEmail}.xlsx");
 			if (dest is null)
@@ -792,7 +810,7 @@ namespace StudentsFetcher.StudentMarking
 			if (dest.Exists)
 				dest.Delete();
 			fl.CopyTo(dest.FullName);
-			sb.Append(assItem.FixFile(dest));
+			sb.Append(assItem.FixFile(dest, componentCount));
 			return sb.ToString();
 		}
 
@@ -829,10 +847,18 @@ namespace StudentsFetcher.StudentMarking
 			return componentValues;
 		}
 
-		public IEnumerable<string> GetDocuementFiles(string paperId)
+		public IEnumerable<string> GetDocumentFiles(string paperId)
+		{
+			var dir = new DirectoryInfo(GetFolderName());
+			foreach (var file in GetDocumentFileInfos(paperId))
+			{
+				yield return file.FullName.Substring(dir.FullName.Length + 1);
+			}
+		}
+
+		public IEnumerable<FileInfo> GetDocumentFileInfos(string paperId)
 		{
 			var r = new Regex(@"^\d+$");
-
 			var dir = new DirectoryInfo(GetFolderName());
 			var subdirs = dir.GetDirectories().Where(x => r.IsMatch(x.Name));
 			foreach (var subdir in subdirs)
@@ -840,10 +866,30 @@ namespace StudentsFetcher.StudentMarking
 				var files = subdir.GetFiles($"{paperId}*.*");
 				foreach (var file in files)
 				{
-					yield return file.FullName.Substring(dir.FullName.Length + 1);
+					yield return file;
 				}
 			}
+		}
 
+		public string ReportMissingIds()
+		{
+			var sb = new StringBuilder();
+			string sql = "select * from TB_Submissions where SUB_UserID like '' OR SUB_NumericUserID like ''";
+			var t = GetDataTable(sql);
+			foreach (DataRow item in t.Rows)
+			{
+				sb.AppendLine($"Missing Id: {item["SUB_ID"]}, {item["SUB_email"]}");
+
+			}
+			return sb.ToString();
+		}
+
+		public TurnitInSubmission? GetSubmission(int shortId)
+		{
+			var stud = GetStudentRow(shortId);
+			if (stud == null)
+				return null;
+			return TurnitInSubmission.FromRow(stud);
 		}
 
 		public string BareName => Path.GetFileNameWithoutExtension(DbName);

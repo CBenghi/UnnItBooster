@@ -25,8 +25,8 @@ namespace StudentMarking
 		public frmMassMail()
 		{
 			InitializeComponent();
-			
-			
+			this.AutoScaleMode = AutoScaleMode.Dpi;
+
 			cmbSelectedModule.Items.Clear();
 			studentsRepo.Reload();
 			foreach (var coll in studentsRepo.GetPersonCollections())
@@ -203,7 +203,6 @@ namespace StudentMarking
 		List<string> GetReplacementList(string emailbody)
 		{
 			var ret = new List<string>();
-
 			MatchCollection mts = Regex.Matches(emailbody, "{([^}]*)}");
 			foreach (Match match in mts)
 			{
@@ -212,20 +211,18 @@ namespace StudentMarking
 			return ret;
 		}
 
-		private void button3_Click(object sender, EventArgs e)
+		private void send_Click(object sender, EventArgs e)
 		{
-			if (cmbEmailSubject.Text == "")
+			if (string.IsNullOrEmpty(cmbEmailSubject.Text))
 			{
 				MessageBox.Show("Subject is empty.");
 				return;
 			}
-
 			if (string.IsNullOrEmpty(cmbEmailField.Text))
 			{
 				MessageBox.Show("email field is invalid.");
 				return;
 			}
-
 			if (!string.IsNullOrWhiteSpace(txtEmailCC.Text) && !txtEmailCC.Text.Trim().EndsWith(";"))
 			{
 				MessageBox.Show("email CC needs to end with semicolon.");
@@ -239,7 +236,6 @@ namespace StudentMarking
 			{
 				if (!studentId.Checked)
 					continue;
-
 				var row = studentId.Tag as DataRow;
 				if (row is null)
 					continue;
@@ -248,12 +244,14 @@ namespace StudentMarking
 					string emailtext = GetMailBody(replacements, row);
 					var emailSubject = replaceFields(cmbEmailSubject.Text, replacements, row);
 					var destEmail = EmailContent.ResolveEmail(row[cmbEmailField.Text].ToString() ?? "", cmbEmailTransformationRule.Text);
+					var emailCC = replaceFields(txtEmailCC.Text, replacements, row).Trim();
+
 					if (string.IsNullOrWhiteSpace(destEmail))
 						continue;
 					if (chkEmailDryRun.Checked)
-						app.SendOutlookEmail("claudio.benghi@gmail.com", emailSubject, emailtext, txtEmailCC.Text.Trim());
+						app.SendOutlookEmail("claudio.benghi@gmail.com", emailSubject, emailtext, emailCC);
 					else
-						app.SendOutlookEmail(destEmail, emailSubject, emailtext, txtEmailCC.Text);
+						app.SendOutlookEmail(destEmail, emailSubject, emailtext, emailCC);
 				}
 				catch (Exception ex)
 				{
@@ -306,8 +304,7 @@ namespace StudentMarking
 				var dataId = data[0];
 
 				// start with the data
-				var repvalue = "";
-				repvalue = row[dataId].ToString();
+				var repvalue = row[dataId].ToString();
 				repvalue = repvalue.Replace("\n", "\r\n");
 				var oValue = row[dataId];
 				if (oValue.GetType() == typeof(double))
@@ -406,8 +403,7 @@ namespace StudentMarking
 
 		private string capitalize(string repvalue)
 		{
-			// Creates a TextInfo based on the "en-US" culture.
-			TextInfo textInfo = new CultureInfo("en-GB", false).TextInfo;
+			var textInfo = new CultureInfo("en-GB", false).TextInfo;
 
 			// Changes a string to titlecase.
 			repvalue = repvalue.ToLowerInvariant(); // all capital would be otherwise ignored because considered Acronyms
@@ -424,14 +420,6 @@ namespace StudentMarking
 			foreach (ListViewItem item in lstEmailSendSelection.Items)
 			{
 				item.Checked = true;
-			}
-		}
-
-		private string folder
-		{
-			get
-			{
-				return new FileInfo(txtExcelFileName.Text).DirectoryName;
 			}
 		}
 
@@ -467,31 +455,26 @@ namespace StudentMarking
 		{
 			if (lstEmailSendSelection.SelectedItems.Count == 0)
 				return;
-
-
-
 			var emailColumn = cmbEmailField.Text;
 			var row = lstEmailSendSelection.SelectedItems[0].Tag as DataRow;
-			if (row == null)
+			if (row is null)
 				return;
-
 			if (!string.IsNullOrEmpty(cmbIdField.Text))
 			{
 				var id = row[cmbIdField.Text].ToString() ?? "";
 				if (StudentsRepository.TryGetNumericUserId(id, out var idString))
 					StudImage.LoadAsync(StudentsRepository.GetImageUrl(idString));
 			}
-
 			if (string.IsNullOrWhiteSpace(emailColumn) || !row.Table.Columns.Contains(emailColumn))
 			{
 				txtEmailPreview.Text = $"Error: Invalid email column '{emailColumn}'";
 				return;
 			}
-
-			
-
 			var replacements = GetReplacementList(txtEmailBody.Text);
-			var destEmail = EmailContent.ResolveEmail(row[emailColumn].ToString(), cmbEmailTransformationRule.Text);
+			var destEmail = EmailContent.ResolveEmail(
+				row[emailColumn].ToString(), 
+				cmbEmailTransformationRule.Text
+				);
 			lblSelectedEmail.Text = destEmail;
 			try
 			{

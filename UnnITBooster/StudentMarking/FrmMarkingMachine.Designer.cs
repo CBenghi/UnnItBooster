@@ -43,7 +43,9 @@ namespace StudentsFetcher.StudentMarking
 			LblMark = new Label();
 			cmdSaveMarks = new Button();
 			panel2 = new Panel();
+			chkJustComponents = new CheckBox();
 			chkUseSorting = new CheckBox();
+			ChkCommNumber = new CheckBox();
 			LblOverlap = new Label();
 			button12 = new Button();
 			button6 = new Button();
@@ -53,13 +55,11 @@ namespace StudentsFetcher.StudentMarking
 			panel1 = new Panel();
 			label8 = new Label();
 			groupBox2 = new GroupBox();
-			chkJustComponents = new CheckBox();
 			cmdSetFromDelegatedMarks = new Button();
 			groupBox4 = new GroupBox();
 			button13 = new Button();
 			cmbDocuments = new ComboBox();
 			button2 = new Button();
-			ChkCommNumber = new CheckBox();
 			cmdReportSizeDecrease = new Button();
 			cmdReportSizeIncrease = new Button();
 			cmdWrap = new Button();
@@ -234,13 +234,13 @@ namespace StudentsFetcher.StudentMarking
 			txtSearch.Location = new System.Drawing.Point(0, 15);
 			txtSearch.Margin = new Padding(4, 3, 4, 3);
 			txtSearch.Name = "txtSearch";
-			txtSearch.Size = new System.Drawing.Size(536, 29);
+			txtSearch.Size = new System.Drawing.Size(526, 29);
 			txtSearch.TabIndex = 3;
 			txtSearch.KeyDown += txtSearch_KeyDown;
 			// 
 			// cmdAdd
 			// 
-			cmdAdd.Location = new System.Drawing.Point(152, 593);
+			cmdAdd.Location = new System.Drawing.Point(154, 593);
 			cmdAdd.Margin = new Padding(4, 3, 4, 3);
 			cmdAdd.Name = "cmdAdd";
 			cmdAdd.Size = new System.Drawing.Size(88, 27);
@@ -260,7 +260,7 @@ namespace StudentsFetcher.StudentMarking
 			txtLibReport.Multiline = true;
 			txtLibReport.Name = "txtLibReport";
 			txtLibReport.ScrollBars = ScrollBars.Both;
-			txtLibReport.Size = new System.Drawing.Size(536, 455);
+			txtLibReport.Size = new System.Drawing.Size(526, 455);
 			txtLibReport.TabIndex = 2;
 			txtLibReport.TabStop = false;
 			// 
@@ -380,6 +380,17 @@ namespace StudentsFetcher.StudentMarking
 			panel2.Size = new System.Drawing.Size(408, 84);
 			panel2.TabIndex = 17;
 			// 
+			// chkJustComponents
+			// 
+			chkJustComponents.AutoSize = true;
+			chkJustComponents.Location = new System.Drawing.Point(5, 46);
+			chkJustComponents.Margin = new Padding(2);
+			chkJustComponents.Name = "chkJustComponents";
+			chkJustComponents.Size = new System.Drawing.Size(146, 19);
+			chkJustComponents.TabIndex = 26;
+			chkJustComponents.Text = "Just component marks";
+			chkJustComponents.UseVisualStyleBackColor = true;
+			// 
 			// chkUseSorting
 			// 
 			chkUseSorting.AutoSize = true;
@@ -391,6 +402,17 @@ namespace StudentsFetcher.StudentMarking
 			chkUseSorting.Text = "Use sorting";
 			chkUseSorting.UseVisualStyleBackColor = true;
 			chkUseSorting.CheckedChanged += chkUseSorting_CheckedChanged;
+			// 
+			// ChkCommNumber
+			// 
+			ChkCommNumber.AutoSize = true;
+			ChkCommNumber.Location = new System.Drawing.Point(5, 63);
+			ChkCommNumber.Margin = new Padding(2);
+			ChkCommNumber.Name = "ChkCommNumber";
+			ChkCommNumber.Size = new System.Drawing.Size(135, 19);
+			ChkCommNumber.TabIndex = 4;
+			ChkCommNumber.Text = "Add Comm Number";
+			ChkCommNumber.UseVisualStyleBackColor = true;
 			// 
 			// LblOverlap
 			// 
@@ -467,7 +489,7 @@ namespace StudentsFetcher.StudentMarking
 			splitContainer2.Panel2.Controls.Add(tableLayoutPanel1);
 			splitContainer2.Panel2.Controls.Add(label7);
 			splitContainer2.Size = new System.Drawing.Size(1202, 639);
-			splitContainer2.SplitterDistance = 536;
+			splitContainer2.SplitterDistance = 526;
 			splitContainer2.SplitterWidth = 5;
 			splitContainer2.TabIndex = 0;
 			splitContainer2.TabStop = false;
@@ -480,7 +502,7 @@ namespace StudentsFetcher.StudentMarking
 			panel1.Location = new System.Drawing.Point(0, 0);
 			panel1.Margin = new Padding(4, 3, 4, 3);
 			panel1.Name = "panel1";
-			panel1.Size = new System.Drawing.Size(536, 46);
+			panel1.Size = new System.Drawing.Size(526, 46);
 			panel1.TabIndex = 16;
 			// 
 			// label8
@@ -508,21 +530,10 @@ namespace StudentsFetcher.StudentMarking
 			groupBox2.Margin = new Padding(4, 3, 4, 3);
 			groupBox2.Name = "groupBox2";
 			groupBox2.Padding = new Padding(4, 3, 4, 3);
-			groupBox2.Size = new System.Drawing.Size(536, 138);
+			groupBox2.Size = new System.Drawing.Size(526, 138);
 			groupBox2.TabIndex = 15;
 			groupBox2.TabStop = false;
 			groupBox2.Text = "Documents downloaded";
-			// 
-			// chkJustComponents
-			// 
-			chkJustComponents.AutoSize = true;
-			chkJustComponents.Location = new System.Drawing.Point(5, 46);
-			chkJustComponents.Margin = new Padding(2);
-			chkJustComponents.Name = "chkJustComponents";
-			chkJustComponents.Size = new System.Drawing.Size(146, 19);
-			chkJustComponents.TabIndex = 26;
-			chkJustComponents.Text = "Just component marks";
-			chkJustComponents.UseVisualStyleBackColor = true;
 			// 
 			// cmdSetFromDelegatedMarks
 			// 
@@ -545,7 +556,7 @@ namespace StudentsFetcher.StudentMarking
 			groupBox4.Margin = new Padding(4, 3, 4, 3);
 			groupBox4.Name = "groupBox4";
 			groupBox4.Padding = new Padding(4, 3, 4, 3);
-			groupBox4.Size = new System.Drawing.Size(521, 54);
+			groupBox4.Size = new System.Drawing.Size(511, 54);
 			groupBox4.TabIndex = 5;
 			groupBox4.TabStop = false;
 			groupBox4.Text = "Documents downloaded";
@@ -553,7 +564,7 @@ namespace StudentsFetcher.StudentMarking
 			// button13
 			// 
 			button13.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			button13.Location = new System.Drawing.Point(400, 22);
+			button13.Location = new System.Drawing.Point(390, 22);
 			button13.Margin = new Padding(4, 3, 4, 3);
 			button13.Name = "button13";
 			button13.Size = new System.Drawing.Size(63, 27);
@@ -570,14 +581,14 @@ namespace StudentsFetcher.StudentMarking
 			cmbDocuments.Location = new System.Drawing.Point(7, 22);
 			cmbDocuments.Margin = new Padding(4, 3, 4, 3);
 			cmbDocuments.Name = "cmbDocuments";
-			cmbDocuments.Size = new System.Drawing.Size(386, 23);
+			cmbDocuments.Size = new System.Drawing.Size(376, 23);
 			cmbDocuments.TabIndex = 0;
 			cmbDocuments.TabStop = false;
 			// 
 			// button2
 			// 
 			button2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			button2.Location = new System.Drawing.Point(462, 22);
+			button2.Location = new System.Drawing.Point(452, 22);
 			button2.Margin = new Padding(4, 3, 4, 3);
 			button2.Name = "button2";
 			button2.Size = new System.Drawing.Size(51, 27);
@@ -586,21 +597,10 @@ namespace StudentsFetcher.StudentMarking
 			button2.UseVisualStyleBackColor = true;
 			button2.Click += Open_Click;
 			// 
-			// ChkCommNumber
-			// 
-			ChkCommNumber.AutoSize = true;
-			ChkCommNumber.Location = new System.Drawing.Point(5, 63);
-			ChkCommNumber.Margin = new Padding(2);
-			ChkCommNumber.Name = "ChkCommNumber";
-			ChkCommNumber.Size = new System.Drawing.Size(135, 19);
-			ChkCommNumber.TabIndex = 4;
-			ChkCommNumber.Text = "Add Comm Number";
-			ChkCommNumber.UseVisualStyleBackColor = true;
-			// 
 			// cmdReportSizeDecrease
 			// 
 			cmdReportSizeDecrease.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			cmdReportSizeDecrease.Location = new System.Drawing.Point(428, 14);
+			cmdReportSizeDecrease.Location = new System.Drawing.Point(418, 14);
 			cmdReportSizeDecrease.Margin = new Padding(4, 3, 4, 3);
 			cmdReportSizeDecrease.Name = "cmdReportSizeDecrease";
 			cmdReportSizeDecrease.Size = new System.Drawing.Size(28, 24);
@@ -612,7 +612,7 @@ namespace StudentsFetcher.StudentMarking
 			// cmdReportSizeIncrease
 			// 
 			cmdReportSizeIncrease.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			cmdReportSizeIncrease.Location = new System.Drawing.Point(456, 14);
+			cmdReportSizeIncrease.Location = new System.Drawing.Point(446, 14);
 			cmdReportSizeIncrease.Margin = new Padding(4, 3, 4, 3);
 			cmdReportSizeIncrease.Name = "cmdReportSizeIncrease";
 			cmdReportSizeIncrease.Size = new System.Drawing.Size(28, 24);
@@ -624,7 +624,7 @@ namespace StudentsFetcher.StudentMarking
 			// cmdWrap
 			// 
 			cmdWrap.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			cmdWrap.Location = new System.Drawing.Point(483, 14);
+			cmdWrap.Location = new System.Drawing.Point(473, 14);
 			cmdWrap.Margin = new Padding(4, 3, 4, 3);
 			cmdWrap.Name = "cmdWrap";
 			cmdWrap.Size = new System.Drawing.Size(47, 24);
@@ -685,7 +685,7 @@ namespace StudentsFetcher.StudentMarking
 			tableLayoutPanel1.RowStyles.Add(new RowStyle());
 			tableLayoutPanel1.RowStyles.Add(new RowStyle());
 			tableLayoutPanel1.RowStyles.Add(new RowStyle());
-			tableLayoutPanel1.Size = new System.Drawing.Size(661, 624);
+			tableLayoutPanel1.Size = new System.Drawing.Size(671, 624);
 			tableLayoutPanel1.TabIndex = 8;
 			// 
 			// label4
@@ -717,12 +717,12 @@ namespace StudentsFetcher.StudentMarking
 			txtTextOrPointer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 			txtTextOrPointer.ChangedColour = System.Drawing.Color.Empty;
 			txtTextOrPointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-			txtTextOrPointer.Location = new System.Drawing.Point(154, 64);
+			txtTextOrPointer.Location = new System.Drawing.Point(156, 64);
 			txtTextOrPointer.Margin = new Padding(6);
 			txtTextOrPointer.MaxLength = 0;
 			txtTextOrPointer.Name = "txtTextOrPointer";
 			txtTextOrPointer.OriginalText = "";
-			txtTextOrPointer.Size = new System.Drawing.Size(501, 225);
+			txtTextOrPointer.Size = new System.Drawing.Size(509, 225);
 			txtTextOrPointer.SpellCheck = true;
 			txtTextOrPointer.TabIndex = 4;
 			txtTextOrPointer.TextCase = CharacterCasing.Normal;
@@ -740,12 +740,12 @@ namespace StudentsFetcher.StudentMarking
 			txtAdditionalNote.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 			txtAdditionalNote.ChangedColour = System.Drawing.Color.Empty;
 			txtAdditionalNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-			txtAdditionalNote.Location = new System.Drawing.Point(154, 301);
+			txtAdditionalNote.Location = new System.Drawing.Point(156, 301);
 			txtAdditionalNote.Margin = new Padding(6);
 			txtAdditionalNote.MaxLength = 0;
 			txtAdditionalNote.Name = "txtAdditionalNote";
 			txtAdditionalNote.OriginalText = "";
-			txtAdditionalNote.Size = new System.Drawing.Size(501, 225);
+			txtAdditionalNote.Size = new System.Drawing.Size(509, 225);
 			txtAdditionalNote.SpellCheck = true;
 			txtAdditionalNote.TabIndex = 5;
 			txtAdditionalNote.TextCase = CharacterCasing.Normal;
@@ -768,10 +768,10 @@ namespace StudentsFetcher.StudentMarking
 			// txtArea
 			// 
 			txtArea.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-			txtArea.Location = new System.Drawing.Point(152, 535);
+			txtArea.Location = new System.Drawing.Point(154, 535);
 			txtArea.Margin = new Padding(4, 3, 4, 3);
 			txtArea.Name = "txtArea";
-			txtArea.Size = new System.Drawing.Size(505, 23);
+			txtArea.Size = new System.Drawing.Size(513, 23);
 			txtArea.TabIndex = 12;
 			txtArea.TabStop = false;
 			// 
@@ -791,20 +791,20 @@ namespace StudentsFetcher.StudentMarking
 			cmbComponentComment.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			cmbComponentComment.DropDownStyle = ComboBoxStyle.DropDownList;
 			cmbComponentComment.FormattingEnabled = true;
-			cmbComponentComment.Location = new System.Drawing.Point(152, 564);
+			cmbComponentComment.Location = new System.Drawing.Point(154, 564);
 			cmbComponentComment.Margin = new Padding(4, 3, 4, 3);
 			cmbComponentComment.Name = "cmbComponentComment";
-			cmbComponentComment.Size = new System.Drawing.Size(505, 23);
+			cmbComponentComment.Size = new System.Drawing.Size(513, 23);
 			cmbComponentComment.TabIndex = 21;
 			cmbComponentComment.TabStop = false;
 			// 
 			// txtSection
 			// 
 			txtSection.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-			txtSection.Location = new System.Drawing.Point(152, 3);
+			txtSection.Location = new System.Drawing.Point(154, 3);
 			txtSection.Margin = new Padding(4, 3, 4, 3);
 			txtSection.Name = "txtSection";
-			txtSection.Size = new System.Drawing.Size(505, 23);
+			txtSection.Size = new System.Drawing.Size(513, 23);
 			txtSection.TabIndex = 11;
 			txtSection.TabStop = false;
 			// 
@@ -822,10 +822,10 @@ namespace StudentsFetcher.StudentMarking
 			// button11
 			// 
 			button11.Dock = DockStyle.Fill;
-			button11.Location = new System.Drawing.Point(152, 32);
+			button11.Location = new System.Drawing.Point(154, 32);
 			button11.Margin = new Padding(4, 3, 4, 3);
 			button11.Name = "button11";
-			button11.Size = new System.Drawing.Size(505, 23);
+			button11.Size = new System.Drawing.Size(513, 23);
 			button11.TabIndex = 22;
 			button11.Text = "Section rotation";
 			button11.UseVisualStyleBackColor = true;
@@ -980,7 +980,7 @@ namespace StudentsFetcher.StudentMarking
 			// 
 			splitContainer5.Panel2.Controls.Add(StudImage);
 			splitContainer5.Size = new System.Drawing.Size(635, 639);
-			splitContainer5.SplitterDistance = 430;
+			splitContainer5.SplitterDistance = 440;
 			splitContainer5.SplitterWidth = 3;
 			splitContainer5.TabIndex = 14;
 			// 
@@ -994,7 +994,7 @@ namespace StudentsFetcher.StudentMarking
 			lstEmailSendSelection.Location = new System.Drawing.Point(0, 35);
 			lstEmailSendSelection.Margin = new Padding(4, 3, 4, 3);
 			lstEmailSendSelection.Name = "lstEmailSendSelection";
-			lstEmailSendSelection.Size = new System.Drawing.Size(635, 395);
+			lstEmailSendSelection.Size = new System.Drawing.Size(635, 405);
 			lstEmailSendSelection.TabIndex = 3;
 			lstEmailSendSelection.UseCompatibleStateImageBehavior = false;
 			lstEmailSendSelection.View = View.Details;
@@ -1104,7 +1104,7 @@ namespace StudentsFetcher.StudentMarking
 			StudImage.Location = new System.Drawing.Point(0, 0);
 			StudImage.Margin = new Padding(2);
 			StudImage.Name = "StudImage";
-			StudImage.Size = new System.Drawing.Size(635, 206);
+			StudImage.Size = new System.Drawing.Size(635, 196);
 			StudImage.SizeMode = PictureBoxSizeMode.Zoom;
 			StudImage.TabIndex = 13;
 			StudImage.TabStop = false;

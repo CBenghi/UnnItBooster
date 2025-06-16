@@ -71,7 +71,7 @@ public class DelegatedMarkResponse
 		Response.Components = components.ToList();
 	}
 
-	public static IEnumerable<DelegatedMarkResponse> GetMarks(XSSFWorkbook workbook, out string report)
+	public static IEnumerable<DelegatedMarkResponse> GetMarks(int componentCount, XSSFWorkbook workbook, out string report)
 	{
 		ISheet sheet = workbook.GetSheet("Project marks");
 
@@ -84,7 +84,7 @@ public class DelegatedMarkResponse
 		if (firstCell is not null)
 			sheetMarkerMail = firstCell.StringCellValue.Trim();
 		row = sheet.GetRow(4);
-		var t = GetComponentsMax(row);
+		var t = GetComponentsMax(row, componentCount);
 		if (t is null)
 			return RetError("No max values", out report);
 		int rowId = 7;
@@ -133,12 +133,12 @@ public class DelegatedMarkResponse
 
 	private static string GetComment(IRow studRow, int count)
 	{
-		return GetCellString(studRow, count + 4);
+		return GetCellString(studRow, count + 5);
 	}
 
 	private static List<int>? GetStudentMarks(IRow studRow, int count)
 	{
-		int iCol = 4;
+		int iCol = 5;
 		var marks = new List<int>();
 		for (int i = 0; i < count; i++)
 		{
@@ -174,10 +174,10 @@ public class DelegatedMarkResponse
 		return ret;
 	}
 
-	private static List<int>? GetComponentsMax(IRow row)
+	private static List<int>? GetComponentsMax(IRow row, int componentCount)
 	{
 		var ret = new List<int>();
-		int i = 4;
+		int i = 5;
 		do
 		{
 			var cell = row.GetCell(i++);
@@ -210,43 +210,50 @@ public class DelegatedMarkResponse
 		var sb = new StringBuilder();
 		if (extended)
 		{
-			sb.AppendLine("Marks:");
+			sb.AppendLine("## Received Marks\r\n");
 		}
 		if (componentNames is not null)
 		{
-			var concatenatedCompNames = string.Join("\t", componentNames.Skip(1).Select(x => x.Substring(0, 10)));
+			var concatenatedCompNames = string.Join(" | ", componentNames.Skip(1));
+			var tableSpacer = string.Join(" | ", componentNames.Skip(1).Select(x => " :---: "));
 			if (!string.IsNullOrEmpty(concatenatedCompNames))
-				sb.AppendLine($"components\ttotal\t{concatenatedCompNames}");
+			{
+				sb.AppendLine($"| marker role | total mark | {concatenatedCompNames} | marker |");
+				sb.AppendLine($"| --- | :---: | {tableSpacer} | --- |");
+			}
 		}
 		foreach (var response in marks)
 		{
-			var tabComponents = string.Join("\t", response.Response.Components.Select(x => x.ToString()));
+			var tabComponents = string.Join(" | ", response.Response.Components.Select(x => x.ToString()));
 			var comm = string.IsNullOrWhiteSpace(response.Response.Comment) ? "<no comment>" : response.Response.Comment;
 			if (response is DelegatedMarkResponseFull fullResp)
 			{
 				sb.AppendLine(
 					extended
-					? $"{fullResp.MarkerRole}\t{response.GetMark()}\t{tabComponents}\t{response.MarkerEmail}"
-					: $"{response.MarkerEmail}\t{response.GetMark()}\t{response.StudentId}\t{tabComponents}\t{comm}"
+					? $"| {fullResp.MarkerRole} | {response.GetMark()} | {tabComponents} | {response.MarkerEmail} |"
+					: $"| {response.MarkerEmail} | {response.GetMark()} | {response.StudentId} | {tabComponents} | {comm} |"
 					);
 			}
 			else
 			{
 				sb.AppendLine(
 					extended
-					? $"\t{response.GetMark()}\t{tabComponents}\t{response.MarkerEmail}"
-					: $"{response.MarkerEmail}\t{response.GetMark()}\t{response.StudentId}\t{tabComponents}\t{comm}"
+					? $"| {response.GetMark()} | {tabComponents} | {response.MarkerEmail} |"
+					: $"| {response.MarkerEmail} | {response.GetMark()} | {response.StudentId} | {tabComponents} | {comm} |"
 					);
 			}
 		}
 		if (extended)
 		{
+			sb.AppendLine();
 			sb.AppendLine(ModuleResult.Describe(marks.Select(x => x.GetMark())));
 
 			sb.AppendLine();
 			sb.AppendLine("Comments:");
 			foreach (var response in marks)
 			{
+				if (string.IsNullOrWhiteSpace(response.Response.Comment))
+					continue;
 				var comm = string.IsNullOrWhiteSpace(response.Response.Comment) ? "<no comment>" : response.Response.Comment;
 				sb.AppendLine(
 					response is DelegatedMarkResponseFull fullResp
