@@ -784,7 +784,7 @@ namespace StudentsFetcher.StudentMarking
 			return tally;
 		}
 
-		public string CreateExcelMarkingFilesFrom(FileInfo fl, string filter)
+		public string CreateExcelMarkingFilesFrom(FileInfo templateFile, string filter)
 		{
 			var sb = new StringBuilder();
 			var assignments = GetMarkingAssignmentsPerMarker();
@@ -794,23 +794,25 @@ namespace StudentsFetcher.StudentMarking
 			{
 				if (!string.IsNullOrWhiteSpace(filter) && !assignment.MarkerEmail.Contains(filter))
 					continue; // skip if does not contain filter				
-				sb.AppendLine(CreateExcelMarking(fl, assignment, cnt));
+				sb.AppendLine(CreateExcelMarking(templateFile, assignment, cnt));
 			}
 			return sb.ToString();
 		}
 
-		private string CreateExcelMarking(FileInfo fl, DelegatedMarkerAssignments assItem, int componentCount)
+		private string CreateExcelMarking(FileInfo templateFile, DelegatedMarkerAssignments studentMarkerAssignment, int componentCount)
 		{
-			var dest = GetLocalizedPathFrom($"{assItem.MarkerEmail}.xlsx");
+			var dest = GetLocalizedPathFrom($"{studentMarkerAssignment.MarkerEmail}.xlsx");
 			if (dest is null)
 			{
-				return $"Invalid name for {assItem.MarkerEmail}";
+				return $"Invalid name for {studentMarkerAssignment.MarkerEmail}";
 			}
 			var sb = new StringBuilder();
-			if (dest.Exists)
-				dest.Delete();
-			fl.CopyTo(dest.FullName);
-			sb.Append(assItem.FixFile(dest, componentCount));
+			if (!dest.Exists)
+			{
+				templateFile.CopyTo(dest.FullName);
+			}
+			var report = studentMarkerAssignment.FixFile(dest, componentCount);
+			sb.Append(report);
 			return sb.ToString();
 		}
 

@@ -2,7 +2,7 @@
   "profiles": {
     "diss debug": {
       "commandName": "Project",
-      "commandLineArgs": "-mm \"C:\\Users\\Claudio\\OneDrive - Northumbria University - Production Azure AD\\2024\\KA7068 - Research project\\SEM2 - marking\\Report submission-Learning Analytics.sqlite\" -max"
+      "commandLineArgs": "-mm \"C:\\Users\\Claudio\\OneDrive - Northumbria University - Production Azure AD\\2024\\KA7068 - Research project\\SEM3 - Marking\\Submissions\\Dissertation report submission - Learning Analytics.sqlite\" -max"
     },
     "debug": {
       "commandName": "Project"

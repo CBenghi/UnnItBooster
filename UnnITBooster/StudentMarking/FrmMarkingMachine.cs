@@ -626,6 +626,13 @@ public partial class FrmMarkingMachine : Form
                         Creates a zip file with the sample.
                         if -markers it provides the assigned markers summary
 
+                    Dissertation Management section:
+
+                    1) get the data from elp
+                    2) associate first markers
+                    3) Markers Randomise Second
+                    4) Create MarkingFiles
+
                     Associate Markers
                         adds markers depending on the data below the command with the following structure:
                         <studentId|submissionId> <markerEmail> <MarkerRole> <MarkerName>

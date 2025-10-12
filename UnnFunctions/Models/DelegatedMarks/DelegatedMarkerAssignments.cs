@@ -2,6 +2,7 @@
 using NPOI.XSSF.UserModel;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace UnnFunctions.Models.DelegatedMarks;
@@ -42,7 +43,37 @@ public class DelegatedMarkerAssignments
 		unlockedCellStyle.IsLocked = false;
 
 		int iRow = 7; // starting at row 8
-		foreach (var det in Details)
+					  // if we are updating an existing file we need not write the
+					  // row if has already the marks
+
+		// get all the student IDs already written
+
+		var outstandingDetails = Details.ToList();
+		const int RowMax = 39;
+		while (iRow < RowMax)
+		{
+			row = sheet.GetRow(iRow);
+			var studentId = row.GetCell(2).StringCellValue;
+			if (studentId != null && studentId.Length > 0)
+			{
+				var existing = outstandingDetails.FirstOrDefault(d => $"w{d.StudentId}" == studentId);
+				if (existing != null)
+				{
+					// already there so remove from the list
+					//
+					outstandingDetails.Remove(existing);
+				}
+			}
+			else
+			{
+				// we have reached a blank row so stop looking
+				//
+				break;
+			}
+			iRow++;
+		}
+		
+		foreach (var det in outstandingDetails)
 		{
 			row = sheet.GetRow(iRow++);
 			row.GetCell(1).SetCellValue(det.ElpId);
@@ -71,7 +102,7 @@ public class DelegatedMarkerAssignments
 			commentCell.CellStyle = newCellStyle;
 		}
 		// sheet.ShiftRows(39, 39, iRow - 39, true, false);
-		while (iRow < 39)
+		while (iRow < RowMax)
 		{
 			row = sheet.GetRow(iRow++);
 			// 11 includes the comment

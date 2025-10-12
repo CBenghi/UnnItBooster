@@ -64,7 +64,10 @@ namespace StudentsFetcher.StudentMarking
 			else
 			{
 				// list matches only
-				foreach (var studentAndColl in studentsRepo.StudentsAndCollection.Where(pair => pair.student.Matches(flt)))
+				foreach (var studentAndColl in studentsRepo.StudentsAndCollection.Where(pair => 
+					pair.student.Matches(flt)
+					|| pair.collectionName.Matches(flt)
+					))
 				{
 					AddStudent(studentAndColl);
 				}
@@ -117,6 +120,10 @@ namespace StudentsFetcher.StudentMarking
 				if (lvi == null)
 					continue;
 				TryShowStudent(lvi);
+			}
+			if (lstStudents.SelectedItems.Count > 1)
+			{
+				txtStudentInfo.Text = txtStudentInfo.Text + Environment.NewLine + $"Count: {lstStudents.SelectedItems.Count}";
 			}
 		}
 
