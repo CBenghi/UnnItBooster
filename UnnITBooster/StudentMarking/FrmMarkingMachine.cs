@@ -1179,7 +1179,7 @@ public partial class FrmMarkingMachine : Form
 		var sql = "SELECT SUB_ID from TB_Submissions ";
 		if (!string.IsNullOrWhiteSpace(elpSite))
 			sql += $"Where SUB_ElpSite like '%{elpSite}%' ";
-		sql += "Order by SUB_ID DESC";
+		sql += "Order by SUB_DateUploaded DESC, SUB_ID DESC";
 
 		StringBuilder stringBuilder = new StringBuilder();
 		var res = _config.GetDataTable(sql);
