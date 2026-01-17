@@ -8,7 +8,7 @@ namespace UnnFunctions.Models
 	{
 		public static bool TryReadExcel(string excelName, [NotNullWhen(true)] out XSSFWorkbook? hssfwb, out string report)
 		{
-			FileInfo fi = new FileInfo(excelName);
+			var fi = new FileInfo(excelName);
 			if (!fi.Exists)
 			{
 				hssfwb = null;

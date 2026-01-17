@@ -1,5 +1,4 @@
-﻿using Org.BouncyCastle.Bcpg;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
@@ -13,7 +12,6 @@ using UnnFunctions.Models.DelegatedMarks;
 using UnnFunctions.Models.SubmissionContent;
 using UnnItBooster.ModelConversions;
 using UnnItBooster.Models;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace StudentsFetcher.StudentMarking
 {

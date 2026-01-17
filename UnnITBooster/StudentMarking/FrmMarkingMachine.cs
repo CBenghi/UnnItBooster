@@ -637,6 +637,9 @@ public partial class FrmMarkingMachine : Form
                         adds markers depending on the data below the command with the following structure:
                         <studentId|submissionId> <markerEmail> <MarkerRole> <MarkerName>
                         22049588 ala.suliman@northumbria.ac.uk Supervisor Ala Suliman
+                        or
+                        <studentId|submissionId> <anyMarkerIdentifier> <MarkerRole> (the identifier will resolve the marker via hardcoded list)
+                        22049588 Omar Supervisor
 
                     Report Markers
                         Creates a report with marker association to submissions and missing entries.
@@ -970,21 +973,39 @@ public partial class FrmMarkingMachine : Form
 		if (string.IsNullOrWhiteSpace(txtLibReport.Text))
 			return 0;
 		var assignments = txtLibReport.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-		var r = new Regex(@"^(?<studId>\d+)\s+(?<email>[^\s]+)\s+(?<role>[^\s]+)\s+(?<name>.+)");
+		var r4components = new Regex(@"^(?<studId>\d+)\s+(?<email>[^\s]+)\s+(?<role>[^\s]+)\s+(?<name>.+)");
+		var r3components = new Regex(@"^(?<studId>\d+)\s+(?<any>[^\s]+)\s+(?<role>[^\s]+)");
 		int tally = 0;
 		foreach (var assignment in assignments)
 		{
-			var m = r.Match(assignment);
-			if (m.Success)
+			string studId = string.Empty;
+			string mrkrEmail = string.Empty;
+			string mrkrRole = string.Empty;
+			string mrkrName = string.Empty;
+			var m4 = r4components.Match(assignment);
+			var m3 = r3components.Match(assignment);
+			if (m4.Success)
 			{
-				var studId = m.Groups["studId"].Value;
-				var mrkrEmail = m.Groups["email"].Value;
+				studId = m4.Groups["studId"].Value;
+				mrkrEmail = m4.Groups["email"].Value;
 				if (!mrkrEmail.Contains("@"))
 					continue;
-				var mrkrRole = m.Groups["role"].Value;
-				var mrkrName = m.Groups["name"].Value;
-				tally += _config.EnsureMarker(studId, mrkrEmail, mrkrName, mrkrRole);
+				mrkrRole = m4.Groups["role"].Value;
+				mrkrName = m4.Groups["name"].Value;
 			}
+			if (m3.Success)
+			{
+				studId = m3.Groups["studId"].Value;
+				var anyMarker = m3.Groups["any"].Value;
+				var t = MarkersKnowledge.GetMarker(anyMarker);
+				if (t == null)
+					continue;
+				mrkrEmail = t.Email;
+				mrkrName = $"{t.First} {t.Last}"; 
+				mrkrRole = m3.Groups["role"].Value;
+			}
+			if (!string.IsNullOrEmpty(studId))
+				tally += _config.EnsureMarker(studId, mrkrEmail, mrkrName, mrkrRole);
 		}
 		return tally;
 	}
