@@ -10,8 +10,8 @@ public class MarkingAssignmentSubmissionInformation
 {
 	public MarkingAssignmentSubmissionInformation(string studentId, string studentPaper, string studentPortal, string markingRole, string studentEmail, string markerEmail)
 	{
-		StudentId = studentId;
-		SubmissionId = studentPaper;
+		StudentId = string.IsNullOrWhiteSpace(studentId) ? "<missing id>" : studentId;
+		SubmissionId = string.IsNullOrWhiteSpace(studentPaper) ? "<missing submission>" : studentPaper;
 		ElpId = studentPortal;
 		MarkingRole = markingRole;
 		StudentEmail = studentEmail;

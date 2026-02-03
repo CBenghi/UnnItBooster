@@ -19,14 +19,11 @@ using MathNet.Numerics.Statistics;
 using UnnFunctions.Models.DelegatedMarks;
 using MathNet.Numerics;
 using System.Runtime.InteropServices;
-using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.Defaults;
 using UnnItBooster;
 using UnnFunctions.Models.SubmissionContent;
 using static StudentsFetcher.StudentMarking.MarkingConfig;
-using OpenTK.Platform.Windows;
-using MathNet.Numerics.Distributions;
 
 namespace StudentsFetcher.StudentMarking;
 
@@ -253,7 +250,9 @@ public partial class FrmMarkingMachine : Form
 		cmbDocuments.Items.AddRange(list.Distinct().ToArray());
 		for (int i = 0; i < cmbDocuments.Items.Count; i++)
 		{
-			var item = cmbDocuments.Items[i].ToString()!;
+			var item = cmbDocuments.Items[i]?.ToString() ?? "";
+			if (item == "")
+				continue;
 			var fullname = Path.Combine(_config.GetFolderName(), item);
 			if (File.Exists(fullname))
 			{
@@ -364,7 +363,7 @@ public partial class FrmMarkingMachine : Form
 				var filter = importMarksMatch.Groups["filter"].Value;
 
 				var sb = new StringBuilder();
-				
+
 				var readingReport = _config.GetDelegatedMarksFromExcel(_config.GetMarkCalculator().Marks.Count, filter, out var marks); // from import
 				if (!string.IsNullOrEmpty(readingReport))
 				{
@@ -474,7 +473,7 @@ public partial class FrmMarkingMachine : Form
 				var sb = new StringBuilder();
 				var markers = _config.GetMarkingAssignmentsPerMarker().ToList();
 				var markerNames = markers.ToDictionary(x => x.MarkerEmail, x => x.MarkerName);
-				var assignments = markers.SelectMany(x=>x.Details).ToList();
+				var assignments = markers.SelectMany(x => x.Details).ToList();
 				var pool = assignments.ToList();
 				foreach (var item in assignments)
 				{
@@ -879,32 +878,34 @@ public partial class FrmMarkingMachine : Form
 		foreach (var marksGroup in marksGroups)
 		{
 			bool studentCompleted = true;
-			dicStudentToMarkers.TryGetValue(marksGroup.Key, out var assignedMarkers);
 			sb.AppendLine($"Student: {marksGroup.Key}");
-			foreach (var mark in marksGroup)
-			{
-				var m = mark.MarkerEmail;
-				var assignemnt = assignedMarkers.First(x => x.MarkerEmail == m);
-				sb.AppendLine($"- {mark.GetMark()} - {mark.MarkerEmail} - {assignemnt.MarkerRole} - {mark.Response.Comment}");
-				assignedMarkers?.Remove(assignemnt); // if one is found we remove it from the list
-			}
+			dicStudentToMarkers.TryGetValue(marksGroup.Key, out var assignedMarkers);
 			if (assignedMarkers is not null)
 			{
-				if (assignedMarkers.Any())
+				foreach (var mark in marksGroup)
 				{
-					studentCompleted = false;
+					var m = mark.MarkerEmail;
+					var assignemnt = assignedMarkers.First(x => x.MarkerEmail == m);
+					sb.AppendLine($"- {mark.GetMark()} - {mark.MarkerEmail} - {assignemnt.MarkerRole} - {mark.Response.Comment}");
+					assignedMarkers.Remove(assignemnt); // if one is found we remove it from the list
 				}
-				foreach (var item in assignedMarkers)
+				if (assignedMarkers is not null)
 				{
-					sb.AppendLine($"- <missing> - {item}");
+					if (assignedMarkers.Any())
+					{
+						studentCompleted = false;
+					}
+					foreach (var item in assignedMarkers)
+					{
+						sb.AppendLine($"- <missing> - {item}");
+					}
+				}
+				var doubleMarks = marksGroup.Select(x => (double)x.GetMark());
+				if (doubleMarks.Count() > 1)
+				{
+					stats.Add(new DescriptiveStatistics(doubleMarks));
 				}
 			}
-			var doubleMarks = marksGroup.Select(x => (double)x.GetMark());
-			if (doubleMarks.Count() > 1)
-			{
-				stats.Add(new DescriptiveStatistics(doubleMarks));
-			}
-
 			if (studentCompleted)
 				tallyCompleted++;
 			else
@@ -941,7 +942,7 @@ public partial class FrmMarkingMachine : Form
 				{
 					if (!marked.Any(x => x.StudentId == singleStudent.StudentId))
 					{
-						sb.AppendLine($"Missing mark for: {assignment.MarkerEmail}, w{singleStudent.StudentId}, submission id:{singleStudent.SubmissionId}, student: {singleStudent.StudentEmail}" );
+						sb.AppendLine($"Missing mark for: {assignment.MarkerEmail}, w{singleStudent.StudentId}, submission id:{singleStudent.SubmissionId}, student: {singleStudent.StudentEmail}");
 					}
 				}
 			}
@@ -1001,7 +1002,7 @@ public partial class FrmMarkingMachine : Form
 				if (t == null)
 					continue;
 				mrkrEmail = t.Email;
-				mrkrName = $"{t.First} {t.Last}"; 
+				mrkrName = $"{t.First} {t.Last}";
 				mrkrRole = m3.Groups["role"].Value;
 			}
 			if (!string.IsNullOrEmpty(studId))
@@ -1019,7 +1020,7 @@ public partial class FrmMarkingMachine : Form
 			{
 				txtStudentreport.Text += $"- {item.Name}\r\n";
 			}
-			
+
 			return;
 		}
 		var studcoll = _studentRepository.GetPersonCollections().FirstOrDefault(x => x.Name.Contains(name));
@@ -1162,7 +1163,7 @@ public partial class FrmMarkingMachine : Form
 			var delegMarks = _config.GetDelegatedMarks().Where(x => x.StudentId == submission.NumericUserId).ToList();
 			sb.AppendLine(DelegatedMarkResponse.Report(delegMarks, true, GetComponentShortNames()));
 		}
-			
+
 		return true;
 	}
 
@@ -1367,7 +1368,7 @@ public partial class FrmMarkingMachine : Form
 		var dt = _config.GetDataTable(sql);
 		foreach (DataRow r in dt.Rows)
 		{
-			var requiredId = r["sub_numericUserId"].ToString().Trim();
+			var requiredId = (r["sub_numericUserId"].ToString()??"").Trim();
 			var found = allIds.Contains(requiredId);
 			if (!found)
 			{
@@ -1611,7 +1612,7 @@ public partial class FrmMarkingMachine : Form
 		var vals = _config.GetDataTable("select distinct COMM_Section from TB_Comments order by COMM_Section");
 		foreach (DataRow row in vals.Rows)
 		{
-			txtSection.Items.Add(row[0].ToString());
+			txtSection.Items.Add(row[0].ToString()??"");
 		}
 	}
 
@@ -1698,7 +1699,7 @@ public partial class FrmMarkingMachine : Form
 				var order = Convert.ToInt32(item["CPNT_Order"]);
 				var ipercent = Convert.ToInt32(item["CPNT_Percent"]);
 				var c = new ComboId(
-					item["CPNT_Name"].ToString(),
+					item["CPNT_Name"].ToString()??"",
 					ipercent,
 					order
 				);
@@ -1709,7 +1710,7 @@ public partial class FrmMarkingMachine : Form
 				cmp.Id = order;
 				try
 				{
-					var desc = item["CPNT_Comment"].ToString();
+					var desc = item["CPNT_Comment"].ToString()??"";
 					cmp.ComponentDescription = desc;
 				}
 				catch (Exception)
@@ -1814,11 +1815,16 @@ public partial class FrmMarkingMachine : Form
 			if (!studentId.Checked)
 				continue;
 
-			var iStudentId = (int)studentId.Tag;
+			var iStudentId = Convert.ToInt32(studentId.Tag);
 			var emailtext = Emailtext(replacements, iStudentId, mcalc, out var row);
 			if (row is not null)
 			{
-				var DestEmail = row["SUB_email"].ToString();
+				var DestEmail = row["SUB_email"].ToString() ?? "";
+				if (DestEmail == "")
+				{
+					Debug.WriteLine($"No email for student {iStudentId}");
+					continue;
+				}
 				if (!chkEmailDryRun.Checked)
 					app.SendOutlookEmail(DestEmail, cmbEmailSubject.Text, emailtext);
 				else
@@ -1846,7 +1852,7 @@ public partial class FrmMarkingMachine : Form
 			return emailtext;
 		foreach (var item in replacements)
 		{
-			var replacementIndex = Array.IndexOf(extraReplacements, item);  
+			var replacementIndex = Array.IndexOf(extraReplacements, item);
 			var repvalue = "";
 			switch (replacementIndex)
 			{
@@ -1926,22 +1932,25 @@ public partial class FrmMarkingMachine : Form
 				lvi.SubItems.Add(localDateTime);
 				if (showDelegate) // report on delegate marking
 				{
-					var numComments = "";
-					var markComments = "";
-					var student = _studentRepository.GetStudentById(numUID);
-					if (student != null && student.TranscriptResults is not null)
+					if (numUID is not null)
 					{
-						var mark = ModuleResult.WeightedAverage(student.TranscriptResults, out var maturedCredits, out _, out var compensatedCode);
-						var cmp = compensatedCode == string.Empty ? "" : $" compensated on {compensatedCode}";
-						markComments = $"Avg: {mark:#.00} out of {maturedCredits} credits{cmp}; ";
+						var numComments = "";
+						var markComments = "";
+						var student = _studentRepository.GetStudentById(numUID);
+						if (student != null && student.TranscriptResults is not null)
+						{
+							var mark = ModuleResult.WeightedAverage(student.TranscriptResults, out var maturedCredits, out _, out var compensatedCode);
+							var cmp = compensatedCode == string.Empty ? "" : $" compensated on {compensatedCode}";
+							markComments = $"Avg: {mark:#.00} out of {maturedCredits} credits{cmp}; ";
+						}
+						if (delegMarks.TryGetValue(numUID, out var delegateMarks))
+						{
+							numComments = $"{delegateMarks.Count()} ({string.Join(", ", delegateMarks)})";
+							markComments += ModuleResult.Describe(delegateMarks);
+						}
+						lvi.SubItems.Add(numComments);
+						lvi.SubItems.Add(markComments);
 					}
-					if (delegMarks.TryGetValue(numUID, out var delegateMarks))
-					{
-						numComments = $"{delegateMarks.Count()} ({string.Join(", ", delegateMarks)})";
-						markComments += ModuleResult.Describe(delegateMarks);
-					}
-					lvi.SubItems.Add(numComments);
-					lvi.SubItems.Add(markComments);
 				}
 				else
 				{
@@ -2016,8 +2025,10 @@ public partial class FrmMarkingMachine : Form
 
 	private void marksChart_Click(object sender, EventArgs e)
 	{
-		var tag = ((ComboTag)CmbGrouping.SelectedItem).Tag;
-		var mode = (MarksCollection.Grouping)tag;
+		var sel = CmbGrouping.SelectedItem as ComboTag;
+		if (sel is null)
+			return;
+		var mode = (MarksCollection.Grouping)sel.Tag;
 		var coll = MarksCollection.Initialize(mode);
 		if (ChkExclude0.Checked)
 			coll.RemoveZeros();
@@ -2149,12 +2160,13 @@ public partial class FrmMarkingMachine : Form
 		if (lstEmailSendSelection.SelectedIndices.Count > 0)
 		{
 			// show picture
-			var iShort = (int)lstEmailSendSelection.SelectedItems[0].Tag;
+			var iShort = Convert.ToInt32(lstEmailSendSelection.SelectedItems[0].Tag);
 			var dt = _config.GetDataTable("SELECT SUB_NumericUserId from tb_submissions where SUB_Id = " + iShort);
 			if (dt.Rows.Count == 1)
 			{
 				var numeriCuserID = dt.Rows[0][0].ToString();
-				ShowUserImage(numeriCuserID);
+				if (numeriCuserID is not null)
+					ShowUserImage(numeriCuserID);
 			}
 			// preview email
 			txtEmailPreview.Text = Emailtext(iShort);
@@ -2226,7 +2238,7 @@ public partial class FrmMarkingMachine : Form
 		return _config.ReportMissingIds();
 		//_studentRepository
 		//TurnItIn.GetEmptyReport();
-		
+
 	}
 
 	private void BtnCompleteData_Click(object sender, EventArgs e)
@@ -2285,7 +2297,9 @@ public partial class FrmMarkingMachine : Form
 					&& !File.Exists(destinationPath)
 					)
 				{
-					FileInfo f = new FileInfo(destinationPath);
+					var f = new FileInfo(destinationPath);
+					if (f.Directory is null)
+						continue;
 					if (!f.Directory.Exists)
 					{
 						f.Directory.Create();
@@ -2334,8 +2348,10 @@ public partial class FrmMarkingMachine : Form
 		if (string.IsNullOrEmpty(txtExcelFileName.Text))
 			return;
 		var f = new FileInfo(txtExcelFileName.Text);
-		if (f.Exists)
+		if (f.Exists && f.Directory is not null)
+		{
 			Process.Start(f.Directory.FullName);
+		}
 	}
 
 	private void BtnExportExcel_Click(object sender, EventArgs e)
@@ -2511,8 +2527,8 @@ public partial class FrmMarkingMachine : Form
 			openFileDialog1.ShowDialog();
 			if (openFileDialog1.FileName != "")
 			{
-				FileInfo f = new FileInfo(openFileDialog1.FileName);
-				if (!f.Exists)
+				var f = new FileInfo(openFileDialog1.FileName);
+				if (!f.Exists || f.Directory is null)
 					return;
 				TxtMergeReportFolder.Text = f.Directory.FullName;
 			}
@@ -2535,12 +2551,15 @@ public partial class FrmMarkingMachine : Form
 
 	private void ProcessFile(FileInfo html, double scl)
 	{
-		DirectoryInfo d = html.Directory;
+		var d = html.Directory;
+		if (d is null)
+			return;
 		var r = new Regex("AI Detection (?<name>.*)\\.html");
 		var m = r.Match(html.Name);
 		if (!m.Success)
 			return;
 		var name = m.Groups["name"].Value;
+
 		var referenceDet = new FileInfo(Path.Combine(d.FullName, $"Reference Detection {name}.txt"));
 		if (!referenceDet.Exists)
 			return;
@@ -2550,7 +2569,6 @@ public partial class FrmMarkingMachine : Form
 	internal void SetSqlFile(string v)
 	{
 		txtExcelFileName.Text = v;
-		// Reload();
 	}
 
 	private void cmdWrap_Click(object sender, EventArgs e)
@@ -2714,5 +2732,37 @@ public partial class FrmMarkingMachine : Form
 			values.Add(item.ColumnName);
 		}
 		return values;
+	}
+
+	private void button3_Click(object sender, EventArgs e)
+	{
+		var currentValues = _config.GetStudentSubmissions().ToList();
+		var updated = new List<TurnitInSubmission>();
+		var sb = new StringBuilder();
+		foreach (var currentValue in currentValues)
+		{
+			if (string.IsNullOrEmpty(currentValue.FirstName))
+			{
+				
+				var fnd = _studentRepository.GetStudentById(currentValue.NumericUserId);
+				if (fnd != null && !string.IsNullOrEmpty( fnd.Forename ))
+				{
+					currentValue.FirstName = fnd.Forename;
+					if (!string.IsNullOrEmpty(fnd.Surname))
+						currentValue.LastName = fnd.Surname;
+					updated.Add(currentValue);
+					sb.AppendLine($"Updated {currentValue.NumericUserId} to FN:{currentValue.FirstName} LN:{currentValue.LastName}");
+				}
+				else
+				{
+					sb.AppendLine($"Not found: {currentValue.NumericUserId}: {currentValue.FirstName} / {currentValue.LastName}");
+				}
+			}
+		}
+		var resp = MessageBox.Show($"Found {updated.Count} records to update.\r\n\r\n" + sb.ToString(),
+			"Continue?", MessageBoxButtons.YesNoCancel);
+		if (resp != DialogResult.Yes)
+			return;
+		txtToolReport.Text = TurnItIn.UpdateDatabase(txtExcelFileName.Text, updated);
 	}
 }

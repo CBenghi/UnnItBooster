@@ -34,7 +34,8 @@ public class StudentsRepository
 
 			if (StudentJsonCollection.IsValid(possibleContainer))
 			{
-				collections.Add(new StudentJsonCollection(possibleContainer));
+				var cont = new StudentJsonCollection(possibleContainer);
+				collections.Add(cont);
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -43,12 +44,20 @@ namespace UnnItBooster.Models
 		private void Reload()
 		{
 			var cont = File.ReadAllText(persistenceFileName);
-			var t = JsonSerializer.Deserialize<StudentJsonCollection>(cont);
-			if (t != null)
+			try
 			{
-				Students = t.Students;
-				OutlookFolder = t.OutlookFolder;
+				var t = JsonSerializer.Deserialize<StudentJsonCollection>(cont);
+				if (t != null)
+				{
+					Students = t.Students;
+					OutlookFolder = t.OutlookFolder;
+				}
 			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.Message);
+				Debug.WriteLine(ex.InnerException?.Message ?? "");
+			}			
 		}
 
 		private string persistenceFileName => GetJsonPersistenceFile(directory);

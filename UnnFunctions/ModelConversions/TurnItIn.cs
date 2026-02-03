@@ -371,7 +371,14 @@ public partial class TurnItIn
 		c.Close();
 	}
 
-	public static string UpdateDatabase(string fullname, List<TurnitInSubmission> submissions, string elpSiteCode)
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="fullname"></param>
+	/// <param name="submissions"></param>
+	/// <param name="elpSiteCode">if left null it does not get updated</param>
+	/// <returns></returns>
+	public static string UpdateDatabase(string fullname, List<TurnitInSubmission> submissions, string? elpSiteCode = null)
 	{
 		var filename = Path.ChangeExtension(fullname, "sqlite");
 		if (!File.Exists(filename))
@@ -393,7 +400,7 @@ public partial class TurnItIn
 			var vc = TurnitInSubmission.GetSqlCouples(item, elpSiteCode).Where(x => !string.IsNullOrWhiteSpace(x.Value));
 			if (!string.IsNullOrEmpty(elpSiteCode))
 			{
-				vc = vc.ToList().Append(new SqlCouple("SUB_ElpSite", elpSiteCode));
+				vc = vc.ToList().Append(new SqlCouple("SUB_ElpSite", elpSiteCode!)); // declared not null because netstandard2 does not support nullable annotations well
 			}
 			if (existingEmails.Contains(item.Email))
 			{

@@ -304,7 +304,7 @@ namespace StudentMarking
 				var dataId = data[0];
 
 				// start with the data
-				var repvalue = row[dataId].ToString();
+				var repvalue = row[dataId].ToString() ?? "";
 				repvalue = repvalue.Replace("\n", "\r\n");
 				var oValue = row[dataId];
 				if (oValue.GetType() == typeof(double))
