@@ -112,7 +112,7 @@ public partial class MainWindow
 	private async void wbSample_WebResourceResponseReceived(object? sender, WebViewCore.CoreWebView2WebResourceResponseReceivedEventArgs e)
 	{
 		var uri = new Uri(e.Request.Uri);
-		Debug.WriteLine(uri.ToString());
+		// Debug.WriteLine(uri.ToString());
 		if (currentAction is null)
 			return;
 		if (currentAction.DataRequired.HasFlag(ActionRequiredData.photos))

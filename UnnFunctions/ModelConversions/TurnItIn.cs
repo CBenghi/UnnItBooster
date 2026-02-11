@@ -102,7 +102,8 @@ public partial class TurnItIn
 	{
 		EnsureField(c, "TB_Submissions", "SUB_ElpSite", "TEXT default NULL", "NULL");
 		ExecuteSql(c, TB_MarkersSql);
-		EnsureField(c, "TB_Submissions", "SUB_ElpSite", "TEXT default NULL", "NULL");
+		EnsureField(c, "TB_Submissions", "SUB_InText", "TEXT default NULL", "NULL");
+		EnsureField(c, "TB_Submissions", "SUB_Biblio", "TEXT default NULL", "NULL");
 		EnsureField(c, "TB_Markers", "MRKR_MarkerRole", "TEXT default NULL", "NULL");
 
 		// ensure indices

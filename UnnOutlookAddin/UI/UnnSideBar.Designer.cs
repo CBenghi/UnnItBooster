@@ -32,27 +32,28 @@
 			this.tbSelection = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.CmbFolder = new System.Windows.Forms.ComboBox();
 			this.CmdFolder = new System.Windows.Forms.Button();
 			this.ButtonToggleWrap = new System.Windows.Forms.Button();
+			this.ButtonThread = new System.Windows.Forms.Button();
 			this.txtInformation = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.StudImage = new System.Windows.Forms.PictureBox();
-			this.button1 = new System.Windows.Forms.Button();
-			this.ButtonThread = new System.Windows.Forms.Button();
+			this.ButtonExecuteCombo = new System.Windows.Forms.Button();
 			this.cmbAction = new System.Windows.Forms.ComboBox();
 			this.tbSystem = new System.Windows.Forms.TabPage();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.BtnSolveStudentName = new System.Windows.Forms.Button();
+			this.ButtonSolveStudentName = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.cmdMoveMail = new System.Windows.Forms.Button();
+			this.ButtonMoveMail = new System.Windows.Forms.Button();
 			this.cmbRepository = new System.Windows.Forms.ComboBox();
-			this.button3 = new System.Windows.Forms.Button();
+			this.ButtonRefreshSystem = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
 			this.txtCollection = new System.Windows.Forms.TextBox();
-			this.button2 = new System.Windows.Forms.Button();
+			this.ButtonAddThreadToCollection = new System.Windows.Forms.Button();
 			this.txtSystemInfo = new System.Windows.Forms.TextBox();
-			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
 			this.tabControl1.SuspendLayout();
 			this.tbSelection.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -60,12 +61,13 @@
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
 			this.groupBox1.SuspendLayout();
+			this.groupBox5.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.StudImage)).BeginInit();
 			this.tbSystem.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox3.SuspendLayout();
-			this.groupBox5.SuspendLayout();
+			this.groupBox6.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl1
@@ -125,6 +127,19 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "General";
 			// 
+			// groupBox5
+			// 
+			this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox5.Controls.Add(this.CmbFolder);
+			this.groupBox5.Controls.Add(this.CmdFolder);
+			this.groupBox5.Location = new System.Drawing.Point(6, 19);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(243, 49);
+			this.groupBox5.TabIndex = 8;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Move to folder";
+			// 
 			// CmbFolder
 			// 
 			this.CmbFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -157,6 +172,18 @@
 			this.ButtonToggleWrap.UseVisualStyleBackColor = true;
 			this.ButtonToggleWrap.Click += new System.EventHandler(this.ButtonToggleWrap_Click);
 			// 
+			// ButtonThread
+			// 
+			this.ButtonThread.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ButtonThread.Location = new System.Drawing.Point(6, 74);
+			this.ButtonThread.Name = "ButtonThread";
+			this.ButtonThread.Size = new System.Drawing.Size(244, 23);
+			this.ButtonThread.TabIndex = 21;
+			this.ButtonThread.Text = "List thread students";
+			this.ButtonThread.UseVisualStyleBackColor = true;
+			this.ButtonThread.Click += new System.EventHandler(this.ButtonThread_Click);
+			// 
 			// txtInformation
 			// 
 			this.txtInformation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -176,7 +203,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox2.Controls.Add(this.StudImage);
-			this.groupBox2.Controls.Add(this.button1);
+			this.groupBox2.Controls.Add(this.ButtonExecuteCombo);
 			this.groupBox2.Controls.Add(this.cmbAction);
 			this.groupBox2.Location = new System.Drawing.Point(0, 0);
 			this.groupBox2.Name = "groupBox2";
@@ -199,28 +226,16 @@
 			this.StudImage.TabIndex = 20;
 			this.StudImage.TabStop = false;
 			// 
-			// button1
+			// ButtonExecuteCombo
 			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(197, 282);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(53, 23);
-			this.button1.TabIndex = 23;
-			this.button1.Text = "Go";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
-			// 
-			// ButtonThread
-			// 
-			this.ButtonThread.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.ButtonThread.Location = new System.Drawing.Point(6, 74);
-			this.ButtonThread.Name = "ButtonThread";
-			this.ButtonThread.Size = new System.Drawing.Size(244, 23);
-			this.ButtonThread.TabIndex = 21;
-			this.ButtonThread.Text = "List thread students";
-			this.ButtonThread.UseVisualStyleBackColor = true;
-			this.ButtonThread.Click += new System.EventHandler(this.ButtonThread_Click);
+			this.ButtonExecuteCombo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.ButtonExecuteCombo.Location = new System.Drawing.Point(197, 282);
+			this.ButtonExecuteCombo.Name = "ButtonExecuteCombo";
+			this.ButtonExecuteCombo.Size = new System.Drawing.Size(53, 23);
+			this.ButtonExecuteCombo.TabIndex = 23;
+			this.ButtonExecuteCombo.Text = "Go";
+			this.ButtonExecuteCombo.UseVisualStyleBackColor = true;
+			this.ButtonExecuteCombo.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// cmbAction
 			// 
@@ -235,12 +250,10 @@
 			// 
 			// tbSystem
 			// 
+			this.tbSystem.Controls.Add(this.groupBox6);
 			this.tbSystem.Controls.Add(this.groupBox4);
 			this.tbSystem.Controls.Add(this.groupBox3);
-			this.tbSystem.Controls.Add(this.button3);
-			this.tbSystem.Controls.Add(this.label1);
-			this.tbSystem.Controls.Add(this.txtCollection);
-			this.tbSystem.Controls.Add(this.button2);
+			this.tbSystem.Controls.Add(this.ButtonRefreshSystem);
 			this.tbSystem.Controls.Add(this.txtSystemInfo);
 			this.tbSystem.Location = new System.Drawing.Point(4, 22);
 			this.tbSystem.Name = "tbSystem";
@@ -254,7 +267,7 @@
 			// 
 			this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox4.Controls.Add(this.BtnSolveStudentName);
+			this.groupBox4.Controls.Add(this.ButtonSolveStudentName);
 			this.groupBox4.Location = new System.Drawing.Point(6, 120);
 			this.groupBox4.Name = "groupBox4";
 			this.groupBox4.Size = new System.Drawing.Size(247, 81);
@@ -262,23 +275,23 @@
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Resolve missing data";
 			// 
-			// BtnSolveStudentName
+			// ButtonSolveStudentName
 			// 
-			this.BtnSolveStudentName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.ButtonSolveStudentName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.BtnSolveStudentName.Location = new System.Drawing.Point(45, 19);
-			this.BtnSolveStudentName.Name = "BtnSolveStudentName";
-			this.BtnSolveStudentName.Size = new System.Drawing.Size(196, 56);
-			this.BtnSolveStudentName.TabIndex = 1;
-			this.BtnSolveStudentName.Text = "Resolve missing first names and Outlook addresses";
-			this.BtnSolveStudentName.UseVisualStyleBackColor = true;
-			this.BtnSolveStudentName.Click += new System.EventHandler(this.BtnSolveStudentName_Click);
+			this.ButtonSolveStudentName.Location = new System.Drawing.Point(45, 19);
+			this.ButtonSolveStudentName.Name = "ButtonSolveStudentName";
+			this.ButtonSolveStudentName.Size = new System.Drawing.Size(196, 56);
+			this.ButtonSolveStudentName.TabIndex = 1;
+			this.ButtonSolveStudentName.Text = "Resolve missing first names and Outlook addresses";
+			this.ButtonSolveStudentName.UseVisualStyleBackColor = true;
+			this.ButtonSolveStudentName.Click += new System.EventHandler(this.BtnSolveStudentName_Click);
 			// 
 			// groupBox3
 			// 
 			this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox3.Controls.Add(this.cmdMoveMail);
+			this.groupBox3.Controls.Add(this.ButtonMoveMail);
 			this.groupBox3.Controls.Add(this.cmbRepository);
 			this.groupBox3.Location = new System.Drawing.Point(6, 35);
 			this.groupBox3.Name = "groupBox3";
@@ -287,17 +300,17 @@
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Move mail to folder";
 			// 
-			// cmdMoveMail
+			// ButtonMoveMail
 			// 
-			this.cmdMoveMail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.ButtonMoveMail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdMoveMail.Location = new System.Drawing.Point(45, 46);
-			this.cmdMoveMail.Name = "cmdMoveMail";
-			this.cmdMoveMail.Size = new System.Drawing.Size(196, 23);
-			this.cmdMoveMail.TabIndex = 7;
-			this.cmdMoveMail.Text = "Move";
-			this.cmdMoveMail.UseVisualStyleBackColor = true;
-			this.cmdMoveMail.Click += new System.EventHandler(this.cmdMoveMail_Click);
+			this.ButtonMoveMail.Location = new System.Drawing.Point(45, 46);
+			this.ButtonMoveMail.Name = "ButtonMoveMail";
+			this.ButtonMoveMail.Size = new System.Drawing.Size(196, 23);
+			this.ButtonMoveMail.TabIndex = 7;
+			this.ButtonMoveMail.Text = "Move";
+			this.ButtonMoveMail.UseVisualStyleBackColor = true;
+			this.ButtonMoveMail.Click += new System.EventHandler(this.cmdMoveMail_Click);
 			// 
 			// cmbRepository
 			// 
@@ -310,23 +323,23 @@
 			this.cmbRepository.Size = new System.Drawing.Size(235, 21);
 			this.cmbRepository.TabIndex = 6;
 			// 
-			// button3
+			// ButtonRefreshSystem
 			// 
-			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.ButtonRefreshSystem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(6, 6);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(247, 23);
-			this.button3.TabIndex = 5;
-			this.button3.Text = "Refresh";
-			this.button3.UseVisualStyleBackColor = true;
-			this.button3.Click += new System.EventHandler(this.button3_Click);
+			this.ButtonRefreshSystem.Location = new System.Drawing.Point(6, 6);
+			this.ButtonRefreshSystem.Name = "ButtonRefreshSystem";
+			this.ButtonRefreshSystem.Size = new System.Drawing.Size(247, 23);
+			this.ButtonRefreshSystem.TabIndex = 5;
+			this.ButtonRefreshSystem.Text = "Refresh";
+			this.ButtonRefreshSystem.UseVisualStyleBackColor = true;
+			this.ButtonRefreshSystem.Click += new System.EventHandler(this.button3_Click);
 			// 
 			// label1
 			// 
 			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(7, 757);
+			this.label1.Location = new System.Drawing.Point(6, 21);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(53, 13);
 			this.label1.TabIndex = 4;
@@ -336,47 +349,48 @@
 			// 
 			this.txtCollection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtCollection.Location = new System.Drawing.Point(74, 755);
+			this.txtCollection.Location = new System.Drawing.Point(65, 18);
 			this.txtCollection.Name = "txtCollection";
-			this.txtCollection.Size = new System.Drawing.Size(188, 20);
+			this.txtCollection.Size = new System.Drawing.Size(176, 20);
 			this.txtCollection.TabIndex = 3;
 			// 
-			// button2
+			// ButtonAddThreadToCollection
 			// 
-			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.ButtonAddThreadToCollection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(3, 731);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(256, 23);
-			this.button2.TabIndex = 2;
-			this.button2.Text = "Add thread students to Collection";
-			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click);
+			this.ButtonAddThreadToCollection.Location = new System.Drawing.Point(65, 44);
+			this.ButtonAddThreadToCollection.Name = "ButtonAddThreadToCollection";
+			this.ButtonAddThreadToCollection.Size = new System.Drawing.Size(176, 23);
+			this.ButtonAddThreadToCollection.TabIndex = 2;
+			this.ButtonAddThreadToCollection.Text = "Add thread students to Collection";
+			this.ButtonAddThreadToCollection.UseVisualStyleBackColor = true;
+			this.ButtonAddThreadToCollection.Click += new System.EventHandler(this.button2_Click);
 			// 
 			// txtSystemInfo
 			// 
 			this.txtSystemInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtSystemInfo.Location = new System.Drawing.Point(6, 207);
+			this.txtSystemInfo.Location = new System.Drawing.Point(6, 292);
 			this.txtSystemInfo.Multiline = true;
 			this.txtSystemInfo.Name = "txtSystemInfo";
 			this.txtSystemInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtSystemInfo.Size = new System.Drawing.Size(247, 438);
+			this.txtSystemInfo.Size = new System.Drawing.Size(247, 353);
 			this.txtSystemInfo.TabIndex = 0;
 			// 
-			// groupBox5
+			// groupBox6
 			// 
-			this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox5.Controls.Add(this.CmbFolder);
-			this.groupBox5.Controls.Add(this.CmdFolder);
-			this.groupBox5.Location = new System.Drawing.Point(6, 19);
-			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(243, 49);
-			this.groupBox5.TabIndex = 8;
-			this.groupBox5.TabStop = false;
-			this.groupBox5.Text = "Move to folder";
+			this.groupBox6.Controls.Add(this.ButtonAddThreadToCollection);
+			this.groupBox6.Controls.Add(this.label1);
+			this.groupBox6.Controls.Add(this.txtCollection);
+			this.groupBox6.Location = new System.Drawing.Point(6, 207);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(247, 79);
+			this.groupBox6.TabIndex = 9;
+			this.groupBox6.TabStop = false;
+			this.groupBox6.Text = "Add to collection";
 			// 
 			// UnnSideBar
 			// 
@@ -393,13 +407,15 @@
 			this.splitContainer1.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
+			this.groupBox5.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.StudImage)).EndInit();
 			this.tbSystem.ResumeLayout(false);
 			this.tbSystem.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox3.ResumeLayout(false);
-			this.groupBox5.ResumeLayout(false);
+			this.groupBox6.ResumeLayout(false);
+			this.groupBox6.PerformLayout();
 			this.ResumeLayout(false);
 
         }
@@ -415,20 +431,21 @@
 		private System.Windows.Forms.Button ButtonToggleWrap;
 		private System.Windows.Forms.ComboBox CmbFolder;
 		private System.Windows.Forms.Button CmdFolder;
-		private System.Windows.Forms.Button BtnSolveStudentName;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button ButtonSolveStudentName;
+		private System.Windows.Forms.Button ButtonExecuteCombo;
 		private System.Windows.Forms.ComboBox cmbAction;
 		private System.Windows.Forms.Button ButtonThread;
-		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button ButtonAddThreadToCollection;
 		private System.Windows.Forms.TextBox txtCollection;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.Button button3;
+		private System.Windows.Forms.Button ButtonRefreshSystem;
 		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.Button cmdMoveMail;
+		private System.Windows.Forms.Button ButtonMoveMail;
 		private System.Windows.Forms.ComboBox cmbRepository;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.GroupBox groupBox6;
 	}
 }

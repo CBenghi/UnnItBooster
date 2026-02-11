@@ -14,6 +14,7 @@ using System.Linq;
 using System.Globalization;
 using UnnItBooster;
 using UnnFunctions.Models;
+using UnnFunctions.Models.DelegatedMarks;
 
 namespace StudentMarking
 {
@@ -318,6 +319,21 @@ namespace StudentMarking
 					var dataFun = data[1].ToLowerInvariant();
 					switch (dataFun)
 					{
+						case "markeremail": 
+						case "markermail": 
+						case "markerfirst": 
+						case "markerlast": 
+							var linkValue = MarkersKnowledge.GetMarker(repvalue);
+							if (linkValue != null)
+							{
+								if (dataFun == "markeremail" || dataFun == "markermail")
+									repvalue = linkValue.Email;
+								else if (dataFun == "markerfirst")
+									repvalue = linkValue.First;
+								else if (dataFun == "markerlast")
+									repvalue = linkValue.Last;
+							}
+							break;
 						case "resultshort":
 						case "resultlong":
 						case "shortresult":

@@ -206,7 +206,7 @@ namespace StudentMarking
 			// 
 			cmbTableNames.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			cmbTableNames.FormattingEnabled = true;
-			cmbTableNames.Location = new System.Drawing.Point(91, 41);
+			cmbTableNames.Location = new System.Drawing.Point(91, 44);
 			cmbTableNames.Margin = new System.Windows.Forms.Padding(2);
 			cmbTableNames.Name = "cmbTableNames";
 			cmbTableNames.Size = new System.Drawing.Size(751, 28);
@@ -266,7 +266,7 @@ namespace StudentMarking
 			// 
 			cmbSelectedModule.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			cmbSelectedModule.FormattingEnabled = true;
-			cmbSelectedModule.Location = new System.Drawing.Point(69, 25);
+			cmbSelectedModule.Location = new System.Drawing.Point(69, 28);
 			cmbSelectedModule.Margin = new System.Windows.Forms.Padding(2);
 			cmbSelectedModule.Name = "cmbSelectedModule";
 			cmbSelectedModule.Size = new System.Drawing.Size(773, 28);
@@ -624,7 +624,7 @@ namespace StudentMarking
 			// cmbEmailSubject
 			// 
 			cmbEmailSubject.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			cmbEmailSubject.Location = new System.Drawing.Point(95, 41);
+			cmbEmailSubject.Location = new System.Drawing.Point(95, 44);
 			cmbEmailSubject.Name = "cmbEmailSubject";
 			cmbEmailSubject.Size = new System.Drawing.Size(591, 28);
 			cmbEmailSubject.TabIndex = 3;

@@ -57,6 +57,7 @@ namespace UnnFunctions.Models.DelegatedMarks
 			t.Add(new MarkersKnowledge("Doukari, Omar", "omar.doukari@northumbria.ac.uk"));
 			t.Add(new MarkersKnowledge("Elysee, Ray", "ray.elysee@northumbria.ac.uk"));
 			t.Add(new MarkersKnowledge("Gbadamosi, Abdul", "abdul.gbadamosi@northumbria.ac.uk"));
+			t.Add(new MarkersKnowledge("Littlemore, Michelle", "michelle.littlemore@northumbria.ac.uk"));
 			t.Add(new MarkersKnowledge("Maqbool, Rashid", "rashid.maqbool@northumbria.ac.uk"));
 			t.Add(new MarkersKnowledge("Martinez-Rodriguez, Pablo", "pablo.rodriguez@northumbria.ac.uk"));
 			t.Add(new MarkersKnowledge("Ponton, Hazel", "hazel.ponton@northumbria.ac.uk"));
@@ -65,6 +66,7 @@ namespace UnnFunctions.Models.DelegatedMarks
 			t.Add(new MarkersKnowledge("Suliman, Ala", "ala.suliman@northumbria.ac.uk"));
 			t.Add(new MarkersKnowledge("Tindall, Jess", "jess.tindall@northumbria.ac.uk"));
 			t.Add(new MarkersKnowledge("Umer, Waleed", "waleed.umer@northumbria.ac.uk"));
+			t.Add(new MarkersKnowledge("Alwan, Zaid", "zaid.alwan@northumbria.ac.uk"));
 			return t;
 		}
 	}

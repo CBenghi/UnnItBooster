@@ -2,14 +2,14 @@
   "profiles": {
     "diss debug": {
       "commandName": "Project",
-      "commandLineArgs": "-mm \"C:\\Users\\Claudio\\OneDrive - Northumbria University - Production Azure AD\\2024\\KA7068 - Research project\\SEM3 - Marking\\Submissions\\Dissertation report submission - Learning Analytics.sqlite\" -max"
+      "commandLineArgs": "-mm \"%USERPROFILE%\\OneDrive - Northumbria University - Production Azure AD\\2025\\KA7068 - Research project\\Sem1\\Submission\\Research Report - Dissertation submission - Learning Analytics.sqlite\" -max"
     },
     "debug": {
       "commandName": "Project"
     },
     "mailer debug": {
       "commandName": "Project",
-      "commandLineArgs": "-mail \"C:\\Users\\Claudio\\OneDrive - Northumbria University - Production Azure AD\\2024\\KA7058 - Research methods\\MCRF KA7058.xlsx\""
+      "commandLineArgs": "-mail \"%USERPROFILE%OneDrive - Northumbria University - Production Azure AD\\2024\\KA7058 - Research methods\\MCRF KA7058.xlsx\""
     }
   }
 }

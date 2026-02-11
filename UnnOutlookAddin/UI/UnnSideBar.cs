@@ -28,6 +28,22 @@ namespace UnnOutlookAddin.UI
 			_repository = repository;
 			SystemReport();
 			Application = application;
+
+			FixButton(ButtonExecuteCombo);
+			FixButton(ButtonThread);
+			FixButton(ButtonToggleWrap);
+			FixButton(ButtonAddThreadToCollection);
+			FixButton(ButtonSolveStudentName);
+			FixButton(ButtonMoveMail);
+			FixButton(ButtonRefreshSystem);
+
+		}
+
+		private void FixButton(Button relevantButton)
+		{
+			relevantButton.UseVisualStyleBackColor = false;
+			relevantButton.ForeColor = System.Drawing.Color.Black;
+			relevantButton.BackColor = System.Drawing.Color.LightGray;
 		}
 
 		private void SystemReport()

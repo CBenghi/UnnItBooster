@@ -590,6 +590,7 @@ public partial class FrmMarkingMachine : Form
                         - sort comment misconduct
                         - sort comment 33
                         - sort unmarked
+                        - sort unmarked 33 (removes the ones with comment 33, e.g. for AM)
 
                     Remove <commentId>
                        removes the comment from the current student by the ID of the comment
@@ -786,7 +787,25 @@ public partial class FrmMarkingMachine : Form
 		{
 			stringBuilder.AppendLine(row["SUB_ID"].ToString());
 		}
-		return stringBuilder.ToString();
+		var tmp = stringBuilder.ToString();
+		if (!string.IsNullOrWhiteSpace(param))
+		{
+			var commented = GetPapersByComment(param);
+			var asList = ToLineList(tmp).Except(ToLineList(commented));
+			tmp = string.Join(Environment.NewLine, asList);
+		}
+		return tmp;
+	}
+
+	/// <summary>
+	/// this method splits the text in lines
+	/// </summary>
+	/// <param name="tmp"></param>
+	private IEnumerable<string> ToLineList(string input)
+	{
+		if (input == null)
+			return Array.Empty<string>();
+		return input.Split(["\r\n", "\n", "\r"], StringSplitOptions.None);
 	}
 
 	private string GetPapersByComment(string numberOrText)

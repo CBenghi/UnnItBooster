@@ -277,10 +277,12 @@ public class StudentsRepository
 			&& string.IsNullOrEmpty(student.NumericStudentId)
 			)
 			return false;
-		var toUpdate = coll.Students.FirstOrDefault(x => x.HasEmail(student.Email));
-		if (toUpdate is null && !string.IsNullOrEmpty(student.NumericStudentId))
-		{
+		Student? toUpdate = null;
+		if (!string.IsNullOrWhiteSpace(student.NumericStudentId))
 			toUpdate = coll.Students.FirstOrDefault(x => x.NumericStudentId == student.NumericStudentId);
+		if (toUpdate is null && !string.IsNullOrWhiteSpace(student.Email))
+		{
+			coll.Students.FirstOrDefault(x => x.HasEmail(student.Email));		
 		}
 		if (toUpdate is null)
 		{
