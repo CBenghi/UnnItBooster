@@ -165,9 +165,13 @@ public partial class FrmMarkingMachine : Form
 			var submission = GetCurrentSubmission();
 			if (submission is null)
 			{
+				txtBibliography.Text = "";
+				txtCitationsList.Text = "";
 				txtStudentreport.Text = "none";
 				return;
 			}
+			txtBibliography.Text = submission.Bibliography;
+			txtCitationsList.Text = submission.CitationList;
 			LblOverlap.Text = $"Overlap: {submission.Overlap}%";
 			if (int.TryParse(submission.Overlap, out var ovl))
 			{
@@ -402,8 +406,15 @@ public partial class FrmMarkingMachine : Form
 				switch (mode)
 				{
 					case "turnitin":
-						SetCustomOrder(GetTurnitinOrder(param));
-						txtLibReport.Text += GetElpSitesReport();
+						if (param == "?")
+						{
+							txtLibReport.Text = GetElpSitesReport();
+						}
+						else
+						{ 
+							SetCustomOrder(GetTurnitinOrder(param));
+							txtLibReport.Text += GetElpSitesReport();
+						}
 						break;
 					case "marker":
 						SetCustomOrder(GetDelegateMarkerPapers(param));
@@ -585,6 +596,7 @@ public partial class FrmMarkingMachine : Form
                         Entries are navigated with +/- buttons as long as the "Use Sorting" checkbox is flagged
                         The list of IDs is visible in the report of the Tools TAB
                         e.g.
+                        - sort turnitin ?
                         - sort turnitin ELPSITENAME
                         - sort marker claudio.benghi
                         - sort comment misconduct
@@ -715,17 +727,17 @@ public partial class FrmMarkingMachine : Form
 		if (wf.Exists)
 		{
 			// preparing content
-			if (string.IsNullOrEmpty(txtTextOrPointer.Text))
+			if (string.IsNullOrEmpty(txtBibliography.Text))
 			{
-				txtTextOrPointer.Text = string.Join(Environment.NewLine, wf.GetReferenceList());
+				txtBibliography.Text = string.Join(Environment.NewLine, wf.GetReferenceList());
 			}
-			var referenceList = new ReferenceList(txtTextOrPointer.Text);
+			var referenceList = new ReferenceList(txtBibliography.Text);
 
-			if (string.IsNullOrEmpty(txtAdditionalNote.Text))
+			if (string.IsNullOrEmpty(txtCitationsList.Text))
 			{
-				txtAdditionalNote.Text = string.Join(Environment.NewLine, wf.GetInlinReferences().OrderBy(x => x));
+				txtCitationsList.Text = string.Join(Environment.NewLine, wf.GetInlinReferences().OrderBy(x => x));
 			}
-			var refs = txtAdditionalNote.Text.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+			var refs = txtCitationsList.Text.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
 			sb.AppendLine("===");
 			sb.AppendLine($"Reference count: {refs.Length}, reference list count: {referenceList.ReferenceCount}");
 			sb.AppendLine();
@@ -743,7 +755,8 @@ public partial class FrmMarkingMachine : Form
 					else
 					{
 						// too many found
-						sb.AppendLine($"- {item.Key}, (usage count: {item.Count()})");
+						sb.Append($"- {item.Key}, (usage count: {item.Count()})");
+						sb.AppendLine($" - ### {candidateRefs.Count()} possible matches:");
 						foreach (var candidate in candidateRefs)
 						{
 							sb.AppendLine($"  - {candidate}");
@@ -754,8 +767,8 @@ public partial class FrmMarkingMachine : Form
 				else
 				{
 					// not found 
-					sb.AppendLine($"- {item.Key}, (usage count: {item.Count()})");
-					sb.AppendLine("  - ### Reference not found.");
+					sb.Append($"- {item.Key}, (usage count: {item.Count()})");
+					sb.AppendLine(" - ### Reference not found.");
 					problematicTally++;
 				}
 			}
@@ -801,11 +814,11 @@ public partial class FrmMarkingMachine : Form
 	/// this method splits the text in lines
 	/// </summary>
 	/// <param name="tmp"></param>
-	private IEnumerable<string> ToLineList(string input)
+	private List<string> ToLineList(string input)
 	{
 		if (input == null)
-			return Array.Empty<string>();
-		return input.Split(["\r\n", "\n", "\r"], StringSplitOptions.None);
+			return new List<string>();
+		return input.Split(["\r\n", "\n", "\r"], StringSplitOptions.None).ToList();
 	}
 
 	private string GetPapersByComment(string numberOrText)
@@ -1387,7 +1400,7 @@ public partial class FrmMarkingMachine : Form
 		var dt = _config.GetDataTable(sql);
 		foreach (DataRow r in dt.Rows)
 		{
-			var requiredId = (r["sub_numericUserId"].ToString()??"").Trim();
+			var requiredId = (r["sub_numericUserId"].ToString() ?? "").Trim();
 			var found = allIds.Contains(requiredId);
 			if (!found)
 			{
@@ -1631,7 +1644,7 @@ public partial class FrmMarkingMachine : Form
 		var vals = _config.GetDataTable("select distinct COMM_Section from TB_Comments order by COMM_Section");
 		foreach (DataRow row in vals.Rows)
 		{
-			txtSection.Items.Add(row[0].ToString()??"");
+			txtSection.Items.Add(row[0].ToString() ?? "");
 		}
 	}
 
@@ -1718,7 +1731,7 @@ public partial class FrmMarkingMachine : Form
 				var order = Convert.ToInt32(item["CPNT_Order"]);
 				var ipercent = Convert.ToInt32(item["CPNT_Percent"]);
 				var c = new ComboId(
-					item["CPNT_Name"].ToString()??"",
+					item["CPNT_Name"].ToString() ?? "",
 					ipercent,
 					order
 				);
@@ -1729,7 +1742,7 @@ public partial class FrmMarkingMachine : Form
 				cmp.Id = order;
 				try
 				{
-					var desc = item["CPNT_Comment"].ToString()??"";
+					var desc = item["CPNT_Comment"].ToString() ?? "";
 					cmp.ComponentDescription = desc;
 				}
 				catch (Exception)
@@ -2762,9 +2775,9 @@ public partial class FrmMarkingMachine : Form
 		{
 			if (string.IsNullOrEmpty(currentValue.FirstName))
 			{
-				
+
 				var fnd = _studentRepository.GetStudentById(currentValue.NumericUserId);
-				if (fnd != null && !string.IsNullOrEmpty( fnd.Forename ))
+				if (fnd != null && !string.IsNullOrEmpty(fnd.Forename))
 				{
 					currentValue.FirstName = fnd.Forename;
 					if (!string.IsNullOrEmpty(fnd.Surname))
@@ -2783,5 +2796,39 @@ public partial class FrmMarkingMachine : Form
 		if (resp != DialogResult.Yes)
 			return;
 		txtToolReport.Text = TurnItIn.UpdateDatabase(txtExcelFileName.Text, updated);
+	}
+
+	private void button16_Click(object sender, EventArgs e)
+	{
+		txtLibReport.Text = ReportReferenceCheck();
+	}
+
+	private void cmdSaveBiblioData_Click(object sender, EventArgs e)
+	{
+		var submission = GetCurrentSubmission();
+		if (submission is null)
+			return;
+		submission.Bibliography = txtBibliography.Text;
+		submission.CitationList = txtCitationsList.Text;
+		_config.UpdateDatabase(submission);
+	}
+
+	private void button15_Click(object sender, EventArgs e)
+	{
+		var input = txtCitationsList.Text;
+		var pars = ToLineList(input);
+		// Debug.WriteLine($"got {pars.Count} paragraphs");
+		List<string> allReferences = new List<string>();
+		var l = 0;
+		foreach (var paragraph in pars)
+		{
+			l += paragraph.Length;
+			var thisParRefs = SubmissionFile.GetInlineReferencesFromParagraph(paragraph).ToList();
+			// Debug.WriteLine(thisParRefs.Count);
+			allReferences.AddRange(thisParRefs);
+		}
+		allReferences.Sort();
+
+		txtCitationsList.Text = string.Join(Environment.NewLine, allReferences);
 	}
 }

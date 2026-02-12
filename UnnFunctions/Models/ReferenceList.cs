@@ -12,6 +12,10 @@ namespace UnnFunctions.Models
 
 		HashSet<string> matchedReferences = new();
 
+		/// <summary>
+		/// Manages the list of bibliographic entries (full record)
+		/// </summary>
+		/// <param name="text">The bibliography content of the submission</param>
 		public ReferenceList(string text)
 		{
 			text = text.Replace("\u00A0", " "); // non breaking space replacement

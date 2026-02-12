@@ -24,6 +24,9 @@ public class TurnitInSubmission
 	public string NumericUserId = "";
 	public string Email = "";
 	public string ElpSite = "";
+	
+	public string CitationList = "";
+	public string Bibliography = "";
 	public int InternalShortId = -1;
 
 	public static TurnitInSubmission FromRow(DataRow row)
@@ -43,6 +46,9 @@ public class TurnitInSubmission
 		item.NumericUserId = GetFromField("SUB_NumericUserID", row);
 		item.Email = GetFromField("SUB_email", row);
 		item.ElpSite = GetFromField("SUB_ElpSite", row);
+		//
+		item.CitationList = GetFromField("SUB_InText", row);
+		item.Bibliography = GetFromField("SUB_Biblio", row);
 		var sid = row["SUB_Id"].ToString();
 		if (!string.IsNullOrEmpty(sid) && int.TryParse(sid, out var result))
 			item.InternalShortId = result;
@@ -78,6 +84,9 @@ public class TurnitInSubmission
 			new SqlCouple("SUB_StudentPapersOverlap",  item?.StudentPapersOverlap?? ""),
 			new SqlCouple("SUB_NumericUserID",  item?.NumericUserId?? ""),
 			new SqlCouple("SUB_email", item?.Email?? ""),
+			// added bibliography and citation list to the sql couples
+			new SqlCouple("SUB_InText", item?.CitationList ?? ""),
+			new SqlCouple("SUB_Biblio", item?.Bibliography ?? ""),
 			new SqlCouple("SUB_ElpSite", elpCode)
 			];
 	}

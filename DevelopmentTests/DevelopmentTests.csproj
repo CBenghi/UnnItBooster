@@ -32,6 +32,9 @@
     <None Update="Files\SitsMarkEntry.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Files\TextExample.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Files\transcript.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

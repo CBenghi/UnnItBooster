@@ -892,6 +892,21 @@ namespace StudentsFetcher.StudentMarking
 			return TurnitInSubmission.FromRow(stud);
 		}
 
+		public bool UpdateDatabase(TurnitInSubmission submission)
+		{
+			if (submission.InternalShortId == -1)
+				return false;
+			var vc = TurnitInSubmission.GetSqlCouples(submission, null)
+				.Where(x => x.Field == "SUB_InText"
+					|| x.Field == "SUB_Biblio"
+					);
+			// update
+			var flds = string.Join(", ", vc.Select(x => x.GetSetCommand()));
+			var sql = $"UPDATE TB_Submissions SET {flds} WHERE SUB_ID = '{submission.InternalShortId}'";
+			Execute(sql);
+			return true;
+		}
+
 		public string BareName => Path.GetFileNameWithoutExtension(DbName);
 	}
 }

@@ -39,11 +39,11 @@ namespace UnnFunctions.Models.SubmissionContent
 		{
 			var parags = GetParagraphs();
 			var reflist = GetReferenceList(parags);
-			foreach (var item in parags)
+			foreach (var paragraphText in parags)
 			{
-				if (reflist.Contains(item)) // we want to exclude elements from the reference list
+				if (reflist.Contains(paragraphText)) // we want to exclude elements from the reference list
 					continue;
-				foreach (var reference in GetReferencesFrom(item))
+				foreach (var reference in GetInlineReferencesFromParagraph(paragraphText))
 				{
 					yield return reference;
 				}
@@ -84,32 +84,32 @@ namespace UnnFunctions.Models.SubmissionContent
 			yield break;
 		}
 
-		private static IEnumerable<string> GetReferencesFrom(string origItem)
+		public static IEnumerable<string> GetInlineReferencesFromParagraph(string paragraphText)
 		{
-			var item = origItem;
+			var editedParagraphText = paragraphText;
 			//char ct = '-';
 			//Debug.WriteLine((int)ct);
 			Regex cleanOpenPar = new Regex(@"\({2,}");
 			Regex cleanClosePar = new Regex(@"\){2,}");
-			item = cleanOpenPar.Replace(item, "(");
-			item = cleanClosePar.Replace(item, ")");
+			editedParagraphText = cleanOpenPar.Replace(editedParagraphText, "(");
+			editedParagraphText = cleanClosePar.Replace(editedParagraphText, ")");
 			Regex parenthesisWithYear = new Regex(@"\((?<insidePar>[^\)]*\b\d{4}[a-z]?\b[^\)]*)\)");
 			Regex startsWithYear = new Regex(@"^\d{4}[a-z]?\b.*?$");
 			Regex invalid = new Regex(@"^[\x2D0-9]*$", RegexOptions.None);
 			// \p{Lu} is uppercase \p{Ll} is lowercase \p{L} is any
-			Regex namesBeforeBracket = new Regex(@"(?<citation>([\p{Lu}][\p{L}\.]+(\s|and|et|al\.|,)*?)+)\s*$", RegexOptions.CultureInvariant);
+			Regex namesBeforeBracket = new Regex(@"(?<citation>([\p{Lu}][\p{L}\.'’-]+(\s|and|et|al\.|,)*?)+)\s*$", RegexOptions.CultureInvariant);
 
 			Regex removePage = new Regex(@"[\s,]*(p\.|pp\.|pag\.)\s*\d+([\s -]\d+)?", RegexOptions.IgnoreCase);
 			Regex removeDoublespace = new Regex(@"[\s]+", RegexOptions.IgnoreCase);
 
-			foreach (Match match in parenthesisWithYear.Matches(item))
+			foreach (Match match in parenthesisWithYear.Matches(editedParagraphText))
 			{
 				var initialValue = match.Groups["insidePar"].Value;
 				var values = initialValue.Split(';').Select(value => value.Trim());
 				foreach (var singleValue in values)
 				{
 					var tmpValue = singleValue;
-					var beforeMatch = item.Substring(0, match.Index);
+					var beforeMatch = editedParagraphText.Substring(0, match.Index);
 					if (startsWithYear.IsMatch(tmpValue))
 					{
 						var capitalMatch = namesBeforeBracket.Match(beforeMatch);
