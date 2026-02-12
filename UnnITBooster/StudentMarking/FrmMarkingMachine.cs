@@ -215,12 +215,12 @@ public partial class FrmMarkingMachine : Form
 			var mc = _config.GetMarkCalculator();
 			var sb = new StringBuilder();
 			var sbDataUpload = new StringBuilder();
-			sb.AppendLine($"SUB_id\tSUB_LastName\tSUB_FirstName\tSUB_PaperID\tSUB_NumericUserID\tMARKS\ttotmark");
+			sb.AppendLine($"SUB_id\tSUB_LastName\tSUB_FirstName\tSUB_PaperID\tSUB_NumericUserID\tMARKS\ttotmark\tELP");
 			foreach (DataRow item in dt.Rows)
 			{
 				int subId = Convert.ToInt32(item["SUB_id"].ToString());
 				var totmark = mc.GetFinalMark(subId, _config, true);
-				sb.AppendLine($"{item["SUB_id"]}\t{item["SUB_LastName"]}\t{item["SUB_FirstName"]}\t{item["SUB_PaperID"]}\t{item["SUB_NumericUserID"]}\t{item["MARKS"]}\t{totmark}");
+				sb.AppendLine($"{item["SUB_id"]}\t{item["SUB_LastName"]}\t{item["SUB_FirstName"]}\t{item["SUB_PaperID"]}\t{item["SUB_NumericUserID"]}\t{item["MARKS"]}\t{totmark}\t{item["SUB_ElpSite"]}");
 				sbDataUpload.AppendFormat($"\"{item["SUB_LastName"]}\"\t\"{item["SUB_FirstName"]}\"\t\"{item["SUB_UserID"]}\"\t\"{item["SUB_NumericUserID"]}\"\t\"{item["SUB_email"]}\"\t\t\t\"{totmark}.00\"\n");
 			}
 
